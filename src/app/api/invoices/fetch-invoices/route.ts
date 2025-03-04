@@ -5,7 +5,10 @@ export async function GET(): Promise<NextResponse> {
   try {
     const supabase = await createClient();
 
-    const { data, error } = await supabase.from("customers").select("*");
+    const { data, error } = await supabase
+      .from("invoices")
+      .select("*, customers (*),products (*)");
+
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
