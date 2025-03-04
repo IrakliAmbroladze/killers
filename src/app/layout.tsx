@@ -6,6 +6,7 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
+import HeaderClientSide from "@/components/HeaderClientSide";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +24,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "killers ERP",
-  description: "The app for teammebers' communication",
+  title: "Teacher",
+  description: "The app for teachers",
 };
 
 export default function RootLayout({
@@ -44,15 +45,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">
-            <nav className="w-full px-20 py-5 flex justify-end h-16 items-center fixed">
+            <nav className="w-full sm:px-20 py-5 flex justify-between h-16 items-center fixed  z-50">
+              <HeaderClientSide />
               <div className="flex gap-5 items-center">
                 {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
                 <ThemeSwitcher />
               </div>
             </nav>
-            <div className="flex flex-col flex-1 justify-center gap-20 max-w-5xl p-5 ">
-              {children}
-            </div>
+            {children}
           </main>
         </ThemeProvider>
       </body>
