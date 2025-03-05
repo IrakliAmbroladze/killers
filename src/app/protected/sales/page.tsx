@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Invoice } from "@/types/invoices";
+import InvoiceForm from "@/components/invoice-form";
 
 const Sales = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -23,11 +25,17 @@ const Sales = () => {
   }, []);
 
   return (
-    <>
+    <div className="w-full">
       {loading ? (
         <div>loading. . . </div>
       ) : (
         <ul className="space-y-4 flex-1 sm:px-5 pt-5 sm:pt-0">
+          <button
+            className="hover:scale-105 active:scale-95 transition-transform duration-150 ease-in-out bg-gray-100 p-3 rounded-lg cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          >
+            create-invoice
+          </button>
           {invoices.map((invoice) => (
             <li
               key={invoice.id}
@@ -61,7 +69,22 @@ const Sales = () => {
           ))}
         </ul>
       )}
-    </>
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="font-semibold cursor-pointer"
+              >
+                X
+              </button>
+            </div>
+            <InvoiceForm />
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
