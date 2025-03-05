@@ -2,26 +2,31 @@
 import { useState } from "react";
 
 export default function InvoiceForm() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     date: "",
     customer: "",
     identity: "",
-    telephone: "",
-    email: "",
     address: "",
-    payment: "",
+    payment: "გადარიცხვა",
     items: "",
     total: "",
-    provider: "",
+    provider: "405049923 LTD KILL (VAT)",
     seller: "",
-  });
+    telephone: "",
+    email: "",
+  };
+  const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement | HTMLSelectElement>
+  ) => {
     e.preventDefault();
     setMessage("Submitting...");
     console.log(formData);
@@ -34,19 +39,7 @@ export default function InvoiceForm() {
 
       const data = await response.json();
       setMessage(data.message || "Invoice submitted successfully!");
-      setFormData({
-        date: "",
-        customer: "",
-        identity: "",
-        telephone: "",
-        email: "",
-        address: "",
-        payment: "",
-        items: "",
-        total: "",
-        provider: "",
-        seller: "",
-      });
+      setFormData(initialFormData);
     } catch (error) {
       console.error(error);
       setMessage("Error submitting invoice.");
@@ -54,7 +47,7 @@ export default function InvoiceForm() {
   };
 
   return (
-    <div className="p-5 max-w-lg mx-auto">
+    <div>
       <h2 className="text-2xl font-bold mb-4">Invoice Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4">
@@ -109,14 +102,17 @@ export default function InvoiceForm() {
             />
           </div>
           <div className="space-y-4">
-            <input
+            <select
               name="payment"
-              placeholder="payment"
-              value={formData.payment}
+              defaultValue="გადარიცხვა"
               onChange={handleChange}
               required
               className="w-full p-2 border rounded"
-            />
+            >
+              <option value="გადარიცხვა">გადარიცხვა</option>
+              <option value="ხელზე">ხელზე</option>
+            </select>
+
             <input
               name="items"
               placeholder="items"
@@ -134,14 +130,18 @@ export default function InvoiceForm() {
               required
               className="w-full p-2 border rounded"
             />
-            <input
+            <select
               name="provider"
-              placeholder="provider"
-              value={formData.provider}
+              defaultValue="405049923 LTD KILL (VAT)"
               onChange={handleChange}
               required
               className="w-full p-2 border rounded"
-            />
+            >
+              <option value="405049923 LTD KILL (VAT)">
+                405049923 LTD KILL (VAT)
+              </option>
+              <option value="405140217 LTD KILLER">405140217 LTD KILLER</option>
+            </select>
             <input
               name="seller"
               placeholder="seller"

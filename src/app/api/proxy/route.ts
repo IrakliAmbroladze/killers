@@ -1,15 +1,17 @@
-export async function POST(req) {
+import { NextRequest } from "next/server";
+
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxKT3RKa5O8yZjAaRXcjMqNxaf0lAKHJxMraqj5XXvM6y9pdZ_VEHU3XnnxG8a-bw7K/exec",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      }
-    );
+    if (!process.env.SHEETS_URL) {
+      throw new Error("SHEETS_URL is not defined");
+    }
+    const response = await fetch(process.env.SHEETS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
     const text = await response.text();
     return new Response(JSON.stringify({ message: text }), {
