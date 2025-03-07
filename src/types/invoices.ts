@@ -13,3 +13,18 @@ export interface Invoice {
   customers: Customer;
   products: Product;
 }
+
+export interface Sheets_Invoice {
+  date: string;
+  customer: string;
+  identity: string;
+  address: string;
+  payment: string;
+  items: string;
+  total: string;
+  provider: string;
+  seller: string;
+  telephone: string;
+  email: string;
+  delivery_date: string;
+}
