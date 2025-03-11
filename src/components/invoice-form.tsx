@@ -13,7 +13,7 @@ export default function InvoiceForm(): JSX.Element {
     total: "",
     provider: "405049923 LTD KILL (VAT)",
     seller: "",
-    telephone: "",
+    phone: "",
     email: "",
     delivery_date: "",
   };
@@ -33,7 +33,7 @@ export default function InvoiceForm(): JSX.Element {
   ) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // setMessage("Submitting...");
+    console.log(JSON.stringify(formData));
     try {
       const response = await fetch("/api/proxy", {
         method: "POST",
@@ -85,9 +85,9 @@ export default function InvoiceForm(): JSX.Element {
               className="w-full p-2 border rounded"
             />
             <input
-              name="telephone"
+              name="phone"
               placeholder="+995 555 ..."
-              value={formData.telephone}
+              value={formData.phone}
               onChange={handleChange}
               required
               className="w-full p-2 border rounded"

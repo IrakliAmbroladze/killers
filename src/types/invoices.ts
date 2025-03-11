@@ -24,7 +24,8 @@ export interface Sheets_Invoice {
   total: string;
   provider: string;
   seller: string;
-  telephone: string;
+  phone: string;
   email: string;
   delivery_date: string;
+  technician?: string;
 }
