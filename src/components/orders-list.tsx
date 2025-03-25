@@ -2,7 +2,6 @@ import { Sheets_Invoice } from "@/types/invoices";
 import React from "react";
 
 const OrdersList = ({ invoices }: { invoices: Sheets_Invoice[] }) => {
-  console.log("Invoices", invoices);
   return (
     <div className="grid grid-cols-4 gap-1.5">
       {[...invoices].reverse().map((invoice, index) => (

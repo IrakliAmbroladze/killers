@@ -1,4 +1,6 @@
-export async function GET() {
+"use server";
+
+const fetchOrders = async () => {
   try {
     if (!process.env.SHEETS_URL) {
       throw new Error("SHEETS_URL is not defined");
@@ -16,19 +18,10 @@ export async function GET() {
     const data = await response.json();
     const sliced = data.slice(-1000);
 
-    return new Response(JSON.stringify(sliced), {
-      headers: { "Content-Type": "application/json" },
-      status: 200,
-    });
+    return sliced;
   } catch (error) {
     console.error(error);
-    if (error instanceof Error) {
-      return new Response(JSON.stringify({ error: error.message }), {
-        headers: { "Content-Type": "application/json" },
-        status: 500,
-      });
-    } else {
-      console.error("An uknown error occurred");
-    }
   }
-}
+};
+
+export default fetchOrders;
