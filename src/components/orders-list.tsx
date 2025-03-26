@@ -8,7 +8,7 @@ const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
   const [start, setStart] = useState(0);
   const [loading, setLoading] = useState(false);
-  const limit = 8; // Load 100 records per request
+  const limit = 8;
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -28,7 +28,7 @@ const OrdersList = () => {
   return (
     <div>
       <div className="grid grid-cols-1 2xl:grid-cols-4 gap-1.5">
-        {invoices.reverse().map((invoice, index) => (
+        {invoices.map((invoice, index) => (
           <li
             key={index}
             className="p-4 bg-white shadow-md rounded-xl border border-gray-200 hover:bg-gray-50 hover:cursor-pointer font-semibold text-lg text-gray-800 "

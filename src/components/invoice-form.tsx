@@ -33,7 +33,6 @@ export default function InvoiceForm(): JSX.Element {
   ) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log(JSON.stringify(formData));
     try {
       const response = await fetch("/api/proxy", {
         method: "POST",
