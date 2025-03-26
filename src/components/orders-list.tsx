@@ -27,7 +27,7 @@ const OrdersList = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-1.5">
+      <div className="grid grid-cols-1 2xl:grid-cols-4 gap-1.5">
         {invoices.reverse().map((invoice, index) => (
           <li
             key={index}
