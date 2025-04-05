@@ -45,7 +45,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">
-            <nav className="w-full sm:px-20 py-5 flex justify-between h-16 items-center fixed  z-50">
+            <nav className="w-full sm:px-20 py-5 flex justify-between h-16 items-center fixed  z-50 bg-black text-white">
               <HeaderClientSide />
               <div className="flex gap-5 items-center">
                 {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}

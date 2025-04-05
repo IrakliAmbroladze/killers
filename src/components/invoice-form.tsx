@@ -2,22 +2,36 @@
 import { Sheets_Invoice } from "@/types/invoices";
 import { JSX, useState } from "react";
 
-export default function InvoiceForm(): JSX.Element {
-  const initialFormData: Sheets_Invoice = {
-    date: "",
-    customer: "",
-    identity: "",
-    address: "",
-    payment: "გადარიცხვა",
-    items: "",
-    total: "",
-    provider: "405049923 LTD KILL (VAT)",
-    seller: "",
-    phone: "",
-    email: "",
-    delivery_date: "",
-  };
+const dropdownOptions = [
+  "",
+  "Oto",
+  "GioNew",
+  "Dato",
+  "GioJoji",
+  "Oto GioNew",
+  "Oto Dato",
+  "Oto GioJoji",
+  "GioNew Dato",
+  "GioNew GioJoji",
+  "Dato GioJoji",
+  "Oto GioNew Dato",
+  "Oto GioNew GioJoji",
+  "Oto Dato GioJoji",
+  "GioNew Dato GioJoji",
+  "Oto GioNew Dato GioJoji",
+];
 
+export default function InvoiceForm({
+  initialFormData,
+  status,
+  updateInvoice,
+  index,
+}: {
+  initialFormData: Sheets_Invoice;
+  status: string;
+  updateInvoice?: (updatedInvoice: Sheets_Invoice, index: number) => void;
+  index?: number;
+}): JSX.Element {
   const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,9 +55,19 @@ export default function InvoiceForm(): JSX.Element {
       });
 
       const data = await response.json();
-      setMessage(data.message || "Invoice submitted successfully!");
-      setFormData(initialFormData);
+      setMessage(data.message || `Invoice ${status}ed successfully!`);
+      if (status === "add") {
+        setFormData(initialFormData);
+      }
+
       setTimeout(() => setMessage(""), 2500);
+      if (status === "update") {
+        if (updateInvoice) {
+          if (index !== undefined) {
+            updateInvoice(formData, index);
+          }
+        }
+      }
     } catch (error) {
       console.error(error);
       setMessage("Error submitting invoice.");
@@ -107,8 +131,6 @@ export default function InvoiceForm(): JSX.Element {
               required
               className="w-full p-2 border rounded"
             />
-          </div>
-          <div className="space-y-4">
             <select
               name="payment"
               defaultValue="გადარიცხვა"
@@ -119,7 +141,8 @@ export default function InvoiceForm(): JSX.Element {
               <option value="გადარიცხვა">გადარიცხვა</option>
               <option value="ხელზე">ხელზე</option>
             </select>
-
+          </div>
+          <div className="space-y-4">
             <input
               name="items"
               placeholder="items"
@@ -167,6 +190,28 @@ export default function InvoiceForm(): JSX.Element {
                 className="w-full p-2 border rounded"
               />
             </div>
+            <div className="flex">
+              <label htmlFor="technician">Tech.</label>
+              <select
+                name="technician"
+                value={formData.technician}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+              >
+                {dropdownOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              name="document"
+              placeholder="document"
+              value={formData.document}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
           </div>
         </div>
         <button
@@ -174,7 +219,7 @@ export default function InvoiceForm(): JSX.Element {
           disabled={isSubmitting}
           className={`w-full ${
             isSubmitting ? "bg-gray-300" : "bg-blue-500"
-          } text-white p-2 rounded`}
+          } text-white p-2 rounded cursor-pointer `}
         >
           {isSubmitting ? "Submitting..." : "Submit Invoice"}
         </button>

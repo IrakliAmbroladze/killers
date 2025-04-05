@@ -1,53 +1,82 @@
 "use client";
 
 import { Sheets_Invoice } from "@/types/invoices";
-import React, { useEffect, useState } from "react";
-import fetchOrders from "@/utils/server/fetch-orders";
+import React, { ChangeEvent, useEffect, useState } from "react";
+// import fetchOrders from "@/utils/server/fetch-orders";
+import UpdateModal from "@/components/update-modal";
+import Cart from "@/components/cart";
+import { loadOrders } from "@/utils/load-orders";
+import Search from "@/components/search";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
   const [start, setStart] = useState(0);
   const [loading, setLoading] = useState(false);
-  const limit = 8;
+  const [openModalIndex, setOpenModalIndex] = useState<number | null>(null);
+  const limit = 20000;
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const loadOrders = async () => {
-      setLoading(true);
-      const newInvoices = await fetchOrders(start, limit);
-      setInvoices((prev) => [...prev, ...newInvoices]);
-      setLoading(false);
-    };
+    const storedSearch = localStorage.getItem("search");
+    if (storedSearch) {
+      setSearchTerm(storedSearch);
+    }
+  }, []);
 
-    loadOrders();
+  useEffect(() => {
+    localStorage.setItem("search", searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    loadOrders(setLoading, start, limit, setInvoices);
   }, [start]);
 
   const loadMore = () => {
     setStart((prev) => prev + limit);
   };
 
+  const updateInvoice = (updatedInvoice: Sheets_Invoice, index: number) => {
+    setInvoices((prevInvoices) =>
+      prevInvoices.map((invoice, i) => (i === index ? updatedInvoice : invoice))
+    );
+  };
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const searchedInvoices = invoices.filter((invoice) => {
+    const search = searchTerm.toLowerCase();
+
+    return Object.values(invoice)
+      .filter((val) => typeof val === "string" || typeof val === "number")
+      .some((val) => val?.toString().toLowerCase().includes(search));
+  });
   return (
     <div>
-      <div className="grid grid-cols-1 2xl:grid-cols-4 gap-1.5">
-        {invoices.map((invoice, index) => (
+      <Search search={searchTerm} onSearch={handleSearch} />
+      <div className="grid grid-cols-1 2xl:grid-cols-4 gap-1.5 pt-2.5">
+        {searchedInvoices.map((invoice, index) => (
           <li
             key={index}
-            className="p-4 bg-white shadow-md rounded-xl border border-gray-200 hover:bg-gray-50 hover:cursor-pointer font-semibold text-lg text-gray-800 "
+            className="p-4 bg-white shadow-md rounded-xl border border-gray-200 hover:bg-gray-50 font-semibold text-lg text-gray-800 "
           >
-            <div className="flex flex-col">
-              <div>date: {invoice.date}</div>
-              <div>customer: {invoice.customer}</div>
-              <div>ID: {invoice.identity}</div>
-              <div>phone: {invoice.phone}</div>
-              <div>address: {invoice.address}</div>
-              <div>provider: {invoice.provider}</div>
-              <div>email: {invoice.email}</div>
-              <div>payment: {invoice.payment}</div>
-              <div>items: {invoice.items}</div>
-              <div>total: {invoice.total}</div>
-              <div>seller: {invoice.seller}</div>
-              <div>delivery_date: {invoice.delivery_date}</div>
-              <div>technician: {invoice.technician}</div>
-            </div>
+            <button
+              onClick={() =>
+                setOpenModalIndex(openModalIndex === index ? null : index)
+              }
+              className="border px-2.5 cursor-pointer hover:bg-gray-200 rounded-md"
+            >
+              edit
+            </button>
+            {openModalIndex === index && (
+              <UpdateModal
+                invoice={invoice}
+                setOpenModalIndex={setOpenModalIndex}
+                index={index}
+                updateInvoice={updateInvoice}
+              />
+            )}
+            <Cart invoice={invoice} />
           </li>
         ))}
       </div>

@@ -38,7 +38,7 @@ export default function HeaderClientSide(): JSX.Element {
   return (
     <>
       <button
-        className={`${lusitana.className} text-2xl text-stone-900 dark:text-gray-200 flex items-center`}
+        className={`${lusitana.className} text-2xl text-white flex items-center`}
         onClick={() => setMenuOpen(!menuOpen)}
         aria-label="Toggle navigation menu"
         data-cy="menu"
