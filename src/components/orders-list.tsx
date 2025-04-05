@@ -2,11 +2,11 @@
 
 import { Sheets_Invoice } from "@/types/invoices";
 import React, { ChangeEvent, useEffect, useState } from "react";
-// import fetchOrders from "@/utils/server/fetch-orders";
 import UpdateModal from "@/components/update-modal";
 import Cart from "@/components/cart";
 import { loadOrders } from "@/utils/load-orders";
 import Search from "@/components/search";
+import { useDebouncedCallback } from "use-debounce";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
@@ -15,17 +15,24 @@ const OrdersList = () => {
   const [openModalIndex, setOpenModalIndex] = useState<number | null>(null);
   const limit = 20000;
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  const debounced = useDebouncedCallback((value: string) => {
+    setDebouncedSearchTerm(value);
+  }, 1000);
 
   useEffect(() => {
     const storedSearch = localStorage.getItem("search");
     if (storedSearch) {
       setSearchTerm(storedSearch);
+      setDebouncedSearchTerm(storedSearch);
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("search", searchTerm);
-  }, [searchTerm]);
+    debounced(searchTerm);
+  }, [debounced, searchTerm]);
 
   useEffect(() => {
     loadOrders(setLoading, start, limit, setInvoices);
@@ -40,17 +47,19 @@ const OrdersList = () => {
       prevInvoices.map((invoice, i) => (i === index ? updatedInvoice : invoice))
     );
   };
+
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
   const searchedInvoices = invoices.filter((invoice) => {
-    const search = searchTerm.toLowerCase();
+    const search = debouncedSearchTerm.toLowerCase();
 
     return Object.values(invoice)
       .filter((val) => typeof val === "string" || typeof val === "number")
       .some((val) => val?.toString().toLowerCase().includes(search));
   });
+
   return (
     <div>
       <Search search={searchTerm} onSearch={handleSearch} />
