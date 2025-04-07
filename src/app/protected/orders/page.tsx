@@ -1,5 +1,7 @@
+import Calendar from "@/components/calendar/Calendar";
+
 const OrdersPage = async () => {
-  return <p>Orders Page</p>;
+  return <Calendar />;
 };
 
 export default OrdersPage;
