@@ -38,13 +38,11 @@ const OrdersList = () => {
     loadOrders(setLoading, start, limit, setInvoices);
   }, [start]);
 
-  const loadMore = () => {
-    setStart((prev) => prev + limit);
-  };
+  const loadMore = () => setStart((prev) => prev + limit);
 
   const updateInvoice = (updatedInvoice: Sheets_Invoice, index: number) => {
-    setInvoices((prevInvoices) =>
-      prevInvoices.map((invoice, i) => (i === index ? updatedInvoice : invoice))
+    setInvoices((prev) =>
+      prev.map((inv, i) => (i === index ? updatedInvoice : inv))
     );
   };
 
@@ -54,54 +52,66 @@ const OrdersList = () => {
 
   const searchedInvoices = invoices.filter((invoice) => {
     const search = debouncedSearchTerm.toLowerCase();
-
     return Object.values(invoice)
       .filter((val) => typeof val === "string" || typeof val === "number")
       .some((val) => val?.toString().toLowerCase().includes(search));
   });
 
   return (
-    <div>
+    <div className="overflow-x-auto p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
-      <div className="grid grid-cols-1 gap-1.5 pt-2.5">
-        {searchedInvoices.map((invoice, index) => (
-          <li
-            key={index}
-            className="p-4 bg-gray-50 dark:bg-stone-900 shadow-md rounded-xl border border-gray-200 dark:border-stone-950 hover:bg-gray-100 font-semibold text-sm dark:hover:bg-stone-950"
-          >
-            <button
-              onClick={() =>
-                setOpenModalIndex(openModalIndex === index ? null : index)
-              }
-              className="border px-2.5 cursor-pointer hover:bg-gray-200 rounded-md"
+      <table className="min-w-full table-auto border border-collapse mt-4">
+        <thead>
+          <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
+            <th className="p-2">Details</th>
+            <th className="p-2">Date</th>
+            <th className="p-2">Customer</th>
+            <th className="p-2">Identity</th>
+            <th className="p-2">Phone</th>
+            <th className="p-2">Items</th>
+            <th className="p-2">Seller</th>
+            <th className="p-2">Delivery Date</th>
+            <th className="p-2">Tech.</th>
+            <th className="p-2">Doc.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {searchedInvoices.map((invoice, index) => (
+            <tr
+              key={index}
+              className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
             >
-              edit
-            </button>
-            {openModalIndex === index && (
-              <UpdateModal
-                invoice={invoice}
-                setOpenModalIndex={setOpenModalIndex}
-                index={index}
-                updateInvoice={updateInvoice}
-              />
-            )}
-            <Cart invoice={invoice} />
-          </li>
-        ))}
-      </div>
+              <td
+                onClick={() =>
+                  setOpenModalIndex(openModalIndex === index ? null : index)
+                }
+                className="p-2 cursor-pointer text-blue-600 hover:underline"
+              >
+                View
+              </td>
+              <Cart invoice={invoice} />
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-      {loading ? (
-        <button className="my-10 hover:scale-105 active:scale-95 transition-transform duration-150 ease-in-out bg-gray-300 text-black py-3 px-20 rounded-lg cursor-pointer">
-          Loading...
-        </button>
-      ) : (
+      {openModalIndex !== null && (
+        <UpdateModal
+          invoice={searchedInvoices[openModalIndex]}
+          setOpenModalIndex={setOpenModalIndex}
+          index={openModalIndex}
+          updateInvoice={updateInvoice}
+        />
+      )}
+
+      <div className="flex justify-center">
         <button
           onClick={loadMore}
           className="my-10 hover:scale-105 active:scale-95 transition-transform duration-150 ease-in-out bg-gray-300 text-black py-3 px-20 rounded-lg cursor-pointer"
         >
-          Load More
+          {loading ? "Loading..." : "Load More"}
         </button>
-      )}
+      </div>
     </div>
   );
 };

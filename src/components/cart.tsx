@@ -3,36 +3,28 @@ import React from "react";
 
 const Cart = ({ invoice }: { invoice: Sheets_Invoice }) => {
   return (
-    <div className="flex flex-col">
-      <div>date: {invoice.date}</div>
-      <div>customer: {invoice.customer}</div>
-      <div>ID: {invoice.identity}</div>
-      <div>phone: {invoice.phone}</div>
-      <div>address: {invoice.address}</div>
-      <div>provider: {invoice.provider}</div>
-      <div>email: {invoice.email}</div>
-      <div>payment: {invoice.payment}</div>
-      <div>items: {invoice.items}</div>
-      <div>total: {invoice.total}</div>
-      <div>seller: {invoice.seller}</div>
-      <div>delivery_date: {invoice.delivery_date}</div>
-      <div>technician: {invoice.technician}</div>
-      <div>
+    <>
+      <td className="p-2">{invoice.date}</td>
+      <td className="p-2">{invoice.customer}</td>
+      <td className="p-2">{invoice.identity}</td>
+      <td className="p-2">{invoice.phone}</td>
+      <td className="p-2">{invoice.items}</td>
+      <td className="p-2">{invoice.seller}</td>
+      <td className="p-2">{invoice.delivery_date}</td>
+      <td className="p-2">{invoice.technician}</td>
+      <td className="p-2">
         {invoice.document && (
-          <>
-            document:{" "}
-            <a
-              href={invoice.document}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline break-words"
-            >
-              📄 View document
-            </a>
-          </>
+          <a
+            href={invoice.document}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline"
+          >
+            📄
+          </a>
         )}
-      </div>
-    </div>
+      </td>
+    </>
   );
 };
 
