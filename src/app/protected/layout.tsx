@@ -7,8 +7,10 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
-    <div className="w-full mt-16 sm:px-20 flex flex-col flex-1 sm:flex-row">
-      <SideNav />
+    <div className="w-full mt-20 sm:px-20 flex flex-col sm:flex-row">
+      <div className="sm:w-3xs">
+        <SideNav />
+      </div>
       {children}
     </div>
   );
