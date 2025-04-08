@@ -7,6 +7,7 @@ import Cart from "@/components/cart";
 import { loadOrders } from "@/utils/load-orders";
 import Search from "@/components/search";
 import { useDebouncedCallback } from "use-debounce";
+import { FiEdit } from "react-icons/fi";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
@@ -58,21 +59,21 @@ const OrdersList = () => {
   });
 
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto sm:p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
       <table className="min-w-full table-auto border border-collapse mt-4">
         <thead>
           <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
-            <th className="p-2">Details</th>
-            <th className="p-2">Date</th>
-            <th className="p-2">Customer</th>
-            <th className="p-2">Identity</th>
-            <th className="p-2">Phone</th>
-            <th className="p-2">Items</th>
-            <th className="p-2">Seller</th>
-            <th className="p-2">Delivery Date</th>
-            <th className="p-2">Tech.</th>
-            <th className="p-2">Doc.</th>
+            <th className="p-1">Det.</th>
+            <th className="p-1 hidden lg:table-cell">Date</th>
+            <th className="p-1">Customer</th>
+            <th className="p-1 hidden lg:table-cell">Identity</th>
+            <th className="p-1 hidden lg:table-cell">Phone</th>
+            <th className="p-1 hidden lg:table-cell">Items</th>
+            <th className="p-1 hidden lg:table-cell">Seller</th>
+            <th className="p-1 hidden lg:table-cell">Delivery Date</th>
+            <th className="p-1 hidden lg:table-cell">Tech.</th>
+            <th className="p-1">Doc.</th>
           </tr>
         </thead>
         <tbody>
@@ -87,7 +88,7 @@ const OrdersList = () => {
                 }
                 className="p-2 cursor-pointer text-blue-600 hover:underline"
               >
-                View
+                <FiEdit />
               </td>
               <Cart invoice={invoice} />
             </tr>

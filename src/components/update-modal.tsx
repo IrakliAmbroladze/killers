@@ -33,7 +33,7 @@ const UpdateModal = ({
 
   return (
     <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
-      <div className="bg-white text-black p-6 rounded-lg shadow-lg text-center max-h-[80vh] w-[90%] md:w-[50%] overflow-y-auto flex flex-col">
+      <div className="bg-white text-black p-2 rounded-lg shadow-lg text-center max-h-[80vh] w-[90%] md:w-[50%] overflow-y-auto flex flex-col">
         <div className="flex justify-end">
           <button
             onClick={() => setOpenModalIndex(null)}

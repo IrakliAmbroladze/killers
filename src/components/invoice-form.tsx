@@ -79,17 +79,17 @@ export default function InvoiceForm({
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Invoice Form</h2>
+      <h2 className="text-xl font-bold mb-2">Invoice Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4">
-          <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:space-x-4">
+          <div className="space-y-1">
             <input
               name="date"
               type="date"
               value={formData.date}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <input
               name="customer"
@@ -97,7 +97,7 @@ export default function InvoiceForm({
               value={formData.customer}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <input
               name="identity"
@@ -105,7 +105,7 @@ export default function InvoiceForm({
               value={formData.identity}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <input
               name="phone"
@@ -113,7 +113,7 @@ export default function InvoiceForm({
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
 
             <input
@@ -121,7 +121,7 @@ export default function InvoiceForm({
               placeholder="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <input
               name="address"
@@ -129,27 +129,27 @@ export default function InvoiceForm({
               value={formData.address}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <select
               name="payment"
               defaultValue="გადარიცხვა"
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             >
               <option value="გადარიცხვა">გადარიცხვა</option>
               <option value="ხელზე">ხელზე</option>
             </select>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-1">
             <input
               name="items"
               placeholder="items"
               value={formData.items}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <input
               name="total"
@@ -158,14 +158,14 @@ export default function InvoiceForm({
               value={formData.total}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <select
               name="provider"
               defaultValue="405049923 LTD KILL (VAT)"
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             >
               <option value="405049923 LTD KILL (VAT)">
                 405049923 LTD KILL (VAT)
@@ -178,7 +178,7 @@ export default function InvoiceForm({
               value={formData.seller}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
             <div className="flex">
               <label htmlFor="delivery-date">delivery date</label>
@@ -187,7 +187,7 @@ export default function InvoiceForm({
                 type="date"
                 value={formData.delivery_date}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-1 border rounded"
               />
             </div>
             <div className="flex">
@@ -196,7 +196,7 @@ export default function InvoiceForm({
                 name="technician"
                 value={formData.technician}
                 onChange={handleChange}
-                className="w-full p-2 border rounded"
+                className="w-full p-1 border rounded"
               >
                 {dropdownOptions.map((option, index) => (
                   <option key={index} value={option}>
@@ -210,7 +210,7 @@ export default function InvoiceForm({
               placeholder="document"
               value={formData.document}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-1 border rounded"
             />
           </div>
         </div>
@@ -219,7 +219,7 @@ export default function InvoiceForm({
           disabled={isSubmitting}
           className={`w-full ${
             isSubmitting ? "bg-gray-300" : "bg-blue-500"
-          } text-white p-2 rounded cursor-pointer `}
+          } text-white p-1 rounded cursor-pointer `}
         >
           {isSubmitting ? "Submitting..." : "Submit Invoice"}
         </button>
