@@ -199,8 +199,8 @@ export default function Calendar() {
   };
 
   return (
-    <div className="w-full px-10">
-      <div className="flex gap-4 mb-4">
+    <div className="w-full px-2.5">
+      <div className="flex mb-4 justify-between">
         <input
           type="number"
           value={year}

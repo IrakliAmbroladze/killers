@@ -63,11 +63,11 @@ const OrdersList = () => {
   return (
     <div>
       <Search search={searchTerm} onSearch={handleSearch} />
-      <div className="grid grid-cols-1 2xl:grid-cols-4 gap-1.5 pt-2.5">
+      <div className="grid grid-cols-1 gap-1.5 pt-2.5">
         {searchedInvoices.map((invoice, index) => (
           <li
             key={index}
-            className="p-4 bg-white shadow-md rounded-xl border border-gray-200 hover:bg-gray-50 font-semibold text-lg text-gray-800 "
+            className="p-4 bg-gray-50 dark:bg-stone-900 shadow-md rounded-xl border border-gray-200 dark:border-stone-950 hover:bg-gray-100 font-semibold text-sm dark:hover:bg-stone-950"
           >
             <button
               onClick={() =>

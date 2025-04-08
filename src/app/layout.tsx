@@ -6,7 +6,6 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
-import HeaderClientSide from "@/components/HeaderClientSide";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,8 +44,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">
-            <nav className="w-full sm:px-20 py-5 flex justify-between h-16 items-center fixed  z-50 bg-black text-white">
-              <HeaderClientSide />
+            <nav className="w-full py-5 flex justify-end h-16 items-center fixed  z-50 dark:bg-stone-900 bg-gray-50">
               <div className="flex gap-5 items-center">
                 {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
                 <ThemeSwitcher />
