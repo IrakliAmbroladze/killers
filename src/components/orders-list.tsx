@@ -14,7 +14,8 @@ const OrdersList = () => {
   const [start, setStart] = useState(0);
   const [loading, setLoading] = useState(false);
   const [openModalIndex, setOpenModalIndex] = useState<number | null>(null);
-  const limit = 20000;
+  const limit = 1000;
+  const allData = 20000;
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
@@ -39,7 +40,7 @@ const OrdersList = () => {
     loadOrders(setLoading, start, limit, setInvoices);
   }, [start]);
 
-  const loadMore = () => setStart((prev) => prev + limit);
+  const loadMore = () => setStart((prev) => prev + allData);
 
   const updateInvoice = (updatedInvoice: Sheets_Invoice, index: number) => {
     setInvoices((prev) =>
