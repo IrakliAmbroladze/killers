@@ -29,8 +29,8 @@ export default function InvoiceForm({
 }: {
   initialFormData: Sheets_Invoice;
   status: string;
-  updateInvoice?: (updatedInvoice: Sheets_Invoice, index: number) => void;
-  index?: number;
+  updateInvoice?: (updatedInvoice: Sheets_Invoice, index: string) => void;
+  index?: string;
 }): JSX.Element {
   const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
