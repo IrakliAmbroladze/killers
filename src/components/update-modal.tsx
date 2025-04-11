@@ -10,11 +10,10 @@ const UpdateModal = ({
 }: {
   invoice: Sheets_Invoice;
   setOpenModalIndex: (index: null) => void;
-  index: number;
-  updateInvoice: (updatedInvoice: Sheets_Invoice, index: number) => void;
+  index: string;
+  updateInvoice: (updatedInvoice: Sheets_Invoice, index: string) => void;
 }) => {
   const initialFormData: Sheets_Invoice = {
-    row: index + 1,
     date: new Date().toISOString().split("T")[0],
     customer: invoice.customer,
     identity: invoice.identity,
@@ -29,6 +28,7 @@ const UpdateModal = ({
     delivery_date: invoice.delivery_date,
     technician: invoice.technician,
     document: invoice.document,
+    order_id: invoice.order_id,
   };
 
   return (

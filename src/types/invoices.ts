@@ -15,7 +15,6 @@ export interface Invoice {
 }
 
 export interface Sheets_Invoice {
-  row?: number;
   date: string;
   customer: string;
   identity: string;
@@ -30,4 +29,5 @@ export interface Sheets_Invoice {
   delivery_date: string;
   technician?: string;
   document?: string;
+  order_id?: string;
 }

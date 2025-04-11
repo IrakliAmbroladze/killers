@@ -13,7 +13,7 @@ const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
   const [start, setStart] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [openModalIndex, setOpenModalIndex] = useState<number | null>(null);
+  const [openModalIndex, setOpenModalIndex] = useState<string | null>(null);
   const limit = 1000;
   const allData = 20000;
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,9 +42,11 @@ const OrdersList = () => {
 
   const loadMore = () => setStart((prev) => prev + allData);
 
-  const updateInvoice = (updatedInvoice: Sheets_Invoice, index: number) => {
+  const updateInvoice = (updatedInvoice: Sheets_Invoice) => {
     setInvoices((prev) =>
-      prev.map((inv, i) => (i === index ? updatedInvoice : inv))
+      prev.map((invoice) =>
+        invoice.order_id === updatedInvoice.order_id ? updatedInvoice : invoice
+      )
     );
   };
 
@@ -78,14 +80,19 @@ const OrdersList = () => {
           </tr>
         </thead>
         <tbody>
-          {searchedInvoices.map((invoice, index) => (
+          {searchedInvoices.map((invoice) => (
             <tr
-              key={index}
+              key={invoice.order_id}
               className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
             >
               <td
                 onClick={() =>
-                  setOpenModalIndex(openModalIndex === index ? null : index)
+                  invoice.order_id &&
+                  setOpenModalIndex(
+                    openModalIndex === invoice.order_id
+                      ? null
+                      : invoice.order_id
+                  )
                 }
                 className="p-2 cursor-pointer text-blue-600 hover:underline"
               >
@@ -99,7 +106,11 @@ const OrdersList = () => {
 
       {openModalIndex !== null && (
         <UpdateModal
-          invoice={searchedInvoices[openModalIndex]}
+          invoice={
+            searchedInvoices.find(
+              (invoice) => invoice.order_id === openModalIndex
+            ) as Sheets_Invoice
+          }
           setOpenModalIndex={setOpenModalIndex}
           index={openModalIndex}
           updateInvoice={updateInvoice}
