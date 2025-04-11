@@ -218,7 +218,7 @@ export default function InvoiceForm({
           type="submit"
           disabled={isSubmitting}
           className={`w-full ${
-            isSubmitting ? "bg-gray-300" : "bg-blue-500"
+            isSubmitting ? "bg-gray-300" : "bg-black"
           } text-white p-1 rounded cursor-pointer `}
         >
           {isSubmitting ? "Submitting..." : "Submit Invoice"}
