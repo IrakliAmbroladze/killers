@@ -8,6 +8,7 @@ import { loadOrders } from "@/utils/load-orders";
 import Search from "@/components/search";
 import { useDebouncedCallback } from "use-debounce";
 import { FiCopy, FiEdit } from "react-icons/fi";
+import fetchOrders from "@/utils/server/fetch-orders";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
@@ -40,6 +41,15 @@ const OrdersList = () => {
   useEffect(() => {
     loadOrders(setLoading, start, limit, setInvoices);
   }, [start]);
+
+  const handleCopy = async () => {
+    console.log("invoices first: ", invoices);
+    console.log("start: ", start);
+    console.log("limit: ", limit);
+    const newInvoices: Sheets_Invoice[] = await fetchOrders(start, limit);
+    setInvoices(newInvoices);
+    console.log("invoices second: ", invoices);
+  };
 
   const loadMore = () => setStart((prev) => prev + allData);
 
@@ -125,6 +135,7 @@ const OrdersList = () => {
 
       {openModalIndex !== null && (
         <UpdateModal
+          handleCopy={handleCopy}
           invoice={
             searchedInvoices.find(
               (invoice) => invoice.order_id === openModalIndex
