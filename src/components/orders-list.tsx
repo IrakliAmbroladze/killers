@@ -68,14 +68,14 @@ const OrdersList = () => {
         <thead>
           <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
             <th className="p-1">Det.</th>
-            <th className="p-1 hidden lg:table-cell">Date</th>
+            <th className="p-1">Date</th>
             <th className="p-1">Customer</th>
             <th className="p-1 hidden lg:table-cell">Identity</th>
             <th className="p-1 hidden lg:table-cell">Phone</th>
             <th className="p-1 hidden lg:table-cell">Items</th>
             <th className="p-1 hidden lg:table-cell">Seller</th>
             <th className="p-1 hidden lg:table-cell">Delivery Date</th>
-            <th className="p-1 hidden lg:table-cell">Tech.</th>
+            <th className="p-1">Tech.</th>
             <th className="p-1">Doc.</th>
           </tr>
         </thead>
