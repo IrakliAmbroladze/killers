@@ -4,14 +4,14 @@ import React from "react";
 const Cart = ({ invoice }: { invoice: Sheets_Invoice }) => {
   return (
     <>
-      <td className="p-1 hidden lg:table-cell">{invoice.date}</td>
+      <td className="p-1 ">{invoice.date}</td>
       <td className="p-1 ">{invoice.customer}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.identity}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.phone}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.items}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.seller}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.delivery_date}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.technician}</td>
+      <td className="p-1 ">{invoice.technician}</td>
       <td className="p-1 ">
         {invoice.document && (
           <a
