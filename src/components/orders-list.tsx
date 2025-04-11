@@ -7,7 +7,7 @@ import Cart from "@/components/cart";
 import { loadOrders } from "@/utils/load-orders";
 import Search from "@/components/search";
 import { useDebouncedCallback } from "use-debounce";
-import { FiEdit } from "react-icons/fi";
+import { FiCopy, FiEdit } from "react-icons/fi";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
@@ -18,6 +18,7 @@ const OrdersList = () => {
   const allData = 20000;
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [status, setStatus] = useState<string>("");
 
   const debounced = useDebouncedCallback((value: string) => {
     setDebouncedSearchTerm(value);
@@ -67,7 +68,8 @@ const OrdersList = () => {
       <table className="min-w-full table-auto border border-collapse mt-4">
         <thead>
           <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
-            <th className="p-1">Det.</th>
+            <th className="p-1">Edit</th>
+            <th className="p-1">Copy</th>
             <th className="p-1">Date</th>
             <th className="p-1">Customer</th>
             <th className="p-1 hidden lg:table-cell">Identity</th>
@@ -86,17 +88,34 @@ const OrdersList = () => {
               className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
             >
               <td
-                onClick={() =>
-                  invoice.order_id &&
-                  setOpenModalIndex(
-                    openModalIndex === invoice.order_id
-                      ? null
-                      : invoice.order_id
-                  )
-                }
+                onClick={() => {
+                  if (invoice.order_id) {
+                    setOpenModalIndex(
+                      openModalIndex === invoice.order_id
+                        ? null
+                        : invoice.order_id
+                    );
+                    setStatus("update");
+                  }
+                }}
                 className="p-2 cursor-pointer text-blue-600 hover:underline"
               >
                 <FiEdit />
+              </td>
+              <td
+                onClick={() => {
+                  if (invoice.order_id) {
+                    setOpenModalIndex(
+                      openModalIndex === invoice.order_id
+                        ? null
+                        : invoice.order_id
+                    );
+                    setStatus("add");
+                  }
+                }}
+                className="p-2 cursor-pointer text-blue-600 hover:underline"
+              >
+                <FiCopy />
               </td>
               <Cart invoice={invoice} />
             </tr>
@@ -114,6 +133,7 @@ const OrdersList = () => {
           setOpenModalIndex={setOpenModalIndex}
           index={openModalIndex}
           updateInvoice={updateInvoice}
+          status={status}
         />
       )}
 

@@ -7,13 +7,15 @@ const UpdateModal = ({
   setOpenModalIndex,
   index,
   updateInvoice,
+  status,
 }: {
   invoice: Sheets_Invoice;
   setOpenModalIndex: (index: null) => void;
   index: string;
   updateInvoice: (updatedInvoice: Sheets_Invoice, index: string) => void;
+  status: string;
 }) => {
-  const initialFormData: Sheets_Invoice = {
+  const copyData: Sheets_Invoice = {
     date: new Date().toISOString().split("T")[0],
     customer: invoice.customer,
     identity: invoice.identity,
@@ -28,8 +30,14 @@ const UpdateModal = ({
     delivery_date: invoice.delivery_date,
     technician: invoice.technician,
     document: invoice.document,
+  };
+  const editData: Sheets_Invoice = {
+    ...copyData,
     order_id: invoice.order_id,
   };
+
+  const initialFormData: Sheets_Invoice =
+    status === "add" ? copyData : editData;
 
   return (
     <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
@@ -44,7 +52,7 @@ const UpdateModal = ({
         </div>
         <InvoiceForm
           initialFormData={initialFormData}
-          status="update"
+          status={status}
           index={index}
           updateInvoice={updateInvoice}
         />
