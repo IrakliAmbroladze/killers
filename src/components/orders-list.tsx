@@ -7,7 +7,8 @@ import Cart from "@/components/cart";
 import { loadOrders } from "@/utils/load-orders";
 import Search from "@/components/search";
 import { useDebouncedCallback } from "use-debounce";
-import { FiEdit } from "react-icons/fi";
+import { FiCopy, FiEdit } from "react-icons/fi";
+import fetchOrders from "@/utils/server/fetch-orders";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
@@ -18,6 +19,7 @@ const OrdersList = () => {
   const allData = 20000;
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [status, setStatus] = useState<string>("");
 
   const debounced = useDebouncedCallback((value: string) => {
     setDebouncedSearchTerm(value);
@@ -39,6 +41,17 @@ const OrdersList = () => {
   useEffect(() => {
     loadOrders(setLoading, start, limit, setInvoices);
   }, [start]);
+
+  const handleCopy = async () => {
+    setLoading(true);
+    console.log("invoices first: ", invoices);
+    console.log("start: ", start);
+    console.log("limit: ", limit);
+    const newInvoices: Sheets_Invoice[] = await fetchOrders(start, limit);
+    setInvoices(newInvoices);
+    setLoading(false);
+    console.log("invoices second: ", invoices);
+  };
 
   const loadMore = () => setStart((prev) => prev + allData);
 
@@ -64,48 +77,71 @@ const OrdersList = () => {
   return (
     <div className="overflow-x-auto sm:p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
-      <table className="min-w-full table-auto border border-collapse mt-4">
-        <thead>
-          <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
-            <th className="p-1">Det.</th>
-            <th className="p-1">Date</th>
-            <th className="p-1">Customer</th>
-            <th className="p-1 hidden lg:table-cell">Identity</th>
-            <th className="p-1 ">Address</th>
-            <th className="p-1 hidden lg:table-cell">Items</th>
-            <th className="p-1 hidden lg:table-cell">Seller</th>
-            <th className="p-1 hidden lg:table-cell">Delivery Date</th>
-            <th className="p-1">Tech.</th>
-            <th className="p-1">Doc.</th>
-          </tr>
-        </thead>
-        <tbody>
-          {searchedInvoices.map((invoice) => (
-            <tr
-              key={invoice.order_id}
-              className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
-            >
-              <td
-                onClick={() =>
-                  invoice.order_id &&
-                  setOpenModalIndex(
-                    openModalIndex === invoice.order_id
-                      ? null
-                      : invoice.order_id
-                  )
-                }
-                className="p-2 cursor-pointer text-blue-600 hover:underline"
-              >
-                <FiEdit />
-              </td>
-              <Cart invoice={invoice} />
+      {loading ? (
+        "loading ... "
+      ) : (
+        <table className="min-w-full table-auto border border-collapse mt-4">
+          <thead>
+            <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
+              <th className="p-1">Edit</th>
+              <th className="p-1">Copy</th>
+              <th className="p-1">Date</th>
+              <th className="p-1">Customer</th>
+              <th className="p-1 hidden lg:table-cell">Identity</th>
+              <th className="p-1 ">Address</th>
+              <th className="p-1 hidden lg:table-cell">Items</th>
+              <th className="p-1 hidden lg:table-cell">Seller</th>
+              <th className="p-1 hidden lg:table-cell">Delivery Date</th>
+              <th className="p-1">Tech.</th>
+              <th className="p-1">Doc.</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {searchedInvoices.map((invoice) => (
+              <tr
+                key={invoice.order_id}
+                className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
+              >
+                <td
+                  onClick={() => {
+                    if (invoice.order_id) {
+                      setOpenModalIndex(
+                        openModalIndex === invoice.order_id
+                          ? null
+                          : invoice.order_id
+                      );
+                      setStatus("update");
+                    }
+                  }}
+                  className="p-2 cursor-pointer text-blue-600 hover:underline"
+                >
+                  <FiEdit />
+                </td>
+                <td
+                  onClick={() => {
+                    if (invoice.order_id) {
+                      setOpenModalIndex(
+                        openModalIndex === invoice.order_id
+                          ? null
+                          : invoice.order_id
+                      );
+                      setStatus("add");
+                    }
+                  }}
+                  className="p-2 cursor-pointer text-blue-600 hover:underline"
+                >
+                  <FiCopy />
+                </td>
+                <Cart invoice={invoice} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {openModalIndex !== null && (
         <UpdateModal
+          handleCopy={handleCopy}
           invoice={
             searchedInvoices.find(
               (invoice) => invoice.order_id === openModalIndex
@@ -114,6 +150,7 @@ const OrdersList = () => {
           setOpenModalIndex={setOpenModalIndex}
           index={openModalIndex}
           updateInvoice={updateInvoice}
+          status={status}
         />
       )}
 
