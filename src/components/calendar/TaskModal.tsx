@@ -35,7 +35,7 @@ export default function TaskModal({
                 setText("");
               }
             }}
-            className="bg-blue-500 text-white px-3 py-1 rounded"
+            className="bg-black text-white px-3 py-1 rounded"
           >
             Add
           </button>
