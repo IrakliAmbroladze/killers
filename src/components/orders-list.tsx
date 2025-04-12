@@ -22,6 +22,7 @@ const OrdersList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [status, setStatus] = useState<string>("");
+  const [title, setTitle] = useState("");
 
   const debounced = useDebouncedCallback((value: string) => {
     setDebouncedSearchTerm(value);
@@ -46,13 +47,9 @@ const OrdersList = () => {
 
   const handleCopy = async () => {
     setLoading(true);
-    console.log("invoices first: ", invoices);
-    console.log("start: ", start);
-    console.log("limit: ", limit);
     const newInvoices: Sheets_Invoice[] = await fetchOrders(start, limit);
     setInvoices(newInvoices);
     setLoading(false);
-    console.log("invoices second: ", invoices);
   };
 
   const loadMore = () => setStart((prev) => prev + allData);
@@ -113,6 +110,7 @@ const OrdersList = () => {
                           : invoice.order_id
                       );
                       setStatus("update");
+                      setTitle("Edit Order");
                     }
                   }}
                   className="p-2 cursor-pointer text-blue-600 hover:underline"
@@ -128,6 +126,7 @@ const OrdersList = () => {
                           : invoice.order_id
                       );
                       setStatus("add");
+                      setTitle("Copy Order");
                     }
                   }}
                   className="p-2 cursor-pointer text-blue-600 hover:underline"
@@ -143,6 +142,7 @@ const OrdersList = () => {
       <ErrorBoundary fallback={<ErrorModal />}>
         {openModalIndex !== null && (
           <UpdateModal
+            title={title}
             handleCopy={handleCopy}
             invoice={
               searchedInvoices.find(

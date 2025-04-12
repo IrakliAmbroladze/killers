@@ -26,7 +26,11 @@ const CreateInvoice = () => {
             X
           </Link>
         </div>
-        <InvoiceForm initialFormData={initialFormData} status="add" />
+        <InvoiceForm
+          title={"Create an Order"}
+          initialFormData={initialFormData}
+          status="add"
+        />
       </div>
     </div>
   );

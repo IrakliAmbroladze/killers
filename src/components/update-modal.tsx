@@ -3,6 +3,7 @@ import { Sheets_Invoice } from "@/types/invoices";
 import InvoiceForm from "./invoice-form";
 
 const UpdateModal = ({
+  title,
   invoice,
   setOpenModalIndex,
   index,
@@ -10,6 +11,7 @@ const UpdateModal = ({
   status,
   handleCopy,
 }: {
+  title: string;
   invoice: Sheets_Invoice;
   setOpenModalIndex: (index: null) => void;
   index: string;
@@ -56,6 +58,7 @@ const UpdateModal = ({
           </button>
         </div>
         <InvoiceForm
+          title={title}
           initialFormData={initialFormData}
           status={status}
           index={index}
