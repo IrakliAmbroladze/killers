@@ -27,12 +27,16 @@ export default function InvoiceForm({
   status,
   updateInvoice,
   index,
+  handleCopy,
+  setOpenModalIndex,
 }: {
+  handleCopy?: () => void;
   title: string;
   initialFormData: Sheets_Invoice;
   status: string;
   updateInvoice?: (updatedInvoice: Sheets_Invoice, index: string) => void;
   index?: string;
+  setOpenModalIndex?: (index: null) => void;
 }): JSX.Element {
   const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
@@ -60,13 +64,20 @@ export default function InvoiceForm({
       setMessage(data.message || `Invoice ${status}ed successfully!`);
       if (status === "add") {
         setFormData(initialFormData);
+        if (handleCopy && setOpenModalIndex) {
+          handleCopy();
+          setTimeout(() => setOpenModalIndex(null), 1000);
+        }
       }
 
-      setTimeout(() => setMessage(""), 2500);
+      setTimeout(() => setMessage(""), 1000);
       if (status === "update") {
         if (updateInvoice) {
           if (index !== undefined) {
             updateInvoice(formData, index);
+            if (setOpenModalIndex) {
+              setTimeout(() => setOpenModalIndex(null), 1000);
+            }
           }
         }
       }

@@ -14,11 +14,10 @@ import ErrorModal from "@/components/error-modal";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
-  const [start, setStart] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const start = 0;
+  const [loading, setLoading] = useState(true);
   const [openModalIndex, setOpenModalIndex] = useState<string | null>(null);
   const limit = 1000;
-  const allData = 20000;
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [status, setStatus] = useState<string>("");
@@ -46,13 +45,11 @@ const OrdersList = () => {
   }, [start]);
 
   const handleCopy = async () => {
-    setLoading(true);
+    setLoading((l) => !l);
     const newInvoices: Sheets_Invoice[] = await fetchOrders(start, limit);
     setInvoices(newInvoices);
-    setLoading(false);
+    setLoading((l) => !l);
   };
-
-  const loadMore = () => setStart((prev) => prev + allData);
 
   const updateInvoice = (updatedInvoice: Sheets_Invoice) => {
     setInvoices((prev) =>
@@ -77,7 +74,9 @@ const OrdersList = () => {
     <div className="overflow-x-auto sm:p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
       {loading ? (
-        "loading ... "
+        <div className="mt-2.5 bg-gray-300 text-black py-3 px-20 rounded-lg text-center">
+          loading ...
+        </div>
       ) : (
         <table className="min-w-full table-auto border border-collapse mt-4">
           <thead>
@@ -156,15 +155,6 @@ const OrdersList = () => {
           />
         )}
       </ErrorBoundary>
-
-      <div className="flex justify-center">
-        <button
-          onClick={loadMore}
-          className="my-10 hover:scale-105 active:scale-95 transition-transform duration-150 ease-in-out bg-gray-300 text-black py-3 px-20 rounded-lg cursor-pointer"
-        >
-          {loading ? "Loading..." : "Load More"}
-        </button>
-      </div>
     </div>
   );
 };

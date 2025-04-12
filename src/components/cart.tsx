@@ -1,10 +1,13 @@
 import { Sheets_Invoice } from "@/types/invoices";
-import React from "react";
 
 const Cart = ({ invoice }: { invoice: Sheets_Invoice }) => {
+  const tableDate =
+    invoice.date.length > 6
+      ? invoice.date.slice(0, 4) + invoice.date.slice(5, 7)
+      : invoice.date;
   return (
     <>
-      <td className="p-1 ">{invoice.date}</td>
+      <td className="p-1 ">{tableDate}</td>
       <td className="p-1 ">{invoice.customer}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.identity}</td>
       <td className="p-1 ">{invoice.address}</td>

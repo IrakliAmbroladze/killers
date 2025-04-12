@@ -50,7 +50,6 @@ const UpdateModal = ({
           <button
             onClick={() => {
               setOpenModalIndex(null);
-              handleCopy();
             }}
             className="border px-2.5 cursor-pointer hover:bg-gray-200 rounded-md"
           >
@@ -58,6 +57,8 @@ const UpdateModal = ({
           </button>
         </div>
         <InvoiceForm
+          setOpenModalIndex={setOpenModalIndex}
+          handleCopy={handleCopy}
           title={title}
           initialFormData={initialFormData}
           status={status}
