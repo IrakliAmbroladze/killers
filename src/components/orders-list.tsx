@@ -9,6 +9,8 @@ import Search from "@/components/search";
 import { useDebouncedCallback } from "use-debounce";
 import { FiCopy, FiEdit } from "react-icons/fi";
 import fetchOrders from "@/utils/server/fetch-orders";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorModal from "@/components/error-modal";
 
 const OrdersList = () => {
   const [invoices, setInvoices] = useState<Sheets_Invoice[]>([]);
@@ -138,21 +140,22 @@ const OrdersList = () => {
           </tbody>
         </table>
       )}
-
-      {openModalIndex !== null && (
-        <UpdateModal
-          handleCopy={handleCopy}
-          invoice={
-            searchedInvoices.find(
-              (invoice) => invoice.order_id === openModalIndex
-            ) as Sheets_Invoice
-          }
-          setOpenModalIndex={setOpenModalIndex}
-          index={openModalIndex}
-          updateInvoice={updateInvoice}
-          status={status}
-        />
-      )}
+      <ErrorBoundary fallback={<ErrorModal />}>
+        {openModalIndex !== null && (
+          <UpdateModal
+            handleCopy={handleCopy}
+            invoice={
+              searchedInvoices.find(
+                (invoice) => invoice.order_id === openModalIndex
+              ) as Sheets_Invoice
+            }
+            setOpenModalIndex={setOpenModalIndex}
+            index={openModalIndex}
+            updateInvoice={updateInvoice}
+            status={status}
+          />
+        )}
+      </ErrorBoundary>
 
       <div className="flex justify-center">
         <button
