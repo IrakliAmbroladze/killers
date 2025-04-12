@@ -22,15 +22,21 @@ const dropdownOptions = [
 ];
 
 export default function InvoiceForm({
+  title,
   initialFormData,
   status,
   updateInvoice,
   index,
+  handleCopy,
+  setOpenModalIndex,
 }: {
+  handleCopy?: () => void;
+  title: string;
   initialFormData: Sheets_Invoice;
   status: string;
   updateInvoice?: (updatedInvoice: Sheets_Invoice, index: string) => void;
   index?: string;
+  setOpenModalIndex?: (index: null) => void;
 }): JSX.Element {
   const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
@@ -58,13 +64,20 @@ export default function InvoiceForm({
       setMessage(data.message || `Invoice ${status}ed successfully!`);
       if (status === "add") {
         setFormData(initialFormData);
+        if (handleCopy && setOpenModalIndex) {
+          handleCopy();
+          setTimeout(() => setOpenModalIndex(null), 1000);
+        }
       }
 
-      setTimeout(() => setMessage(""), 2500);
+      setTimeout(() => setMessage(""), 1000);
       if (status === "update") {
         if (updateInvoice) {
           if (index !== undefined) {
             updateInvoice(formData, index);
+            if (setOpenModalIndex) {
+              setTimeout(() => setOpenModalIndex(null), 1000);
+            }
           }
         }
       }
@@ -79,7 +92,7 @@ export default function InvoiceForm({
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-2">Invoice Form</h2>
+      <h2 className="text-xl font-bold mb-2">{title}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:space-x-4">
           <div className="space-y-1">
@@ -218,16 +231,14 @@ export default function InvoiceForm({
           type="submit"
           disabled={isSubmitting}
           className={`w-full ${
-            isSubmitting ? "bg-gray-300" : "bg-black"
-          } text-white p-1 rounded cursor-pointer `}
+            isSubmitting ? "bg-gray-300 text-black" : "bg-black text-white"
+          } p-1 rounded cursor-pointer `}
         >
-          {isSubmitting ? "Submitting..." : "Submit Invoice"}
+          {isSubmitting ? "Submitting..." : title}
         </button>
       </form>
       {message && (
-        <p className="mt-3 text-center text-green-500">
-          {JSON.parse(message).message}
-        </p>
+        <p className="mt-3 text-center">{JSON.parse(message).message}</p>
       )}
     </div>
   );
