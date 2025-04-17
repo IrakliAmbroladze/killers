@@ -146,7 +146,7 @@ export default function InvoiceForm({
             />
             <select
               name="payment"
-              defaultValue="გადარიცხვა"
+              defaultValue={formData.payment}
               onChange={handleChange}
               required
               className="w-full p-1 border rounded"
@@ -175,7 +175,7 @@ export default function InvoiceForm({
             />
             <select
               name="provider"
-              defaultValue="405049923 LTD KILL (VAT)"
+              defaultValue={formData.provider}
               onChange={handleChange}
               required
               className="w-full p-1 border rounded"

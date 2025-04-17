@@ -12,6 +12,7 @@ const Cart = ({ invoice }: { invoice: Sheets_Invoice }) => {
       <td className="p-1 hidden lg:table-cell">{invoice.identity}</td>
       <td className="p-1 ">{invoice.address}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.items}</td>
+      <td className="p-1 hidden lg:table-cell">{invoice.provider}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.seller}</td>
       <td className="p-1 hidden lg:table-cell">{invoice.delivery_date}</td>
       <td className="p-1 ">{invoice.technician}</td>
