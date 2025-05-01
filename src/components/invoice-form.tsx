@@ -102,7 +102,7 @@ export default function InvoiceForm({
               value={formData.date}
               onChange={handleChange}
               required
-              className="w-full p-1 border rounded"
+              className="w-full p-1 border rounded dark:bg-black dark:text-white"
             />
             <input
               name="customer"
@@ -200,7 +200,7 @@ export default function InvoiceForm({
                 type="date"
                 value={formData.delivery_date}
                 onChange={handleChange}
-                className="w-full p-1 border rounded"
+                className="w-full p-1 border rounded dark:bg-black dark:text-white"
               />
             </div>
             <div className="flex">
