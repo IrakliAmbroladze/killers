@@ -88,6 +88,7 @@ const OrdersList = () => {
               <th className="p-1 hidden lg:table-cell">Identity</th>
               <th className="p-1 ">Address</th>
               <th className="p-1 hidden lg:table-cell">Items</th>
+              <th className="p-1 hidden lg:table-cell">Total</th>
               <th className="p-1 hidden lg:table-cell">Provider</th>
               <th className="p-1 hidden lg:table-cell">Seller</th>
               <th className="p-1 hidden lg:table-cell">Delivery Date</th>
