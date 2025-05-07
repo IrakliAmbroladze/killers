@@ -201,7 +201,7 @@ export default function Calendar() {
             return (
               <div
                 key={`${key}-${index}`}
-                className="flex justify-between gap-1 w-full break-words border-b"
+                className="flex justify-between gap-1 w-full break-words border-b overflow-auto"
               >
                 <label
                   className={`whitespace-normal break-words cursor-pointer flex gap-1 ${
