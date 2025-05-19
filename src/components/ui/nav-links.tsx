@@ -1,21 +1,31 @@
-"use client";
+// "use client";
 import Link from "next/link";
 import React, { JSX } from "react";
+import { createClient } from "@/utils/supabase/server";
+import { isTechnician } from "@/utils/supabase/utils";
 
 interface LinkItem {
   name: string;
   href: string;
 }
 
-const links: LinkItem[] = [
+const allLinks: LinkItem[] = [
   { name: "Sales", href: "/protected/sales" },
   { name: "Orders", href: "/protected/orders" },
 ];
 
-export default function NavLinks(): JSX.Element {
+export default async function NavLinks(): Promise<JSX.Element> {
+  const supabase = await createClient();
+
+  const userResponse = await supabase.auth.getUser();
+
+  const linksToShow = (await isTechnician(userResponse))
+    ? allLinks.filter((link) => link.name !== "Sales")
+    : allLinks;
+
   return (
     <div className="flex flex-wrap gap-2 sm:flex-col">
-      {links.map((link) => (
+      {linksToShow.map((link) => (
         <Link
           key={link.name}
           href={link.href}

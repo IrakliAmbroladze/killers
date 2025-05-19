@@ -1,26 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TaskModal from "./TaskModal";
 import { MdAddTask } from "react-icons/md";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "./create-calendar-task";
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import * as utils from "./utils";
+import { Task } from "./type";
 
 export default function Calendar() {
   const supabase = createClient();
@@ -41,30 +26,32 @@ export default function Calendar() {
     }
 
     loadTasks();
-  }, []);
+  }, [supabase]);
 
-  const today = new Date();
-  const [month, setMonth] = useState(today.getMonth());
-  const [year, setYear] = useState(today.getFullYear());
+  const [editingTask, setEditingTask] = useState<{
+    key: string;
+    idx: number;
+    text: string;
+  } | null>(null);
+  // const [updatedTaskText, setUpdatedTaskText] = useState<string>("");
+  // const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [month, setMonth] = useState<number>(utils.currentMonth);
+  const [year, setYear] = useState<number>(utils.currentYear);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [tasks, setTasks] = useState<{
-    [key: string]: { text: string; checked: boolean }[];
-  }>({});
-  const [selectedWeek, setSelectedWeek] = useState(1);
-
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const firstDayOfWeek = new Date(year, month, 1).getDay();
+  const [tasks, setTasks] = useState<Task>({});
+  const [selectedWeek, setSelectedWeek] = useState<number>(utils.currentWeek);
   const days = Array.from(
-    { length: daysInMonth },
+    { length: utils.daysInMonth(year, month) },
     (_, i) => new Date(year, month, i + 1)
   );
-  const weeks = Math.ceil((firstDayOfWeek + daysInMonth) / 7);
-
-  const getDateKey = (date: Date) =>
-    `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const weeks = Math.ceil(
+    (utils.dayOfWeekOfFirstDayOfMonth(year, month) +
+      utils.daysInMonth(year, month)) /
+      7
+  );
 
   const addTask = async (date: Date, taskText: string) => {
-    const key = getDateKey(date);
+    const key = utils.getDateKey(date);
     const taskData = {
       date_key: key,
       task_text: taskText,
@@ -118,9 +105,83 @@ export default function Calendar() {
       setTasks((prev) => ({ ...prev, [key]: updated }));
     }
   };
+  const handleEditClick = (key: string, idx: number) => {
+    const taskToEdit = tasks[key][idx];
+    setEditingTask({ key, idx, text: taskToEdit.text });
+  };
+
+  const handleSaveClick = async (newText: string) => {
+    if (!editingTask) return;
+    const { key, idx } = editingTask;
+    const taskToEdit = tasks[key][idx];
+
+    const { data, error } = await supabase
+      .from("calendar_tasks")
+      .select("id")
+      .eq("date_key", key)
+      .eq("task_text", taskToEdit.text)
+      .maybeSingle();
+
+    if (error || !data) {
+      console.error("Error finding task:", error);
+      return;
+    }
+
+    const { id } = data;
+    const { error: updateError } = await supabase
+      .from("calendar_tasks")
+      .update({ task_text: newText })
+      .eq("id", id);
+
+    if (updateError) {
+      console.error("Error updating task:", updateError);
+    } else {
+      const updated = tasks[key].map((task, i) =>
+        i === idx ? { ...task, text: newText } : task
+      );
+      setTasks((prev) => ({ ...prev, [key]: updated }));
+    }
+    setEditingTask(null);
+  };
+
+  const TaskInput = ({
+    initialText,
+    onSave,
+  }: {
+    initialText: string;
+    onSave: (text: string) => void;
+  }) => {
+    const [text, setText] = useState(initialText);
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+    // Resize textarea on input
+    useEffect(() => {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        textarea.style.height = "auto"; // Reset height
+        textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on content
+      }
+    }, [text]);
+
+    return (
+      <>
+        <textarea
+          ref={textareaRef}
+          className="w-full p-1 border rounded resize-none overflow-hidden"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter task"
+        />
+        <button onClick={() => onSave(text)} className="border mt-1 px-2 py-1">
+          Save
+        </button>
+      </>
+    );
+  };
 
   const renderDay = (date: Date) => {
-    const key = getDateKey(date);
+    const key = utils.getDateKey(date);
+
     return (
       <div key={key} className="border p-2">
         <div
@@ -136,27 +197,49 @@ export default function Calendar() {
           <MdAddTask />
         </div>
         <div className="flex flex-col gap-2">
-          {(tasks[key] || []).map((task, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-1 w-full break-words border-b"
-            >
-              <label
-                className={`whitespace-normal break-words cursor-pointer flex gap-1 ${
-                  task.checked && "text-green-600"
-                }`}
-                style={{ overflowWrap: "anywhere" }}
+          {(tasks[key] || []).map((task, index) => {
+            return (
+              <div
+                key={`${key}-${index}`}
+                className="flex justify-between gap-1 w-full break-words border-b overflow-auto"
               >
-                <input
-                  type="checkbox"
-                  checked={task.checked}
-                  onChange={() => toggleTask(key, index)}
-                  className="mt-0.5"
-                />
-                {task.text}
-              </label>
-            </div>
-          ))}
+                <label
+                  className={`whitespace-normal break-words cursor-pointer flex gap-1 ${
+                    task.checked && "text-green-600"
+                  }`}
+                  style={{ overflowWrap: "anywhere" }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={task.checked}
+                    onChange={() => toggleTask(key, index)}
+                    className="mt-0.5"
+                  />
+                </label>
+                {editingTask?.key === key && editingTask?.idx === index ? (
+                  <TaskInput
+                    initialText={editingTask.text}
+                    onSave={(newText) => {
+                      handleSaveClick(newText);
+                    }}
+                  />
+                ) : (
+                  <>
+                    <span
+                      className={`break-words whitespace-pre-wrap w-full overflow-wrap-anywhere ${
+                        task.checked && "text-green-600"
+                      }`}
+                    >
+                      {task.text}
+                    </span>
+                    <button onClick={() => handleEditClick(key, index)}>
+                      edit
+                    </button>
+                  </>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -164,7 +247,7 @@ export default function Calendar() {
 
   const renderWeekdays = () => (
     <>
-      {weekdays.map((d) => (
+      {utils.weekdays.map((d) => (
         <div key={d} className="font-bold hidden lg:block">
           {d}
         </div>
@@ -172,10 +255,11 @@ export default function Calendar() {
     </>
   );
 
-  const renderMonthGrid = () => {
-    const emptyDays = Array.from({ length: firstDayOfWeek }, (_, i) => (
-      <div key={`empty-${i}`} />
-    ));
+  const MonthGrid = () => {
+    const emptyDays = Array.from(
+      { length: utils.dayOfWeekOfFirstDayOfMonth(year, month) },
+      (_, i) => <div key={`empty-${i}`} />
+    );
     return (
       <div className="lg:grid gap-1 lg:grid-cols-7 hidden">
         {renderWeekdays()}
@@ -185,9 +269,10 @@ export default function Calendar() {
     );
   };
 
-  const renderWeekGrid = () => {
+  const WeekGrid = ({ days }: { days: Date[] }) => {
     const filtered = days.filter((date) => {
-      const dayIndex = date.getDate() + firstDayOfWeek - 1;
+      const dayIndex =
+        date.getDate() + utils.dayOfWeekOfFirstDayOfMonth(year, month) - 1;
       const week = Math.floor(dayIndex / 7) + 1;
       return week === selectedWeek;
     });
@@ -212,7 +297,7 @@ export default function Calendar() {
           onChange={(e) => setMonth(Number(e.target.value))}
           className="px-2 text-black bg-gray-100"
         >
-          {months.map((m, index) => (
+          {utils.months.map((m, index) => (
             <option key={index} value={index}>
               {m}
             </option>
@@ -225,14 +310,14 @@ export default function Calendar() {
         >
           {Array.from({ length: weeks }, (_, idx) => (
             <option key={idx} value={idx + 1}>
-              Week {idx + 1}
+              კვირა {idx + 1}
             </option>
           ))}
         </select>
       </div>
 
-      {renderMonthGrid()}
-      {renderWeekGrid()}
+      <MonthGrid />
+      <WeekGrid days={days} />
 
       {selectedDate && (
         <TaskModal

@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { isSalesPage, isTechnician } from "./utils";
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
@@ -46,6 +47,9 @@ export const updateSession = async (request: NextRequest) => {
 
     if (request.nextUrl.pathname === "/" && !user.error) {
       return NextResponse.redirect(new URL("/protected", request.url));
+    }
+    if (isSalesPage(request) && (await isTechnician(user))) {
+      return NextResponse.redirect(new URL("/protected/orders", request.url));
     }
 
     return response;
