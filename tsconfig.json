@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/context/orders-context.ts"
+    "src/context/orders-context.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -4,6 +4,7 @@ import { useOrderModal } from "@/context/order-modal-context";
 import Comments from "@/components/comments/comments";
 import Modal from "@/components/ui/modal";
 import { RxActivityLog } from "react-icons/rx";
+import CheckBoxOfPlanned from "@/components/ui/CheckBoxOfPlanned";
 
 const OrderModal = () => {
   const { order, closeOrder } = useOrderModal();
@@ -23,6 +24,9 @@ const OrderModal = () => {
         <div>პროცედურა: {order.items}</div>
         <div>შემსრულებელი: {order.provider}</div>
         <div>თანხა: {order.total}</div>
+        <label>
+          <CheckBoxOfPlanned /> დაგეგმილი
+        </label>
         <div className="flex items-center gap-1.5 pt-5">
           <RxActivityLog /> <span>აქტივობა:</span>
         </div>

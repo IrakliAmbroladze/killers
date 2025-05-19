@@ -6,7 +6,7 @@ import SortOrders from "./SortOrders";
 const TechniciansOrdersListCotainer = () => {
   const orders = useOrders();
 
-  return orders && <SortOrders orders={orders} />;
+  return orders && <SortOrders orders={orders.orders} />;
 };
 
 export default TechniciansOrdersListCotainer;
