@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { Sheets_Invoice } from "@/types/invoices";
 
 interface OrdersContextType {
@@ -34,10 +34,4 @@ export const OrdersProvider = ({
       {children}
     </OrdersContext.Provider>
   );
-};
-
-export const useOrders = () => {
-  const ctx = useContext(OrdersContext);
-  if (!ctx) throw new Error("useOrders must be used within OrdersProvider");
-  return ctx;
 };
