@@ -1,4 +1,4 @@
-import { Sheets_Invoice } from "./invoices";
+import { Sheets_Invoice } from "@/types/invoices";
 
 export interface ProtectedLayoutProvidersProps {
   children: React.ReactNode;

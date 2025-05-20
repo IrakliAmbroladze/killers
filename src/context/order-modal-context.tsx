@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { Sheets_Invoice } from "@/types/invoices";
 
 interface ModalContextType {
@@ -10,7 +10,7 @@ interface ModalContextType {
   setOrder: (order: Sheets_Invoice) => void;
 }
 
-const OrderModalContext = createContext<ModalContextType | undefined>(
+export const OrderModalContext = createContext<ModalContextType | undefined>(
   undefined
 );
 
@@ -31,11 +31,4 @@ export const OrderModalProvider = ({
       {children}
     </OrderModalContext.Provider>
   );
-};
-
-export const useOrderModal = () => {
-  const ctx = useContext(OrderModalContext);
-  if (!ctx)
-    throw new Error("useOrderModal must be used within OrderModalProvider");
-  return ctx;
 };

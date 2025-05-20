@@ -1,8 +1,8 @@
 "use client";
 
 import React, { JSX } from "react";
-import { useOrderModal } from "@/context/order-modal-context";
 import { useOrders } from "@/hooks/useOrders";
+import { useOrderModal } from "@/hooks/useOrderModal";
 
 const CheckBoxOfPlanned = (): JSX.Element => {
   const { order, setOrder } = useOrderModal();
