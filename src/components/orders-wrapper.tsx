@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { OrdersContext } from "@/context/orders-context";
+import { OrdersProvider } from "@/context/orders-context";
 import { Sheets_Invoice } from "@/types/invoices";
 
 export default function OrdersWrapper({
@@ -11,7 +11,5 @@ export default function OrdersWrapper({
   children: React.ReactNode;
   orders: Sheets_Invoice[];
 }) {
-  return (
-    <OrdersContext.Provider value={orders}>{children}</OrdersContext.Provider>
-  );
+  return <OrdersProvider initialOrders={orders}>{children}</OrdersProvider>;
 }
