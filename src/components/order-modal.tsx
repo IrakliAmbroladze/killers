@@ -1,10 +1,10 @@
 "use client";
 
-import { useOrderModal } from "@/context/order-modal-context";
 import Comments from "@/components/comments/comments";
 import Modal from "@/components/ui/modal";
 import { RxActivityLog } from "react-icons/rx";
 import CheckBoxOfPlanned from "@/components/ui/CheckBoxOfPlanned";
+import { useOrderModal } from "@/hooks/useOrderModal";
 
 const OrderModal = () => {
   const { order, closeOrder } = useOrderModal();
