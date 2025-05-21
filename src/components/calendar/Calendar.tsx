@@ -40,6 +40,7 @@ export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task>({});
   const [selectedWeek, setSelectedWeek] = useState<number>(utils.currentWeek);
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const days = Array.from(
     { length: utils.daysInMonth(year, month) },
     (_, i) => new Date(year, month, i + 1)
@@ -261,7 +262,7 @@ export default function Calendar() {
       (_, i) => <div key={`empty-${i}`} />
     );
     return (
-      <div className="lg:grid gap-1 lg:grid-cols-7 hidden">
+      <div className="lg:grid gap-1 grid-cols-7 hidden min-w-[4000px]">
         {renderWeekdays()}
         {emptyDays}
         {days.map(renderDay)}
@@ -284,51 +285,61 @@ export default function Calendar() {
   };
 
   return (
-    <div className="w-full px-2.5">
-      <div className="flex mb-4 justify-between">
-        <input
-          type="number"
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-          className="border px-2 w-24"
-        />
-        <select
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-          className="px-2 text-black bg-gray-100"
-        >
-          {utils.months.map((m, index) => (
-            <option key={index} value={index}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <select
-          value={selectedWeek}
-          onChange={(e) => setSelectedWeek(Number(e.target.value))}
-          className="px-2 lg:hidden text-black bg-gray-100"
-        >
-          {Array.from({ length: weeks }, (_, idx) => (
-            <option key={idx} value={idx + 1}>
-              კვირა {idx + 1}
-            </option>
-          ))}
-        </select>
-      </div>
+    <>
+      <button
+        className="m-2.5 p-2.5 border rounded-2xl"
+        onClick={() => setShowCalendar((prev) => !prev)}
+      >
+        {showCalendar ? "კალენდარის დამალვა" : "კალენდარის ჩვენება"}
+      </button>
+      {showCalendar && (
+        <div className="w-full px-2.5 overflow-auto">
+          <div className="flex mb-4 justify-between">
+            <input
+              type="number"
+              value={year}
+              onChange={(e) => setYear(Number(e.target.value))}
+              className="border px-2 w-24"
+            />
+            <select
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+              className="px-2 text-black bg-gray-100"
+            >
+              {utils.months.map((m, index) => (
+                <option key={index} value={index}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedWeek}
+              onChange={(e) => setSelectedWeek(Number(e.target.value))}
+              className="px-2 lg:hidden text-black bg-gray-100"
+            >
+              {Array.from({ length: weeks }, (_, idx) => (
+                <option key={idx} value={idx + 1}>
+                  კვირა {idx + 1}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <MonthGrid />
-      <WeekGrid days={days} />
+          <MonthGrid />
+          <WeekGrid days={days} />
 
-      {selectedDate && (
-        <TaskModal
-          date={selectedDate}
-          onClose={() => setSelectedDate(null)}
-          onAdd={(text) => {
-            addTask(selectedDate, text);
-            setSelectedDate(null);
-          }}
-        />
+          {selectedDate && (
+            <TaskModal
+              date={selectedDate}
+              onClose={() => setSelectedDate(null)}
+              onAdd={(text) => {
+                addTask(selectedDate, text);
+                setSelectedDate(null);
+              }}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
