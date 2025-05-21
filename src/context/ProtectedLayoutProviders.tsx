@@ -2,7 +2,7 @@
 import { ProtectedLayoutProvidersProps } from "@/types/ProtectedLayoutProvidersProps";
 import React from "react";
 import { OrdersProvider } from "@/context/orders-provider";
-import { OrderModalProvider } from "@/context/order-modal-context";
+import { OrderModalProvider } from "@/context/OrderModalProvider";
 
 const ProtectedLayoutProviders = ({
   children,
