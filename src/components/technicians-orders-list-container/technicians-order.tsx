@@ -2,8 +2,8 @@ import React from "react";
 import { TechniciansOrderProps } from "./types/technicians-order-props";
 import { FiAlignLeft } from "react-icons/fi";
 import { FaRegComment } from "react-icons/fa";
-import { useOrderModal } from "@/context/order-modal-context";
-import { useOrders } from "@/context/orders-context";
+import { useOrders } from "@/hooks/useOrders";
+import { useOrderModal } from "@/hooks/useOrderModal";
 
 const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();

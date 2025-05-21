@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useOrders } from "@/context/orders-context";
 import SortOrders from "./SortOrders";
+import { useOrders } from "@/hooks/useOrders";
 
 const TechniciansOrdersListCotainer = () => {
   const orders = useOrders();
