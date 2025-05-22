@@ -5,6 +5,7 @@ import Modal from "@/components/ui/modal";
 import { RxActivityLog } from "react-icons/rx";
 import CheckBoxOfPlanned from "@/components/ui/CheckBoxOfPlanned";
 import { useOrderModal } from "@/hooks/useOrderModal";
+import TagTechnician from "@/features/TagTechnician/TagTechnician";
 
 const OrderModal = () => {
   const { order, closeOrder } = useOrderModal();
@@ -24,6 +25,7 @@ const OrderModal = () => {
         <div>პროცედურა: {order.items}</div>
         <div>შემსრულებელი: {order.provider}</div>
         <div>თანხა: {order.total}</div>
+        <div>{order && <TagTechnician order={order} />}</div>
         <label>
           <CheckBoxOfPlanned /> დაგეგმილი
         </label>
