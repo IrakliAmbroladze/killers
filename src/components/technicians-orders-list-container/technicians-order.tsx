@@ -2,17 +2,17 @@ import React from "react";
 import { TechniciansOrderProps } from "./types/technicians-order-props";
 import { FiAlignLeft } from "react-icons/fi";
 import { FaRegComment } from "react-icons/fa";
-import { useOrders } from "@/hooks/useOrders";
+// import { useOrders } from "@/hooks/useOrders";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
+import CheckBoxOfPlanned from "../ui/CheckBoxOfPlanned";
 
 const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();
-  const { orders } = useOrders();
+  // const { orders } = useOrders();
 
   const handleClick = (id: string) => {
-    const orderToOpen = orders.find((o) => o.order_id === id);
-    if (orderToOpen) openOrder(orderToOpen);
+    openOrder(id);
   };
 
   return (
@@ -36,7 +36,11 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
         </div>
       </div>
 
-      {order && <TagTechnician order={order} />}
+      {order.order_id && <TagTechnician order_id={order.order_id} />}
+      <label>
+        {order.order_id && <CheckBoxOfPlanned order_id={order.order_id} />}
+        დაგეგმილი
+      </label>
     </div>
   );
 };

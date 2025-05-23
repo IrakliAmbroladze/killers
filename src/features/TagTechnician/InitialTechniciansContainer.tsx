@@ -1,25 +1,90 @@
 import React from "react";
 import InitialTechnicians from "./InitialTechnicians";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
+import { Sheets_Invoice } from "@/types/invoices";
+import { useOrders } from "@/hooks/useOrders";
 
 interface InitialTechniciansContainerProps {
   initialTechnicians: string[];
+  order: Sheets_Invoice;
 }
 
 const InitialTechniciansContainer = ({
   initialTechnicians,
+  order,
 }: InitialTechniciansContainerProps) => {
-  const [selectedTechnicians, setSelectedTechnicians] =
-    React.useState<string[]>(initialTechnicians);
+  const { dispatch } = useOrders();
+
+  const selectedTechnicians = initialTechnicians;
 
   const displayNames = useTechniciansAndManagersDisplayNames();
 
-  const handleTechnicianSelect = (name: string) => {
+  const handleTechnicianSelect = async (name: string) => {
     if (selectedTechnicians.includes(name)) {
       alert("ეს ტექნიკოსი უკვე მონიშნულია");
       return;
     }
-    setSelectedTechnicians((prev) => [...prev, name]);
+    const updatedTechnicians = [...selectedTechnicians, name];
+    const newdata = updatedTechnicians.join(" ");
+    const updatedOrder = {
+      ...order,
+      technician: newdata,
+    };
+    dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
+    try {
+      const response = await fetch("/api/proxy", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedOrder),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update the backend");
+      }
+
+      const data = await response.json();
+      console.log("Backend update successful:", data);
+    } catch (error) {
+      console.error("Error updating order:", error);
+    }
+  };
+
+  const handleTechnicianDelete = async (name: string) => {
+    if (!selectedTechnicians.includes(name)) {
+      alert("ეს ტექნიკოსი უკვე წაშლილია");
+      return;
+    }
+    const updatedTechnicians = selectedTechnicians.filter(
+      (item) => item !== name
+    );
+    const newdata = updatedTechnicians.join(" ");
+    const updatedOrder = {
+      ...order,
+      technician: newdata,
+    };
+    dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
+    try {
+      const response = await fetch("/api/proxy", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedOrder),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update the backend");
+      }
+
+      const data = await response.json();
+      console.log("Backend update successful:", data);
+    } catch (error) {
+      console.error("Error updating order:", error);
+    }
   };
 
   return (
@@ -27,6 +92,7 @@ const InitialTechniciansContainer = ({
       selectedTechnicians={selectedTechnicians}
       displayNames={displayNames}
       onTechnicianSelect={handleTechnicianSelect}
+      onTechnicianDelete={handleTechnicianDelete}
     />
   );
 };

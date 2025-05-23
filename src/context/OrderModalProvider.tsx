@@ -1,4 +1,3 @@
-import type { Sheets_Invoice } from "@/types/invoices";
 import { useReducer } from "react";
 import { OrderModalContext } from "@/context/order-modal-context";
 import { orderModalReducer } from "@/context/orderModalReducer";
@@ -9,17 +8,17 @@ export const OrderModalProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [order, dispatch] = useReducer(orderModalReducer, null);
+  const [state, dispatch] = useReducer(orderModalReducer, {
+    openOrderId: null,
+  });
 
-  const openOrder = (order: Sheets_Invoice) =>
-    dispatch(Action.openOrderAction(order));
+  const openOrder = (orderId: string) =>
+    dispatch(Action.openOrderAction(orderId));
   const closeOrder = () => dispatch(Action.closeOrderAction());
-  const setOrder = (order: Sheets_Invoice) =>
-    dispatch(Action.setOrderAction(order));
 
   return (
     <OrderModalContext.Provider
-      value={{ order, openOrder, closeOrder, setOrder }}
+      value={{ openOrderId: state.openOrderId, openOrder, closeOrder }}
     >
       {children}
     </OrderModalContext.Provider>

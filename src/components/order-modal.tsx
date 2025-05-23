@@ -6,10 +6,13 @@ import { RxActivityLog } from "react-icons/rx";
 import CheckBoxOfPlanned from "@/components/ui/CheckBoxOfPlanned";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
+import { Sheets_Invoice } from "@/types/invoices";
+import { useOrders } from "@/hooks/useOrders";
 
 const OrderModal = () => {
-  const { order, closeOrder } = useOrderModal();
-
+  const { openOrderId, closeOrder } = useOrderModal();
+  const { orders } = useOrders();
+  const order = orders.find((o: Sheets_Invoice) => o.order_id === openOrderId);
   if (!order) return null;
 
   return (
@@ -25,9 +28,12 @@ const OrderModal = () => {
         <div>პროცედურა: {order.items}</div>
         <div>შემსრულებელი: {order.provider}</div>
         <div>თანხა: {order.total}</div>
-        <div>{order && <TagTechnician order={order} />}</div>
+        <div>
+          {order.order_id && <TagTechnician order_id={order.order_id} />}
+        </div>
         <label>
-          <CheckBoxOfPlanned /> დაგეგმილი
+          {order.order_id && <CheckBoxOfPlanned order_id={order.order_id} />}
+          დაგეგმილი
         </label>
         <div className="flex items-center gap-1.5 pt-5">
           <RxActivityLog /> <span>აქტივობა:</span>

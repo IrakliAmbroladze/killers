@@ -5,12 +5,14 @@ interface InitialTechniciansProps {
   selectedTechnicians: string[];
   displayNames: string[];
   onTechnicianSelect: (name: string) => void;
+  onTechnicianDelete: (name: string) => void;
 }
 
 const InitialTechnicians = ({
   selectedTechnicians,
   displayNames,
   onTechnicianSelect,
+  onTechnicianDelete,
 }: InitialTechniciansProps) => {
   return (
     <>
@@ -21,7 +23,7 @@ const InitialTechnicians = ({
               key={index}
               className="px-3 py-1 bg-blue-200 dark:bg-blue-700 rounded-full text-sm "
             >
-              {name}
+              {name} <button onClick={() => onTechnicianDelete(name)}>X</button>
             </span>
           ))}
         </div>
