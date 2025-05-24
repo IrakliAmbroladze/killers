@@ -2,10 +2,10 @@
 
 import React, { JSX } from "react";
 import { useOrders } from "@/hooks/useOrders";
-import { useOrderModal } from "@/hooks/useOrderModal";
 
-const CheckBoxOfPlanned = (): JSX.Element => {
-  const { order, setOrder } = useOrderModal();
+const CheckBoxOfPlanned = ({ order_id }: { order_id: string }): JSX.Element => {
+  const { orders } = useOrders();
+  const order = orders.find((o) => o.order_id === order_id);
   const { dispatch } = useOrders();
 
   const togglePlannedStatus = async () => {
@@ -22,7 +22,6 @@ const CheckBoxOfPlanned = (): JSX.Element => {
     };
 
     try {
-      setOrder(updatedOrder);
       dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
       const response = await fetch("/api/proxy", {
         method: "POST",

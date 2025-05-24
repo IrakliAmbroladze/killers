@@ -1,21 +1,20 @@
-import type { Sheets_Invoice } from "@/types/invoices";
+type OrderModalState = {
+  openOrderId: string | null;
+};
 
 export type OrderModalAction =
-  | { type: "OPEN_ORDER"; payload: Sheets_Invoice }
-  | { type: "CLOSE_ORDER" }
-  | { type: "SET_ORDER"; payload: Sheets_Invoice | null };
+  | { type: "OPEN_ORDER"; payload: string }
+  | { type: "CLOSE_ORDER" };
 
 export function orderModalReducer(
-  state: Sheets_Invoice | null,
+  state: OrderModalState,
   action: OrderModalAction
-): Sheets_Invoice | null {
+): OrderModalState {
   switch (action.type) {
     case "OPEN_ORDER":
-      return action.payload;
+      return { openOrderId: action.payload };
     case "CLOSE_ORDER":
-      return null;
-    case "SET_ORDER":
-      return action.payload;
+      return { openOrderId: null };
     default:
       return state;
   }
