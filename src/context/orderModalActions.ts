@@ -1,15 +1,8 @@
-import type { Sheets_Invoice } from "@/types/invoices";
-
-const openOrderAction = (order: Sheets_Invoice) => ({
+const openOrderAction = (orderId: string) => ({
   type: "OPEN_ORDER" as const,
-  payload: order,
+  payload: orderId,
 });
 
 const closeOrderAction = () => ({ type: "CLOSE_ORDER" as const });
 
-const setOrderAction = (order: Sheets_Invoice) => ({
-  type: "SET_ORDER" as const,
-  payload: order,
-});
-
-export { openOrderAction, closeOrderAction, setOrderAction };
+export { openOrderAction, closeOrderAction };
