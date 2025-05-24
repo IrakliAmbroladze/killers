@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { OrderModalContext } from "@/context/order-modal-context";
+import { Context } from "@/context/order-modal/Context";
 
 export const useOrderModal = () => {
-  const ctx = useContext(OrderModalContext);
-  if (!ctx)
+  const context = useContext(Context);
+  if (!context)
     throw new Error("useOrderModal must be used within OrderModalProvider");
-  return ctx;
+  return context;
 };

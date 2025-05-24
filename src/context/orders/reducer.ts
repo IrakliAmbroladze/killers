@@ -1,9 +1,9 @@
 import { Sheets_Invoice } from "@/types/invoices";
-import { OrdersAction } from "@/types/OrdersActionType";
+import { Action } from "@/types/orders/Action";
 
-export function ordersReducer(
+export function reducer(
   state: Sheets_Invoice[],
-  action: OrdersAction
+  action: Action
 ): Sheets_Invoice[] {
   switch (action.type) {
     case "SET_ORDERS":

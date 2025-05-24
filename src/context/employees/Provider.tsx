@@ -1,7 +1,7 @@
 import { Employee } from "@/types/Employee";
-import { EmployeesContext } from "./EmployeesContext";
+import { EmployeesContext } from "@/context/employees/Context";
 
-export const EmployeesProvider = ({
+export const Provider = ({
   employees,
   children,
 }: {
