@@ -12,6 +12,7 @@ interface LinkItem {
 const allLinks: LinkItem[] = [
   { name: "Sales", href: "/protected/sales" },
   { name: "Orders", href: "/protected/orders" },
+  { name: "Procedures", href: "/protected/procedures" },
 ];
 
 export default async function NavLinks(): Promise<JSX.Element> {
@@ -20,7 +21,7 @@ export default async function NavLinks(): Promise<JSX.Element> {
   const userResponse = await supabase.auth.getUser();
 
   const linksToShow = (await isTechnician(userResponse))
-    ? allLinks.filter((link) => link.name !== "Sales")
+    ? allLinks.filter((link) => link.name !== "Sales" && link.name !== "Orders")
     : allLinks;
 
   return (

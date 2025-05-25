@@ -1,13 +1,7 @@
-import Calendar from "@/components/calendar/Calendar";
-import TechniciansOrdersListCotainer from "@/components/technicians-orders-list-container/technicians-orders-list-container";
+import React from "react";
 
-const OrdersPage = () => {
-  return (
-    <div className="overflow-auto">
-      <Calendar />
-      <TechniciansOrdersListCotainer />
-    </div>
-  );
+const ProceduresPage = () => {
+  return <div>ProceduresPage</div>;
 };
 
-export default OrdersPage;
+export default ProceduresPage;
