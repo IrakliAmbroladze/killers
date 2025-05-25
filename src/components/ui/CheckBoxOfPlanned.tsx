@@ -6,7 +6,7 @@ import { useOrders } from "@/hooks/useOrders";
 const CheckBoxOfPlanned = ({ order_id }: { order_id: string }): JSX.Element => {
   const { orders } = useOrders();
   const order = orders.find((o) => o.order_id === order_id);
-  const { dispatch } = useOrders();
+  const { updateOrder } = useOrders();
 
   const togglePlannedStatus = async () => {
     if (!order) return;
@@ -22,7 +22,7 @@ const CheckBoxOfPlanned = ({ order_id }: { order_id: string }): JSX.Element => {
     };
 
     try {
-      dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
+      updateOrder(updatedOrder);
       const response = await fetch("/api/proxy", {
         method: "POST",
         headers: {

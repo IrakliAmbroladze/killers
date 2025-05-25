@@ -13,7 +13,7 @@ const InitialTechniciansContainer = ({
   initialTechnicians,
   order,
 }: InitialTechniciansContainerProps) => {
-  const { dispatch } = useOrders();
+  const { updateOrder } = useOrders();
 
   const selectedTechnicians = initialTechnicians;
 
@@ -30,7 +30,7 @@ const InitialTechniciansContainer = ({
       ...order,
       technician: newdata,
     };
-    dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
+    updateOrder(updatedOrder);
     try {
       const response = await fetch("/api/proxy", {
         method: "POST",
@@ -65,7 +65,7 @@ const InitialTechniciansContainer = ({
       ...order,
       technician: newdata,
     };
-    dispatch({ type: "UPDATE_ORDER", payload: updatedOrder });
+    updateOrder(updatedOrder);
     try {
       const response = await fetch("/api/proxy", {
         method: "POST",

@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { OrdersContext } from "@/context/orders-context";
+import { Context } from "@/context/orders/Context";
 
 export const useOrders = () => {
-  const ctx = useContext(OrdersContext);
-  if (!ctx) throw new Error("useOrders must be used within OrdersProvider");
-  return ctx;
+  const context = useContext(Context);
+  if (!context)
+    throw new Error("useOrders must be used within Orders provider");
+  return context;
 };
