@@ -35,6 +35,7 @@ const OrderModal = () => {
           {order.order_id && <CheckBoxOfPlanned order_id={order.order_id} />}
           დაგეგმილი
         </label>
+        <div>თვე: {order.date}</div>
         <div className="flex items-center gap-1.5 pt-5">
           <RxActivityLog /> <span>აქტივობა:</span>
         </div>
