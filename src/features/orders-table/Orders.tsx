@@ -11,6 +11,7 @@ import ErrorModal from "@/components/error-modal";
 import { useOrders } from "@/hooks/useOrders";
 import ReturnOrders from "./ReturnOrders";
 import Loading from "@/components/ui/Loading";
+import { wholeListSearch } from "@/utils/orders-table/wholeListSearch";
 
 const Orders = () => {
   const { orders } = useOrders();
@@ -67,12 +68,7 @@ const Orders = () => {
     setSearchTerm(event.target.value);
   };
 
-  const searchedInvoices = invoices.filter((invoice) => {
-    const search = debouncedSearchTerm.toLowerCase();
-    return Object.values(invoice)
-      .filter((val) => typeof val === "string" || typeof val === "number")
-      .some((val) => val?.toString().toLowerCase().includes(search));
-  });
+  const searchedInvoices = wholeListSearch(invoices, debouncedSearchTerm);
 
   return (
     <div className="overflow-x-auto sm:p-4">
