@@ -3,7 +3,6 @@
 import { Sheets_Invoice } from "@/types/invoices";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import EditModal from "@/components/EditModal";
-// import { loadOrders } from "@/utils/load-orders";
 import Search from "@/components/search";
 import { useDebouncedCallback } from "use-debounce";
 import fetchOrders from "@/utils/server/fetch-orders";
@@ -11,6 +10,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorModal from "@/components/error-modal";
 import { useOrders } from "@/hooks/useOrders";
 import ReturnOrders from "./ReturnOrders";
+import Loading from "@/components/ui/Loading";
 
 const Orders = () => {
   const { orders } = useOrders();
@@ -48,12 +48,6 @@ const Orders = () => {
     debounced(searchTerm);
   }, [debounced, searchTerm]);
 
-  // useEffect(() => {
-  //   // loadOrders(setLoading, start, limit, setInvoices);
-  //   setLoading(false);
-  //   setInvoices(orders);
-  // }, [orders]);
-
   const handleCopy = async () => {
     setLoading((l) => !l);
     const newInvoices: Sheets_Invoice[] = await fetchOrders(start, limit);
@@ -84,9 +78,7 @@ const Orders = () => {
     <div className="overflow-x-auto sm:p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
       {loading ? (
-        <div className="mt-2.5 bg-gray-300 text-black py-3 px-20 rounded-lg text-center">
-          loading ...
-        </div>
+        <Loading />
       ) : (
         <ReturnOrders
           onSetStatus={setStatus}
