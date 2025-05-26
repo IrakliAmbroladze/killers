@@ -49,7 +49,9 @@ export const updateSession = async (request: NextRequest) => {
       return NextResponse.redirect(new URL("/protected", request.url));
     }
     if (isSalesPage(request) && (await isTechnician(user))) {
-      return NextResponse.redirect(new URL("/protected/orders", request.url));
+      return NextResponse.redirect(
+        new URL("/protected/procedures", request.url)
+      );
     }
 
     return response;
