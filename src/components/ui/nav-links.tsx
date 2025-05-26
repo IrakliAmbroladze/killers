@@ -10,7 +10,6 @@ interface LinkItem {
 }
 
 const allLinks: LinkItem[] = [
-  { name: "Sales", href: "/protected/sales" },
   { name: "Orders", href: "/protected/orders" },
   { name: "Procedures", href: "/protected/procedures" },
 ];
