@@ -1,9 +1,12 @@
 import { Sheets_Invoice } from "../invoices";
 
 export interface ReturnOrdersProps {
-  onSetStatus: (status: string) => void;
-  onSetTitle: (title: string) => void;
-  onOpenModal: (index: string | null) => void;
-  modalIndex: string | null;
   orders: Sheets_Invoice[];
+  onSetStatus: (s: string) => void;
+  onSetTitle: (t: string) => void;
+  onOpenModal: (id: string | null) => void;
+  modalIndex: string | null;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  totalOrders: number;
 }

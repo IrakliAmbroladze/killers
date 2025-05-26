@@ -19,6 +19,8 @@ const Orders = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [status, setStatus] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 25;
 
   const debounced = useDebouncedCallback((value: string) => {
     setDebouncedSearchTerm(value);
@@ -35,6 +37,7 @@ const Orders = () => {
   useEffect(() => {
     localStorage.setItem("search", searchTerm);
     debounced(searchTerm);
+    setCurrentPage(1);
   }, [debounced, searchTerm]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +45,10 @@ const Orders = () => {
   };
 
   const searchedInvoices = wholeListSearch(orders, debouncedSearchTerm);
+  const paginatedInvoices = searchedInvoices.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <div className="overflow-x-auto sm:p-4">
@@ -51,7 +58,10 @@ const Orders = () => {
         onSetTitle={setTitle}
         onOpenModal={setOpenModalIndex}
         modalIndex={openModalIndex}
-        orders={searchedInvoices}
+        orders={paginatedInvoices}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalOrders={searchedInvoices.length}
       />
       <ErrorBoundary fallback={<ErrorModal />}>
         {openModalIndex !== null && (
