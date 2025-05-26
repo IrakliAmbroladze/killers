@@ -1,6 +1,6 @@
 "use server";
 
-const fetchOrders = async (start = 0, limit = 100) => {
+const fetchOrders = async (start = 0, limit = 20000) => {
   try {
     if (!process.env.SHEETS_URL) {
       throw new Error("SHEETS_URL is not defined");
