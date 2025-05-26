@@ -26,12 +26,9 @@ export default function OrderForm({
   title,
   initialFormData,
   status,
-  updateInvoice,
   index,
-  handleCopy,
   setOpenModalIndex,
 }: {
-  handleCopy?: () => void;
   title: string;
   initialFormData: Sheets_Invoice;
   status: string;
@@ -48,42 +45,50 @@ export default function OrderForm({
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+  function createUUID() {
+    return crypto.randomUUID();
+  }
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/proxy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      setMessage(data.message || `Invoice ${status}ed successfully!`);
       if (status === "add") {
         setFormData(initialFormData);
-        if (handleCopy && setOpenModalIndex) {
-          addOrder(formData);
-          handleCopy();
-          setTimeout(() => setOpenModalIndex(null), 1000);
+        const newId = createUUID();
+        const addData = {
+          ...formData,
+          order_id: newId,
+        };
+        addOrder(addData);
+        await fetch("/api/proxy", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...addData, status }),
+        });
+        if (setOpenModalIndex) {
+          setOpenModalIndex(null);
         }
       }
-
-      setTimeout(() => setMessage(""), 1000);
       if (status === "update") {
-        if (updateInvoice) {
-          if (index !== undefined) {
-            updateInvoice(formData, index);
-            updateOrder(formData);
-            if (setOpenModalIndex) {
-              setTimeout(() => setOpenModalIndex(null), 1000);
-            }
+        if (index !== undefined) {
+          console.log("update formdata", formData);
+          updateOrder(formData);
+          await fetch("/api/proxy", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...formData, status }),
+          });
+          if (setOpenModalIndex) {
+            setOpenModalIndex(null);
           }
         }
       }
+
+      // const data = await response.json();
+      // setMessage(data.message || `Invoice ${status}ed successfully!`);
+      // setTimeout(() => setMessage(""), 1000);
     } catch (error) {
       console.error(error);
       setMessage("Error submitting invoice.");

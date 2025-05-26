@@ -1,4 +1,4 @@
-import InvoiceForm from "@/components/invoice-form";
+import OrderForm from "@/components/OrderForm";
 import { Sheets_Invoice } from "@/types/invoices";
 import Link from "next/link";
 import React from "react";
@@ -26,7 +26,7 @@ const CreateInvoice = () => {
             X
           </Link>
         </div>
-        <InvoiceForm
+        <OrderForm
           title={"Create an Order"}
           initialFormData={initialFormData}
           status="add"

@@ -7,17 +7,13 @@ const UpdateModal = ({
   invoice,
   setOpenModalIndex,
   index,
-  updateInvoice,
   status,
-  handleCopy,
 }: {
   title: string;
   invoice: Sheets_Invoice;
   setOpenModalIndex: (index: null) => void;
   index: string;
-  updateInvoice: (updatedInvoice: Sheets_Invoice, index: string) => void;
   status: string;
-  handleCopy: () => void;
 }) => {
   const copyData: Sheets_Invoice = {
     date: new Date().toISOString().split("T")[0],
@@ -58,12 +54,10 @@ const UpdateModal = ({
         </div>
         <OrderForm
           setOpenModalIndex={setOpenModalIndex}
-          handleCopy={handleCopy}
           title={title}
           initialFormData={initialFormData}
           status={status}
           index={index}
-          updateInvoice={updateInvoice}
         />
       </div>
     </div>

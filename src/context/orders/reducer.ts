@@ -13,7 +13,7 @@ export function reducer(
         order.order_id === action.payload.order_id ? action.payload : order
       );
     case "ADD_ORDER":
-      return [...state, action.payload];
+      return [action.payload, ...state];
 
     default:
       return state;

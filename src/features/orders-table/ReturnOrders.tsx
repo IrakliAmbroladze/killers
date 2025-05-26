@@ -34,9 +34,9 @@ const ReturnOrders = ({
         </tr>
       </thead>
       <tbody>
-        {orders.map((invoice) => (
+        {orders.map((invoice, index) => (
           <tr
-            key={invoice.order_id}
+            key={index}
             className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
           >
             <td
