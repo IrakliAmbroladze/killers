@@ -15,9 +15,10 @@ export const Provider = ({
 
   const updateOrder = (order: Sheets_Invoice) =>
     dispatch(action.updateOrder(order));
+  const addOrder = (order: Sheets_Invoice) => dispatch(action.addOrder(order));
 
   return (
-    <Context.Provider value={{ orders, updateOrder }}>
+    <Context.Provider value={{ orders, updateOrder, addOrder }}>
       {children}
     </Context.Provider>
   );

@@ -12,6 +12,8 @@ export function reducer(
       return state.map((order) =>
         order.order_id === action.payload.order_id ? action.payload : order
       );
+    case "ADD_ORDER":
+      return [action.payload, ...state];
 
     default:
       return state;

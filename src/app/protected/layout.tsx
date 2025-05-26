@@ -17,7 +17,7 @@ export default async function Layout({
   return (
     <Providers orders={orders} employees={employees}>
       <div className="w-full mt-20 sm:px-20 flex flex-col sm:flex-row">
-        <div className="sm:w-3xs">
+        <div className="sm:w-[200px] shrink-0">
           <SideNav />
         </div>
         {children}

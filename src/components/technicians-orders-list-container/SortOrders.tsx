@@ -13,7 +13,7 @@ const SortOrders = ({ orders }: SortOrdersProps) => {
   const plannedOrders = filterByStatus(orders, "planned");
   const doneOrders = filterByStatus(orders, "done");
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 overflow-auto flex-nowrap w-full">
       <TechniciansOrdersList
         orders={toBePlannedOrders}
         title={orderListTitles[0]}
