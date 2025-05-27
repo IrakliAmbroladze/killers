@@ -8,7 +8,7 @@ const TechniciansOrdersList = ({
   title,
 }: TechniciansOrdersListProps) => {
   return (
-    <div className="flex flex-col min-w-[300px] bg-gray-100 dark:bg-gray-800 rounded-2xl mt-5 p-2.5 ">
+    <div className="flex flex-col w-80 shrink-0 bg-gray-100 dark:bg-gray-800 rounded-2xl mt-5 p-2.5 ">
       <div className="flex justify-between">
         <span>{title}</span>
         <span>...</span>
