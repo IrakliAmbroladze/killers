@@ -3,8 +3,10 @@ import { FiCopy, FiEdit } from "react-icons/fi";
 import Cart from "@/components/cart";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import { ReturnOrdersProps } from "@/types/orders-table/ReturnOrdersProps";
+import { useOrders } from "@/hooks/useOrders";
 
 const ReturnOrders = ({
+  pageSize,
   onSetStatus,
   onSetTitle,
   onOpenModal,
@@ -15,19 +17,22 @@ const ReturnOrders = ({
   totalOrders,
 }: ReturnOrdersProps) => {
   const { openOrder } = useOrderModal();
+  const { totalPages } = useOrders();
   const Pagination = () => (
     <div className="flex justify-center gap-2 mt-4">
       <button
         disabled={currentPage === 1}
-        onClick={() => setCurrentPage((p) => p - 1)}
+        onClick={() => setCurrentPage(currentPage - 1)}
         className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50 dark:text-black"
       >
         Prev
       </button>
-      <span>Page {currentPage}</span>
+      <span>
+        Page {currentPage} / {totalPages}
+      </span>
       <button
-        disabled={currentPage * 25 >= totalOrders}
-        onClick={() => setCurrentPage((p) => p + 1)}
+        disabled={currentPage * pageSize >= totalOrders}
+        onClick={() => setCurrentPage(currentPage + 1)}
         className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50 dark:text-black"
       >
         Next

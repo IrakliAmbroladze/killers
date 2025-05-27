@@ -10,3 +10,8 @@ export const addOrder = (order: Sheets_Invoice): Action => ({
   type: "ADD_ORDER" as const,
   payload: order,
 });
+
+export const setCurrentPage = (page: number): Action => ({
+  type: "SET_CURRENT_PAGE" as const,
+  payload: page,
+});
