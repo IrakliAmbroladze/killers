@@ -6,14 +6,15 @@ export const filterByStatus = (
 ) => {
   switch (status) {
     case "empty":
-      return orders.filter((order) => order.delivery_date === "");
+      return orders.filter(
+        (order) => order.delivery_date === "" && order.plan_time === ""
+      );
     case "planned":
-      return orders.filter((order) => order.delivery_date === "planned");
+      return orders.filter(
+        (order) => order.delivery_date === "" && order.plan_time !== ""
+      );
     case "done":
     default:
-      return orders.filter(
-        (order) =>
-          order.delivery_date !== "" && order.delivery_date !== "planned"
-      );
+      return orders.filter((order) => order.delivery_date !== "");
   }
 };
