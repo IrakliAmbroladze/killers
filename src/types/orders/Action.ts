@@ -1,6 +1,12 @@
-import { Sheets_Invoice } from "@/types/invoices";
+import {
+  addOrder,
+  setCurrentPage,
+  setSearchTerm,
+  updateOrder,
+} from "@/context/orders/action";
 
 export type Action =
-  | { type: "SET_ORDERS"; payload: Sheets_Invoice[] }
-  | { type: "UPDATE_ORDER"; payload: Sheets_Invoice }
-  | { type: "ADD_ORDER"; payload: Sheets_Invoice };
+  | ReturnType<typeof updateOrder>
+  | ReturnType<typeof addOrder>
+  | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof setSearchTerm>;

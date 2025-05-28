@@ -1,19 +1,30 @@
-import { Sheets_Invoice } from "@/types/invoices";
 import { Action } from "@/types/orders/Action";
+import { State } from "@/types/orders/State";
 
-export function reducer(
-  state: Sheets_Invoice[],
-  action: Action
-): Sheets_Invoice[] {
+export function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "SET_ORDERS":
-      return action.payload;
     case "UPDATE_ORDER":
-      return state.map((order) =>
-        order.order_id === action.payload.order_id ? action.payload : order
-      );
+      return {
+        ...state,
+        orders: state.orders.map((order) =>
+          order.order_id === action.payload.order_id ? action.payload : order
+        ),
+      };
     case "ADD_ORDER":
-      return [action.payload, ...state];
+      return {
+        ...state,
+        orders: [action.payload, ...state.orders],
+      };
+    case "SET_CURRENT_PAGE":
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+    case "SET_SEARCH_TERM":
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
 
     default:
       return state;
