@@ -4,6 +4,7 @@ import React, { JSX } from "react";
 import { useOrders } from "@/hooks/useOrders";
 import { findOrder } from "@/utils/findOrder";
 import DatePicker from "react-datepicker";
+import { updateOrderInDB } from "@/utils/updateOrderInDB";
 
 const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
   const { orders, updateOrder } = useOrders();
@@ -11,13 +12,14 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
   const selectedDate = order?.plan_time ? new Date(order.plan_time) : null;
 
-  const handleChange = (date: Date | null) => {
+  const handleChange = async (date: Date | null) => {
     if (order) {
       const updatedOrder = {
         ...order,
         plan_time: date ? date.toISOString() : "",
       };
       updateOrder(updatedOrder);
+      updateOrderInDB(updatedOrder);
     }
   };
 
