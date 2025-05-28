@@ -16,6 +16,10 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
   const handleApprove = () => {
     if (!order) return;
+    if (order.delivery_date) {
+      alert("შესრულებულ შეკვეთას დაგეგმვის თარიღს ვერ შეუცვლი");
+      return;
+    }
 
     const updatedOrder = {
       ...order,
@@ -31,7 +35,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
   return (
     <div className="flex gap-0.5 max-w-xs">
       <label htmlFor={`plan-time-${order_id}`} className="text-sm font-medium">
-        დრო:
+        Plan:
       </label>
 
       <DatePicker
