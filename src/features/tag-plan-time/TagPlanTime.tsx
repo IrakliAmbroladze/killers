@@ -12,7 +12,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
   const selectedDate = order?.plan_time ? new Date(order.plan_time) : null;
 
-  const handleChange = async (date: Date | null) => {
+  const handleChange = (date: Date | null) => {
     if (order) {
       const updatedOrder = {
         ...order,
