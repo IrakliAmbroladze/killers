@@ -21,7 +21,6 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
         <div className="flex">
-          <span className="hidden group-hover:flex mx-1.5">o</span>
           <div>
             <div className="flex">{order.customer}</div>
             <div>{order.identity}</div>
