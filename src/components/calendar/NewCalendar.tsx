@@ -290,7 +290,7 @@ export default function NewCalendar() {
         className="m-2.5 p-2.5 border rounded-2xl"
         onClick={() => setShowCalendar((prev) => !prev)}
       >
-        {showCalendar ? "კალენდარის დამალვა" : "კალენდარის ჩვენება"}
+        {showCalendar ? "Hide Calendar" : "Show Calendar"}
       </button>
       {showCalendar && (
         <div className="w-full px-2.5 overflow-auto">
