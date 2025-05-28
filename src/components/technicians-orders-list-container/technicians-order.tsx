@@ -6,6 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import CheckBoxOfPlanned from "../ui/CheckBoxOfPlanned";
+import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
 
 const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();
@@ -41,6 +42,7 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
         {order.order_id && <CheckBoxOfPlanned order_id={order.order_id} />}
         დაგეგმილი
       </label>
+      {order.order_id && <TagPlanTime order_id={order.order_id} />}
     </div>
   );
 };

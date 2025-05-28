@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "./create-calendar-task";
 import * as utils from "./utils";
 import { Task } from "./type";
+import { useOrders } from "@/hooks/useOrders";
+import TechniciansOrder from "../technicians-orders-list-container/technicians-order";
 
 export default function NewCalendar() {
   const supabase = createClient();
@@ -179,10 +181,17 @@ export default function NewCalendar() {
       </>
     );
   };
+  // const myTestArray = [
+  //   { date: "2025-05-19", name: "Ambroladze" },
+  //   { date: "2025-05-18", name: "Irakli" },
+  // ];
 
+  const { orders } = useOrders();
   const renderDay = (date: Date) => {
     const key = utils.getDateKey(date);
-
+    const renderOrders = orders.filter(
+      (order) => order.delivery_date === date.toISOString().split("T")[0]
+    );
     return (
       <div key={key} className="border p-2">
         <div
@@ -198,6 +207,11 @@ export default function NewCalendar() {
           <MdAddTask />
         </div>
         <div className="flex flex-col gap-2">
+          {renderOrders.map((order) => (
+            <div key={order.order_id}>
+              <TechniciansOrder order={order} />
+            </div>
+          ))}
           {(tasks[key] || []).map((task, index) => {
             return (
               <div
