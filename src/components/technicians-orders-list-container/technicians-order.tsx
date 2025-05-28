@@ -5,12 +5,10 @@ import { FaRegComment } from "react-icons/fa";
 // import { useOrders } from "@/hooks/useOrders";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
-import CheckBoxOfPlanned from "../ui/CheckBoxOfPlanned";
 import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
 
 const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();
-  // const { orders } = useOrders();
 
   const handleClick = (id: string) => {
     openOrder(id);
@@ -38,10 +36,7 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
       </div>
 
       {order.order_id && <TagTechnician order_id={order.order_id} />}
-      <label>
-        {order.order_id && <CheckBoxOfPlanned order_id={order.order_id} />}
-        დაგეგმილი
-      </label>
+
       {order.order_id && <TagPlanTime order_id={order.order_id} />}
     </div>
   );
