@@ -8,6 +8,7 @@ import * as utils from "./utils";
 import { Task } from "./type";
 import { useOrders } from "@/hooks/useOrders";
 import TechniciansOrder from "../technicians-orders-list-container/technicians-order";
+import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 
 export default function NewCalendar() {
   const supabase = createClient();
@@ -187,20 +188,33 @@ export default function NewCalendar() {
   // ];
 
   const { orders } = useOrders();
+  const techNames = useTechniciansAndManagersDisplayNames();
   const renderDay = (date: Date) => {
     const key = utils.getDateKey(date);
-    const renderOrders = orders
-      .filter((order) => {
-        if (!order.plan_time) return false;
-        const myDate = new Date(order.plan_time);
-        myDate.toLocaleDateString();
-        return myDate.toLocaleDateString() === date.toLocaleDateString();
-      })
-      .sort((a, b) => {
-        return (
-          new Date(a.plan_time!).getTime() - new Date(b.plan_time!).getTime()
-        );
-      });
+    const dayOrders = orders.filter((order) => {
+      if (!order.plan_time) return false;
+      const myDate = new Date(order.plan_time);
+      return myDate.toLocaleDateString() === date.toLocaleDateString();
+    });
+    const ordersByGroup: { [groupKey: string]: typeof orders } = {};
+    for (const order of dayOrders) {
+      if (!order.technician) continue;
+      let technicians = order.technician.split(" ");
+      if (!technicians) continue;
+
+      // Normalize to array
+      if (!Array.isArray(technicians)) {
+        technicians = [technicians];
+      }
+
+      // Only use names that are in our known list (optional safety)
+      const validTechs = technicians.filter((t) => techNames.includes(t));
+
+      // Sort for consistency (Dato - Oto same as Oto - Dato)
+      const groupKey = validTechs.sort().join(" - ");
+      if (!ordersByGroup[groupKey]) ordersByGroup[groupKey] = [];
+      ordersByGroup[groupKey].push(order);
+    }
     return (
       <div key={key}>
         <div
@@ -215,10 +229,14 @@ export default function NewCalendar() {
             </span>
           </div>
         </div>
+
         <div className="flex flex-col gap-1">
-          {renderOrders.map((order) => (
-            <div key={order.order_id}>
-              <TechniciansOrder order={order} />
+          {Object.entries(ordersByGroup).map(([groupKey, groupOrders]) => (
+            <div key={groupKey}>
+              <div className="text-sm font-semibold underline">{groupKey}</div>
+              {groupOrders.map((order) => (
+                <TechniciansOrder key={order.order_id} order={order} />
+              ))}
             </div>
           ))}
           {(tasks[key] || []).map((task, index) => {
