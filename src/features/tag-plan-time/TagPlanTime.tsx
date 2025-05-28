@@ -26,10 +26,6 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
     }
   };
 
-  const handleClear = () => {
-    handleChange(null);
-  };
-
   return (
     <div className="flex flex-col gap-2 max-w-xs">
       <div className="font-medium">{order?.customer}</div>
@@ -44,13 +40,6 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
         placeholderText="Plan time"
         isClearable
       />
-
-      <button
-        onClick={handleClear}
-        className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded"
-      >
-        Clear Date & Time
-      </button>
     </div>
   );
 };
