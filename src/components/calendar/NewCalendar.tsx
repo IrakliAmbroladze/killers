@@ -276,7 +276,7 @@ export default function NewCalendar() {
       (_, i) => <div key={`empty-${i}`} />
     );
     return (
-      <div className="lg:grid gap-1 grid-cols-7 hidden min-w-[4000px]">
+      <div className="lg:grid gap-1 grid-cols-7 hidden min-w-[2000px]">
         {renderWeekdays()}
         {emptyDays}
         {days.map(renderDay)}
