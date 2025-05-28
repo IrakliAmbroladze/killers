@@ -189,12 +189,18 @@ export default function NewCalendar() {
   const { orders } = useOrders();
   const renderDay = (date: Date) => {
     const key = utils.getDateKey(date);
-    const renderOrders = orders.filter((order) => {
-      if (!order.plan_time) return false;
-      const myDate = new Date(order.plan_time);
-      myDate.toLocaleDateString();
-      return myDate.toLocaleDateString() === date.toLocaleDateString();
-    });
+    const renderOrders = orders
+      .filter((order) => {
+        if (!order.plan_time) return false;
+        const myDate = new Date(order.plan_time);
+        myDate.toLocaleDateString();
+        return myDate.toLocaleDateString() === date.toLocaleDateString();
+      })
+      .sort((a, b) => {
+        return (
+          new Date(a.plan_time!).getTime() - new Date(b.plan_time!).getTime()
+        );
+      });
     return (
       <div key={key} className="border p-2">
         <div
