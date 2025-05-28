@@ -6,6 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
+import Done from "@/features/done/Done";
 
 const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();
@@ -34,9 +35,11 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
         </div>
       </div>
 
-      {order.order_id && <TagTechnician order_id={order.order_id} />}
-
       {order.order_id && <TagPlanTime order_id={order.order_id} />}
+      <div className="flex justify-between items-center">
+        {order.order_id && <TagTechnician order_id={order.order_id} />}
+        {order.order_id && <Done order_id={order.order_id} />}
+      </div>
     </div>
   );
 };
