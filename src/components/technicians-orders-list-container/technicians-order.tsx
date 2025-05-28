@@ -17,7 +17,7 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   return (
     <div className="border rounded-lg mb-2.5">
       <div
-        className="group bg-gray-200 dark:bg-gray-900 rounded-lg mt-2.5 p-2.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out"
+        className="group bg-gray-200 dark:bg-gray-900 rounded-lg p-2.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out"
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
         <div className="flex">
