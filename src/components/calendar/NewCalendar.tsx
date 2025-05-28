@@ -202,20 +202,20 @@ export default function NewCalendar() {
         );
       });
     return (
-      <div key={key} className="border p-2">
+      <div key={key}>
         <div
           onClick={() => setSelectedDate(date)}
-          className="cursor-pointer font-bold flex justify-between pb-2.5"
+          className="cursor-pointer font-bold flex justify-center gap-4"
         >
+          <MdAddTask />
           <div className="flex gap-5">
             {date.getDate()}
             <span className="lg:hidden">
               {date.toLocaleString("en-US", { weekday: "short" })}
             </span>
           </div>
-          <MdAddTask />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           {renderOrders.map((order) => (
             <div key={order.order_id}>
               <TechniciansOrder order={order} />
@@ -272,7 +272,7 @@ export default function NewCalendar() {
   const renderWeekdays = () => (
     <>
       {utils.weekdays.map((d) => (
-        <div key={d} className="font-bold hidden lg:block">
+        <div key={d} className="font-bold hidden lg:block text-center">
           {d}
         </div>
       ))}

@@ -45,7 +45,11 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
 
   if (!order) return <div>Order not found</div>;
 
-  return <button onClick={handleClick}>{done ? "done" : "waiting"}</button>;
+  return (
+    <button onClick={handleClick} className="text-sm">
+      {done ? "done" : "waiting"}
+    </button>
+  );
 };
 
 export default Done;
