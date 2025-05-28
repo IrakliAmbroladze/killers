@@ -3,8 +3,6 @@ import { State } from "@/types/orders/State";
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "SET_ORDERS":
-      return { ...state };
     case "UPDATE_ORDER":
       return {
         ...state,
@@ -21,6 +19,11 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         currentPage: action.payload,
+      };
+    case "SET_SEARCH_TERM":
+      return {
+        ...state,
+        searchTerm: action.payload,
       };
 
     default:

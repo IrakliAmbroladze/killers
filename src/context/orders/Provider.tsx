@@ -1,6 +1,6 @@
 import { Sheets_Invoice } from "@/types/invoices";
 import { Context } from "@/context/orders/Context";
-import { useReducer, useMemo } from "react";
+import { useReducer } from "react";
 import { reducer } from "./reducer";
 import * as action from "./action";
 import { State } from "@/types/orders/State";
@@ -17,6 +17,7 @@ export const Provider = ({
   const initialState: State = {
     orders: initialOrders,
     currentPage: 1,
+    searchTerm: "",
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -26,25 +27,18 @@ export const Provider = ({
   const addOrder = (order: Sheets_Invoice) => dispatch(action.addOrder(order));
   const setCurrentPage = (page: number) =>
     dispatch(action.setCurrentPage(page));
-
-  // Pagination logic
-  const paginatedOrders = useMemo(() => {
-    const start = (state.currentPage - 1) * PAGE_SIZE;
-    return state.orders.slice(start, start + PAGE_SIZE);
-  }, [state.orders, state.currentPage]);
-
-  const totalPages = Math.ceil(state.orders.length / PAGE_SIZE);
+  const setSearchTerm = (term: string) => dispatch(action.setSearchTerm(term));
 
   return (
     <Context.Provider
       value={{
         orders: state.orders,
-        paginatedOrders,
         updateOrder,
         addOrder,
         currentPage: state.currentPage,
         setCurrentPage,
-        totalPages,
+        searchTerm: state.searchTerm,
+        setSearchTerm,
         pageSize: PAGE_SIZE,
       }}
     >

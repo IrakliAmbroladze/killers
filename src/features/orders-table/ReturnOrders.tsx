@@ -3,7 +3,6 @@ import { FiCopy, FiEdit } from "react-icons/fi";
 import Cart from "@/components/cart";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import { ReturnOrdersProps } from "@/types/orders-table/ReturnOrdersProps";
-import { useOrders } from "@/hooks/useOrders";
 
 const ReturnOrders = ({
   pageSize,
@@ -17,7 +16,6 @@ const ReturnOrders = ({
   totalOrders,
 }: ReturnOrdersProps) => {
   const { openOrder } = useOrderModal();
-  const { totalPages } = useOrders();
   const Pagination = () => (
     <div className="flex justify-center gap-2 mt-4">
       <button
@@ -28,7 +26,7 @@ const ReturnOrders = ({
         Prev
       </button>
       <span>
-        Page {currentPage} / {totalPages}
+        Page {currentPage} / {Math.ceil(totalOrders / pageSize)}
       </span>
       <button
         disabled={currentPage * pageSize >= totalOrders}
