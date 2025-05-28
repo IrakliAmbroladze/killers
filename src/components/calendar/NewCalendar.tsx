@@ -189,9 +189,12 @@ export default function NewCalendar() {
   const { orders } = useOrders();
   const renderDay = (date: Date) => {
     const key = utils.getDateKey(date);
-    const renderOrders = orders.filter(
-      (order) => order.delivery_date === date.toISOString().split("T")[0]
-    );
+    const renderOrders = orders.filter((order) => {
+      if (!order.plan_time) return false;
+      const myDate = new Date(order.plan_time);
+      myDate.toLocaleDateString();
+      return myDate.toLocaleDateString() === date.toLocaleDateString();
+    });
     return (
       <div key={key} className="border p-2">
         <div
