@@ -12,15 +12,19 @@ import ReturnOrders from "./ReturnOrders";
 import { wholeListSearch } from "@/utils/orders-table/wholeListSearch";
 
 const Orders = () => {
-  const { orders } = useOrders();
+  const {
+    orders,
+    currentPage,
+    pageSize,
+    setCurrentPage,
+    searchTerm,
+    setSearchTerm,
+  } = useOrders();
 
   const [openModalIndex, setOpenModalIndex] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [status, setStatus] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 25;
 
   const debounced = useDebouncedCallback((value: string) => {
     setDebouncedSearchTerm(value);
@@ -32,12 +36,14 @@ const Orders = () => {
       setSearchTerm(storedSearch);
       setDebouncedSearchTerm(storedSearch);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     localStorage.setItem("search", searchTerm);
     debounced(searchTerm);
     setCurrentPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounced, searchTerm]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +60,7 @@ const Orders = () => {
     <div className="overflow-x-auto sm:p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
       <ReturnOrders
+        pageSize={pageSize}
         onSetStatus={setStatus}
         onSetTitle={setTitle}
         onOpenModal={setOpenModalIndex}
