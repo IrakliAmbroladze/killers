@@ -8,6 +8,14 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
   const order = findOrder(orders, order_id);
 
   const [done, setDone] = useState<boolean>(false);
+
+  const date = new Date(order?.plan_time ?? "");
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const localDateString = `${year}-${month}-${day}`;
   useEffect(() => {
     if (order?.delivery_date !== "") {
       setDone(true);
@@ -28,7 +36,7 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
 
     const updatedOrder = {
       ...order,
-      delivery_date: newDone ? "2025-05-30" : "",
+      delivery_date: newDone ? localDateString : "",
     };
 
     updateOrder(updatedOrder);
