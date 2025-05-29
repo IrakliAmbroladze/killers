@@ -182,10 +182,6 @@ export default function NewCalendar() {
       </>
     );
   };
-  // const myTestArray = [
-  //   { date: "2025-05-19", name: "Ambroladze" },
-  //   { date: "2025-05-18", name: "Irakli" },
-  // ];
 
   const { orders } = useOrders();
   const techNames = useTechniciansAndManagersDisplayNames();
@@ -202,15 +198,12 @@ export default function NewCalendar() {
       let technicians = order.technician.split(" ");
       if (!technicians) continue;
 
-      // Normalize to array
       if (!Array.isArray(technicians)) {
         technicians = [technicians];
       }
 
-      // Only use names that are in our known list (optional safety)
       const validTechs = technicians.filter((t) => techNames.includes(t));
 
-      // Sort for consistency (Dato - Oto same as Oto - Dato)
       const groupKey = validTechs.sort().join(" - ");
       if (!ordersByGroup[groupKey]) ordersByGroup[groupKey] = [];
       ordersByGroup[groupKey].push(order);
@@ -234,9 +227,16 @@ export default function NewCalendar() {
           {Object.entries(ordersByGroup).map(([groupKey, groupOrders]) => (
             <div key={groupKey}>
               <div className="text-sm font-semibold underline">{groupKey}</div>
-              {groupOrders.map((order) => (
-                <TechniciansOrder key={order.order_id} order={order} />
-              ))}
+              {groupOrders
+                .sort((a, b) => {
+                  return (
+                    new Date(a.plan_time! ?? 0).getTime() -
+                    new Date(b.plan_time! ?? 0).getTime()
+                  );
+                })
+                .map((order) => (
+                  <TechniciansOrder key={order.order_id} order={order} />
+                ))}
             </div>
           ))}
           {(tasks[key] || []).map((task, index) => {
