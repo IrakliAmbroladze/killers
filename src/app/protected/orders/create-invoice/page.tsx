@@ -17,6 +17,7 @@ const CreateInvoice = () => {
     phone: "",
     email: "",
     delivery_date: "",
+    plan_time: "",
   };
   return (
     <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
