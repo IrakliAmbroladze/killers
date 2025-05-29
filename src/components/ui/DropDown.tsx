@@ -20,9 +20,9 @@ const DropDown = ({ list, onChange }: DropDownProps) => {
     <select
       value={selectedValue}
       onChange={handleChange}
-      className="px-2 py-1 rounded border dark:bg-gray-900"
+      className="px-0.5 py-0.5 rounded border dark:bg-gray-900 text-xs"
     >
-      <option value="">დათაგე ტექნიკოსი</option>
+      <option value="">ტექნიკ.</option>
       {list.map((item, index) => (
         <option key={index} value={item}>
           {item}

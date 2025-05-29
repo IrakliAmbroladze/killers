@@ -30,4 +30,5 @@ export interface Sheets_Invoice {
   technician?: string;
   document?: string;
   order_id?: string;
+  plan_time?: string;
 }

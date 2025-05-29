@@ -62,6 +62,7 @@ export default function OrderForm({
           order_id: newId,
         };
         addOrder(addData);
+        console.log(addData);
         await fetch("/api/proxy", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

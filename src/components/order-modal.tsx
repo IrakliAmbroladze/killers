@@ -3,11 +3,12 @@
 import Comments from "@/components/comments/comments";
 import Modal from "@/components/ui/modal";
 import { RxActivityLog } from "react-icons/rx";
-import CheckBoxOfPlanned from "@/components/ui/CheckBoxOfPlanned";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import { Sheets_Invoice } from "@/types/invoices";
 import { useOrders } from "@/hooks/useOrders";
+import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
+import Done from "@/features/done/Done";
 
 const OrderModal = () => {
   const { openOrderId, closeOrder } = useOrderModal();
@@ -28,13 +29,12 @@ const OrderModal = () => {
         <div>პროცედურა: {order.items}</div>
         <div>შემსრულებელი: {order.provider}</div>
         <div>თანხა: {order.total}</div>
-        <div>
+
+        {order.order_id && <TagPlanTime order_id={order.order_id} />}
+        <div className="flex justify-between items-center">
           {order.order_id && <TagTechnician order_id={order.order_id} />}
+          {order.order_id && <Done order_id={order.order_id} />}
         </div>
-        <label>
-          {order.order_id && <CheckBoxOfPlanned order_id={order.order_id} />}
-          დაგეგმილი
-        </label>
         <div>თვე: {order.date}</div>
         <div className="flex items-center gap-1.5 pt-5">
           <RxActivityLog /> <span>აქტივობა:</span>
