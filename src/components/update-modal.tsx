@@ -34,6 +34,7 @@ const UpdateModal = ({
     delivery_date: invoice.delivery_date,
     technician: invoice.technician,
     document: invoice.document,
+    plan_time: invoice.plan_time,
   };
   const editData: Sheets_Invoice = {
     ...copyData,
