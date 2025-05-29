@@ -20,6 +20,12 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
       alert("შესრულებულ შეკვეთას დაგეგმვის თარიღს ვერ შეუცვლი");
       return;
     }
+    if (!order.technician) {
+      alert(
+        "ტექნიკოსი არაა მონიშნული. დაჯგუფებისთვის აუცილებელია ჯერ ვიცოდეთ ვინ აკეთებს პროცედურას"
+      );
+      return;
+    }
 
     const updatedOrder = {
       ...order,

@@ -60,6 +60,13 @@ const InitialTechniciansContainer = ({
     const updatedTechnicians = selectedTechnicians.filter(
       (item) => item !== name
     );
+
+    if (updatedTechnicians.length == 0 && order.plan_time) {
+      alert(
+        "პროცედურაზე, რომელსაც დაგეგმვის თარიღი აქვს, ერთი ტექნიკოსი მაინც უნდა იყოს მონიშნული"
+      );
+      return;
+    }
     const newdata = updatedTechnicians.join(" ");
     const updatedOrder = {
       ...order,
