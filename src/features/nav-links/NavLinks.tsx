@@ -2,31 +2,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import React, { JSX } from "react";
-import { createClient } from "@/utils/supabase/server";
-import { isTechnician } from "@/utils/supabase/utils";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
-
-interface LinkItem {
-  name: string;
-  href: string;
-}
-
-const allLinks: LinkItem[] = [
-  { name: "Orders", href: "/protected/orders" },
-  { name: "Procedures", href: "/protected/procedures" },
-];
+import { getNavLinks } from "./utils/navLinksService";
 
 export default async function NavLinks(): Promise<JSX.Element> {
-  const supabase = await createClient();
-
-  const userResponse = await supabase.auth.getUser();
-
-  const linksToShow = (await isTechnician(userResponse))
-    ? allLinks.filter((link) => link.name !== "Sales" && link.name !== "Orders")
-    : allLinks;
+  const { linksToShow } = await getNavLinks();
 
   return (
     <div className={`flex flex-wrap gap-2 h-full`}>
