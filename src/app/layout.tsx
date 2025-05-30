@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/header-auth";
+
+import NavLinks from "@/components/ui/nav-links";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,13 +41,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <header className="w-full py-5 flex justify-end h-10 items-center fixed  z-50 dark:bg-stone-900 bg-gray-50">
+            <NavLinks />
+          </header>
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">
-            <nav className="w-full py-5 flex justify-end h-16 items-center fixed  z-50 dark:bg-stone-900 bg-gray-50">
-              <div className="flex gap-5 items-center">
-                {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-                <ThemeSwitcher />
-              </div>
-            </nav>
             {children}
           </main>
         </ThemeProvider>
