@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
 import NavLinks from "@/features/nav-links/NavLinks";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <header className="fixed z-50 w-full h-10 flex justify-end items-center dark:bg-stone-900 bg-gray-50">
-            <NavLinks />
+            <Header />
           </header>
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">
             {children}
