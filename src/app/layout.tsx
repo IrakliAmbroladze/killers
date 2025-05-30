@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
-import NavLinks from "@/features/nav-links/NavLinks";
 import Header from "@/components/Header";
 
 const geistSans = Geist({
@@ -42,7 +41,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="fixed z-50 w-full h-10 flex justify-end items-center dark:bg-stone-900 bg-gray-50">
+          <header className="fixed z-50 w-full h-10 flex justify-between px-2.5 items-center dark:bg-stone-900 bg-gray-50">
             <Header />
           </header>
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">
