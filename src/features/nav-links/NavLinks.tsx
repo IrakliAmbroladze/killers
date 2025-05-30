@@ -23,7 +23,7 @@ export default async function NavLinks(): Promise<JSX.Element> {
           <Link
             key={link.name}
             href={link.href}
-            className="flex text-black grow items-center justify-center rounded-md bg-gray-50 text-xs font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"
+            className="flex text-black grow items-center justify-center rounded-md bg-white text-xs font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"
           >
             <p className="md:block">{link.name}</p>
           </Link>
