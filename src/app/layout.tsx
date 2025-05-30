@@ -41,7 +41,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header className="w-full py-5 flex justify-end h-10 items-center fixed  z-50 dark:bg-stone-900 bg-gray-50">
+          <header className="fixed z-50 w-full h-10 flex justify-end items-center dark:bg-stone-900 bg-gray-50">
             <NavLinks />
           </header>
           <main className="min-h-screen flex flex-col items-center flex-1 w-full ">

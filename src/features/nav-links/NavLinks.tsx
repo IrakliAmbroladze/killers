@@ -9,7 +9,7 @@ import HeaderAuth from "@/components/header-auth";
 import { getNavLinks } from "./utils/navLinksService";
 
 export default async function NavLinks(): Promise<JSX.Element> {
-  const { linksToShow } = await getNavLinks();
+  const linksToShow = await getNavLinks();
 
   return (
     <div className={`flex flex-wrap gap-2 h-full`}>
