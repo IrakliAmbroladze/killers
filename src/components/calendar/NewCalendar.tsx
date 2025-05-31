@@ -10,6 +10,7 @@ import TechniciansOrder from "../technicians-orders-list-container/technicians-o
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
 import { useMonth } from "@/hooks/useMonth";
+import { useYear } from "@/hooks/useYear";
 
 export default function NewCalendar() {
   const supabase = createClient();
@@ -39,9 +40,9 @@ export default function NewCalendar() {
   } | null>(null);
   // const [updatedTaskText, setUpdatedTaskText] = useState<string>("");
   // const [isEditing, setIsEditing] = useState<boolean>(false);
-  // const [month, setMonth] = useState<number>(utils.currentMonth);
   const { month, setMonth } = useMonth();
-  const [year, setYear] = useState<number>(utils.currentYear);
+  const { year, setYear } = useYear();
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task>({});
   const [selectedWeek, setSelectedWeek] = useState<number>(utils.currentWeek);
@@ -359,46 +360,46 @@ export default function NewCalendar() {
 
   return (
     <>
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full flex justify-center items-center"></div>
+      <div className="flex mb-2 justify-between text-xs">
+        <input
+          type="number"
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+          className="border w-12"
+        />
         <button
-          className="my-1.5 p-0.5 border rounded-lg text-xs"
+          className="border rounded-sm text-xs"
           onClick={() => setShowCalendar((prev) => !prev)}
         >
           {showCalendar ? "Hide Calendar" : "Show Calendar"}
         </button>
+        <select
+          value={month}
+          onChange={(e) => setMonth(Number(e.target.value))}
+          className="text-black bg-gray-100 text-xs"
+        >
+          {utils.months.map((m, index) => (
+            <option key={index} value={index}>
+              {m}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={selectedWeek}
+          onChange={(e) => setSelectedWeek(Number(e.target.value))}
+          className="px-2 lg:hidden text-black bg-gray-100"
+        >
+          {Array.from({ length: weeks }, (_, idx) => (
+            <option key={idx} value={idx + 1}>
+              კვირა {idx + 1}
+            </option>
+          ))}
+        </select>
       </div>
       {showCalendar && (
         <>
-          <div className="flex mb-2 justify-between text-xs">
-            <input
-              type="number"
-              value={year}
-              onChange={(e) => setYear(Number(e.target.value))}
-              className="border w-12"
-            />
-            <select
-              value={month}
-              onChange={(e) => setMonth(Number(e.target.value))}
-              className="text-black bg-gray-100 text-xs"
-            >
-              {utils.months.map((m, index) => (
-                <option key={index} value={index}>
-                  {m}
-                </option>
-              ))}
-            </select>
-            <select
-              value={selectedWeek}
-              onChange={(e) => setSelectedWeek(Number(e.target.value))}
-              className="px-2 lg:hidden text-black bg-gray-100"
-            >
-              {Array.from({ length: weeks }, (_, idx) => (
-                <option key={idx} value={idx + 1}>
-                  კვირა {idx + 1}
-                </option>
-              ))}
-            </select>
-          </div>
           <div className="w-full overflow-auto">
             <MonthGrid />
             <WeekGrid days={days} />

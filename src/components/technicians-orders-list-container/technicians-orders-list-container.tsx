@@ -1,14 +1,16 @@
 "use client";
 import SortOrders from "./SortOrders";
 import { useOrders } from "@/hooks/useOrders";
-import { filterByMonth } from "./utils/filterByMonth";
+import { filterByYearMonth } from "./utils/filterByYearMonth";
 import { useMonth } from "@/hooks/useMonth";
+import { useYear } from "@/hooks/useYear";
 
 const TechniciansOrdersListCotainer = () => {
   const { orders } = useOrders();
   const { month } = useMonth();
+  const { year } = useYear();
 
-  const ordersFilteredByMonth = filterByMonth(orders, month);
+  const ordersFilteredByMonth = filterByYearMonth(orders, year, month);
 
   return <SortOrders orders={ordersFilteredByMonth} />;
 };

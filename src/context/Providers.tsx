@@ -4,6 +4,7 @@ import React from "react";
 import { Provider as Orders } from "@/context/orders/Provider";
 import { Provider as OrderModal } from "@/context/order-modal/Provider";
 import { Provider as Employees } from "@/context/employees/Provider";
+import { Provider as Year } from "@/context/year/Provider";
 
 // Protected Layout Providers
 export const Providers = ({
@@ -14,7 +15,9 @@ export const Providers = ({
   return (
     <Orders initialOrders={orders}>
       <OrderModal>
-        <Employees employees={employees}>{children}</Employees>
+        <Employees employees={employees}>
+          <Year>{children}</Year>
+        </Employees>
       </OrderModal>
     </Orders>
   );
