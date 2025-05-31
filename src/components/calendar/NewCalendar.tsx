@@ -367,12 +367,12 @@ export default function NewCalendar() {
       </div>
       {showCalendar && (
         <>
-          <div className="flex mb-2 justify-between mt-[-20px]">
+          <div className="flex mb-2 justify-between text-xs">
             <input
               type="number"
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="border w-24"
+              className="border w-12"
             />
             <select
               value={month}
