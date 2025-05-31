@@ -209,7 +209,7 @@ export default function NewCalendar() {
       ordersByGroup[groupKey].push(order);
     }
     return (
-      <div key={key}>
+      <div key={key} className="border">
         <div
           onClick={() => setSelectedDate(date)}
           className="cursor-pointer font-bold flex justify-center gap-4"
@@ -226,7 +226,16 @@ export default function NewCalendar() {
         <div className="flex flex-col gap-1">
           {Object.entries(ordersByGroup).map(([groupKey, groupOrders]) => (
             <div key={groupKey}>
-              <div className="text-sm font-semibold underline">{groupKey}</div>
+              <div
+                className="text-sm font-semibold underline text-center"
+                style={{
+                  background: "rgb(255, 100, 0)",
+                  color: "black",
+                  textDecoration: "none",
+                }}
+              >
+                {groupKey}
+              </div>
               {groupOrders
                 .sort((a, b) => {
                   return (
@@ -300,10 +309,10 @@ export default function NewCalendar() {
   const MonthGrid = () => {
     const emptyDays = Array.from(
       { length: utils.dayOfWeekOfFirstDayOfMonth(year, month) },
-      (_, i) => <div key={`empty-${i}`} />
+      (_, i) => <div key={`empty-${i} `} className="border p-2" />
     );
     return (
-      <div className="lg:grid gap-1 grid-cols-7 hidden min-w-[2000px]">
+      <div className="lg:grid grid-cols-7 hidden min-w-[1800px] text-xs border">
         {renderWeekdays()}
         {emptyDays}
         {days.map(renderDay)}
@@ -327,25 +336,27 @@ export default function NewCalendar() {
 
   return (
     <>
-      <button
-        className="m-2.5 p-2.5 border rounded-2xl"
-        onClick={() => setShowCalendar((prev) => !prev)}
-      >
-        {showCalendar ? "Hide Calendar" : "Show Calendar"}
-      </button>
+      <div className="w-full flex justify-center items-center">
+        <button
+          className="my-1.5 p-0.5 border rounded-lg text-xs"
+          onClick={() => setShowCalendar((prev) => !prev)}
+        >
+          {showCalendar ? "Hide Calendar" : "Show Calendar"}
+        </button>
+      </div>
       {showCalendar && (
-        <div className="w-full px-2.5 overflow-auto">
-          <div className="flex mb-4 justify-between">
+        <>
+          <div className="flex mb-2 justify-between mt-[-20px]">
             <input
               type="number"
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="border px-2 w-24"
+              className="border w-24"
             />
             <select
               value={month}
               onChange={(e) => setMonth(Number(e.target.value))}
-              className="px-2 text-black bg-gray-100"
+              className="text-black bg-gray-100 text-xs"
             >
               {utils.months.map((m, index) => (
                 <option key={index} value={index}>
@@ -365,21 +376,22 @@ export default function NewCalendar() {
               ))}
             </select>
           </div>
+          <div className="w-full overflow-auto">
+            <MonthGrid />
+            <WeekGrid days={days} />
 
-          <MonthGrid />
-          <WeekGrid days={days} />
-
-          {selectedDate && (
-            <TaskModal
-              date={selectedDate}
-              onClose={() => setSelectedDate(null)}
-              onAdd={(text) => {
-                addTask(selectedDate, text);
-                setSelectedDate(null);
-              }}
-            />
-          )}
-        </div>
+            {selectedDate && (
+              <TaskModal
+                date={selectedDate}
+                onClose={() => setSelectedDate(null)}
+                onAdd={(text) => {
+                  addTask(selectedDate, text);
+                  setSelectedDate(null);
+                }}
+              />
+            )}
+          </div>
+        </>
       )}
     </>
   );

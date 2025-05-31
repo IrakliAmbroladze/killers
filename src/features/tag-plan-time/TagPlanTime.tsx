@@ -40,7 +40,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
   return (
     <div className="flex gap-0.5 max-w-xs">
-      <label htmlFor={`plan-time-${order_id}`} className="text-sm font-medium">
+      <label htmlFor={`plan-time-${order_id}`} className="text-xs font-medium">
         Plan:
       </label>
 

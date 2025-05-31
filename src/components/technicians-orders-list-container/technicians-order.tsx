@@ -16,7 +16,7 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   };
 
   return (
-    <div className="border rounded-lg mb-1">
+    <div className="border-b">
       <div
         className={`group ${
           order.delivery_date
@@ -26,7 +26,7 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
         <div>
-          {order.customer} - {order.identity}
+          {order.customer} - {order.identity} - {order.address}
         </div>
         {/* <div className="flex">
           <FiAlignLeft />
