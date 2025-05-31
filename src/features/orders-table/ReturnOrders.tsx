@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { FiCopy, FiEdit } from "react-icons/fi";
 import Cart from "@/components/cart";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import { ReturnOrdersProps } from "@/types/orders-table/ReturnOrdersProps";
-import { Sheets_Invoice } from "@/types/invoices";
+import { useFilteredOrders } from "@/hooks/useFilteredOrders";
+import { useOrders } from "@/hooks/useOrders";
 
 const ReturnOrders = ({
   pageSize,
@@ -11,12 +12,13 @@ const ReturnOrders = ({
   onSetTitle,
   onOpenModal,
   modalIndex,
-  orders,
   currentPage,
   setCurrentPage,
   totalOrders,
 }: ReturnOrdersProps) => {
   const { openOrder } = useOrderModal();
+  const { filteredOrders, totalFiltered } = useFilteredOrders();
+  const { sort, setSort, setFilter } = useOrders();
   const Pagination = () => (
     <div className="flex justify-center gap-2 mt-4">
       <button
@@ -27,7 +29,7 @@ const ReturnOrders = ({
         Prev
       </button>
       <span>
-        Page {currentPage} / {Math.ceil(totalOrders / pageSize)}
+        Page {currentPage} / {Math.ceil(totalFiltered / pageSize)}
       </span>
       <button
         disabled={currentPage * pageSize >= totalOrders}
@@ -38,52 +40,6 @@ const ReturnOrders = ({
       </button>
     </div>
   );
-
-  const [filters, setFilters] = useState({
-    date: "",
-    customer: "",
-    identity: "",
-    address: "",
-    items: "",
-    total: "",
-    provider: "",
-    seller: "",
-    delivery: "",
-    technician: "",
-  });
-
-  const [sortConfig, setSortConfig] = useState<{
-    key: keyof Sheets_Invoice;
-    direction: "asc" | "desc";
-  } | null>(null);
-
-  const filteredOrders = useMemo(() => {
-    let filtered = [...orders];
-
-    // Apply filters
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value.trim() !== "") {
-        filtered = filtered.filter((order) =>
-          order[key as keyof Sheets_Invoice]
-            ?.toLowerCase()
-            .includes(value.toLowerCase())
-        );
-      }
-    });
-
-    // Apply sort
-    if (sortConfig) {
-      filtered.sort((a, b) => {
-        const aValue = a[sortConfig.key]?.toString() || "";
-        const bValue = b[sortConfig.key]?.toString() || "";
-        return sortConfig.direction === "asc"
-          ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue);
-      });
-    }
-
-    return filtered;
-  }, [orders, filters, sortConfig]);
 
   return (
     <>
@@ -96,55 +52,49 @@ const ReturnOrders = ({
             <th className="p-1">Copy</th>
             <th
               className="p-1 cursor-pointer"
-              onClick={() =>
-                setSortConfig((prev) => {
-                  if (prev?.key === "date") {
-                    return {
-                      key: "date",
-                      direction: prev.direction === "asc" ? "desc" : "asc",
-                    };
-                  }
-                  return { key: "date", direction: "asc" };
-                })
-              }
+              onClick={() => {
+                const dir =
+                  sort?.column === "date" && sort?.direction === "asc"
+                    ? "desc"
+                    : "asc";
+                setSort("date", dir);
+              }}
             >
-              Date
+              Date{" "}
+              {sort?.column === "date"
+                ? sort.direction === "asc"
+                  ? "↑"
+                  : "↓"
+                : ""}
               <input
                 type="text"
-                className="mt-1 block w-full text-xs p-1 rounded border"
-                placeholder="Search..."
-                value={filters.date}
-                onChange={(e) =>
-                  setFilters((prev) => ({ ...prev, date: e.target.value }))
-                }
+                className="block mt-1 w-full text-xs border rounded px-1"
+                onChange={(e) => setFilter("date", e.target.value)}
               />
             </th>
             <th
               className="p-1 cursor-pointer"
-              onClick={() =>
-                setSortConfig((prev) => {
-                  if (prev?.key === "customer") {
-                    return {
-                      key: "customer",
-                      direction: prev.direction === "asc" ? "desc" : "asc",
-                    };
-                  }
-                  return { key: "customer", direction: "asc" };
-                })
-              }
+              onClick={() => {
+                const dir =
+                  sort?.column === "customer" && sort?.direction === "asc"
+                    ? "desc"
+                    : "asc";
+                setSort("customer", dir);
+              }}
             >
-              Customer
+              Customer{" "}
+              {sort?.column === "customer"
+                ? sort.direction === "asc"
+                  ? "↑"
+                  : "↓"
+                : ""}
               <input
                 type="text"
-                className="mt-1 block w-full text-xs p-1 rounded border"
-                placeholder="Search..."
-                value={filters.customer}
-                onChange={(e) =>
-                  setFilters((prev) => ({ ...prev, customer: e.target.value }))
-                }
+                className="block mt-1 w-full text-xs border rounded px-1"
+                onChange={(e) => setFilter("customer", e.target.value)}
               />
             </th>
-            <th
+            {/* <th
               className="p-1 cursor-pointer hidden lg:table-cell"
               onClick={() =>
                 setSortConfig((prev) => {
@@ -347,7 +297,7 @@ const ReturnOrders = ({
                 }
               />
             </th>
-            <th className="p-1">Doc.</th>
+            <th className="p-1">Doc.</th> */}
           </tr>
         </thead>
         <tbody>
