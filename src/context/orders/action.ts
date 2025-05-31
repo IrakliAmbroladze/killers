@@ -12,3 +12,13 @@ export const setCurrentPage = (page: number) =>
 
 export const setSearchTerm = (term: string) =>
   createAction("SET_SEARCH_TERM", term);
+
+export const setFilter = (term: { key: string; value: string }) =>
+  createAction("SET_FILTER", term);
+
+export const clearFilters = () => createAction("CLEAR_FILTERS");
+
+export const setSort = (payload: {
+  column: keyof Sheets_Invoice;
+  direction: "asc" | "desc";
+}) => createAction("SET_SORT", payload);
