@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { FiCopy, FiEdit } from "react-icons/fi";
 import Cart from "@/components/cart";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import { ReturnOrdersProps } from "@/types/orders-table/ReturnOrdersProps";
+import { Sheets_Invoice } from "@/types/invoices";
 
 const ReturnOrders = ({
   pageSize,
@@ -37,6 +38,53 @@ const ReturnOrders = ({
       </button>
     </div>
   );
+
+  const [filters, setFilters] = useState({
+    date: "",
+    customer: "",
+    identity: "",
+    address: "",
+    items: "",
+    total: "",
+    provider: "",
+    seller: "",
+    delivery: "",
+    technician: "",
+  });
+
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof Sheets_Invoice;
+    direction: "asc" | "desc";
+  } | null>(null);
+
+  const filteredOrders = useMemo(() => {
+    let filtered = [...orders];
+
+    // Apply filters
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value.trim() !== "") {
+        filtered = filtered.filter((order) =>
+          order[key as keyof Sheets_Invoice]
+            ?.toLowerCase()
+            .includes(value.toLowerCase())
+        );
+      }
+    });
+
+    // Apply sort
+    if (sortConfig) {
+      filtered.sort((a, b) => {
+        const aValue = a[sortConfig.key]?.toString() || "";
+        const bValue = b[sortConfig.key]?.toString() || "";
+        return sortConfig.direction === "asc"
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      });
+    }
+
+    return filtered;
+  }, [orders, filters, sortConfig]);
+
   return (
     <>
       <Pagination />
@@ -46,21 +94,264 @@ const ReturnOrders = ({
             <th className="p-1">View</th>
             <th className="p-1">Edit</th>
             <th className="p-1">Copy</th>
-            <th className="p-1">Date</th>
-            <th className="p-1">Customer</th>
-            <th className="p-1 hidden lg:table-cell">Identity</th>
-            <th className="p-1 ">Address</th>
-            <th className="p-1 hidden lg:table-cell">Items</th>
-            <th className="p-1 hidden lg:table-cell">Total</th>
-            <th className="p-1 hidden lg:table-cell">Provider</th>
-            <th className="p-1 hidden lg:table-cell">Seller</th>
-            <th className="p-1 hidden lg:table-cell">Delivery Date</th>
-            <th className="p-1">Tech.</th>
+            <th
+              className="p-1 cursor-pointer"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "date") {
+                    return {
+                      key: "date",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "date", direction: "asc" };
+                })
+              }
+            >
+              Date
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.date}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, date: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "customer") {
+                    return {
+                      key: "customer",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "customer", direction: "asc" };
+                })
+              }
+            >
+              Customer
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.customer}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, customer: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer hidden lg:table-cell"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "identity") {
+                    return {
+                      key: "identity",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "identity", direction: "asc" };
+                })
+              }
+            >
+              Identity
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.identity}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, identity: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "address") {
+                    return {
+                      key: "address",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "address", direction: "asc" };
+                })
+              }
+            >
+              Address
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.address}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, address: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer hidden lg:table-cell"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "items") {
+                    return {
+                      key: "items",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "items", direction: "asc" };
+                })
+              }
+            >
+              Items
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.items}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, items: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer hidden lg:table-cell"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "total") {
+                    return {
+                      key: "total",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "total", direction: "asc" };
+                })
+              }
+            >
+              Total
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.total}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, total: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer hidden lg:table-cell"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "provider") {
+                    return {
+                      key: "provider",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "provider", direction: "asc" };
+                })
+              }
+            >
+              Provider
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.provider}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, provider: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer hidden lg:table-cell"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "seller") {
+                    return {
+                      key: "seller",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "seller", direction: "asc" };
+                })
+              }
+            >
+              Seller
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.seller}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, seller: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer hidden lg:table-cell"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "delivery_date") {
+                    return {
+                      key: "delivery_date",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "delivery_date", direction: "asc" };
+                })
+              }
+            >
+              Delivery Date
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.delivery}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, delivery: e.target.value }))
+                }
+              />
+            </th>
+            <th
+              className="p-1 cursor-pointer"
+              onClick={() =>
+                setSortConfig((prev) => {
+                  if (prev?.key === "technician") {
+                    return {
+                      key: "technician",
+                      direction: prev.direction === "asc" ? "desc" : "asc",
+                    };
+                  }
+                  return { key: "technician", direction: "asc" };
+                })
+              }
+            >
+              Tech.
+              <input
+                type="text"
+                className="mt-1 block w-full text-xs p-1 rounded border"
+                placeholder="Search..."
+                value={filters.technician}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    technician: e.target.value,
+                  }))
+                }
+              />
+            </th>
             <th className="p-1">Doc.</th>
           </tr>
         </thead>
         <tbody>
-          {orders.map((invoice) => (
+          {filteredOrders.map((invoice) => (
             <tr
               key={invoice.order_id}
               className="border-b dark:border-stone-700 hover:bg-gray-100 dark:hover:bg-stone-900"
