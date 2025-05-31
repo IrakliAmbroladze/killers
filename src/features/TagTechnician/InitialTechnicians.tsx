@@ -15,14 +15,7 @@ const InitialTechnicians = ({
   onTechnicianDelete,
 }: InitialTechniciansProps) => {
   return (
-    <div className="flex">
-      <DropDown
-        list={displayNames}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-          const selected = e.target.value;
-          if (selected) onTechnicianSelect(selected);
-        }}
-      />
+    <>
       {selectedTechnicians.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {selectedTechnicians.map((name, index) => (
@@ -35,7 +28,14 @@ const InitialTechnicians = ({
           ))}
         </div>
       )}
-    </div>
+      <DropDown
+        list={displayNames}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+          const selected = e.target.value;
+          if (selected) onTechnicianSelect(selected);
+        }}
+      />
+    </>
   );
 };
 

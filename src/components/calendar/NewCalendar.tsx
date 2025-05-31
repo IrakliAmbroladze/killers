@@ -312,7 +312,7 @@ export default function NewCalendar() {
       (_, i) => <div key={`empty-${i} `} className="border p-2" />
     );
     return (
-      <div className="lg:grid grid-cols-7 hidden min-w-[1800px] text-xs border">
+      <div className="lg:grid grid-cols-7 hidden min-w-[1500px] text-xs border">
         {renderWeekdays()}
         {emptyDays}
         {days.map(renderDay)}
