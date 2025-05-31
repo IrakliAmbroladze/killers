@@ -1,5 +1,4 @@
 import React, { JSX } from "react";
-import SideNav from "@/components/ui/sidenav";
 import fetchOrders from "@/utils/server/fetch-orders";
 import OrderModal from "@/components/order-modal";
 import { Providers } from "@/context/Providers";
@@ -16,10 +15,7 @@ export default async function Layout({
   const employees = await getEmployees();
   return (
     <Providers orders={orders} employees={employees}>
-      <div className="w-full mt-20 sm:px-20 flex flex-col sm:flex-row">
-        <div className="sm:w-[200px] shrink-0">
-          <SideNav />
-        </div>
+      <div className="w-full mt-10 sm:px-2.5">
         {children}
         <OrderModal />
       </div>

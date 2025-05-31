@@ -5,7 +5,6 @@ import { useOrders } from "@/hooks/useOrders";
 import { findOrder } from "@/utils/findOrder";
 import DatePicker from "react-datepicker";
 import { updateOrderInDB } from "@/utils/updateOrderInDB";
-import { FaCheck } from "react-icons/fa6";
 
 const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
   const { orders, updateOrder } = useOrders();
@@ -39,27 +38,53 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
   if (!order) return <div>Order not found</div>;
 
   return (
-    <div className="flex gap-0.5 max-w-xs">
-      <label htmlFor={`plan-time-${order_id}`} className="text-sm font-medium">
-        Plan:
+    <div
+      className={`flex gap-0.5 ${
+        order.delivery_date
+          ? "bg-green-200 dark:bg-green-950"
+          : "bg-gray-200 dark:bg-gray-900"
+      } items-center`}
+    >
+      <label htmlFor={`plan-time-${order_id}`} className="text-xs font-medium">
+        {order.delivery_date ? "done: " : "plan: "}
       </label>
 
-      <DatePicker
-        selected={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        dateFormat="yyyy-MM-dd HH:mm"
-        placeholderText="აირჩიე დღე და საათი"
-        isClearable
-      />
-
+      {order.delivery_date ? (
+        <span>
+          {selectedDate
+            ? `${selectedDate.getFullYear()}-${String(
+                selectedDate.getMonth() + 1
+              ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(
+                2,
+                "0"
+              )} ${String(selectedDate.getHours()).padStart(2, "0")}:${String(
+                selectedDate.getMinutes()
+              ).padStart(2, "0")}`
+            : "თარიღი არ არის არჩეული"}
+        </span>
+      ) : (
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          dateFormat="yyyy-MM-dd HH:mm"
+          placeholderText="აირჩიე დღე და საათი"
+          isClearable
+          className="pr-4 w-40"
+        />
+      )}
       <button
         onClick={handleApprove}
-        className=" bg-blue-600 text-white rounded hover:bg-green-700"
+        className={`active:scale-90 duration-100 border rounded-full p-1 ease-in-out ${
+          order.delivery_date && "hidden"
+        }`}
+        style={{
+          fontSize: "6px",
+        }}
       >
-        <FaCheck />
+        OK
       </button>
     </div>
   );
