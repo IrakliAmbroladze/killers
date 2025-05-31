@@ -32,7 +32,12 @@ const OrderModal = () => {
 
         {order.order_id && <TagPlanTime order_id={order.order_id} />}
         <div className="flex justify-between items-center">
-          {order.order_id && <TagTechnician order_id={order.order_id} />}
+          <div className="justify-between items-center">
+            ტექნიკოსი:{" "}
+            {order.delivery_date
+              ? order.technician
+              : order.order_id && <TagTechnician order_id={order.order_id} />}
+          </div>
           {order.order_id && <Done order_id={order.order_id} />}
         </div>
         <div>თვე: {order.date}</div>

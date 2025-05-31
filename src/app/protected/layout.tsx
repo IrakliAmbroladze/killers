@@ -15,7 +15,7 @@ export default async function Layout({
   const employees = await getEmployees();
   return (
     <Providers orders={orders} employees={employees}>
-      <div className="w-full mt-20 sm:px-5">
+      <div className="w-full mt-10 sm:px-2.5">
         {children}
         <OrderModal />
       </div>

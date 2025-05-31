@@ -15,7 +15,19 @@ const InitialTechnicians = ({
   onTechnicianDelete,
 }: InitialTechniciansProps) => {
   return (
-    <div className="flex">
+    <>
+      {selectedTechnicians.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {selectedTechnicians.map((name, index) => (
+            <span
+              key={index}
+              className=" bg-blue-200 dark:bg-blue-700 rounded-sm text-xs "
+            >
+              {name} <button onClick={() => onTechnicianDelete(name)}>X</button>
+            </span>
+          ))}
+        </div>
+      )}
       <DropDown
         list={displayNames}
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,19 +35,7 @@ const InitialTechnicians = ({
           if (selected) onTechnicianSelect(selected);
         }}
       />
-      {selectedTechnicians.length > 0 && (
-        <div className="flex flex-wrap gap-1">
-          {selectedTechnicians.map((name, index) => (
-            <span
-              key={index}
-              className="px-0.5 py-0.5 bg-blue-200 dark:bg-blue-700 rounded-md text-xs "
-            >
-              {name} <button onClick={() => onTechnicianDelete(name)}>X</button>
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

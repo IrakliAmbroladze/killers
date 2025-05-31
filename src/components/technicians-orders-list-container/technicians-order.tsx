@@ -16,17 +16,17 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
   };
 
   return (
-    <div className="border rounded-lg mb-1">
+    <div className="border-b">
       <div
         className={`group ${
           order.delivery_date
             ? "bg-green-200 dark:bg-green-950"
             : "bg-gray-200 dark:bg-gray-900"
-        } rounded-lg p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
+        } p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
         <div>
-          {order.customer} - {order.identity}
+          {order.customer} - {order.identity} - {order.address}
         </div>
         {/* <div className="flex">
           <FiAlignLeft />
@@ -37,8 +37,24 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
       </div>
 
       {order.order_id && <TagPlanTime order_id={order.order_id} />}
-      <div className="flex justify-between items-center">
-        {order.order_id && <TagTechnician order_id={order.order_id} />}
+      <div
+        className={`justify-between items-center ${
+          order.delivery_date
+            ? "bg-green-200 dark:bg-green-950"
+            : "bg-gray-200 dark:bg-gray-900"
+        } `}
+      >
+        {order.delivery_date
+          ? order.technician
+          : order.order_id && <TagTechnician order_id={order.order_id} />}
+      </div>
+      <div
+        className={`mt-[-10px] flex justify-end ${
+          order.delivery_date
+            ? "bg-green-200 dark:bg-green-950"
+            : "bg-gray-200 dark:bg-gray-900"
+        } `}
+      >
         {order.order_id && <Done order_id={order.order_id} />}
       </div>
     </div>
