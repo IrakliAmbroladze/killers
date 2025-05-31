@@ -241,17 +241,18 @@ export default function NewCalendar() {
             : "bg-white dark:bg-black"
         }`}
       >
-        <div className="flex justify-around border-b">
+        <div className="flex justify-between items-center border-b px-1.5">
           <div
             onClick={() => setSelectedDate(date)}
-            className="cursor-pointer font-bold flex justify-center gap-4"
+            className="cursor-pointer font-bold flex justify-center gap-4 text-xs"
           >
             <RxPencil1 />
           </div>
-          <div className="flex gap-5">
-            <span>{todaysDayInGeo()}</span>
+          <span className="text-xs">{todaysDayInGeo()}</span>
+          <span className="text-xs">
+            {" "}
             {date.getDate()} {date.toLocaleString("ka-GE", { month: "short" })}{" "}
-          </div>
+          </span>
         </div>
 
         <div className="flex flex-col gap-1">
