@@ -43,7 +43,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
         order.delivery_date
           ? "bg-green-200 dark:bg-green-950"
           : "bg-gray-200 dark:bg-gray-900"
-      } `}
+      } items-center`}
     >
       <label htmlFor={`plan-time-${order_id}`} className="text-xs font-medium">
         {order.delivery_date ? "done: " : "plan: "}
@@ -72,6 +72,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
           dateFormat="yyyy-MM-dd HH:mm"
           placeholderText="აირჩიე დღე და საათი"
           isClearable
+          className="pr-4 w-40"
         />
       )}
       <button

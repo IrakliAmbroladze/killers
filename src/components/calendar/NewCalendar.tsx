@@ -9,6 +9,7 @@ import { useOrders } from "@/hooks/useOrders";
 import TechniciansOrder from "../technicians-orders-list-container/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
+import { useMonth } from "@/hooks/useMonth";
 
 export default function NewCalendar() {
   const supabase = createClient();
@@ -38,7 +39,8 @@ export default function NewCalendar() {
   } | null>(null);
   // const [updatedTaskText, setUpdatedTaskText] = useState<string>("");
   // const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [month, setMonth] = useState<number>(utils.currentMonth);
+  // const [month, setMonth] = useState<number>(utils.currentMonth);
+  const { month, setMonth } = useMonth();
   const [year, setYear] = useState<number>(utils.currentYear);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<Task>({});
