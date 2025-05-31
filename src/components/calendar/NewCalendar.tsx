@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import TaskModal from "./TaskModal";
-import { MdAddTask } from "react-icons/md";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "./create-calendar-task";
 import * as utils from "./utils";
@@ -9,6 +8,7 @@ import { Task } from "./type";
 import { useOrders } from "@/hooks/useOrders";
 import TechniciansOrder from "../technicians-orders-list-container/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
+import { RxPencil1 } from "react-icons/rx";
 
 export default function NewCalendar() {
   const supabase = createClient();
@@ -208,18 +208,49 @@ export default function NewCalendar() {
       if (!ordersByGroup[groupKey]) ordersByGroup[groupKey] = [];
       ordersByGroup[groupKey].push(order);
     }
+
+    const todaysDay = date.toLocaleString("ka-GE", { weekday: "long" });
+    const todaysDayInGeo = () => {
+      switch (todaysDay) {
+        case "Sunday":
+          return "კვირა";
+        case "Monday":
+          return "ორშაბათი";
+        case "Tuesday":
+          return "სამშაბათი";
+        case "Wednesday":
+          return "ოთხშაბათი";
+        case "Thursday":
+          return "ხუთშაბათი";
+        case "Friday":
+          return "პარასკევი";
+        case "Saturday":
+          return "შაბათი";
+
+        default:
+          return todaysDay;
+      }
+    };
+
     return (
-      <div key={key} className="border">
-        <div
-          onClick={() => setSelectedDate(date)}
-          className="cursor-pointer font-bold flex justify-center gap-4"
-        >
-          <MdAddTask />
+      <div
+        key={key}
+        className={`border ${
+          todaysDay == "Sunday" || todaysDay == "Saturday"
+            ? "bg-[#e0a8fb] dark:bg-[#15031e]"
+            : "bg-white dark:bg-black"
+        }`}
+      >
+        <div className="flex justify-around border-b">
+          <div
+            onClick={() => setSelectedDate(date)}
+            className="cursor-pointer font-bold flex justify-center gap-4"
+          >
+            <RxPencil1 />
+          </div>
           <div className="flex gap-5">
-            {date.getDate()}
-            <span className="lg:hidden">
-              {date.toLocaleString("en-US", { weekday: "short" })}
-            </span>
+            <span>{todaysDayInGeo()}</span>
+            {date.getDate()} {date.toLocaleString("ka-GE", { month: "short" })}{" "}
           </div>
         </div>
 
@@ -227,7 +258,7 @@ export default function NewCalendar() {
           {Object.entries(ordersByGroup).map(([groupKey, groupOrders]) => (
             <div key={groupKey}>
               <div
-                className="text-sm font-semibold underline text-center"
+                className="text-xs font-semibold underline text-center"
                 style={{
                   background: "rgb(255, 100, 0)",
                   color: "black",
@@ -296,16 +327,6 @@ export default function NewCalendar() {
     );
   };
 
-  const renderWeekdays = () => (
-    <>
-      {utils.weekdays.map((d) => (
-        <div key={d} className="font-bold hidden lg:block text-center">
-          {d}
-        </div>
-      ))}
-    </>
-  );
-
   const MonthGrid = () => {
     const emptyDays = Array.from(
       { length: utils.dayOfWeekOfFirstDayOfMonth(year, month) },
@@ -313,7 +334,6 @@ export default function NewCalendar() {
     );
     return (
       <div className="lg:grid grid-cols-7 hidden min-w-[1500px] text-xs border">
-        {renderWeekdays()}
         {emptyDays}
         {days.map(renderDay)}
       </div>

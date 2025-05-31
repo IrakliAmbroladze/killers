@@ -40,7 +40,7 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
       <div className="justify-between items-center">
         {order.order_id && <TagTechnician order_id={order.order_id} />}
       </div>
-      <div className="mt-[-20px] flex justify-end">
+      <div className="mt-[-10px] flex justify-end">
         {order.order_id && <Done order_id={order.order_id} />}
       </div>
     </div>

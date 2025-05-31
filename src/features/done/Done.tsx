@@ -2,6 +2,8 @@ import { useOrders } from "@/hooks/useOrders";
 import { findOrder } from "@/utils/findOrder";
 import { updateOrderInDB } from "@/utils/updateOrderInDB";
 import React, { JSX, useEffect, useState } from "react";
+import { FaCheck } from "react-icons/fa6";
+import { GrInProgress } from "react-icons/gr";
 
 const Done = ({ order_id }: { order_id: string }): JSX.Element => {
   const { orders, updateOrder } = useOrders();
@@ -46,8 +48,8 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
   if (!order) return <div>Order not found</div>;
 
   return (
-    <button onClick={handleClick} className="text-sm">
-      {done ? "done" : "waiting"}
+    <button onClick={handleClick} className="text-xs ">
+      {done ? <FaCheck /> : <GrInProgress />}
     </button>
   );
 };

@@ -12,15 +12,6 @@ const months: string[] = [
   "ნოემბერი",
   "დეკემბერი",
 ];
-const weekdays: string[] = [
-  "კვირა",
-  "ორშ.",
-  "სამშ.",
-  "ოთხ",
-  "ხუთ.",
-  "პარ",
-  "შაბათი",
-];
 const today = new Date();
 const currentMonth: number = today.getMonth();
 const currentYear: number = today.getFullYear();
@@ -44,7 +35,6 @@ const getDateKey = (date: Date) =>
 export {
   getDateKey,
   months,
-  weekdays,
   currentMonth,
   currentYear,
   currentWeek,

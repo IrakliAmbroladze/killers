@@ -5,7 +5,6 @@ import { useOrders } from "@/hooks/useOrders";
 import { findOrder } from "@/utils/findOrder";
 import DatePicker from "react-datepicker";
 import { updateOrderInDB } from "@/utils/updateOrderInDB";
-import { FaCheck } from "react-icons/fa6";
 
 const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
   const { orders, updateOrder } = useOrders();
@@ -57,9 +56,12 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
       <button
         onClick={handleApprove}
-        className=" bg-blue-600 text-white rounded hover:bg-green-700"
+        className="active:scale-90 duration-100 border rounded-full p-1 ease-in-out"
+        style={{
+          fontSize: "6px",
+        }}
       >
-        <FaCheck />
+        OK
       </button>
     </div>
   );
