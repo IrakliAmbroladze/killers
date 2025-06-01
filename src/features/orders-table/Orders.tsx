@@ -8,7 +8,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorModal from "@/components/error-modal";
 import { useOrders } from "@/hooks/useOrders";
-import ReturnOrders from "./ReturnOrders";
+import Table from "./Table";
 import { wholeListSearch } from "@/utils/orders-table/wholeListSearch";
 import { Pagination } from "./Pagination";
 
@@ -51,7 +51,7 @@ const Orders = () => {
       <Search search={searchTerm} onSearch={handleSearch} />
       <Pagination />
 
-      <ReturnOrders
+      <Table
         onSetStatus={setStatus}
         onSetTitle={setTitle}
         onOpenModal={setOpenModalIndex}

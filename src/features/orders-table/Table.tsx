@@ -2,19 +2,20 @@ import React from "react";
 import { FiCopy, FiEdit } from "react-icons/fi";
 import Cart from "@/components/cart";
 import { useOrderModal } from "@/hooks/useOrderModal";
-import { ReturnOrdersProps } from "@/types/orders-table/ReturnOrdersProps";
+import { TableProps } from "@/types/orders-table/TableProps";
 import { useFilteredOrders } from "@/hooks/useFilteredOrders";
-import { useOrders } from "@/hooks/useOrders";
+import { tableHeaders } from "@/constants/tableHeaders";
+import { TH } from "./TH";
+import { filterHidden } from "@/utils/filterHiddenHeader";
 
-const ReturnOrders = ({
+const Table = ({
   onSetStatus,
   onSetTitle,
   onOpenModal,
   modalIndex,
-}: ReturnOrdersProps) => {
+}: TableProps) => {
   const { openOrder } = useOrderModal();
   const { filteredOrders } = useFilteredOrders();
-  const { sort, setSort, setFilter } = useOrders();
 
   return (
     <>
@@ -24,7 +25,12 @@ const ReturnOrders = ({
             <th className="p-1">View</th>
             <th className="p-1">Edit</th>
             <th className="p-1">Copy</th>
-            <th
+            {tableHeaders.filter(filterHidden).map((header) => (
+              <th key={header.value}>
+                <TH header={header} />
+              </th>
+            ))}
+            {/* <th
               className="p-1 cursor-pointer"
               onClick={() => {
                 const dir =
@@ -67,7 +73,7 @@ const ReturnOrders = ({
                 className="block mt-1 w-full text-xs border rounded px-1"
                 onChange={(e) => setFilter("customer", e.target.value)}
               />
-            </th>
+            </th> */}
             {/* <th
               className="p-1 cursor-pointer hidden lg:table-cell"
               onClick={() =>
@@ -327,4 +333,4 @@ const ReturnOrders = ({
   );
 };
 
-export default ReturnOrders;
+export default Table;

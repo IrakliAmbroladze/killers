@@ -17,7 +17,7 @@ export const useFilteredOrders = () => {
     }
 
     for (const [key, value] of Object.entries(filters)) {
-      if (["status", "customer", "email"].includes(key)) {
+      if (["date", "customer", "email"].includes(key)) {
         result = result.filter((order) =>
           (order[key as FilterableKeys] as string)
             ?.toLowerCase()
