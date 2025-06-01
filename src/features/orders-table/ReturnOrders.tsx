@@ -7,43 +7,17 @@ import { useFilteredOrders } from "@/hooks/useFilteredOrders";
 import { useOrders } from "@/hooks/useOrders";
 
 const ReturnOrders = ({
-  pageSize,
   onSetStatus,
   onSetTitle,
   onOpenModal,
   modalIndex,
-  currentPage,
-  setCurrentPage,
-  totalOrders,
 }: ReturnOrdersProps) => {
   const { openOrder } = useOrderModal();
-  const { filteredOrders, totalFiltered } = useFilteredOrders();
+  const { filteredOrders } = useFilteredOrders();
   const { sort, setSort, setFilter } = useOrders();
-  const Pagination = () => (
-    <div className="flex justify-center gap-2 mt-4">
-      <button
-        disabled={currentPage === 1}
-        onClick={() => setCurrentPage(currentPage - 1)}
-        className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50 dark:text-black"
-      >
-        Prev
-      </button>
-      <span>
-        Page {currentPage} / {Math.ceil(totalFiltered / pageSize)}
-      </span>
-      <button
-        disabled={currentPage * pageSize >= totalOrders}
-        onClick={() => setCurrentPage(currentPage + 1)}
-        className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50 dark:text-black"
-      >
-        Next
-      </button>
-    </div>
-  );
 
   return (
     <>
-      <Pagination />
       <table className="min-w-full table-auto border border-collapse mt-4">
         <thead>
           <tr className="bg-gray-200 dark:bg-stone-800 text-left text-sm font-bold">
@@ -349,7 +323,6 @@ const ReturnOrders = ({
           ))}
         </tbody>
       </table>
-      <Pagination />
     </>
   );
 };
