@@ -1,4 +1,5 @@
 import { Sheets_Invoice } from "@/types/invoices";
+import { SetSort } from "./SetSort";
 
 export interface ContextActions {
   updateOrder: (order: Sheets_Invoice) => void;
@@ -7,5 +8,5 @@ export interface ContextActions {
   setSearchTerm: (term: string) => void;
   setFilter: (key: string, value: string) => void;
   clearFilters: () => void;
-  setSort: (column: keyof Sheets_Invoice, direction: "asc" | "desc") => void;
+  setSort: SetSort;
 }

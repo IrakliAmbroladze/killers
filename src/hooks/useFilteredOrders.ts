@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import { useOrders } from "./useOrders";
 import { wholeListSearch } from "@/utils/orders-table/wholeListSearch";
 import { FilterableKeys } from "@/types/FilterableKeys";
+import { tableHeaders } from "@/constants/tableHeaders";
+import { Sheets_Invoice } from "@/types/invoices";
 
 export const useFilteredOrders = () => {
   const { orders, searchTerm, filters, sort, currentPage, pageSize } =
@@ -17,7 +19,9 @@ export const useFilteredOrders = () => {
     }
 
     for (const [key, value] of Object.entries(filters)) {
-      if (["date", "customer", "email"].includes(key)) {
+      if (
+        tableHeaders.map((h) => h.value).includes(key as keyof Sheets_Invoice)
+      ) {
         result = result.filter((order) =>
           (order[key as FilterableKeys] as string)
             ?.toLowerCase()
