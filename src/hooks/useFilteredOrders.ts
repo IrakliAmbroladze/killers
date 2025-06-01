@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { useOrders } from "./useOrders";
 import { wholeListSearch } from "@/utils/orders-table/wholeListSearch";
+import { FilterableKeys } from "@/types/FilterableKeys";
 
 export const useFilteredOrders = () => {
   const { orders, searchTerm, filters, sort, currentPage, pageSize } =
@@ -15,11 +16,14 @@ export const useFilteredOrders = () => {
       return wholeListSearch(result, searchTerm);
     }
 
-    // Per-column filters
     for (const [key, value] of Object.entries(filters)) {
-      result = result.filter((order) =>
-        (order as any)[key]?.toLowerCase?.().includes(value.toLowerCase())
-      );
+      if (["status", "customer", "email"].includes(key)) {
+        result = result.filter((order) =>
+          (order[key as FilterableKeys] as string)
+            ?.toLowerCase()
+            .includes(value.toLowerCase())
+        );
+      }
     }
 
     // Sorting
