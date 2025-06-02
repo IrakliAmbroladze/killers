@@ -21,7 +21,7 @@ const InitialTechnicians = ({
           {selectedTechnicians.map((name, index) => (
             <span
               key={index}
-              className=" bg-blue-200 dark:bg-blue-700 rounded-sm text-xs "
+              className=" bg-blue-200 text-black rounded-sm text-xs "
             >
               {name} <button onClick={() => onTechnicianDelete(name)}>X</button>
             </span>
