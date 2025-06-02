@@ -258,7 +258,7 @@ export default function NewCalendar() {
           </span>
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
           {Object.entries(ordersByGroup).map(([groupKey, groupOrders]) => (
             <div key={groupKey}>
               <div
