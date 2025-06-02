@@ -5,6 +5,7 @@ import { useOrders } from "@/hooks/useOrders";
 import { findOrder } from "@/utils/findOrder";
 import DatePicker from "react-datepicker";
 import { updateOrderInDB } from "@/utils/updateOrderInDB";
+import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
 
 const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
   const { orders, updateOrder } = useOrders();
@@ -39,6 +40,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
   return (
     <div
+      style={getDeliveryStyle(order.delivery_date)}
       className={`flex gap-0.5 ${
         order.delivery_date
           ? "bg-green-200 dark:bg-green-950"
