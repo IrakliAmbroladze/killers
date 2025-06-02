@@ -13,6 +13,8 @@ export async function createComment(commentData: Comment) {
   if (!session?.access_token) {
     throw new Error("User is not authenticated");
   }
+
+  const comment = { ...commentData, author_id: session.user.id };
   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/comments`, {
     method: "POST",
     headers: {
@@ -21,7 +23,7 @@ export async function createComment(commentData: Comment) {
       apikey: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
       Authorization: `Bearer ${session.access_token}`,
     },
-    body: JSON.stringify(commentData),
+    body: JSON.stringify(comment),
   });
 
   if (!response.ok) {
