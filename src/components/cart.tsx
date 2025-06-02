@@ -7,17 +7,23 @@ const Cart = ({ invoice }: { invoice: Sheets_Invoice }) => {
       : invoice.date;
   return (
     <>
-      <td className="p-1 ">{tableDate}</td>
-      <td className="p-1 ">{invoice.customer}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.identity}</td>
-      <td className="p-1 ">{invoice.address}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.items}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.total}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.provider}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.seller}</td>
-      <td className="p-1 hidden lg:table-cell">{invoice.delivery_date}</td>
-      <td className="p-1 ">{invoice.technician}</td>
-      <td className="p-1 ">
+      <td className="p-0.5  w-[80px] ">{tableDate}</td>
+      <td className="p-0.5 w-[200px] ">{invoice.customer}</td>
+      <td className="p-0.5  w-[100px]  hidden lg:table-cell">
+        {invoice.identity}
+      </td>
+      <td className="p-0.5  w-[200px] ">{invoice.address}</td>
+      <td className="p-0.5 hidden  w-[200px]  lg:table-cell">
+        {invoice.items}
+      </td>
+      <td className="p-0.5 hidden  w-[80px] lg:table-cell">{invoice.total}</td>
+      <td className="p-0.5 hidden  w-[130px] lg:table-cell">
+        {invoice.provider}
+      </td>
+      <td className="p-0.5 hidden w-[80px] lg:table-cell">{invoice.seller}</td>
+      <td className="p-0.5 hidden lg:table-cell">{invoice.delivery_date}</td>
+      <td className="p-0.5 ">{invoice.technician}</td>
+      <td className="p-0.5 ">
         {invoice.document && (
           <a
             href={invoice.document}

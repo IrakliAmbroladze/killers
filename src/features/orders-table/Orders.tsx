@@ -8,18 +8,12 @@ import { useDebouncedCallback } from "use-debounce";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorModal from "@/components/error-modal";
 import { useOrders } from "@/hooks/useOrders";
-import ReturnOrders from "./ReturnOrders";
+import Table from "./Table";
 import { wholeListSearch } from "@/utils/orders-table/wholeListSearch";
+import { Pagination } from "./Pagination";
 
 const Orders = () => {
-  const {
-    orders,
-    currentPage,
-    pageSize,
-    setCurrentPage,
-    searchTerm,
-    setSearchTerm,
-  } = useOrders();
+  const { orders, setCurrentPage, searchTerm, setSearchTerm } = useOrders();
 
   const [openModalIndex, setOpenModalIndex] = useState<string | null>(null);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -51,25 +45,19 @@ const Orders = () => {
   };
 
   const searchedInvoices = wholeListSearch(orders, debouncedSearchTerm);
-  const paginatedInvoices = searchedInvoices.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
 
   return (
     <div className="overflow-x-auto sm:p-4">
       <Search search={searchTerm} onSearch={handleSearch} />
-      <ReturnOrders
-        pageSize={pageSize}
+      <Pagination />
+
+      <Table
         onSetStatus={setStatus}
         onSetTitle={setTitle}
         onOpenModal={setOpenModalIndex}
         modalIndex={openModalIndex}
-        orders={paginatedInvoices}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalOrders={searchedInvoices.length}
       />
+      <Pagination />
       <ErrorBoundary fallback={<ErrorModal />}>
         {openModalIndex !== null && (
           <EditModal

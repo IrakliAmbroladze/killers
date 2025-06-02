@@ -1,3 +1,9 @@
-export function createAction<T extends string, P>(type: T, payload: P) {
-  return { type, payload } as const;
+// utils/createAction.ts
+export function createAction<T extends string>(type: T): { type: T };
+export function createAction<T extends string, P>(
+  type: T,
+  payload: P
+): { type: T; payload: P };
+export function createAction<T extends string, P>(type: T, payload?: P) {
+  return payload === undefined ? { type } : { type, payload };
 }
