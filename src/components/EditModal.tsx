@@ -34,6 +34,7 @@ const UpdateModal = ({
   };
   const editData: Sheets_Invoice = {
     ...copyData,
+    date: `${invoice.date.slice(0, 4)}-${invoice.date.slice(4, 6)}-01`,
     order_id: invoice.order_id,
   };
 
