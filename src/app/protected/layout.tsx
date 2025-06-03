@@ -12,6 +12,7 @@ export default async function Layout({
   children,
 }: LayoutProps): Promise<JSX.Element> {
   const orders = await fetchOrders();
+
   const employees = await getEmployees();
   return (
     <Providers orders={orders} employees={employees}>
