@@ -1,10 +1,10 @@
 "use server";
 
-import { Comment } from "../types/comment";
+import type { CommentType } from "../types/comment";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 
-export async function createComment(commentData: Comment) {
+export async function createComment(commentData: CommentType) {
   const supabase = createClient();
   const {
     data: { session },
