@@ -1,11 +1,12 @@
 "use client";
-import { Comment as CommentType } from "./types/comment";
+import type { CommentType } from "./types/comment";
 import { createComment } from "./lib/create-comment";
 import { fetchComments } from "./lib/fetch-comments";
 import React, { JSX, useEffect, useState } from "react";
 import { deleteComment } from "./lib/deleteComment";
 import { updateComment } from "./lib/updateComment";
 import Comment from "./comment";
+import { mapComments } from "./utils/map-comments";
 
 const Comments = ({ id }: { id: string }): JSX.Element => {
   const initialFormData: CommentType = {
@@ -21,20 +22,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
     const loadComments = async (id: string) => {
       try {
         const result = await fetchComments(id);
-        // Map employees array to single object if needed
-        const mappedResult = result.map((comment: unknown) => {
-          if (typeof comment === "object" && comment !== null) {
-            const c = comment as CommentType;
-            return {
-              ...c,
-              employees: Array.isArray(c.employees)
-                ? c.employees[0]
-                : c.employees,
-            };
-          }
-          return comment;
-        });
-        setCommentList(mappedResult as CommentType[]);
+        setCommentList(mapComments(result));
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.log("Error: " + error.message);
@@ -59,20 +47,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
     try {
       await createComment(formData);
       const result = await fetchComments(id);
-      // Map employees array to single object if needed
-      const mappedResult = result.map((comment: unknown) => {
-        if (typeof comment === "object" && comment !== null) {
-          const c = comment as CommentType;
-          return {
-            ...c,
-            employees: Array.isArray(c.employees)
-              ? c.employees[0]
-              : c.employees,
-          };
-        }
-        return comment;
-      });
-      setCommentList(mappedResult as CommentType[]);
+      setCommentList(mapComments(result));
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log("Error: " + error.message);

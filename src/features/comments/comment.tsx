@@ -1,5 +1,5 @@
 import React from "react";
-import { Comment as CommentType } from "./types/comment";
+import type { CommentType } from "./types/comment";
 
 interface CommentProps {
   editingCommentId: string | null;
