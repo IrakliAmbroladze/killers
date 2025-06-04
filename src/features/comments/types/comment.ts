@@ -1,4 +1,4 @@
-export interface Comment {
+export interface CommentType {
   id?: number;
   text: string;
   task_id?: string;
