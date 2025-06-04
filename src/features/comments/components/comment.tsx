@@ -1,5 +1,6 @@
 import React from "react";
 import type { CommentType } from "../types/comment";
+import { renderTextWithLinks } from "../utils/renderTextWithLinks";
 
 interface CommentProps {
   editingCommentId: string | null;
@@ -50,7 +51,7 @@ const Comment = ({
         </div>
       ) : (
         <>
-          <p className="mt-1">{comment.text}</p>
+          <p className="mt-1">{renderTextWithLinks(comment.text)}</p>
           <div className="flex gap-2 mt-1">
             <button
               onClick={() => onEdit(String(comment.id!), comment.text)}
