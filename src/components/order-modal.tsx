@@ -1,6 +1,6 @@
 "use client";
 
-import Comments from "@/features/comments/comments";
+import Comments from "@/features/comments/components/comments";
 import Modal from "@/components/ui/modal";
 import { RxActivityLog } from "react-icons/rx";
 import { useOrderModal } from "@/hooks/useOrderModal";

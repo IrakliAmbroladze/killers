@@ -1,11 +1,11 @@
 import React from "react";
-import type { CommentType } from "./types/comment";
+import type { CommentType } from "../types/comment";
 
 interface CommentProps {
   editingCommentId: string | null;
   comment: CommentType;
   editingText: string;
-  setEditingText: (t: string) => void;
+  setEditing: (payload: { id: string | null; text: string }) => void;
   onEdit: (commentId: string, currentText: string) => void;
   onDelete: (commentId: string) => void;
   onSave: (commentId: string) => void;
@@ -16,7 +16,7 @@ const Comment = ({
   editingCommentId,
   comment,
   editingText,
-  setEditingText,
+  setEditing,
   onEdit,
   onDelete,
   onSave,
@@ -29,7 +29,9 @@ const Comment = ({
           <textarea
             className="w-full border rounded p-1"
             value={editingText}
-            onChange={(e) => setEditingText(e.target.value)}
+            onChange={(e) =>
+              setEditing({ id: String(comment.id), text: e.target.value })
+            }
           />
           <div className="flex gap-2 mt-1">
             <button
