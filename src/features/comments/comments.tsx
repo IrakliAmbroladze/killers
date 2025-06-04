@@ -1,18 +1,19 @@
 "use client";
-import { Comment } from "./types/comment";
+import { Comment as CommentType } from "./types/comment";
 import { createComment } from "./lib/create-comment";
 import { fetchComments } from "./lib/fetch-comments";
 import React, { JSX, useEffect, useState } from "react";
 import { deleteComment } from "./lib/deleteComment";
 import { updateComment } from "./lib/updateComment";
+import Comment from "./comment";
 
 const Comments = ({ id }: { id: string }): JSX.Element => {
-  const initialFormData: Comment = {
+  const initialFormData: CommentType = {
     text: "",
     task_id: id,
   };
-  const [formData, setFormData] = useState<Comment>(initialFormData);
-  const [commentList, setCommentList] = useState<Comment[] | null>([]);
+  const [formData, setFormData] = useState<CommentType>(initialFormData);
+  const [commentList, setCommentList] = useState<CommentType[] | null>([]);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState<string>("");
 
@@ -23,7 +24,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
         // Map employees array to single object if needed
         const mappedResult = result.map((comment: unknown) => {
           if (typeof comment === "object" && comment !== null) {
-            const c = comment as Comment;
+            const c = comment as CommentType;
             return {
               ...c,
               employees: Array.isArray(c.employees)
@@ -33,7 +34,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
           }
           return comment;
         });
-        setCommentList(mappedResult as Comment[]);
+        setCommentList(mappedResult as CommentType[]);
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.log("Error: " + error.message);
@@ -61,7 +62,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
       // Map employees array to single object if needed
       const mappedResult = result.map((comment: unknown) => {
         if (typeof comment === "object" && comment !== null) {
-          const c = comment as Comment;
+          const c = comment as CommentType;
           return {
             ...c,
             employees: Array.isArray(c.employees)
@@ -71,7 +72,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
         }
         return comment;
       });
-      setCommentList(mappedResult as Comment[]);
+      setCommentList(mappedResult as CommentType[]);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log("Error: " + error.message);
@@ -101,7 +102,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
         ...c,
         employees: Array.isArray(c.employees) ? c.employees[0] : c.employees,
       }));
-      setCommentList(mappedResult as Comment[]);
+      setCommentList(mappedResult as CommentType[]);
       setEditingCommentId(null);
       setEditingText("");
     } catch (error) {
@@ -118,7 +119,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
         ...c,
         employees: Array.isArray(c.employees) ? c.employees[0] : c.employees,
       }));
-      setCommentList(mappedResult as Comment[]);
+      setCommentList(mappedResult as CommentType[]);
     } catch (error) {
       console.error("Failed to delete comment:", error);
     }
@@ -163,50 +164,16 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
                       new Date(comment.created_at).toLocaleString()}
                   </span>
                 </div>
-
-                {editingCommentId === String(comment.id) ? (
-                  <div className="mt-2">
-                    <textarea
-                      className="w-full border rounded p-1"
-                      value={editingText}
-                      onChange={(e) => setEditingText(e.target.value)}
-                    />
-                    <div className="flex gap-2 mt-1">
-                      <button
-                        onClick={() => handleSave(String(comment.id!))}
-                        className="text-white bg-[#00c951] px-2 py-1 rounded hover:bg-[#43A047]"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={handleCancel}
-                        className="text-white bg-[#6a7282] px-2 py-1 rounded hover:bg-[#718096]"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <p className="mt-1">{comment.text}</p>
-                    <div className="flex gap-2 mt-1">
-                      <button
-                        onClick={() =>
-                          handleEdit(String(comment.id!), comment.text)
-                        }
-                        className="text-sm text-[#155dfc] hover:underline"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(String(comment.id!))}
-                        className="text-[#e7000b] text-sm hover:underline"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </>
-                )}
+                <Comment
+                  editingCommentId={editingCommentId}
+                  comment={comment}
+                  editingText={editingText}
+                  setEditingText={setEditingText}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onSave={handleSave}
+                  onCancel={handleCancel}
+                />
               </div>
             );
           })}
