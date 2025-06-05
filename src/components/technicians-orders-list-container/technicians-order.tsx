@@ -1,15 +1,14 @@
 import React from "react";
 import { TechniciansOrderProps } from "./types/technicians-order-props";
-// import { FiAlignLeft } from "react-icons/fi";
-// import { FaRegComment } from "react-icons/fa";
-// import { useOrders } from "@/hooks/useOrders";
+import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
 import Done from "@/features/done/Done";
 import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
+import CommentsQtyUI from "../ui/CommentsQtyUI";
 
-const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
+const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();
 
   const handleClick = (id: string) => {
@@ -23,15 +22,13 @@ const TechniciansOrder = ({ order }: TechniciansOrderProps) => {
         style={getDeliveryStyle(order.delivery_date)}
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
-        <div>
+        <div className="flex">
           {order.customer} - {order.identity} - {order.address}
-        </div>
-        {/* <div className="flex">
-          <FiAlignLeft />
-          <div className="px-5">
+          <div className="flex flex-col justify-center items-center">
             <FaRegComment />
+            <CommentsQtyUI>{comments_num}</CommentsQtyUI>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {order.order_id && <TagPlanTime order_id={order.order_id} />}
