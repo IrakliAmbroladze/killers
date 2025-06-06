@@ -11,6 +11,7 @@ import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAnd
 import { RxPencil1 } from "react-icons/rx";
 import { useMonth } from "@/hooks/useMonth";
 import { useYear } from "@/hooks/useYear";
+import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 
 export default function NewCalendar() {
   const supabase = createClient();
@@ -185,6 +186,7 @@ export default function NewCalendar() {
       </>
     );
   };
+  const { commentsQuantities } = useCommentsQuantities();
 
   const { orders } = useOrders();
   const techNames = useTechniciansAndManagersDisplayNames();
@@ -279,7 +281,15 @@ export default function NewCalendar() {
                   );
                 })
                 .map((order) => (
-                  <TechniciansOrder key={order.order_id} order={order} />
+                  <TechniciansOrder
+                    key={order.order_id}
+                    order={order}
+                    comments_num={
+                      order.order_id !== undefined
+                        ? commentsQuantities[order.order_id] || 0
+                        : 0
+                    }
+                  />
                 ))}
             </div>
           ))}

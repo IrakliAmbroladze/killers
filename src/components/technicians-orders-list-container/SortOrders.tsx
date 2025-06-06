@@ -1,5 +1,5 @@
 import React from "react";
-import TechniciansOrdersList from "./technicians-orders-list";
+import TechniciansOrdersList from "./TechniciansOrdersList";
 import { Sheets_Invoice } from "@/types/invoices";
 import { orderListTitles } from "./utils/orderListTitles";
 import { filterByStatus } from "./utils/filterByStatus";

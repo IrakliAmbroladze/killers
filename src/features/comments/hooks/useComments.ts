@@ -5,6 +5,7 @@ import { createComment } from "../lib/create-comment";
 import { refreshComments } from "../utils/refresh";
 import { deleteComment } from "../lib/deleteComment";
 import { updateComment } from "../lib/updateComment";
+import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 
 const useComments = (id: string) => {
   const initialFormData: CommentType = {
@@ -20,6 +21,8 @@ const useComments = (id: string) => {
   const [editing, setEditing] = useState<{ id: string | null; text: string }>(
     blankContent
   );
+
+  const { increaseQuantity, decreaseQuantity } = useCommentsQuantities();
 
   useEffect(() => {
     (async () => {
@@ -42,6 +45,7 @@ const useComments = (id: string) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      increaseQuantity(id);
       await createComment(formData);
       await refreshComments(id, setCommentList);
     } catch (error: unknown) {
@@ -74,6 +78,7 @@ const useComments = (id: string) => {
 
   const handleDelete = async (commentId: string) => {
     try {
+      decreaseQuantity(id);
       await deleteComment(commentId);
       await refreshComments(id, setCommentList);
     } catch (error) {
