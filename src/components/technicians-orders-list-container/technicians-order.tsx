@@ -22,7 +22,7 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         style={getDeliveryStyle(order.delivery_date)}
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
-        <div className="flex">
+        <div className="flex justify-between">
           <div>
             {order.customer} - {order.identity} - {order.address}
           </div>
