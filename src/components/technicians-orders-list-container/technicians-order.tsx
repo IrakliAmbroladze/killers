@@ -23,7 +23,9 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         onClick={() => order.order_id && handleClick(order.order_id)}
       >
         <div className="flex">
-          {order.customer} - {order.identity} - {order.address}
+          <div>
+            {order.customer} - {order.identity} - {order.address}
+          </div>
           <div className="flex flex-col justify-center items-center">
             <FaRegComment />
             <CommentsQtyUI>{comments_num}</CommentsQtyUI>
