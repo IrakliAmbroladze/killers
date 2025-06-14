@@ -371,7 +371,7 @@ export default function NewCalendar() {
   return (
     <>
       <div className="w-full flex justify-center items-center"></div>
-      <div className="flex mb-2 justify-between text-xs">
+      <div className="flex my-2 justify-between text-xs">
         <input
           type="number"
           value={year}
