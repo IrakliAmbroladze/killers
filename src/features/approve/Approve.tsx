@@ -1,12 +1,12 @@
+import { useFindOrderById } from "@/hooks/useFindOrderById";
 import { useOrders } from "@/hooks/useOrders";
 import { Sheets_Invoice } from "@/types/invoices";
-import { findOrder } from "@/utils/findOrder";
 import { updateOrderInDB } from "@/utils/updateOrderInDB";
 import React, { JSX, useEffect, useState } from "react";
 
 const Done = ({ order_id }: { order_id: string }): JSX.Element => {
-  const { orders, updateOrder } = useOrders();
-  const order = findOrder(orders, order_id);
+  const { updateOrder } = useOrders();
+  const order = useFindOrderById(order_id);
 
   const [approveStatus, setApproveStatus] = useState<boolean>(false);
 
