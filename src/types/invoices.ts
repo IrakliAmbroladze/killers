@@ -31,4 +31,5 @@ export interface Sheets_Invoice {
   document?: string;
   order_id?: string;
   plan_time?: string;
+  approve: string;
 }

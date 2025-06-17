@@ -40,7 +40,7 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
 
   return (
     <div
-      style={getDeliveryStyle(order.delivery_date)}
+      style={getDeliveryStyle(order.delivery_date, order.approve)}
       className={`flex gap-0.5 ${
         order.delivery_date
           ? "bg-green-200 dark:bg-green-950"
