@@ -1,6 +1,6 @@
 "use client";
 
-import Calendar from "@/features/calendar/Calendar";
+import Calendar from "@/features/calendar/components/Calendar";
 import { MonthProvider } from "@/context/month/Provider";
 import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 

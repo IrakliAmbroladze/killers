@@ -2,16 +2,20 @@
 import { useState, useEffect, useRef } from "react";
 import TaskModal from "./TaskModal";
 import { createClient } from "@/utils/supabase/client";
-import { createCalendarTask } from "./create-calendar-task";
-import * as utils from "./utils";
-import { Task } from "./type";
+import { createCalendarTask } from "../lib/create-calendar-task";
+import * as utils from "../utils/utils";
 import { useOrders } from "@/hooks/useOrders";
-import TechniciansOrder from "../../components/technicians-order";
+import TechniciansOrder from "../../../components/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
 import { useMonth } from "@/hooks/useMonth";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
+import { months } from "../utils";
+
+interface Task {
+  [key: string]: { text: string; checked: boolean }[];
+}
 
 export default function Calendar() {
   const supabase = createClient();
@@ -389,7 +393,7 @@ export default function Calendar() {
           onChange={(e) => setMonth(Number(e.target.value))}
           className="text-black bg-gray-100 text-xs"
         >
-          {utils.months.map((m, index) => (
+          {months.map((m, index) => (
             <option key={index} value={index}>
               {m}
             </option>
