@@ -1,7 +1,7 @@
 import { useOrders } from "./useOrders";
 import { useMonth } from "./useMonth";
 import { useYear } from "./useYear";
-import { filterByYearMonth } from "@/components/technicians-orders-list-container/utils/filterByYearMonth";
+import { filterByYearMonth } from "@/utils/filterByYearMonth";
 
 const useOrdersFilteredByMonth = () => {
   const { orders } = useOrders();

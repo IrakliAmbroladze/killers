@@ -1,6 +1,6 @@
 "use client";
 
-import TechniciansOrder from "@/components/technicians-orders-list-container/technicians-order";
+import TechniciansOrder from "@/components/technicians-order";
 import React from "react";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import useOrdersFilteredByMonth from "@/hooks/useOrdersFilteredByMonth";

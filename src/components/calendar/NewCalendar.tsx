@@ -6,7 +6,7 @@ import { createCalendarTask } from "./create-calendar-task";
 import * as utils from "./utils";
 import { Task } from "./type";
 import { useOrders } from "@/hooks/useOrders";
-import TechniciansOrder from "../technicians-orders-list-container/technicians-order";
+import TechniciansOrder from "../technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
 import { useMonth } from "@/hooks/useMonth";
