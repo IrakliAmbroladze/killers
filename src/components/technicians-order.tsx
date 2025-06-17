@@ -1,12 +1,17 @@
 import React from "react";
-import { TechniciansOrderProps } from "./types/technicians-order-props";
 import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
 import Done from "@/features/done/Done";
 import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
-import CommentsQtyUI from "../ui/CommentsQtyUI";
+import CommentsQtyUI from "./ui/CommentsQtyUI";
+import { Sheets_Invoice } from "@/types/invoices";
+
+interface TechniciansOrderProps {
+  order: Sheets_Invoice;
+  comments_num: number;
+}
 
 const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
   const { openOrder } = useOrderModal();
