@@ -6,14 +6,14 @@ import { createCalendarTask } from "./create-calendar-task";
 import * as utils from "./utils";
 import { Task } from "./type";
 import { useOrders } from "@/hooks/useOrders";
-import TechniciansOrder from "../technicians-order";
+import TechniciansOrder from "../../components/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
 import { useMonth } from "@/hooks/useMonth";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 
-export default function NewCalendar() {
+export default function Calendar() {
   const supabase = createClient();
   useEffect(() => {
     async function loadTasks() {

@@ -1,6 +1,6 @@
 "use client";
 
-import NewCalendar from "@/components/calendar/NewCalendar";
+import Calendar from "@/features/calendar/Calendar";
 import { MonthProvider } from "@/context/month/Provider";
 import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 
@@ -8,7 +8,7 @@ const OrdersPage = () => {
   return (
     <div className="w-full">
       <MonthProvider>
-        <NewCalendar />
+        <Calendar />
         <ToDoDoneList />
       </MonthProvider>
     </div>
