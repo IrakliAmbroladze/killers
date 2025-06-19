@@ -8,7 +8,10 @@ export const getNavLinks = async () => {
   return userResponse.data.user
     ? (await isTechnician(userResponse))
       ? allLinks.filter(
-          (link) => link.name !== "Sales" && link.name !== "Orders"
+          (link) =>
+            link.name !== "Sales" &&
+            link.name !== "Orders" &&
+            link.name !== "Office"
         )
       : allLinks
     : null;

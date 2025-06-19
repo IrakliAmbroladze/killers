@@ -1,7 +1,13 @@
-import React from "react";
+import OfficeTable from "@/features/office-table/OfficeTable";
+import Link from "next/link";
 
 const Office = () => {
-  return <div>Office</div>;
+  return (
+    <>
+      <Link href="./office/create-invoice">create-invoice</Link>
+      <OfficeTable />;
+    </>
+  );
 };
 
 export default Office;

@@ -3,6 +3,7 @@ import { Action } from "@/types/orders/Actions";
 import * as action from "../action";
 
 export const useOrderActions = (dispatch: React.Dispatch<Action>) => ({
+  deleteOrder: (order: Sheets_Invoice) => dispatch(action.deleteOrder(order)),
   updateOrder: (order: Sheets_Invoice) => dispatch(action.updateOrder(order)),
   addOrder: (order: Sheets_Invoice) => dispatch(action.addOrder(order)),
   setCurrentPage: (page: number) => dispatch(action.setCurrentPage(page)),
