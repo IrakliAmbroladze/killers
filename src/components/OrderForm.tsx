@@ -62,7 +62,6 @@ export default function OrderForm({
           order_id: newId,
         };
         addOrder(addData);
-        console.log(addData);
         await fetch("/api/proxy", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -107,7 +106,7 @@ export default function OrderForm({
           <div className="space-y-1">
             <input
               name="date"
-              type="date"
+              // type="date"
               value={formData.date}
               onChange={handleChange}
               required
