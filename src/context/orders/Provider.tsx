@@ -25,6 +25,7 @@ export const Provider = ({
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
+    deleteOrder,
     updateOrder,
     addOrder,
     setCurrentPage,
@@ -38,6 +39,7 @@ export const Provider = ({
     <Context.Provider
       value={{
         orders: state.orders,
+        deleteOrder,
         updateOrder,
         addOrder,
         currentPage: state.currentPage,

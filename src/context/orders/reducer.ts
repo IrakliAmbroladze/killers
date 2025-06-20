@@ -3,6 +3,13 @@ import { State } from "@/types/orders/State";
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case "DELETE_ORDER":
+      return {
+        ...state,
+        orders: state.orders.filter(
+          (order) => order.order_id !== action.payload.order_id
+        ),
+      };
     case "UPDATE_ORDER":
       return {
         ...state,

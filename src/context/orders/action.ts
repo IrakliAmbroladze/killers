@@ -1,6 +1,8 @@
 import { Sheets_Invoice } from "@/types/invoices";
 import { createAction } from "@/utils/createAction";
 
+export const deleteOrder = (order: Sheets_Invoice) =>
+  createAction("DELETE_ORDER", order);
 export const updateOrder = (order: Sheets_Invoice) =>
   createAction("UPDATE_ORDER", order);
 
