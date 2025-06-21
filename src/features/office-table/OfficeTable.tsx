@@ -37,6 +37,7 @@ const OfficeTable = () => {
   const defaultColDef = useMemo(() => {
     return {
       filter: true,
+      filterParams: { buttons: ["clear"] },
       floatingFilter: true,
       editable: true,
     };
@@ -273,7 +274,14 @@ const OfficeTable = () => {
   }
 
   return loading ? (
-    `იშლება... ${count} / ${total}`
+    <div
+      className="flex justify-center items-center"
+      style={{ height: "calc(100vh - 100px)" }}
+    >
+      <div>
+        იშლება... {count} / {total}
+      </div>
+    </div>
   ) : (
     <div style={{ height: "calc(100vh - 100px)" }}>
       <div className="flex gap-10 ">

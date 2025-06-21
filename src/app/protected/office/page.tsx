@@ -3,10 +3,10 @@ import Link from "next/link";
 
 const Office = () => {
   return (
-    <>
+    <div className="flex flex-col">
       <Link href="./office/create-invoice">create-invoice</Link>
-      <OfficeTable />;
-    </>
+      <OfficeTable />
+    </div>
   );
 };
 
