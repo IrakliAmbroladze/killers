@@ -1,4 +1,4 @@
-import OfficeTable from "@/features/office-table/OfficeTable";
+import OfficeTable from "@/features/office-table/components/OfficeTable";
 import Link from "next/link";
 
 const Office = () => {

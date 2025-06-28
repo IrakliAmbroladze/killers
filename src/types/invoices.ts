@@ -29,7 +29,7 @@ export interface Sheets_Invoice {
   delivery_date: string;
   technician?: string;
   document?: string;
-  order_id?: string;
+  order_id: string;
   plan_time?: string;
   approve: string;
 }
