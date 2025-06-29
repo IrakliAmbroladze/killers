@@ -14,7 +14,7 @@ const CopyRows = ({
   return (
     <button
       className="copy-button hover:underline cursor-pointer "
-      onClick={() => handleCopyRows(gridRef, addOrder)}
+      onClick={() => handleCopyRows(addOrder, gridRef)}
     >
       Copy Selected Row(s)
     </button>
