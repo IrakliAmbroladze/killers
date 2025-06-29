@@ -8,6 +8,7 @@ import * as Constant from "../constants";
 import DeleteRows from "./DeleteRows";
 import DeleteInProcess from "./DeleteInProcess";
 import CopyRows from "./CopyRows";
+import { ErrorBoundary } from "react-error-boundary";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -42,19 +43,21 @@ const OfficeTable = () => {
           setCount={setCount}
         />
       </div>
-      <AgGridReact
-        ref={gridRef}
-        theme={Constant.myTheme}
-        rowSelection={Constant.rowSelection}
-        rowData={rowData}
-        columnDefs={columnDefs}
-        pagination={Constant.paginationConfig.pagination}
-        paginationPageSize={Constant.paginationConfig.Size}
-        paginationPageSizeSelector={Constant.paginationConfig.Selector}
-        defaultColDef={Constant.defaultColumnDefs}
-        enableCellTextSelection={true}
-        getRowId={(params) => params.data.order_id}
-      />
+      <ErrorBoundary fallback={<div>Failed to load table</div>}>
+        <AgGridReact
+          ref={gridRef}
+          theme={Constant.myTheme}
+          rowSelection={Constant.rowSelection}
+          rowData={rowData}
+          columnDefs={columnDefs}
+          pagination={Constant.paginationConfig.pagination}
+          paginationPageSize={Constant.paginationConfig.Size}
+          paginationPageSizeSelector={Constant.paginationConfig.Selector}
+          defaultColDef={Constant.defaultColumnDefs}
+          enableCellTextSelection={true}
+          getRowId={(params) => params.data.order_id}
+        />
+      </ErrorBoundary>
     </div>
   );
 };
