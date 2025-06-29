@@ -4,7 +4,7 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useOrders } from "@/hooks/useOrders";
 import type { Sheets_Invoice } from "@/types/invoices";
-import * as Constant from "../constants";
+import * as constants from "../constants";
 import DeleteRows from "./DeleteRows";
 import DeleteInProcess from "./DeleteInProcess";
 import CopyRows from "./CopyRows";
@@ -16,8 +16,8 @@ const OfficeTable = () => {
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
-  const { orders } = useOrders();
   const [rowData, setRowData] = useState<Sheets_Invoice[]>([]);
+  const { orders } = useOrders();
 
   useEffect(() => {
     setRowData(orders);
@@ -25,10 +25,7 @@ const OfficeTable = () => {
 
   const gridRef = useRef<AgGridReact<Sheets_Invoice> | null>(null);
 
-  const columnDefs = useMemo(
-    () => Constant.getColumnDefs(gridRef, setRowData),
-    [gridRef, setRowData]
-  );
+  const columnDefs = useMemo(() => constants.getColumnDefs(gridRef), [gridRef]);
 
   return loading ? (
     <DeleteInProcess count={count} total={total} />
@@ -46,14 +43,14 @@ const OfficeTable = () => {
       <ErrorBoundary fallback={<div>Failed to load table</div>}>
         <AgGridReact
           ref={gridRef}
-          theme={Constant.myTheme}
-          rowSelection={Constant.rowSelection}
+          theme={constants.myTheme}
+          rowSelection={constants.rowSelection}
           rowData={rowData}
           columnDefs={columnDefs}
-          pagination={Constant.paginationConfig.pagination}
-          paginationPageSize={Constant.paginationConfig.Size}
-          paginationPageSizeSelector={Constant.paginationConfig.Selector}
-          defaultColDef={Constant.defaultColumnDefs}
+          pagination={constants.paginationConfig.pagination}
+          paginationPageSize={constants.paginationConfig.Size}
+          paginationPageSizeSelector={constants.paginationConfig.Selector}
+          defaultColDef={constants.defaultColumnDefs}
           enableCellTextSelection={true}
           getRowId={(params) => params.data.order_id}
         />
