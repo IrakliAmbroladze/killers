@@ -1,12 +1,12 @@
 import { useOrders } from "@/hooks/useOrders";
-import { Sheets_Invoice } from "@/types/invoices";
-import { AgGridReact } from "ag-grid-react";
-import { RefObject } from "react";
 import { buildCopiedRow } from "./buildCopiedRow ";
+import { Sheets_Invoice } from "@/types/invoices";
+import { RefObject } from "react";
+import { AgGridReact } from "ag-grid-react";
 
 export const handleCopyRows = async (
-  gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>,
-  addOrder: ReturnType<typeof useOrders>["addOrder"]
+  addOrder: ReturnType<typeof useOrders>["addOrder"],
+  gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>
 ) => {
   const api = gridRef.current?.api;
   if (!api) return;
@@ -17,7 +17,7 @@ export const handleCopyRows = async (
   }
   const userInputDate = window.prompt(
     "შეიყვანე შეკვეთის მიღების თარიღი (მაგ: 202505):",
-    ""
+    selectedRows[0].date ?? ""
   );
   if (!userInputDate) {
     alert("შეკვეთის აღების თარიღი არ მიგითითებია");
