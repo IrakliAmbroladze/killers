@@ -32,6 +32,7 @@ const UpdateModal = ({
     document: invoice.document,
     plan_time: invoice.plan_time,
     approve: invoice.approve,
+    order_id: "",
   };
   const editData: Sheets_Invoice = {
     ...copyData,
