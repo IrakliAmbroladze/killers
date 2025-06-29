@@ -1,12 +1,11 @@
 import { Sheets_Invoice } from "@/types/invoices";
 import type { ColDef } from "ag-grid-community";
 import * as Renderer from "../renderers";
-import { Dispatch, RefObject, SetStateAction } from "react";
+import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
 
 export const getColumnDefs = (
-  gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>,
-  setRowData: Dispatch<SetStateAction<Sheets_Invoice[]>>
+  gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>
 ): ColDef<Sheets_Invoice>[] => [
   {
     field: "delete",
@@ -20,7 +19,7 @@ export const getColumnDefs = (
   {
     field: "copy",
     headerName: "C",
-    cellRenderer: Renderer.createCopyButton(setRowData),
+    cellRenderer: Renderer.createCopyButton(gridRef),
     editable: false,
     pinned: "left",
     filter: false,
