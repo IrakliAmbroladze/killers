@@ -7,18 +7,9 @@ type DeleteRowsProps = {
   gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>;
   setLoading: Dispatch<SetStateAction<boolean>>;
   setTotal: Dispatch<SetStateAction<number>>;
-  setCount: Dispatch<SetStateAction<number>>;
 };
 
-const DeleteRows = ({
-  gridRef,
-  setLoading,
-  setTotal,
-  setCount,
-}: DeleteRowsProps) => {
-  function delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+const DeleteRows = ({ gridRef, setLoading, setTotal }: DeleteRowsProps) => {
   const { deleteOrder } = useOrders();
 
   return (
@@ -29,42 +20,46 @@ const DeleteRows = ({
         if (!api) return;
         const selectedRows = api.getSelectedRows();
 
-        if (selectedRows && selectedRows.length > 20) {
-          alert("ოცზე მეტი მონაცემის წაშლაზე შეზღუდვაა");
-        } else if (selectedRows && selectedRows.length > 0) {
-          const confirmDelete = window.confirm(
-            `ნამდვილად გსურს წაშლა? \nწასაშლელი მონაცემების რაოდენობაა: ${selectedRows.length}`
-          );
-
-          if (confirmDelete) {
-            const rowsToDelete = [...selectedRows];
-            setTotal(rowsToDelete.length);
-            setLoading(true);
-            for (const row of rowsToDelete) {
-              setCount((prev) => prev + 1);
-              try {
-                await fetch("/api/proxy", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    order_id: row.order_id,
-                    status: "delete",
-                  }),
-                });
-
-                await delay(50);
-              } catch (e) {
-                console.error("Failed to delete:", row.order_id);
-                console.error("Failed to delete:", e);
-              }
-            }
-            setCount(0);
-            api.applyTransaction({ remove: rowsToDelete });
-            rowsToDelete.forEach(deleteOrder);
-            setLoading(false);
-          }
-        } else {
+        if (selectedRows.length === 0) {
           alert("მონიშნე წასაშლელი მინიმუმ ერთი შეკვეთა.");
+          return;
+        }
+
+        if (selectedRows.length > 200) {
+          alert("ორასზე მეტი მონაცემის წაშლაზე შეზღუდვაა");
+          return;
+        }
+
+        const confirmDelete = window.confirm(
+          `ნამდვილად გსურს წაშლა? \nწასაშლელი მონაცემების რაოდენობაა: ${selectedRows.length}`
+        );
+        if (!confirmDelete) return;
+
+        setLoading(true);
+        setTotal(selectedRows.length);
+
+        const order_ids = selectedRows.map((row) => row.order_id);
+
+        try {
+          const response = await fetch("/api/proxy", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              status: "bulkDelete",
+              order_ids,
+            }),
+          });
+
+          const result = await response.json();
+          if (result.error) throw new Error(result.error);
+
+          api.applyTransaction({ remove: selectedRows });
+          selectedRows.forEach(deleteOrder);
+        } catch (e) {
+          console.error("Bulk delete failed:", e);
+          alert("წაშლისას მოხდა შეცდომა.");
+        } finally {
+          setLoading(false);
         }
       }}
     >

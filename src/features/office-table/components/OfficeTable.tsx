@@ -14,7 +14,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const OfficeTable = () => {
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
   const [rowData, setRowData] = useState<Sheets_Invoice[]>([]);
   const { orders } = useOrders();
@@ -28,7 +27,7 @@ const OfficeTable = () => {
   const columnDefs = useMemo(() => constants.getColumnDefs(gridRef), [gridRef]);
 
   return loading ? (
-    <DeleteInProcess count={count} total={total} />
+    <DeleteInProcess total={total} />
   ) : (
     <div style={{ height: "calc(100vh - 100px)" }}>
       <div className="flex gap-10 ">
@@ -37,7 +36,6 @@ const OfficeTable = () => {
           gridRef={gridRef}
           setLoading={setLoading}
           setTotal={setTotal}
-          setCount={setCount}
         />
       </div>
       <ErrorBoundary fallback={<div>Failed to load table</div>}>
