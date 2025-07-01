@@ -1,3 +1,5 @@
+//handleCopyRows.ts
+
 import { useOrders } from "@/hooks/useOrders";
 import { buildCopiedRow } from "./buildCopiedRow ";
 import { Sheets_Invoice } from "@/types/invoices";
@@ -25,19 +27,7 @@ export const handleCopyRows = async (
   }
 
   const newRows = selectedRows.map((row) => buildCopiedRow(row, userInputDate));
-
-  newRows.forEach((row) => {
-    addOrder(row);
-    try {
-      fetch("/api/proxy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...row, status: "add" }),
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  });
+  newRows.forEach((row) => addOrder(row));
 
   api.applyTransaction({
     add: newRows,
@@ -45,6 +35,24 @@ export const handleCopyRows = async (
   });
 
   api.paginationGoToPage(0);
+
+  try {
+    // Bulk fetch request
+    const response = await fetch("/api/proxy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        status: "bulkAdd",
+        rows: newRows,
+      }),
+    });
+
+    const result = await response.json();
+    if (result.error) throw new Error(result.error);
+  } catch (error) {
+    console.error("Bulk add error:", error);
+    alert("შეცდომა მოხდა დაკოპირებისას.");
+  }
 
   setTimeout(() => {
     api.deselectAll();
