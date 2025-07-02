@@ -1,6 +1,7 @@
 "use server";
 
-const fetchOrders = async (start = 0, limit = 20000) => {
+const fetchOrders = async (start = 0, limit = 10000) => {
+  console.time("fetchOrders");
   try {
     if (!process.env.SHEETS_URL) {
       throw new Error("SHEETS_URL is not defined");
@@ -18,8 +19,12 @@ const fetchOrders = async (start = 0, limit = 20000) => {
       throw new Error(`Request failed with status: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.timeEnd("fetchOrders");
+    console.log("Fetched orders:", data?.length);
+    return data;
   } catch (error) {
+    console.error("error in fetchOrders:", error);
     console.error(error);
     return [];
   }
