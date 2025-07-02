@@ -1,3 +1,5 @@
+//screen size
+
 import { Sheets_Invoice } from "@/types/invoices";
 import type { ColDef } from "ag-grid-community";
 import * as Renderer from "../renderers";
@@ -7,14 +9,13 @@ import { AgGridReact } from "ag-grid-react";
 export const getColumnDefs = (
   gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>
 ): ColDef<Sheets_Invoice>[] => {
-  const isSmallScreen = window.innerWidth < 768;
   return [
     {
       field: "delete",
       headerName: "D",
       cellRenderer: Renderer.createDeleteButton(gridRef),
       editable: false,
-      pinned: isSmallScreen ? undefined : "left",
+      pinned: "left",
       filter: false,
       width: 50,
     } as unknown as ColDef<Sheets_Invoice>,
@@ -23,7 +24,7 @@ export const getColumnDefs = (
       headerName: "C",
       cellRenderer: Renderer.createCopyButton(gridRef),
       editable: false,
-      pinned: isSmallScreen ? undefined : "left",
+      pinned: "left",
       filter: false,
       width: 50,
     } as unknown as ColDef<Sheets_Invoice>,
@@ -32,7 +33,7 @@ export const getColumnDefs = (
       headerName: "S",
       cellRenderer: Renderer.saveButton,
       editable: false,
-      pinned: isSmallScreen ? undefined : "left",
+      pinned: "left",
       filter: false,
       width: 50,
     } as unknown as ColDef<Sheets_Invoice>,
@@ -41,7 +42,7 @@ export const getColumnDefs = (
       headerName: "V",
       cellRenderer: Renderer.createViewButton(),
       editable: false,
-      pinned: isSmallScreen ? undefined : "left",
+      pinned: "left",
       filter: false,
       width: 50,
     } as unknown as ColDef<Sheets_Invoice>,
@@ -80,7 +81,7 @@ export const getColumnDefs = (
       field: "delivery_date",
     },
     { field: "technician", editable: false },
-    { field: "document" },
+    { field: "document", cellRenderer: Renderer.documentLinkRenderer },
     { field: "order_id", editable: false },
     { field: "plan_time", editable: false },
     { field: "approve", editable: false },
