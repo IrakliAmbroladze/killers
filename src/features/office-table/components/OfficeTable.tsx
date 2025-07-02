@@ -34,7 +34,7 @@ const OfficeTable = () => {
       <div className="flex justify-around">
         <CopyRows gridRef={gridRef} />
         <Link
-          href="./office/create-invoice"
+          href="./orders/create-invoice"
           className="hover:underline border rounded-lg px-2.5 py-1.5"
         >
           create-invoice
