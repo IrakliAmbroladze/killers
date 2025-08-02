@@ -1,10 +1,11 @@
 //screen size
 
 import type { ColDef } from "ag-grid-community";
-// import * as Renderer from "../renderers";
+import * as Renderer from "../renderers";
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";
+import { formatAgGridDate } from "../utils";
 
 export const getColumnDefs = (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>
@@ -56,16 +57,7 @@ export const getColumnDefs = (
         const value = params.data?.created_at;
         return value ? new Date(value) : null;
       },
-      valueFormatter: (params) => {
-        const value = params.value;
-        if (!value) return "";
-        const date = new Date(value);
-        const yyyy = date.getFullYear();
-        const mm = String(date.getMonth() + 1).padStart(2, "0");
-        const dd = String(date.getDate()).padStart(2, "0");
-        return `${yyyy}-${mm}-${dd}`;
-      },
-
+      valueFormatter: formatAgGridDate,
       width: 120,
     },
     { headerName: "Customer", field: "customers.name" },
@@ -110,16 +102,24 @@ export const getColumnDefs = (
         values: ["405049923 LTD KILL (VAT)", "405140217 LTD KILLER"],
       },
     },
-    { headerName: "Seller", field: "employees.display_name" },
-    // { field: "phone", width: 100 },
-    // { field: "email" },
-    // {
-    //   field: "delivery_date",
-    // },
-    // { field: "technician", editable: false },
-    // { field: "document", cellRenderer: Renderer.documentLinkRenderer },
-    // { field: "order_id", editable: false },
-    // { field: "plan_time", editable: false },
-    // { field: "approve", editable: false },
+    { headerName: "Seller", field: "employees.display_name", width: 100 },
+    { field: "phone", width: 100 },
+    { field: "email", width: 100 },
+    {
+      field: "delivery_date",
+      filter: "agDateColumnFilter",
+      cellEditor: "agDateCellEditor",
+      valueGetter: (params) => {
+        const value = params.data?.delivery_date;
+        return value ? new Date(value) : null;
+      },
+      valueFormatter: formatAgGridDate,
+      width: 120,
+    },
+    { field: "technician", editable: false },
+    { field: "document", cellRenderer: Renderer.documentLinkRenderer },
+    { headerName: "Order_id", field: "id", editable: false },
+    { field: "plan_time", editable: false },
+    { field: "approve", editable: false },
   ];
 };
