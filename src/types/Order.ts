@@ -2,6 +2,7 @@
 
 import { Customer } from "./Customer";
 import { PaymentType } from "./PaymentType";
+import { Provider } from "./Provider";
 
 export interface Order {
   id: string;
@@ -25,4 +26,5 @@ export interface Order {
 export interface OrderExtended extends Order {
   customers: Customer;
   payment_types: PaymentType;
+  providers: Provider;
 }

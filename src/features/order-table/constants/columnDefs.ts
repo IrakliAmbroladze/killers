@@ -86,27 +86,30 @@ export const getColumnDefs = (
     },
     { field: "items" },
     {
+      headerName: "Total",
       field: "price",
-      // filter: "agNumberFilter",
       width: 100,
       valueGetter: (params) => {
         const value = params.data?.price;
-        if (typeof value != "number") {
+        if (typeof value !== "number") {
           throw new Error("price value is not number");
         }
-        return value ? (value / 100).toFixed(2) : null;
+        return value ? value / 100 : null;
       },
-      valueFormatter: (params) => params.value ?? "",
+      valueFormatter: (params) => {
+        return params.value != null ? params.value.toFixed(2) : "";
+      },
       cellClass: "ag-right-aligned-cell",
       filter: "agNumberColumnFilter",
     },
-    // {
-    //   field: "provider",
-    //   cellEditor: "agSelectCellEditor",
-    //   cellEditorParams: {
-    //     values: ["405049923 LTD KILL (VAT)", "405140217 LTD KILLER"],
-    //   },
-    // },
+    {
+      headerName: "Provider",
+      field: "providers.name",
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: ["405049923 LTD KILL (VAT)", "405140217 LTD KILLER"],
+      },
+    },
     // { field: "seller" },
     // { field: "phone", width: 100 },
     // { field: "email" },

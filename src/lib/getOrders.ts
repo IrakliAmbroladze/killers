@@ -31,6 +31,10 @@ export const getOrders = async (
       payment_types (
       id,
       name
+      ),
+      providers (
+      id,
+      name
       )
     `,
       { count: "exact" }
