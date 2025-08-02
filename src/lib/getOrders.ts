@@ -35,6 +35,11 @@ export const getOrders = async (
       providers (
       id,
       name
+      ),
+      employees (
+      id,
+      display_name,
+      role_id
       )
     `,
       { count: "exact" }

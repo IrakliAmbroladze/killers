@@ -1,6 +1,7 @@
 //Order.ts
 
 import { Customer } from "./Customer";
+import { Employee } from "./Employee";
 import { PaymentType } from "./PaymentType";
 import { Provider } from "./Provider";
 
@@ -27,4 +28,5 @@ export interface OrderExtended extends Order {
   customers: Customer;
   payment_types: PaymentType;
   providers: Provider;
+  employees: Employee;
 }

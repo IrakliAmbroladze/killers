@@ -66,7 +66,7 @@ export const getColumnDefs = (
         return `${yyyy}-${mm}-${dd}`;
       },
 
-      width: 220,
+      width: 120,
     },
     { headerName: "Customer", field: "customers.name" },
     {
@@ -110,7 +110,7 @@ export const getColumnDefs = (
         values: ["405049923 LTD KILL (VAT)", "405140217 LTD KILLER"],
       },
     },
-    // { field: "seller" },
+    { headerName: "Seller", field: "employees.display_name" },
     // { field: "phone", width: 100 },
     // { field: "email" },
     // {

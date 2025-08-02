@@ -12,7 +12,6 @@ const TestPage = async ({
     Number(page),
     Number(pageSize)
   );
-  console.log(orders);
   console.log(totalCount);
   return (
     <div className="mt-14 w-full">
