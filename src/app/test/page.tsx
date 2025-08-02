@@ -1,3 +1,4 @@
+import OrderTable from "@/features/order-table/components/OrderTable";
 import { getOrders } from "@/lib/getOrders";
 import React from "react";
 
@@ -11,10 +12,10 @@ const TestPage = async ({
     Number(page),
     Number(pageSize)
   );
-  console.log(orders[0]);
+  console.log(orders);
   console.log(totalCount);
   return (
-    <div className="mt-14">
+    <div className="mt-14 w-full">
       <div>TestPage</div>
       <div>
         {orders.map((order) => (
@@ -24,9 +25,11 @@ const TestPage = async ({
             <span>{order.customers.name}</span>
             <span> - </span>
             <span>{order.address}</span>
+            <span>{order.payment_types.name}</span>
           </div>
         ))}
       </div>
+      <OrderTable orders={orders} />
     </div>
   );
 };

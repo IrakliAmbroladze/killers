@@ -1,6 +1,7 @@
 //Order.ts
 
 import { Customer } from "./Customer";
+import { PaymentType } from "./PaymentType";
 
 export interface Order {
   id: string;
@@ -21,6 +22,7 @@ export interface Order {
   approve: string | null;
 }
 
-export interface OrderWithCustomer extends Order {
+export interface OrderExtended extends Order {
   customers: Customer;
+  payment_types: PaymentType;
 }

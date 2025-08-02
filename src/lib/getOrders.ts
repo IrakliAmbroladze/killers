@@ -1,11 +1,11 @@
 //getORders.ts
 
 import { createClient } from "@/utils/supabase/server";
-import { OrderWithCustomer } from "@/types/Order";
+import { OrderExtended } from "@/types/Order";
 export const getOrders = async (
   page = 0,
   pageSize = 50
-): Promise<{ orders: OrderWithCustomer[]; totalCount: number }> => {
+): Promise<{ orders: OrderExtended[]; totalCount: number }> => {
   console.time("getOrders");
   const supabase = createClient();
 
@@ -27,6 +27,10 @@ export const getOrders = async (
         id,
         name,
         description
+      ),
+      payment_types (
+      id,
+      name
       )
     `,
       { count: "exact" }
@@ -43,5 +47,5 @@ export const getOrders = async (
     throw new Error("Error while fetching data count");
   }
 
-  return { orders: orders as OrderWithCustomer[], totalCount: count };
+  return { orders: orders as OrderExtended[], totalCount: count };
 };
