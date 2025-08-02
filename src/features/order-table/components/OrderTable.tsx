@@ -11,6 +11,7 @@ import * as constants from "../constants";
 import { ErrorBoundary } from "react-error-boundary";
 // import Link from "next/link";
 import { OrderExtended } from "@/types/Order";
+import { DateRange } from "./DateRange";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -42,6 +43,7 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
           setTotal={setTotal}
         />
       </div> */}
+      <DateRange />
       <ErrorBoundary fallback={<div>Failed to load table</div>}>
         <AgGridReact
           ref={gridRef}
