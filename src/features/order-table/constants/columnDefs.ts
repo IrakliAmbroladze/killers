@@ -54,7 +54,6 @@ export const getColumnDefs = (
       cellEditor: "agDateCellEditor",
       valueGetter: (params) => {
         const value = params.data?.created_at;
-        console.log("date value is: ", value);
         return value ? new Date(value) : null;
       },
       valueFormatter: (params) => {
@@ -76,16 +75,31 @@ export const getColumnDefs = (
       width: 120,
     },
     { field: "address" },
-    // {
-    //   field: "payment",
-    //   width: 120,
-    //   cellEditor: "agSelectCellEditor",
-    //   cellEditorParams: {
-    //     values: ["გადარიცხვა", "ხელზე"],
-    //   },
-    // },
-    // { field: "items" },
-    // { field: "total", width: 100 },
+    {
+      headerName: "Payment",
+      field: "payment_types.name",
+      width: 120,
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: ["გადარიცხვა", "ხელზე"],
+      },
+    },
+    { field: "items" },
+    {
+      field: "price",
+      // filter: "agNumberFilter",
+      width: 100,
+      valueGetter: (params) => {
+        const value = params.data?.price;
+        if (typeof value != "number") {
+          throw new Error("price value is not number");
+        }
+        return value ? (value / 100).toFixed(2) : null;
+      },
+      valueFormatter: (params) => params.value ?? "",
+      cellClass: "ag-right-aligned-cell",
+      filter: "agNumberColumnFilter",
+    },
     // {
     //   field: "provider",
     //   cellEditor: "agSelectCellEditor",
