@@ -2,6 +2,7 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, JSX, useMemo } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import * as Utils from "@/utils";
 
 const formatDate = (date: Date): string => {
   return date.toISOString().split("T")[0];
@@ -41,7 +42,11 @@ export function DateRange(): JSX.Element {
 
   useEffect(() => {
     if (!params.get("fromDate")) {
-      params.set("fromDate", formatDate(firstDayOfMonth));
+      params.set(
+        "fromDate",
+        Utils.formatDateYYYYMMDD(Utils.firstDayOfCurrentMonth)
+      );
+      console.log("Params is: ", params);
       replace(`${pathname}?${params.toString()}`);
     }
     if (!params.get("toDate")) {
@@ -55,7 +60,10 @@ export function DateRange(): JSX.Element {
       <input
         type="date"
         className={`bg-stone-100 dark:bg-stone-500 text-stone-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-200 px-4 py-0.5 rounded-lg pr-10 `}
-        value={params.get("fromDate") || formatDate(firstDayOfMonth)}
+        value={
+          params.get("fromDate") ||
+          Utils.formatDateYYYYMMDD(Utils.firstDayOfCurrentMonth)
+        }
         onChange={(e) => {
           const value = e.target.value;
           handleFromDate(value);

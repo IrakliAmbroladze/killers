@@ -1,16 +1,24 @@
 import type { ICellRendererParams } from "ag-grid-community";
 import { updateOrder } from "@/lib";
 import { FaRegSave } from "react-icons/fa";
-import { OrderExtended } from "@/types/Order";
+import type { OrderExtended, Order } from "@/types/Order";
 
 export const saveButton = (props: ICellRendererParams<OrderExtended>) => {
+  const handleSave = () => {
+    if (!props.data?.id) return;
+
+    const updatedOrder: Partial<OrderExtended> = { ...props.data };
+
+    delete updatedOrder.customers;
+    delete updatedOrder.payment_types;
+    delete updatedOrder.providers;
+    delete updatedOrder.employees;
+    console.log(updatedOrder);
+    updateOrder(updatedOrder as Order);
+  };
+
   return (
-    <button
-      className="cursor-pointer"
-      onClick={() => {
-        if (props.data?.id) updateOrder(props.data);
-      }}
-    >
+    <button className="cursor-pointer" onClick={handleSave}>
       <FaRegSave />
     </button>
   );

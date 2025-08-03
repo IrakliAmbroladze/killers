@@ -1,24 +1,19 @@
-import type { OrderExtended } from "@/types/Order";
+"use server";
 
-export const updateOrder = async (updatedOrder: OrderExtended) => {
-  // try {
-  //   const response = await fetch("/api/proxy", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(updatedOrder),
-  //   });
+import type { Order } from "@/types";
+import { createClient } from "@/utils/supabase/server";
 
-  //   if (!response.ok) {
-  //     throw new Error("Failed to update the backend");
-  //   }
+export const updateOrder = async (updatedOrder: Order) => {
+  const supabase = await createClient();
 
-  //   const data = await response.json();
-  //   console.log("Backend update successful:", data);
-  // } catch (error) {
-  //   console.error("Error updating order:", error);
-  // }
-  console.log("we are in updateOrder. ", updatedOrder);
+  const { error } = await supabase
+    .from("orders")
+    .update(updatedOrder)
+    .eq("id", updatedOrder.id);
+
+  if (error) {
+    console.error("Supabase error:", error.message);
+  } else {
+    console.log("Order updated successfully:", updatedOrder);
+  }
 };
