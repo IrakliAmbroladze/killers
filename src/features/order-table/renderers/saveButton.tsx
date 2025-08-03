@@ -1,15 +1,14 @@
 import type { ICellRendererParams } from "ag-grid-community";
-import type { Sheets_Invoice } from "@/types/invoices";
-import { updateOrderInDB } from "@/utils/updateOrderInDB";
+import { updateOrder } from "@/lib";
 import { FaRegSave } from "react-icons/fa";
+import { OrderExtended } from "@/types/Order";
 
-export const saveButton = (props: ICellRendererParams<Sheets_Invoice>) => {
+export const saveButton = (props: ICellRendererParams<OrderExtended>) => {
   return (
     <button
       className="cursor-pointer"
       onClick={() => {
-        if (props.data?.order_id) updateOrderInDB(props.data);
-        alert("✅ მონაცემი შეინახა");
+        if (props.data?.id) updateOrder(props.data);
       }}
     >
       <FaRegSave />
