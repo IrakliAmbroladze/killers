@@ -60,7 +60,7 @@ export const getColumnDefs = (
       valueFormatter: formatAgGridDate,
       width: 120,
     },
-    { headerName: "Customer", field: "customers.name" },
+    { headerName: "Customer", field: "customers.name", editable: false },
     {
       headerName: "Identity",
       field: "customer_id",
