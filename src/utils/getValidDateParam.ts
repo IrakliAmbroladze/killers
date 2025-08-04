@@ -6,5 +6,21 @@ export const getValidDateParam = (
   fallback: Date
 ): string => {
   const value = params[key];
-  return typeof value === "string" ? value : Utils.formatDateYYYYMMDD(fallback);
+
+  if (typeof value === "string") {
+    const isValid = Utils.isValidYYYYMMDD(value);
+
+    if (!isValid) {
+      console.warn(`Invalid date format for '${key}': ${value}`);
+    }
+
+    if (isValid) {
+      const date = new Date(value);
+      if (!isNaN(date.getTime())) {
+        return value;
+      }
+    }
+  }
+
+  return Utils.formatDateYYYYMMDD(fallback);
 };

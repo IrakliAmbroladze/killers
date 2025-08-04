@@ -12,7 +12,6 @@ export const getOrders = async ({
   orders: OrderExtended[];
   totalCount: number;
 }> => {
-  console.time("getOrders");
   const supabase = createClient();
   const { count, error: countError } = await (await supabase)
     .from("orders")
@@ -106,8 +105,6 @@ export const getOrders = async ({
 
     allData = orders ?? [];
   }
-
-  console.timeEnd("getOrders");
 
   return { orders: allData as OrderExtended[], totalCount: count ?? 0 };
 };
