@@ -1,10 +1,7 @@
 // pages/api/orders/update.ts
+import { deepEqual } from "@/utils";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
-
-function deepEqual(a: object, b: object): boolean {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,7 +33,10 @@ export async function POST(req: NextRequest) {
     const areEqual = deepEqual(updatedOrder, updatedRow);
 
     if (areEqual) {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return NextResponse.json(
+        { success: true, data: updatedRow },
+        { status: 200 }
+      );
     } else {
       console.warn("Update mismatch", {
         sent: updatedOrder,

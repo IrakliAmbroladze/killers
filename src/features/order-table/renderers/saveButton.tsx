@@ -7,7 +7,6 @@ export const saveButton = (props: ICellRendererParams<OrderExtended>) => {
   const handleSave = () => {
     if (!props.data?.id) {
       throw new Error("Order id is abscent");
-      return;
     }
 
     const updatedOrder: Partial<OrderExtended> = { ...props.data };
@@ -16,7 +15,6 @@ export const saveButton = (props: ICellRendererParams<OrderExtended>) => {
     delete updatedOrder.payment_types;
     delete updatedOrder.providers;
     delete updatedOrder.employees;
-    console.log(updatedOrder);
     updateOrder(updatedOrder as Order);
   };
 

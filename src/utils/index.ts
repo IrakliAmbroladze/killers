@@ -6,3 +6,4 @@ export {
   getDefaultDateParams,
   getRedirectWithValidDateRange,
 } from "./dateQuery";
+export { deepEqual } from "./deepEqual";
