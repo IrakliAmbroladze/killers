@@ -6,6 +6,7 @@ import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";
 import { formatAgGridDate } from "../utils";
+import { dateOnlyComparator } from "../utils/customDateComparator";
 
 export const getColumnDefs = (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>
@@ -57,9 +58,13 @@ export const getColumnDefs = (
         const value = params.data?.created_at;
         return value ? new Date(value) : null;
       },
+      filterParams: {
+        comparator: dateOnlyComparator,
+      },
       valueFormatter: formatAgGridDate,
       width: 120,
     },
+
     { headerName: "Customer", field: "customers.name", editable: false },
     {
       headerName: "Identity",
@@ -112,6 +117,9 @@ export const getColumnDefs = (
       valueGetter: (params) => {
         const value = params.data?.delivery_date;
         return value ? new Date(value) : null;
+      },
+      filterParams: {
+        comparator: dateOnlyComparator,
       },
       valueFormatter: formatAgGridDate,
       width: 120,
