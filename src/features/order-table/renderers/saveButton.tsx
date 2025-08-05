@@ -5,7 +5,10 @@ import type { OrderExtended, Order } from "@/types/Order";
 
 export const saveButton = (props: ICellRendererParams<OrderExtended>) => {
   const handleSave = () => {
-    if (!props.data?.id) return;
+    if (!props.data?.id) {
+      throw new Error("Order id is abscent");
+      return;
+    }
 
     const updatedOrder: Partial<OrderExtended> = { ...props.data };
 
