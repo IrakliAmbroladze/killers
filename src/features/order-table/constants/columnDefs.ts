@@ -7,6 +7,8 @@ import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";
 import { formatAgGridDate } from "../utils";
 import { dateOnlyComparator } from "../utils/customDateComparator";
+import { validDecimalNumberRegex } from "@/constants/regex";
+// import * as Utils from "@/utils";
 
 export const getColumnDefs = (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>
@@ -86,15 +88,18 @@ export const getColumnDefs = (
       headerName: "Total",
       field: "price",
       width: 100,
-      valueGetter: (params) => {
-        const value = params.data?.price;
-        if (typeof value !== "number") {
-          throw new Error("price value is not number");
-        }
-        return value ? value / 100 : null;
-      },
+      editable: true,
       valueFormatter: (params) => {
-        return params.value != null ? params.value.toFixed(2) : "";
+        return params.value != null ? Number(params.value).toFixed(2) : "";
+      },
+      valueParser: (params) => {
+        const input = params.newValue?.toString().trim();
+
+        if (!validDecimalNumberRegex.test(input)) {
+          alert("⚠️ ჩაწერე მხოლოდ რიცხვი. ათწილადისთვის გამოიყენე წერტილი (.)");
+          return params.oldValue;
+        }
+        return Number(input);
       },
       cellClass: "ag-right-aligned-cell",
       filter: "agNumberColumnFilter",

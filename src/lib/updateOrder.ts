@@ -11,11 +11,7 @@ export const updateOrder = async (updatedOrder: Partial<Order>) => {
   console.log("response is: ", responseObj);
   if (responseObj.success) {
     alert(
-      `✅ მონაცემები შენახულია წარმატებით: \n ს/კ: ${
-        responseObj.data.customer_id
-      } \n მისამართ: ${responseObj.data.address} \n პროდუქტი: ${
-        responseObj.data.items
-      } \n ფასი: ${responseObj.data.price / 100} `
+      `✅ მონაცემები შენახულია წარმატებით: \n ს/კ: ${responseObj.data.customer_id} \n მისამართ: ${responseObj.data.address} \n პროდუქტი: ${responseObj.data.items} \n ფასი: ${responseObj.data.price} `
     );
   } else {
     alert(
