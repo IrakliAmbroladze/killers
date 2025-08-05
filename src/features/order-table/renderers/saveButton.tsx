@@ -1,23 +1,20 @@
 import type { ICellRendererParams } from "ag-grid-community";
 import { updateOrder } from "@/lib";
 import { FaRegSave } from "react-icons/fa";
-import type { OrderExtended, Order } from "@/types/Order";
+import type { OrderExtended } from "@/types/Order";
+import { normalizeOrder } from "../utils/normalize";
 
 export const saveButton = (props: ICellRendererParams<OrderExtended>) => {
   const handleSave = () => {
-    if (!props.data?.id) {
-      throw new Error("Order id is abscent");
+    const data = props.data;
+    if (!data?.id) {
+      throw new Error("Order id is absent");
     }
 
-    const updatedOrder: Partial<OrderExtended> = { ...props.data };
+    const updatedOrder = normalizeOrder(data);
 
-    delete updatedOrder.customers;
-    delete updatedOrder.payment_types;
-    delete updatedOrder.providers;
-    delete updatedOrder.employees;
-    updateOrder(updatedOrder as Order);
+    updateOrder(updatedOrder);
   };
-
   return (
     <button className="cursor-pointer" onClick={handleSave}>
       <FaRegSave />

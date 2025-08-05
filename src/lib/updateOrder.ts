@@ -1,6 +1,6 @@
 import type { Order } from "@/types";
 
-export const updateOrder = async (updatedOrder: Order) => {
+export const updateOrder = async (updatedOrder: Partial<Order>) => {
   const response = await fetch("/api/orders/update", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
