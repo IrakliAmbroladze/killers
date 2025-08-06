@@ -13,7 +13,6 @@ import { validDecimalNumberRegex } from "@/constants/regex";
 export const getColumnDefs = (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>
 ): ColDef<OrderExtended>[] => {
-  console.log("gridRef is: ", gridRef);
   return [
     // {
     //   field: "delete",
@@ -24,15 +23,15 @@ export const getColumnDefs = (
     //   filter: false,
     //   width: 50,
     // } as unknown as ColDef<OrderExtended>,
-    // {
-    //   field: "copy",
-    //   headerName: "C",
-    //   cellRenderer: Renderer.createCopyButton(gridRef),
-    //   editable: false,
-    //   pinned: "left",
-    //   filter: false,
-    //   width: 50,
-    // } as unknown as ColDef<OrderExtended>,
+    {
+      field: "copy",
+      headerName: "C",
+      cellRenderer: Renderer.createCopyButton(gridRef),
+      editable: false,
+      pinned: "left",
+      filter: false,
+      width: 50,
+    } as unknown as ColDef<OrderExtended>,
     {
       field: "save",
       headerName: "S",

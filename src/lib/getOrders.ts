@@ -12,8 +12,8 @@ export const getOrders = async ({
   orders: OrderExtended[];
   totalCount: number;
 }> => {
-  const supabase = createClient();
-  const { count, error: countError } = await (await supabase)
+  const supabase = await createClient();
+  const { count, error: countError } = await supabase
     .from("orders")
     .select("*", { count: "exact", head: true })
     .gte("created_at", fromDate)
