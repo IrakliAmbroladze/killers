@@ -7,3 +7,4 @@ export {
   getRedirectWithValidDateRange,
 } from "./dateQuery";
 export { deepEqual } from "./deepEqual";
+export { alertsForSelectedRows } from "./order-table/alertsForSelectedRows";

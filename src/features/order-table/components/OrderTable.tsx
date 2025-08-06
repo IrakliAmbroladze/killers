@@ -9,7 +9,7 @@ import * as constants from "../constants";
 // import DeleteInProcess from "./DeleteInProcess";
 // import CopyRows from "./CopyRows";
 import { ErrorBoundary } from "react-error-boundary";
-// import Link from "next/link";
+import Link from "next/link";
 import { OrderExtended } from "@/types/Order";
 import { DateRange } from "./DateRange";
 
@@ -29,20 +29,20 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
   // ) : (
   return (
     <div style={{ height: "calc(100vh - 100px)" }}>
-      {/* <div className="flex justify-around">
-        <CopyRows gridRef={gridRef} />
+      <div className="flex justify-around">
+        {/* <CopyRows gridRef={gridRef} /> */}
         <Link
-          href="./orders/create-invoice"
+          href={`./${constants.pageName}/new-order`}
           className="hover:underline border rounded-lg px-2.5 py-1.5"
         >
           create-invoice
         </Link>
-        <DeleteRows
+        {/* <DeleteRows
           // gridRef={gridRef}
           setLoading={setLoading}
           setTotal={setTotal}
-        />
-      </div> */}
+        /> */}
+      </div>
       <DateRange />
       <ErrorBoundary fallback={<div>Failed to load table</div>}>
         <AgGridReact
