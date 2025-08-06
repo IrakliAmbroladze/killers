@@ -6,15 +6,9 @@ import { OrderExtended } from "@/types/Order";
 import { normalizeAgGridRowForCopy } from "./normalizeAgGridRowForCopy";
 import { insertOrder } from "@/lib";
 
-export const handleCopyRows = async (
-  gridRef: RefObject<AgGridReact<OrderExtended> | null>
-) => {
-  const api = gridRef.current?.api;
-  if (!api) {
-    console.warn("no AgGrid api");
-    return;
-  }
-  const selectedRows = api.getSelectedRows();
+const alertsForSelectedRows = (selectedRows: OrderExtended[]) => {
+  console.log("typeof selected rows: ", typeof selectedRows);
+  console.log("selected rows: ", selectedRows);
   if (selectedRows.length === 0) {
     alert("მონიშნე დასაკოპირებელი მინიმუმ ერთი შეკვეთა.");
     return;
@@ -29,6 +23,19 @@ export const handleCopyRows = async (
       return;
     }
   }
+};
+export const handleCopyRows = async (
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>
+) => {
+  const api = gridRef.current?.api;
+  if (!api) {
+    console.warn("no AgGrid api");
+    return;
+  }
+  const selectedRows = api.getSelectedRows();
+  alertsForSelectedRows(selectedRows);
+
+  api.setGridOption("loading", true);
   const newOrders = selectedRows.map((row) => normalizeAgGridRowForCopy(row));
   // const currentRow = selectedRows[0];
   // console.log("currentRow is: ", currentRow);
@@ -53,4 +60,5 @@ export const handleCopyRows = async (
       }
     });
   }, 50);
+  api.setGridOption("loading", false);
 };
