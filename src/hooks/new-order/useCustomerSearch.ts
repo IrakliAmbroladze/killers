@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { fetchCustomers } from "@/lib"; // A function that can fetch by partial ID
+import { fetchCustomers } from "@/lib";
 import { Customer } from "@/types";
 
 export const useCustomerSearch = () => {
@@ -14,8 +14,8 @@ export const useCustomerSearch = () => {
     }
     try {
       const res = await fetchCustomers(query);
-      if (res?.data) {
-        setSearchResults(res.data);
+      if (res) {
+        setSearchResults(res);
         setIsOpen(true);
       }
     } catch (err) {

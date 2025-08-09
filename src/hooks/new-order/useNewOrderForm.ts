@@ -1,3 +1,4 @@
+import { fetchCustomers } from "@/lib";
 import { Order, Customer } from "@/types";
 import { insertOrder } from "@/lib";
 import { useDebouncedCallback } from "use-debounce";
@@ -23,11 +24,19 @@ export const useNewOrderForm = ({
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const debouncedSearch = useDebouncedCallback((value: string) => {
+  const debouncedSearch = useDebouncedCallback(async (value: string) => {
+    if (!value.trim()) {
+      setCustomer(null);
+      return;
+    }
     searchCustomers(value);
+    const res = await fetchCustomers(value, "exact");
+    setCustomer(res?.[0] ?? null);
   }, 500);
 
-  const handleCustomerInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCustomerInput = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     handleChange(e);
     debouncedSearch(e.target.value);
   };
@@ -40,11 +49,23 @@ export const useNewOrderForm = ({
     e: React.FormEvent<HTMLFormElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
+    if (!formData.customer_id) {
+      alert("Please select a customer");
+      return;
+    }
+
+    const res = await fetchCustomers(formData.customer_id, "exact");
+    if (!res?.length) {
+      alert("Customer does not exist");
+      return;
+    }
     setFormData(initialData);
-    setCustomer(null);
     console.log("Form data:", formData);
     try {
-      await insertOrder([formData]);
+      const res = await insertOrder([formData]);
+      if (res?.success) {
+        alert("შეკვეთა წარმატებით დაემატა");
+      }
     } catch (error) {
       console.error("Failed to insert order", error);
     }

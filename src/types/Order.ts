@@ -17,7 +17,7 @@ export interface Order {
   seller_id: string;
   phone: string | null;
   email: string | null;
-  delivery_date: string;
+  delivery_date: string | null;
   technician: string | null;
   document: string | null;
   plan_time: string | null;

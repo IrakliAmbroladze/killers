@@ -13,7 +13,7 @@ export const NewOrderForm = () => {
     price: 0,
     provider_id: 1,
     seller_id: "f542028a-d20e-4491-a0ec-de6628764736",
-    delivery_date: "",
+    delivery_date: null,
   };
 
   const [formData, setFormData] = useState<Partial<Order>>(initialData);
@@ -46,15 +46,19 @@ export const NewOrderForm = () => {
               <input
                 type="text"
                 name="customer_id"
-                placeholder="საიდენტიფიკაციო კოდი"
+                placeholder="ს/კ ან სახელი"
                 onChange={handleCustomerInput}
                 onBlur={handleCustomerBlur}
                 required
                 className="p-1 border rounded"
-                value={formData.customer_id}
+                value={formData.customer_id ?? ""}
               />
               <div className="p-1">
-                {formData.customer_id ? customer && customer.name : ""}
+                {formData.customer_id
+                  ? customer
+                    ? customer.name
+                    : "მომხმარებელი არ არსებობს"
+                  : ""}
               </div>
             </div>
             {isOpen && (
@@ -130,34 +134,11 @@ export const NewOrderForm = () => {
               <input
                 name="delivery_date"
                 type="date"
-                value={formData.delivery_date}
+                value={formData.delivery_date ?? ""}
                 onChange={handleChange}
                 className=" p-1 border rounded dark:bg-black dark:text-white"
               />
             </div>
-            {/*
-            <div className="flex">
-              <label htmlFor="technician">Tech.</label>
-              <select
-                name="technician"
-                value={formData.technician}
-                onChange={handleChange}
-                className="w-full p-1 border rounded"
-              >
-                {dropdownOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <input
-              name="document"
-              placeholder="document"
-              value={formData.document}
-              onChange={handleChange}
-              className="w-full p-1 border rounded"
-            /> */}
           </div>
         </div>
         <button
