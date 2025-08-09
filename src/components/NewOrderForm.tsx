@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useNewOrderForm, useCustomerSearch } from "@/hooks";
 import type { Order, Customer } from "@/types";
 import { CustomerSearchModal } from "./CustomerSearchModal";
+import { User } from "@supabase/supabase-js";
 
-export const NewOrderForm = () => {
+export const NewOrderForm = ({ user }: { user: User | null }) => {
   const initialData = {
     customer_id: "",
     address: "",
@@ -12,7 +13,7 @@ export const NewOrderForm = () => {
     items: "",
     price: 0,
     provider_id: 1,
-    seller_id: "f542028a-d20e-4491-a0ec-de6628764736",
+    seller_id: user?.id,
     delivery_date: null,
   };
 
