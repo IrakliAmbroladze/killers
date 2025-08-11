@@ -5,8 +5,7 @@ import { AgGridReact } from "ag-grid-react";
 // import { useOrders } from "@/hooks/useOrders";
 // import type { Sheets_Invoice } from "@/types/invoices";
 import * as constants from "../constants";
-// import DeleteRows from "./DeleteRows";
-// import DeleteInProcess from "./DeleteInProcess";
+import DeleteRows from "./DeleteRows";
 // import CopyRows from "./CopyRows";
 import { ErrorBoundary } from "react-error-boundary";
 import Link from "next/link";
@@ -16,17 +15,11 @@ import { DateRange } from "./DateRange";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
-  // const [loading, setLoading] = useState(false);
-  // const [total, setTotal] = useState(0);
   // const { orders } = useOrders();
-
   const gridRef = useRef<AgGridReact<OrderExtended> | null>(null);
 
   const columnDefs = useMemo(() => constants.getColumnDefs(gridRef), [gridRef]);
 
-  // return loading ? (
-  //   <DeleteInProcess total={total} />
-  // ) : (
   return (
     <div style={{ height: "calc(100vh - 100px)" }}>
       <div className="flex justify-around">
@@ -43,11 +36,7 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
         >
           create-customer
         </Link>
-        {/* <DeleteRows
-          // gridRef={gridRef}
-          setLoading={setLoading}
-          setTotal={setTotal}
-        /> */}
+        <DeleteRows gridRef={gridRef} />
       </div>
       <DateRange />
       <ErrorBoundary fallback={<div>Failed to load table</div>}>

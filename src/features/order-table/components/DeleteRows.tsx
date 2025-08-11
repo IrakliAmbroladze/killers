@@ -1,17 +1,13 @@
-import { useOrders } from "@/hooks/useOrders";
 import { AgGridReact } from "ag-grid-react";
-import { Dispatch, RefObject, SetStateAction } from "react";
-import { Sheets_Invoice } from "@/types/invoices";
+import { RefObject } from "react";
+import { OrderExtended } from "@/types";
+import { deleteOrders } from "@/lib";
 
 type DeleteRowsProps = {
-  gridRef: RefObject<AgGridReact<Sheets_Invoice> | null>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
-  setTotal: Dispatch<SetStateAction<number>>;
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>;
 };
 
-const DeleteRows = ({ gridRef, setLoading, setTotal }: DeleteRowsProps) => {
-  const { deleteOrder } = useOrders();
-
+const DeleteRows = ({ gridRef }: DeleteRowsProps) => {
   return (
     <button
       className="delete-button hover:underline cursor-pointer "
@@ -35,31 +31,16 @@ const DeleteRows = ({ gridRef, setLoading, setTotal }: DeleteRowsProps) => {
         );
         if (!confirmDelete) return;
 
-        setLoading(true);
-        setTotal(selectedRows.length);
-
-        const order_ids = selectedRows.map((row) => row.order_id);
+        const order_ids = selectedRows.map((row) => row.id);
 
         try {
-          const response = await fetch("/api/proxy", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              status: "bulkDelete",
-              order_ids,
-            }),
-          });
-
-          const result = await response.json();
-          if (result.error) throw new Error(result.error);
+          const response = await deleteOrders(order_ids);
+          console.log(response.message);
 
           api.applyTransaction({ remove: selectedRows });
-          selectedRows.forEach(deleteOrder);
         } catch (e) {
           console.error("Bulk delete failed:", e);
           alert("წაშლისას მოხდა შეცდომა.");
-        } finally {
-          setLoading(false);
         }
       }}
     >
