@@ -4,6 +4,8 @@ import { useNewOrderForm, useCustomerSearch } from "@/hooks";
 import type { Order, Customer } from "@/types";
 import { CustomerSearchModal } from "./CustomerSearchModal";
 import { User } from "@supabase/supabase-js";
+import Link from "next/link";
+import { pageName } from "@/features/order-table/constants";
 
 export const NewOrderForm = ({ user }: { user: User | null }) => {
   const initialData = {
@@ -55,11 +57,23 @@ export const NewOrderForm = ({ user }: { user: User | null }) => {
                 value={formData.customer_id ?? ""}
               />
               <div className="p-1">
-                {formData.customer_id
-                  ? customer
-                    ? customer.name
-                    : "მომხმარებელი არ არსებობს"
-                  : ""}
+                {formData.customer_id ? (
+                  customer ? (
+                    customer.name
+                  ) : (
+                    <div>
+                      მომხმარებელი არ არსებობს{" "}
+                      <Link
+                        href={`/${pageName}/new-customer`}
+                        className={`w-full bg-blue-600 hover:bg-gray-800 text-white active:scale-95 p-1 rounded cursor-pointer `}
+                      >
+                        დაამატე ახალი
+                      </Link>
+                    </div>
+                  )
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             {isOpen && (

@@ -5,7 +5,6 @@ import { getAuthenticatedUser } from "@/lib";
 
 const NewOrder = async () => {
   const user = await getAuthenticatedUser();
-  console.log("getAuthenticatedUser: ", user);
 
   return (
     <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
