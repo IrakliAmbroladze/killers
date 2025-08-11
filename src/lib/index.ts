@@ -4,3 +4,4 @@ export { getCustomer } from "./getCustomer";
 export { fetchCustomers } from "./fetchCustomers";
 export { getAuthenticatedUser } from "./auth/getAuthenticatedUser";
 export { insertCustomer } from "./insertCustomer";
+export { deleteOrders } from "./deleteOrders";

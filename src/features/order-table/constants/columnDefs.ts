@@ -14,15 +14,15 @@ export const getColumnDefs = (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>
 ): ColDef<OrderExtended>[] => {
   return [
-    // {
-    //   field: "delete",
-    //   headerName: "D",
-    //   cellRenderer: Renderer.createDeleteButton(gridRef),
-    //   editable: false,
-    //   pinned: "left",
-    //   filter: false,
-    //   width: 50,
-    // } as unknown as ColDef<OrderExtended>,
+    {
+      field: "delete",
+      headerName: "D",
+      cellRenderer: Renderer.createDeleteButton(gridRef),
+      editable: false,
+      pinned: "left",
+      filter: false,
+      width: 50,
+    } as unknown as ColDef<OrderExtended>,
     {
       field: "copy",
       headerName: "C",
