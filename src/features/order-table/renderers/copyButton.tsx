@@ -1,6 +1,6 @@
 import type { ICellRendererParams } from "ag-grid-community";
 import { FiCopy } from "react-icons/fi";
-import { handleCopyRows } from "../utils";
+import { handleCopyRows } from "@/utils";
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";

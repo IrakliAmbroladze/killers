@@ -3,7 +3,7 @@
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";
-import { normalizeAgGridRowForCopy } from "./normalizeAgGridRowForCopy";
+import { normalizeAgGridRowForCopy } from "../../features/order-table/utils/normalizeAgGridRowForCopy";
 import { insertOrder } from "@/lib";
 import { alertsForSelectedRows } from "@/utils";
 
