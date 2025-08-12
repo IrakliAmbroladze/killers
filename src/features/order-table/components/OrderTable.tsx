@@ -5,9 +5,8 @@ import { AgGridReact } from "ag-grid-react";
 import * as constants from "../constants";
 import { ErrorBoundary } from "react-error-boundary";
 import Link from "next/link";
-import { OrderExtended } from "@/types/Order";
-import { DateRange } from "./DateRange";
-import { handleDeleteRows, handleCopyRows } from "@/utils";
+import { OrderExtended } from "@/types";
+import DateRange from "./DateRange";
 import BulkActionButton from "./BulkActionButton";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -19,31 +18,26 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
 
   return (
     <div style={{ height: "calc(100vh - 100px)" }}>
-      <div className="flex justify-around">
-        <BulkActionButton
-          gridRef={gridRef}
-          updateFunction={handleCopyRows}
-          text={"copy"}
-        />
-        <Link
-          href={`./${constants.pageName}/new-order`}
-          className="hover:underline border rounded-lg px-2.5 py-1.5"
-        >
-          create-invoice
-        </Link>
-        <Link
-          href={`./${constants.pageName}/new-customer`}
-          className="hover:underline border rounded-lg px-2.5 py-1.5"
-        >
-          create-customer
-        </Link>
-        <BulkActionButton
-          gridRef={gridRef}
-          updateFunction={handleDeleteRows}
-          text={"delete"}
-        />
+      <div className="flex justify-around mb-2">
+        <DateRange />
+        {["new-order", "new-customer"].map((n) => (
+          <Link
+            key={n}
+            href={`./${constants.pageName}/${n}`}
+            className="hover:underline border rounded-lg px-2.5 py-0.5"
+          >
+            {n}
+          </Link>
+        ))}
+        {constants.bulkActionButtons.map((b) => (
+          <BulkActionButton
+            key={b.text}
+            gridRef={gridRef}
+            updateFunction={b.action}
+            text={b.text}
+          />
+        ))}
       </div>
-      <DateRange />
       <ErrorBoundary fallback={<div>Failed to load table</div>}>
         <AgGridReact
           ref={gridRef}

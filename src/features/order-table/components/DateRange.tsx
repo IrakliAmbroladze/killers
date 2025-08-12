@@ -3,7 +3,7 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDateParams } from "../hooks/useDateParam";
 
-export function DateRange() {
+export default function DateRange() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -14,7 +14,7 @@ export function DateRange() {
   const { updateDateParam } = useDateParams(pathname, router, searchParams);
 
   return (
-    <div className="my-2 flex gap-2">
+    <div className="flex gap-2">
       <input
         type="date"
         value={fromDate}
