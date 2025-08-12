@@ -16,11 +16,14 @@ export const handleCopyRows = async (
     return;
   }
   const selectedRows = api.getSelectedRows();
-  if (!alertsForSelectedRows(selectedRows)) return;
+  const input = alertsForSelectedRows(selectedRows);
+  if (selectedRows.length > 1 && !input) return;
 
   api.setGridOption("loading", true);
   try {
-    const newOrders = selectedRows.map((row) => normalizeAgGridRowForCopy(row));
+    const newOrders = selectedRows.map((row) =>
+      normalizeAgGridRowForCopy(row, input)
+    );
 
     const insertedOrdersObj = await insertOrder(newOrders);
     const insertedOrders: OrderExtended[] =

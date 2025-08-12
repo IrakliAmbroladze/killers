@@ -1,9 +1,11 @@
 import { Order, OrderExtended } from "@/types/Order";
 
-export const normalizeAgGridRowForCopy = (row: OrderExtended) => {
+export const normalizeAgGridRowForCopy = (
+  row: OrderExtended,
+  date = new Date().toISOString().split("T")[0]
+) => {
   const {
     id,
-    created_at,
     customers,
     providers,
     employees,
@@ -18,7 +20,6 @@ export const normalizeAgGridRowForCopy = (row: OrderExtended) => {
   console.log(
     "removed ",
     id,
-    created_at,
     customers,
     providers,
     employees,
@@ -33,16 +34,11 @@ export const normalizeAgGridRowForCopy = (row: OrderExtended) => {
 
   const newOrder: Omit<
     Order,
-    | "id"
-    | "created_at"
-    | "delivery_date"
-    | "technician"
-    | "document"
-    | "plan_time"
-    | "approve"
+    "id" | "delivery_date" | "technician" | "document" | "plan_time" | "approve"
   > & { id: string } = {
     ...plainOrder,
     id: crypto.randomUUID(),
+    created_at: date,
   };
   return newOrder;
 };

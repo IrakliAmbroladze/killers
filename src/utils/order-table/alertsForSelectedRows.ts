@@ -1,19 +1,21 @@
+import { validDateRegex } from "@/constants/regex";
 import type { OrderExtended } from "@/types";
 
 export const alertsForSelectedRows = (rs: OrderExtended[]) => {
-  if (rs.length === 0) {
-    alert("მონიშნე დასაკოპირებელი მინიმუმ ერთი შეკვეთა.");
-    return false;
-  }
   if (rs.length > 1) {
+    const draftDate = new Date().toISOString().split("T")[0];
     const input = prompt(
-      "შეიყვანე შეკვეთის მიღების თარიღი (მაგ: 202505):",
-      rs[0].created_at ?? ""
+      `შეიყვანე შეკვეთის მიღების თარიღი YYYY-MM-DD (მაგ: ${draftDate}):`,
+      draftDate ?? ""
     );
     if (!input) {
       alert("შეკვეთის აღების თარიღი არ მიგითითებია");
-      return false;
+      return undefined;
     }
+    if (!validDateRegex.test(input)) {
+      alert("თარიღის ფორმატი უნდა იყოს YYYY-MM-DD");
+      return undefined;
+    }
+    return input;
   }
-  return true;
 };

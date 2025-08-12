@@ -8,7 +8,6 @@ export {
 } from "./dateQuery";
 export { deepEqual } from "./deepEqual";
 export { alertsForSelectedRows } from "./order-table/alertsForSelectedRows";
-export { useDeleteButton } from "./order-table/useDeleteButton";
 export { confirDeletePrompt } from "./order-table/confirDeletePrompt";
 export { handleCopyRows } from "./order-table/handleCopyRows";
 export { handleDeleteRows } from "./order-table/handleDeleteRows";

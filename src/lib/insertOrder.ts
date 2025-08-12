@@ -1,4 +1,4 @@
-import { Order, OrderExtended } from "@/types/Order";
+import { Order, OrderExtended } from "@/types";
 
 export const insertOrder = async (newOrders: Partial<Order>[]) => {
   const response = await fetch("/api/orders/insert", {
