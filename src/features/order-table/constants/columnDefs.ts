@@ -131,6 +131,15 @@ export const getColumnDefs = (
         const value = params.data?.delivery_date;
         return value ? new Date(value) : null;
       },
+      valueSetter: (params) => {
+        if (params.newValue) {
+          const date = new Date(params.newValue);
+          const formattedDate = date.toLocaleDateString("en-CA");
+          params.data.delivery_date = formattedDate;
+          return true;
+        }
+        return false;
+      },
       filterParams: {
         comparator: dateOnlyComparator,
       },
