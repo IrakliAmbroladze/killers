@@ -59,6 +59,15 @@ export const getColumnDefs = (
         const value = params.data?.created_at;
         return value ? new Date(value) : null;
       },
+      valueSetter: (params) => {
+        if (params.newValue) {
+          const date = new Date(params.newValue);
+          const formattedDate = date.toLocaleDateString("en-CA");
+          params.data.created_at = formattedDate;
+          return true;
+        }
+        return false;
+      },
       filterParams: {
         comparator: dateOnlyComparator,
       },
