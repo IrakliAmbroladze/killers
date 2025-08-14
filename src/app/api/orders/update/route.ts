@@ -1,5 +1,4 @@
 // pages/api/orders/update.ts
-import { deepEqual } from "@/utils";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,15 +7,12 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient();
     const body = await req.json();
     const { updatedOrder } = body;
-    console.log("updatedOrder in api:", updatedOrder);
 
     const { data, error } = await supabase
       .from("orders")
       .update(updatedOrder)
       .eq("id", updatedOrder.id)
       .select();
-
-    console.log("Supabase update result:", { data, error });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
@@ -30,27 +26,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const areEqual = deepEqual(updatedOrder, updatedRow);
-
-    if (areEqual) {
-      return NextResponse.json(
-        { success: true, data: updatedRow },
-        { status: 200 }
-      );
-    } else {
-      console.warn("Update mismatch", {
-        sent: updatedOrder,
-        saved: updatedRow,
-      });
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Data mismatch — update may have failed or been modified.",
-          saved: updatedRow,
-        },
-        { status: 409 }
-      );
-    }
+    return NextResponse.json(
+      { success: true, data: updatedRow },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 401 });

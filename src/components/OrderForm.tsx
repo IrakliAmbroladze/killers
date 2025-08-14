@@ -73,7 +73,6 @@ export default function OrderForm({
       }
       if (status === "update") {
         if (index !== undefined) {
-          console.log("update formdata", formData);
           updateOrder(formData);
           await fetch("/api/proxy", {
             method: "POST",

@@ -1,6 +1,6 @@
-import { fetchCustomers } from "@/lib";
+import { addOrders, fetchCustomers } from "@/lib";
 import { Order, Customer } from "@/types";
-import { insertOrder } from "@/lib";
+// import { insertOrder } from "@/lib";
 import { useDebouncedCallback } from "use-debounce";
 
 export const useNewOrderForm = ({
@@ -60,14 +60,18 @@ export const useNewOrderForm = ({
       return;
     }
     setFormData(initialData);
-    console.log("Form data:", formData);
     try {
-      const res = await insertOrder([formData]);
-      if (res?.success) {
-        alert("შეკვეთა წარმატებით დაემატა");
+      const response = await addOrders([
+        { ...formData, created_at: new Date().toISOString() },
+      ]);
+      if (response.status == "OK") {
+        alert(response.message);
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
-      console.error("Failed to insert order", error);
+      console.error("Error inserting orders", error);
+      alert("❌ დაფიქსირდა შეცდომა შეკვეთის დამატებისას.");
     }
   };
 

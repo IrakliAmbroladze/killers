@@ -4,7 +4,7 @@ import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";
 import { normalizeAgGridRowForCopy } from "../../features/order-table/utils/normalizeAgGridRowForCopy";
-import { insertOrder } from "@/lib";
+import { addOrders } from "@/lib";
 import { alertsForSelectedRows } from "@/utils";
 
 export const handleCopyRows = async (
@@ -25,25 +25,17 @@ export const handleCopyRows = async (
       normalizeAgGridRowForCopy(row, input)
     );
 
-    const insertedOrdersObj = await insertOrder(newOrders);
-    const insertedOrders: OrderExtended[] =
-      insertedOrdersObj != undefined ? insertedOrdersObj.data : [];
-    api.applyTransaction({
-      add: insertedOrders,
-      addIndex: 0,
-    });
-    api.paginationGoToPage(0);
-    api.deselectAll();
-    insertedOrders.forEach((newRow) => {
-      const node = api.getRowNode(newRow.id);
-      if (node) {
-        node.setSelected(true);
-        api.ensureNodeVisible(node, "top");
-      }
-    });
+    const response = await addOrders(newOrders);
+    if (response.status == "OK") {
+      api.deselectAll();
+      api.paginationGoToPage(0);
+      alert(response.message);
+    } else {
+      throw new Error(response.message);
+    }
   } catch (error) {
     console.error("Error inserting orders", error);
-    alert("დაფიქსირდა შეცდომა შეკვეთის კოპირებისას.");
+    alert("❌ დაფიქსირდა შეცდომა შეკვეთის კოპირებისას.");
   } finally {
     api.setGridOption("loading", false);
   }

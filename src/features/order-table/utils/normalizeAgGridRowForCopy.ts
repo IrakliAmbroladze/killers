@@ -2,14 +2,14 @@ import { Order, OrderExtended } from "@/types/Order";
 
 export const normalizeAgGridRowForCopy = (
   row: OrderExtended,
-  date = new Date().toISOString().split("T")[0]
+  date = new Date().toISOString()
 ) => {
   const {
     id,
     customers,
-    providers,
     employees,
     payment_types,
+    providers,
     delivery_date,
     technician,
     document,
@@ -21,9 +21,9 @@ export const normalizeAgGridRowForCopy = (
     "removed ",
     id,
     customers,
-    providers,
     employees,
     payment_types,
+    providers,
     delivery_date,
     technician,
     document,
