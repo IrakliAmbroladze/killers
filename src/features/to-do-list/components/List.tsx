@@ -3,7 +3,6 @@
 import TechniciansOrder from "@/components/technicians-order";
 import React from "react";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
-// import useOrdersFilteredByMonth from "@/hooks/useOrdersFilteredByMonth";
 import { mapOrdersToTasks } from "../utils/mapOrdersToTasks";
 import { OrderExtended } from "@/types";
 
@@ -15,7 +14,6 @@ const List = ({
   orders: OrderExtended[];
 }) => {
   const { commentsQuantities } = useCommentsQuantities();
-  // const ordersFilteredByMonth = useOrdersFilteredByMonth();
   const tasks = mapOrdersToTasks(orders);
   return (
     <>

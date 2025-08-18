@@ -2,7 +2,7 @@ import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
-// import Done from "@/features/done/Done";
+import Done from "@/features/done/Done";
 import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
 import CommentsQtyUI from "./ui/CommentsQtyUI";
 import Approve from "@/features/approve/Approve";
@@ -21,7 +21,7 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
   };
 
   return (
-    <div className="border-b mb-2.5">
+    <div className="border-b">
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
@@ -54,7 +54,7 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
         className={`mt-[-10px] flex justify-end `}
       >
-        {/* {order.id && <Done order_id={order.id} />} */}
+        <Done order={order} />
       </div>
     </div>
   );

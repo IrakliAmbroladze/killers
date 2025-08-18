@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useState, JSX } from "react";
-// import { useOrders } from "@/hooks/useOrders";
-// import { findOrder } from "@/utils/findOrder";
 import DatePicker from "react-datepicker";
-// import { updateOrderInDB } from "@/utils/updateOrderInDB";
 import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
 import { OrderExtended } from "@/types";
 import { normalizeOrder } from "../order-table/utils/normalize";
@@ -18,8 +15,6 @@ const TagPlanTime = ({
   order_id: string;
   order: OrderExtended;
 }): JSX.Element => {
-  // const { orders, updateOrder } = useOrders();
-  // const order = findOrder(orders, order_id);
   const currentDate = order?.plan_time ? new Date(order.plan_time) : null;
   const [selectedDate, setSelectedDate] = useState<Date | null>(currentDate);
 
