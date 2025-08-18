@@ -1,18 +1,19 @@
 "use client";
 
-import Calendar from "@/features/calendar/components/Calendar";
-import { MonthProvider } from "@/context/month/Provider";
-import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
+// import Calendar from "@/features/calendar/components/Calendar";
+// import { MonthProvider } from "@/context/month/Provider";
+// import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 
-const OrdersPage = () => {
+const ProceduresPage = () => {
   return (
     <div className="w-full">
-      <MonthProvider>
+      Procedures page
+      {/* <MonthProvider>
         <Calendar />
         <ToDoDoneList />
-      </MonthProvider>
+      </MonthProvider> */}
     </div>
   );
 };
 
-export default OrdersPage;
+export default ProceduresPage;
