@@ -1,16 +1,25 @@
 "use client";
 
 import React, { useState, JSX } from "react";
-import { useOrders } from "@/hooks/useOrders";
-import { findOrder } from "@/utils/findOrder";
+// import { useOrders } from "@/hooks/useOrders";
+// import { findOrder } from "@/utils/findOrder";
 import DatePicker from "react-datepicker";
-import { updateOrderInDB } from "@/utils/updateOrderInDB";
+// import { updateOrderInDB } from "@/utils/updateOrderInDB";
 import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
+import { OrderExtended } from "@/types";
+import { normalizeOrder } from "../order-table/utils/normalize";
+import { editOrder } from "@/lib";
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 
-const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
-  const { orders, updateOrder } = useOrders();
-  const order = findOrder(orders, order_id);
-
+const TagPlanTime = ({
+  order_id,
+  order,
+}: {
+  order_id: string;
+  order: OrderExtended & { status_id: number };
+}): JSX.Element => {
+  // const { orders, updateOrder } = useOrders();
+  // const order = findOrder(orders, order_id);
   const currentDate = order?.plan_time ? new Date(order.plan_time) : null;
   const [selectedDate, setSelectedDate] = useState<Date | null>(currentDate);
 
@@ -27,20 +36,20 @@ const TagPlanTime = ({ order_id }: { order_id: string }): JSX.Element => {
       return;
     }
 
-    const updatedOrder = {
+    const { status_id, ...rest } = {
       ...order,
       plan_time: selectedDate ? selectedDate.toISOString() : "",
     };
-
-    updateOrder(updatedOrder);
-    updateOrderInDB(updatedOrder);
+    console.log(status_id);
+    const updatedOrder = normalizeOrder(rest);
+    editOrder(updatedOrder, proceduresPathName);
   };
 
   if (!order) return <div>Order not found</div>;
 
   return (
     <div
-      style={getDeliveryStyle(order.delivery_date, order.approve)}
+      style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
       className={`flex gap-0.5 ${
         order.delivery_date
           ? "bg-green-200 dark:bg-green-950"

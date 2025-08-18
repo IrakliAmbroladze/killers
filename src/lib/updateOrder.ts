@@ -1,4 +1,6 @@
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 import type { Order } from "@/types";
+import { redirect } from "next/navigation";
 
 export const updateOrder = async (updatedOrder: Partial<Order>) => {
   const response = await fetch("/api/orders/update", {
@@ -18,4 +20,6 @@ export const updateOrder = async (updatedOrder: Partial<Order>) => {
       `❌ მონაცემების შენახვისას დაფიქსირდა შეცდომა \n ${responseObj.error}`
     );
   }
+
+  redirect(proceduresPathName);
 };
