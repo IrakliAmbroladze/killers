@@ -8,6 +8,7 @@ import { proceduresPathName } from "./constants/proceduresPathName";
 import { getOrders } from "@/lib/getOrders";
 import Calendar from "@/features/calendar/components/Calendar";
 import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
+import DateRange from "@/features/order-table/components/DateRange";
 
 const ProceduresPage = async ({
   searchParams,
@@ -25,7 +26,7 @@ const ProceduresPage = async ({
   });
   return (
     <div className="w-full">
-      Procedures page
+      <DateRange />
       <Calendar orders={orders} />
       <ToDoDoneList orders={orders} />
     </div>
