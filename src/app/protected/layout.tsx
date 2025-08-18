@@ -9,7 +9,6 @@ interface LayoutProps {
 export default async function Layout({
   children,
 }: LayoutProps): Promise<JSX.Element> {
-  console.time();
   return (
     <Providers>
       <div className="w-full mt-10 sm:px-2.5">
