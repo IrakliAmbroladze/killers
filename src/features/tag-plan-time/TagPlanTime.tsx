@@ -16,7 +16,7 @@ const TagPlanTime = ({
   order,
 }: {
   order_id: string;
-  order: OrderExtended & { status_id: number };
+  order: OrderExtended;
 }): JSX.Element => {
   // const { orders, updateOrder } = useOrders();
   // const order = findOrder(orders, order_id);
@@ -36,12 +36,10 @@ const TagPlanTime = ({
       return;
     }
 
-    const { status_id, ...rest } = {
+    const updatedOrder = normalizeOrder({
       ...order,
       plan_time: selectedDate ? selectedDate.toISOString() : "",
-    };
-    console.log(status_id);
-    const updatedOrder = normalizeOrder(rest);
+    });
     editOrder(updatedOrder, proceduresPathName);
   };
 

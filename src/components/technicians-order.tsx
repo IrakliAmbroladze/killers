@@ -1,15 +1,15 @@
 import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
-// import TagTechnician from "@/features/TagTechnician/TagTechnician";
+import TagTechnician from "@/features/TagTechnician/TagTechnician";
 import TagPlanTime from "@/features/tag-plan-time/TagPlanTime";
 // import Done from "@/features/done/Done";
 import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
 import CommentsQtyUI from "./ui/CommentsQtyUI";
-// import Approve from "@/features/approve/Approve";
+import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
 
 interface TechniciansOrderProps {
-  order: OrderExtended & { status_id: number };
+  order: OrderExtended;
   comments_num: number;
 }
 
@@ -21,7 +21,7 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
   };
 
   return (
-    <div className="border-b">
+    <div className="border-b mb-2.5">
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
@@ -43,10 +43,12 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         className={`justify-between items-center `}
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
       >
-        {/* {order.delivery_date
-          ? order.technician
-          : order.id && <TagTechnician order_id={order.id} />}{" "}
-        {order.id && <Approve order_id={order.id} />} */}
+        {order.delivery_date ? (
+          order.technician
+        ) : (
+          <TagTechnician order={order} />
+        )}{" "}
+        <Approve order={order} />
       </div>
       <div
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}

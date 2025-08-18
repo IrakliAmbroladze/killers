@@ -19,17 +19,20 @@ const List = ({
   const tasks = mapOrdersToTasks(orders);
   return (
     <>
-      {tasks.map(
-        (task) =>
+      {tasks.map((task) => {
+        const { status_id, ...order } = task;
+        console.log(status_id);
+        return (
           task.status_id === statusId && (
             <div key={task.id}>
               <TechniciansOrder
-                order={task}
+                order={order}
                 comments_num={commentsQuantities[task.id ?? ""] ?? 0}
               />
             </div>
           )
-      )}
+        );
+      })}
     </>
   );
 };
