@@ -26,11 +26,7 @@ const OrdersPage = async ({
     toDate: string;
   });
 
-  return (
-    <div className="mt-12 w-full">
-      <OrderTable orders={orders} />
-    </div>
-  );
+  return <OrderTable orders={orders} />;
 };
 
 export default OrdersPage;
