@@ -3,22 +3,29 @@
 import TechniciansOrder from "@/components/technicians-order";
 import React from "react";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
-import useOrdersFilteredByMonth from "@/hooks/useOrdersFilteredByMonth";
+// import useOrdersFilteredByMonth from "@/hooks/useOrdersFilteredByMonth";
 import { mapOrdersToTasks } from "../utils/mapOrdersToTasks";
+import { OrderExtended } from "@/types";
 
-const List = ({ statusId }: { statusId: number }) => {
+const List = ({
+  statusId,
+  orders,
+}: {
+  statusId: number;
+  orders: OrderExtended[];
+}) => {
   const { commentsQuantities } = useCommentsQuantities();
-  const ordersFilteredByMonth = useOrdersFilteredByMonth();
-  const tasks = mapOrdersToTasks(ordersFilteredByMonth);
+  // const ordersFilteredByMonth = useOrdersFilteredByMonth();
+  const tasks = mapOrdersToTasks(orders);
   return (
     <>
       {tasks.map(
         (task) =>
           task.status_id === statusId && (
-            <div key={task.order_id}>
+            <div key={task.id}>
               <TechniciansOrder
                 order={task}
-                comments_num={commentsQuantities[task.order_id ?? ""] ?? 0}
+                comments_num={commentsQuantities[task.id ?? ""] ?? 0}
               />
             </div>
           )

@@ -1,6 +1,6 @@
-import { Sheets_Invoice } from "@/types/invoices";
+import { OrderExtended } from "@/types";
 
-export const mapOrdersToTasks = (orders: Sheets_Invoice[]) => {
+export const mapOrdersToTasks = (orders: OrderExtended[]) => {
   return orders.map((order) => {
     const status_id =
       order.delivery_date === "" && order.plan_time === ""
