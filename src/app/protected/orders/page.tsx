@@ -1,10 +1,9 @@
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 import OrderTable from "@/features/order-table/components/OrderTable";
 import { getOrders } from "@/lib/getOrders";
-import * as Utils from "@/utils";
-import { ordersPageName } from "./constants/ordersPageName";
+import { ordersPathName } from "./constants/ordersPathName";
+import { validateUrlForGettingOrders } from "@/utils";
 
 const OrdersPage = async ({
   searchParams,
@@ -12,14 +11,9 @@ const OrdersPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const params = await searchParams;
+  const header = await headers();
 
-  if (!Utils.hasValidDateRangeQuery(params)) {
-    const pathname =
-      (await headers()).get("x-url")?.split("?")[0] ?? ordersPageName;
-    const redirectUrl = Utils.getRedirectWithValidDateRange(pathname, params);
-    redirect(redirectUrl);
-  }
-
+  validateUrlForGettingOrders(params, header, ordersPathName);
   const { fromDate, toDate } = params;
   const { orders } = await getOrders({ fromDate, toDate } as {
     fromDate: string;
