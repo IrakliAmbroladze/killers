@@ -1,14 +1,12 @@
-import { useOrders } from "@/hooks/useOrders";
-import { findOrder } from "@/utils/findOrder";
-import { updateOrderInDB } from "@/utils/updateOrderInDB";
+import { OrderExtended } from "@/types";
 import React, { JSX, useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { GrInProgress } from "react-icons/gr";
+import { normalizeOrder } from "../order-table/utils/normalize";
+import { editOrder } from "@/lib";
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 
-const Done = ({ order_id }: { order_id: string }): JSX.Element => {
-  const { orders, updateOrder } = useOrders();
-  const order = findOrder(orders, order_id);
-
+const Done = ({ order }: { order: OrderExtended }): JSX.Element => {
   const [done, setDone] = useState<boolean>(false);
 
   const date = new Date(order?.plan_time ?? "");
@@ -19,7 +17,7 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
 
   const localDateString = `${year}-${month}-${day}`;
   useEffect(() => {
-    if (order?.delivery_date !== "") {
+    if (!!order?.delivery_date) {
       setDone(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,20 +34,19 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
     const newDone = !done;
     setDone(newDone);
 
-    const updatedOrder = {
+    const updatedOrder = normalizeOrder({
       ...order,
-      delivery_date: newDone ? localDateString : "",
-    };
+      delivery_date: newDone ? localDateString : null,
+    });
 
-    updateOrder(updatedOrder);
-    updateOrderInDB(updatedOrder);
+    editOrder(updatedOrder, proceduresPathName);
   };
 
   if (!order) return <div>Order not found</div>;
 
   return (
     <button onClick={handleClick} className="text-xs ">
-      {done ? <FaCheck /> : <GrInProgress />}
+      {!!done ? <FaCheck /> : <GrInProgress />}
     </button>
   );
 };

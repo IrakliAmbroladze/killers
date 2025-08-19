@@ -1,7 +1,6 @@
 "use server";
 
 const fetchOrders = async (start = 0, limit = 10000) => {
-  console.time("fetchOrders");
   try {
     if (!process.env.SHEETS_URL) {
       throw new Error("SHEETS_URL is not defined");
@@ -20,7 +19,6 @@ const fetchOrders = async (start = 0, limit = 10000) => {
     }
 
     const data = await response.json();
-    console.timeEnd("fetchOrders");
     console.log("Fetched orders:", data?.length);
     return data;
   } catch (error) {
