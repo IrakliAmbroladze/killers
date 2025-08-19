@@ -1,13 +1,10 @@
-import { useFindOrderById } from "@/hooks/useFindOrderById";
-import { useOrders } from "@/hooks/useOrders";
-import { Sheets_Invoice } from "@/types/invoices";
-import { updateOrderInDB } from "@/utils/updateOrderInDB";
+import { OrderExtended } from "@/types";
 import React, { JSX, useEffect, useState } from "react";
+import { normalizeOrder } from "../order-table/utils/normalize";
+import { editOrder } from "@/lib";
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 
-const Done = ({ order_id }: { order_id: string }): JSX.Element => {
-  const { updateOrder } = useOrders();
-  const order = useFindOrderById(order_id);
-
+const Approve = ({ order }: { order: OrderExtended }): JSX.Element => {
   const [approveStatus, setApproveStatus] = useState<boolean>(false);
 
   useEffect(() => {
@@ -20,14 +17,13 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
   const handleApprove = () => {
     const newApproveStatus = !approveStatus;
     setApproveStatus(newApproveStatus);
-    const updatedOrder = {
+    const updatedOrder = normalizeOrder({
       ...order,
       approve: newApproveStatus ? "TRUE" : "FALSE",
-      date: order?.date ?? "", // Ensure date is always a string
-    };
+      created_at: order?.created_at ?? "", // Ensure date is always a string
+    });
 
-    updateOrder(updatedOrder as Sheets_Invoice);
-    updateOrderInDB(updatedOrder as Sheets_Invoice);
+    editOrder(updatedOrder, proceduresPathName);
   };
 
   if (!order) return <div>Order not found</div>;
@@ -42,4 +38,4 @@ const Done = ({ order_id }: { order_id: string }): JSX.Element => {
   );
 };
 
-export default Done;
+export default Approve;

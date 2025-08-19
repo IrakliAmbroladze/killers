@@ -4,20 +4,19 @@ import TaskModal from "./TaskModal";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "../lib/create-calendar-task";
 import * as utils from "../utils/utils";
-import { useOrders } from "@/hooks/useOrders";
 import TechniciansOrder from "../../../components/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
-import { useMonth } from "@/hooks/useMonth";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import { months } from "../utils";
+import { OrderExtended } from "@/types";
 
 interface Task {
   [key: string]: { text: string; checked: boolean }[];
 }
 
-export default function Calendar() {
+export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const supabase = createClient();
   useEffect(() => {
     async function loadTasks() {
@@ -45,7 +44,7 @@ export default function Calendar() {
   } | null>(null);
   // const [updatedTaskText, setUpdatedTaskText] = useState<string>("");
   // const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { month, setMonth } = useMonth();
+  const month = 7;
   const { year, setYear } = useYear();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -192,7 +191,6 @@ export default function Calendar() {
   };
   const { commentsQuantities } = useCommentsQuantities();
 
-  const { orders } = useOrders();
   const techNames = useTechniciansAndManagersDisplayNames();
   const renderDay = (date: Date) => {
     const key = utils.getDateKey(date);
@@ -286,11 +284,11 @@ export default function Calendar() {
                 })
                 .map((order) => (
                   <TechniciansOrder
-                    key={order.order_id}
+                    key={order.id}
                     order={order}
                     comments_num={
-                      order.order_id !== undefined
-                        ? commentsQuantities[order.order_id] || 0
+                      order.id !== undefined
+                        ? commentsQuantities[order.id] || 0
                         : 0
                     }
                   />
@@ -388,11 +386,7 @@ export default function Calendar() {
         >
           {showCalendar ? "Hide Calendar" : "Show Calendar"}
         </button>
-        <select
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-          className="text-black bg-gray-100 text-xs"
-        >
+        <select className="text-black bg-gray-100 text-xs">
           {months.map((m, index) => (
             <option key={index} value={index}>
               {m}

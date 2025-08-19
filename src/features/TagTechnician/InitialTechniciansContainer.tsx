@@ -1,20 +1,20 @@
 import React from "react";
 import InitialTechnicians from "./InitialTechnicians";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
-import { Sheets_Invoice } from "@/types/invoices";
-import { useOrders } from "@/hooks/useOrders";
+import { OrderExtended } from "@/types";
+import { normalizeOrder } from "../order-table/utils/normalize";
+import { editOrder } from "@/lib";
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 
 interface InitialTechniciansContainerProps {
   initialTechnicians: string[];
-  order: Sheets_Invoice;
+  order: OrderExtended;
 }
 
 const InitialTechniciansContainer = ({
   initialTechnicians,
   order,
 }: InitialTechniciansContainerProps) => {
-  const { updateOrder } = useOrders();
-
   const selectedTechnicians = initialTechnicians;
 
   const displayNames = useTechniciansAndManagersDisplayNames();
@@ -26,30 +26,12 @@ const InitialTechniciansContainer = ({
     }
     const updatedTechnicians = [...selectedTechnicians, name];
     const newdata = updatedTechnicians.join(" ");
-    const updatedOrder = {
+    const updatedOrder = normalizeOrder({
       ...order,
       technician: newdata,
-    };
-    updateOrder(updatedOrder);
-    try {
-      const response = await fetch("/api/proxy", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedOrder),
-      });
+    });
 
-      if (!response.ok) {
-        throw new Error("Failed to update the backend");
-      }
-
-      const data = await response.json();
-      console.log("Backend update successful:", data);
-    } catch (error) {
-      console.error("Error updating order:", error);
-    }
+    editOrder(updatedOrder, proceduresPathName);
   };
 
   const handleTechnicianDelete = async (name: string) => {
@@ -68,30 +50,11 @@ const InitialTechniciansContainer = ({
       return;
     }
     const newdata = updatedTechnicians.join(" ");
-    const updatedOrder = {
+    const updatedOrder = normalizeOrder({
       ...order,
       technician: newdata,
-    };
-    updateOrder(updatedOrder);
-    try {
-      const response = await fetch("/api/proxy", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedOrder),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update the backend");
-      }
-
-      const data = await response.json();
-      console.log("Backend update successful:", data);
-    } catch (error) {
-      console.error("Error updating order:", error);
-    }
+    });
+    editOrder(updatedOrder, proceduresPathName);
   };
 
   return (
