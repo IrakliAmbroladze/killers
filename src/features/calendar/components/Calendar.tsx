@@ -11,8 +11,11 @@ import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import { months } from "../utils";
 import { CalendarTasks, OrderExtended } from "@/types";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { DayGrid } from "@/components";
+import { editOrder } from "@/lib";
+import { normalizeOrder } from "@/features/order-table/utils/normalize";
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 
 export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const supabase = createClient();
@@ -384,8 +387,20 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
     );
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    const order = active.data.current;
+    console.log("droppable over: ", over?.id);
+    console.log("draggable active: ", order?.customers.name);
+    const updatedOrder = normalizeOrder({
+      ...order,
+      plan_time: "2025-08-03",
+    });
+    editOrder(updatedOrder, proceduresPathName);
+  };
+
   return (
-    <DndContext>
+    <DndContext onDragEnd={handleDragEnd}>
       <div className="w-full flex justify-center items-center"></div>
       <div className="flex my-2 justify-between text-xs">
         <input

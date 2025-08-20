@@ -7,6 +7,7 @@ import { getDeliveryStyle } from "@/utils/getDeliveryStyle";
 import CommentsQtyUI from "./ui/CommentsQtyUI";
 import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
+import { useDraggable } from "@dnd-kit/core";
 
 interface TechniciansOrderProps {
   order: OrderExtended;
@@ -14,6 +15,16 @@ interface TechniciansOrderProps {
 }
 
 const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: order.id,
+    data: { ...order },
+  });
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
+
   const { openOrder } = useOrderModal();
 
   const handleClick = (id: string) => {
@@ -21,7 +32,13 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
   };
 
   return (
-    <div className="border-b">
+    <div
+      className="border-b"
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+    >
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
