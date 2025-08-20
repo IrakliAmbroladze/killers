@@ -5,7 +5,7 @@ import type { Order, Customer } from "@/types";
 import { CustomerSearchModal } from "./CustomerSearchModal";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
-import { pageName } from "@/features/order-table/constants";
+import { newCustomerPathName } from "@/app/protected/orders/constants/ordersPathName";
 
 export const NewOrderForm = ({ user }: { user: User | null }) => {
   const initialData = {
@@ -64,7 +64,7 @@ export const NewOrderForm = ({ user }: { user: User | null }) => {
                     <div>
                       მომხმარებელი არ არსებობს{" "}
                       <Link
-                        href={`/${pageName}/new-customer`}
+                        href={newCustomerPathName}
                         className={`w-full bg-blue-600 hover:bg-gray-800 text-white active:scale-95 p-1 rounded cursor-pointer `}
                       >
                         დაამატე ახალი
