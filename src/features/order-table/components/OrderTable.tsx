@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useCallback } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import * as constants from "../constants";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { OrderExtended } from "@/types";
 import DateRange from "./DateRange";
 import BulkActionButton from "./BulkActionButton";
+import DownloadCSV from "./DownloadCSV";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -15,6 +16,9 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
   const gridRef = useRef<AgGridReact<OrderExtended> | null>(null);
 
   const columnDefs = useMemo(() => constants.getColumnDefs(gridRef), [gridRef]);
+  const onBtnExport = useCallback(() => {
+    gridRef.current!.api.exportDataAsCsv();
+  }, []);
 
   return (
     <div style={{ height: "calc(100vh - 100px)" }}>
@@ -29,6 +33,7 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
             {n}
           </Link>
         ))}
+        <DownloadCSV onClick={onBtnExport}>Download CSV</DownloadCSV>
         {constants.bulkActionButtons.map((b) => (
           <BulkActionButton
             key={b.text}
