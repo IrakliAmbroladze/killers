@@ -1,6 +1,6 @@
-import { colorSchemeDarkBlue, themeQuartz } from "ag-grid-community";
+import { colorSchemeLightWarm, themeQuartz } from "ag-grid-community";
 
-export const myTheme = themeQuartz.withPart(colorSchemeDarkBlue);
+export const myTheme = themeQuartz.withPart(colorSchemeLightWarm);
 
 // themeQuartz
 //   .withParams(
