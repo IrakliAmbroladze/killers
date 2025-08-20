@@ -10,11 +10,9 @@ import { RxPencil1 } from "react-icons/rx";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import { months } from "../utils";
-import { OrderExtended } from "@/types";
-
-interface Task {
-  [key: string]: { text: string; checked: boolean }[];
-}
+import { CalendarTasks, OrderExtended } from "@/types";
+import { DndContext } from "@dnd-kit/core";
+import { DayGrid } from "@/components";
 
 export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const supabase = createClient();
@@ -48,7 +46,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const { year, setYear } = useYear();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [tasks, setTasks] = useState<Task>({});
+  const [tasks, setTasks] = useState<CalendarTasks>({});
   const [selectedWeek, setSelectedWeek] = useState<number>(utils.currentWeek);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const days = Array.from(
@@ -351,7 +349,23 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
     return (
       <div className="lg:grid grid-cols-7 hidden min-w-[1500px] text-xs border">
         {emptyDays}
-        {days.map(renderDay)}
+        {days.map((day, index) => (
+          <DayGrid
+            key={index}
+            date={day}
+            setSelectedDate={setSelectedDate}
+            tasks={tasks}
+            setTasks={setTasks}
+            handleEditClick={handleEditClick}
+            handleSaveClick={handleSaveClick}
+            editingTask={editingTask}
+            orders={orders}
+            techNames={techNames}
+            commentsQuantities={commentsQuantities}
+            toggleTask={toggleTask}
+            TaskInput={TaskInput}
+          />
+        ))}
       </div>
     );
   };
@@ -371,7 +385,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   };
 
   return (
-    <>
+    <DndContext>
       <div className="w-full flex justify-center items-center"></div>
       <div className="flex my-2 justify-between text-xs">
         <input
@@ -425,6 +439,6 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
           </div>
         </>
       )}
-    </>
+    </DndContext>
   );
 }
