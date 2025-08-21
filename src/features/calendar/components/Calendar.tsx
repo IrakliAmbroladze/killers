@@ -387,14 +387,20 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
     );
   };
 
+  function formatDate(input: string) {
+    const [year, month, day] = input.split("-");
+    const newMonth = Number(month) + 1;
+    const mm = String(newMonth).padStart(2, "0");
+    const dd = day.padStart(2, "0");
+    return `${year}-${mm}-${dd}`;
+  }
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     const order = active.data.current;
-    console.log("droppable over: ", over?.id);
-    console.log("draggable active: ", order?.customers.name);
     const updatedOrder = normalizeOrder({
       ...order,
-      plan_time: "2025-08-03",
+      plan_time: formatDate(String(over?.id)),
     });
     editOrder(updatedOrder, proceduresPathName);
   };

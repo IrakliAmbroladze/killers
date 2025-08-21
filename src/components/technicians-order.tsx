@@ -32,13 +32,7 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
   };
 
   return (
-    <div
-      className="border-b"
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-    >
+    <div className="border-b" ref={setNodeRef} style={style}>
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
@@ -69,8 +63,11 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
       </div>
       <div
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
-        className={`mt-[-10px] flex justify-end `}
+        className={`mt-[-10px] flex justify-end gap-1.5`}
       >
+        <button {...listeners} {...attributes} className="border ">
+          drag me
+        </button>
         <Done order={order} />
       </div>
     </div>
