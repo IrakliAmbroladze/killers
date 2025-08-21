@@ -4,11 +4,11 @@
 // import { MdAddTask } from "react-icons/md";
 // import { toggleTask } from "@/utils";
 // import { useEffect, useRef, useState } from "react";
-import * as utils from "@/features/calendar/utils/utils";
 import { CalendarTasks, OrderExtended } from "@/types";
 import { RxPencil1 } from "react-icons/rx";
 import TechniciansOrder from "../technicians-order";
 import { useDroppable } from "@dnd-kit/core";
+import { getDateKey } from "@/utils";
 
 type DayGridProps = {
   date: Date;
@@ -49,7 +49,7 @@ export const DayGrid = ({
   toggleTask,
   TaskInput,
 }: DayGridProps) => {
-  const key = utils.getDateKey(date);
+  const key = getDateKey(date);
   const dayOrders = orders.filter((order) => {
     if (!order.plan_time) return false;
     const myDate = new Date(order.plan_time);
