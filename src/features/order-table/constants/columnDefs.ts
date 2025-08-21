@@ -35,7 +35,7 @@ export const getColumnDefs = (
     {
       field: "save",
       headerName: "S",
-      cellRenderer: Renderer.saveButton,
+      cellRenderer: Renderer.SaveButton,
       editable: false,
       pinned: "left",
       filter: false,

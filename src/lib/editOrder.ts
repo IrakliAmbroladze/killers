@@ -9,7 +9,7 @@ export const editOrder = async (
 ) => {
   const supabase = await createClient();
 
-  const { error } = await supabase
+  const { error, count } = await supabase
     .from("orders")
     .update(updatedOrder)
     .eq("id", updatedOrder.id);
@@ -17,10 +17,17 @@ export const editOrder = async (
     return { message: `❌ შეცდომა: ${error.message}` };
   }
 
+  if (count === 0) {
+    return {
+      message: "ℹ️ ცვლილებები არ არის, მონაცემები არ შენახულა",
+      status: "NO_CHANGE",
+    };
+  }
+
   if (!!revalidatePathName) revalidatePath(revalidatePathName);
 
   return {
-    message: "✅ დამატება წარმატებით განხორციელდა",
+    message: "✅ ოპერაცია წარმატებით განხორციელდა",
     status: "OK",
   };
 };
