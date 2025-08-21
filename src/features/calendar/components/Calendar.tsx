@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import TaskModal from "./TaskModal";
 import { createClient } from "@/utils/supabase/client";
-import { createCalendarTask } from "../lib/create-calendar-task";
+import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import * as utils from "../utils/utils";
 import TechniciansOrder from "../../../components/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
