@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function TaskModal({
+export function TaskModal({
   date,
   onAdd,
   onClose,

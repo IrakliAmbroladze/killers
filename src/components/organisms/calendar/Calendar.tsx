@@ -1,21 +1,26 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import TaskModal from "./TaskModal";
+import { TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
-import { createCalendarTask } from "../lib/create-calendar-task";
-import * as utils from "../utils/utils";
+import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import TechniciansOrder from "../../../components/technicians-order";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { RxPencil1 } from "react-icons/rx";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
-import { months } from "../utils";
 import { CalendarTasks, OrderExtended } from "@/types";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { DayGrid } from "@/components";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { monthNamesInGeoArray } from "@/constants";
+import {
+  currentWeek,
+  dayOfWeekOfFirstDayOfMonth,
+  daysInMonth,
+  getDateKey,
+} from "@/utils";
 
 export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const supabase = createClient();
@@ -50,20 +55,18 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<CalendarTasks>({});
-  const [selectedWeek, setSelectedWeek] = useState<number>(utils.currentWeek);
+  const [selectedWeek, setSelectedWeek] = useState<number>(currentWeek);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const days = Array.from(
-    { length: utils.daysInMonth(year, month) },
+    { length: daysInMonth(year, month) },
     (_, i) => new Date(year, month, i + 1)
   );
   const weeks = Math.ceil(
-    (utils.dayOfWeekOfFirstDayOfMonth(year, month) +
-      utils.daysInMonth(year, month)) /
-      7
+    (dayOfWeekOfFirstDayOfMonth(year, month) + daysInMonth(year, month)) / 7
   );
 
   const addTask = async (date: Date, taskText: string) => {
-    const key = utils.getDateKey(date);
+    const key = getDateKey(date);
     const taskData = {
       date_key: key,
       task_text: taskText,
@@ -194,7 +197,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
 
   const techNames = useTechniciansAndManagersDisplayNames();
   const renderDay = (date: Date) => {
-    const key = utils.getDateKey(date);
+    const key = getDateKey(date);
     const dayOrders = orders.filter((order) => {
       if (!order.plan_time) return false;
       const myDate = new Date(order.plan_time);
@@ -346,7 +349,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
 
   const MonthGrid = () => {
     const emptyDays = Array.from(
-      { length: utils.dayOfWeekOfFirstDayOfMonth(year, month) },
+      { length: dayOfWeekOfFirstDayOfMonth(year, month) },
       (_, i) => <div key={`empty-${i} `} className="border p-2" />
     );
     return (
@@ -376,7 +379,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const WeekGrid = ({ days }: { days: Date[] }) => {
     const filtered = days.filter((date) => {
       const dayIndex =
-        date.getDate() + utils.dayOfWeekOfFirstDayOfMonth(year, month) - 1;
+        date.getDate() + dayOfWeekOfFirstDayOfMonth(year, month) - 1;
       const week = Math.floor(dayIndex / 7) + 1;
       return week === selectedWeek;
     });
@@ -422,7 +425,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
           {showCalendar ? "Hide Calendar" : "Show Calendar"}
         </button>
         <select className="text-black bg-gray-100 text-xs">
-          {months.map((m, index) => (
+          {monthNamesInGeoArray.map((m, index) => (
             <option key={index} value={index}>
               {m}
             </option>
