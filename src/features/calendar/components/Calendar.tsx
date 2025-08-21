@@ -9,13 +9,13 @@ import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAnd
 import { RxPencil1 } from "react-icons/rx";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
-import { months } from "../utils";
 import { CalendarTasks, OrderExtended } from "@/types";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { DayGrid } from "@/components";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { monthNamesInGeoArray } from "@/constants";
 
 export default function Calendar({ orders }: { orders: OrderExtended[] }) {
   const supabase = createClient();
@@ -422,7 +422,7 @@ export default function Calendar({ orders }: { orders: OrderExtended[] }) {
           {showCalendar ? "Hide Calendar" : "Show Calendar"}
         </button>
         <select className="text-black bg-gray-100 text-xs">
-          {months.map((m, index) => (
+          {monthNamesInGeoArray.map((m, index) => (
             <option key={index} value={index}>
               {m}
             </option>
