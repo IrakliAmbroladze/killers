@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import TaskModal from "./TaskModal";
+import { TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import TechniciansOrder from "../../../components/technicians-order";

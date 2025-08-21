@@ -6,7 +6,7 @@
 // import { useEffect, useRef, useState } from "react";
 import { CalendarTasks, OrderExtended } from "@/types";
 import { RxPencil1 } from "react-icons/rx";
-import TechniciansOrder from "../technicians-order";
+import TechniciansOrder from "../../technicians-order";
 import { useDroppable } from "@dnd-kit/core";
 import { getDateKey } from "@/utils";
 
