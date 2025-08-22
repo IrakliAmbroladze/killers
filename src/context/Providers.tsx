@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Provider as OrderModal } from "@/context/order-modal/Provider";
 import { Provider as Employees } from "@/context/employees/Provider";
+import { MonthProvider as Month } from "@/context/month/Provider";
 import { Provider as Year } from "@/context/year/Provider";
 import { Provider as CommentsProvider } from "@/context/comments-quantities/Provider";
 
@@ -46,7 +47,9 @@ export const Providers = ({ children }: { children: ReactNode }) => {
     <CommentsProvider initialCommentsQuantities={comments}>
       <OrderModal>
         <Employees employees={employees}>
-          <Year>{children}</Year>
+          <Year>
+            <Month>{children}</Month>
+          </Year>
         </Employees>
       </OrderModal>
     </CommentsProvider>

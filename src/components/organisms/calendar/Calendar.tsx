@@ -22,6 +22,7 @@ import {
   getDateKey,
   weeksNumberInMonth,
 } from "@/utils";
+import { useMonth } from "@/hooks/useMonth";
 
 export function Calendar({
   orders,
@@ -37,7 +38,8 @@ export function Calendar({
     idx: number;
     text: string;
   } | null>(null);
-  const month = 7;
+  const { month, setMonth } = useMonth();
+  console.log("month: ", month);
   const { year, setYear } = useYear();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -409,7 +411,12 @@ export function Calendar({
         >
           {showCalendar ? "Hide Calendar" : "Show Calendar"}
         </button>
-        <select className="text-black bg-gray-100 text-xs">
+
+        <select
+          value={month}
+          onChange={(e) => setMonth(Number(e.target.value))}
+          className="text-black bg-gray-100 text-xs"
+        >
           {monthNamesInGeoArray.map((m, index) => (
             <option key={index} value={index}>
               {m}
