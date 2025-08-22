@@ -6,7 +6,7 @@ import { validateUrlForGettingOrders } from "@/utils";
 import { headers } from "next/headers";
 import { proceduresPathName } from "./constants/proceduresPathName";
 import { getOrders } from "@/lib/getOrders";
-import Calendar from "@/features/calendar/components/Calendar";
+import { Calendar } from "@/components";
 import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 import DateRange from "@/features/order-table/components/DateRange";
 
