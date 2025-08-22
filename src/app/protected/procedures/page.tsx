@@ -9,6 +9,7 @@ import { getOrders } from "@/lib/getOrders";
 import { Calendar } from "@/components";
 import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 import DateRange from "@/features/order-table/components/DateRange";
+import { getCalendarTasks } from "@/lib";
 
 const ProceduresPage = async ({
   searchParams,
@@ -24,10 +25,12 @@ const ProceduresPage = async ({
     fromDate: string;
     toDate: string;
   });
+  const calendarTasks = await getCalendarTasks();
+
   return (
     <div className="w-full">
       <DateRange />
-      <Calendar orders={orders} />
+      <Calendar orders={orders} calendarTasks={calendarTasks} />
       <ToDoDoneList orders={orders} />
     </div>
   );
