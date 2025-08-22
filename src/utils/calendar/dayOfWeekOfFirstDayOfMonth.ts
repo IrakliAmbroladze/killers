@@ -1,4 +1,7 @@
 import { firstDayOfMonth } from "./firstDayOfMonth";
 
-export const dayOfWeekOfFirstDayOfMonth = (year: number, month: number) =>
-  firstDayOfMonth(year, month).getDay();
+//set on Monday
+export const dayOfWeekOfFirstDayOfMonth = (year: number, month: number) => {
+  const day = firstDayOfMonth(year, month).getDay();
+  return day === 0 ? 6 : day - 1;
+};
