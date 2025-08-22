@@ -6,3 +6,4 @@ export { insertCustomer } from "./insertCustomer";
 export { deleteOrders } from "./deleteOrders";
 export { addOrders } from "./addOrders";
 export { editOrder } from "./editOrder";
+export * from "./supabase";

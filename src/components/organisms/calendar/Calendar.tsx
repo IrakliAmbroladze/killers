@@ -8,7 +8,7 @@ import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAnd
 import { RxPencil1 } from "react-icons/rx";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
-import { CalendarTasks, OrderExtended } from "@/types";
+import { CalendarTasksArray, OrderExtended } from "@/types";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { DayGrid } from "@/components";
 import { editOrder } from "@/lib";
@@ -22,26 +22,14 @@ import {
   getDateKey,
 } from "@/utils";
 
-export function Calendar({ orders }: { orders: OrderExtended[] }) {
+export function Calendar({
+  orders,
+  calendarTasks,
+}: {
+  orders: OrderExtended[];
+  calendarTasks: CalendarTasksArray;
+}) {
   const supabase = createClient();
-  useEffect(() => {
-    async function loadTasks() {
-      const { data, error } = await supabase.from("calendar_tasks").select("*");
-
-      if (error) {
-        console.error("Error fetching tasks:", error);
-      } else {
-        const grouped: typeof tasks = {};
-        data.forEach(({ date_key, task_text, checked }) => {
-          if (!grouped[date_key]) grouped[date_key] = [];
-          grouped[date_key].push({ text: task_text, checked });
-        });
-        setTasks(grouped);
-      }
-    }
-
-    loadTasks();
-  }, [supabase]);
 
   const [editingTask, setEditingTask] = useState<{
     key: string;
@@ -54,7 +42,8 @@ export function Calendar({ orders }: { orders: OrderExtended[] }) {
   const { year, setYear } = useYear();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [tasks, setTasks] = useState<CalendarTasks>({});
+  const [tasks, setTasks] = useState<CalendarTasksArray>(calendarTasks);
+
   const [selectedWeek, setSelectedWeek] = useState<number>(currentWeek);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const days = Array.from(
