@@ -20,6 +20,7 @@ import {
   dayOfWeekOfFirstDayOfMonth,
   daysInMonth,
   getDateKey,
+  weeksNumberInMonth,
 } from "@/utils";
 
 export function Calendar({
@@ -36,8 +37,6 @@ export function Calendar({
     idx: number;
     text: string;
   } | null>(null);
-  // const [updatedTaskText, setUpdatedTaskText] = useState<string>("");
-  // const [isEditing, setIsEditing] = useState<boolean>(false);
   const month = 7;
   const { year, setYear } = useYear();
 
@@ -49,9 +48,6 @@ export function Calendar({
   const days = Array.from(
     { length: daysInMonth(year, month) },
     (_, i) => new Date(year, month, i + 1)
-  );
-  const weeks = Math.ceil(
-    (dayOfWeekOfFirstDayOfMonth(year, month) + daysInMonth(year, month)) / 7
   );
 
   const addTask = async (date: Date, taskText: string) => {
@@ -426,7 +422,7 @@ export function Calendar({
           onChange={(e) => setSelectedWeek(Number(e.target.value))}
           className="px-2 lg:hidden text-black bg-gray-100"
         >
-          {Array.from({ length: weeks }, (_, idx) => (
+          {Array.from({ length: weeksNumberInMonth(year, month) }, (_, idx) => (
             <option key={idx} value={idx + 1}>
               კვირა {idx + 1}
             </option>
