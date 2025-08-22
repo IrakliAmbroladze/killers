@@ -22,7 +22,7 @@ import {
   getDateKey,
 } from "@/utils";
 
-export default function Calendar({ orders }: { orders: OrderExtended[] }) {
+export function Calendar({ orders }: { orders: OrderExtended[] }) {
   const supabase = createClient();
   useEffect(() => {
     async function loadTasks() {
