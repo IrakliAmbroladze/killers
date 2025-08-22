@@ -1,4 +1,4 @@
-export const months: string[] = [
+export const monthNamesInGeoArray: string[] = [
   "იანვარი",
   "თებერვალი",
   "მარტი",
