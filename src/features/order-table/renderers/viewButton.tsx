@@ -1,10 +1,10 @@
 import type { ICellRendererParams } from "ag-grid-community";
-import type { Sheets_Invoice } from "@/types/invoices";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import { RxEyeOpen } from "react-icons/rx";
+import { OrderExtended } from "@/types";
 
 export const createViewButton = () => {
-  return function ViewButton(props: ICellRendererParams<Sheets_Invoice>) {
+  return function ViewButton(props: ICellRendererParams<OrderExtended>) {
     const { openOrder } = useOrderModal();
 
     const handleView = (orderId: string) => {
@@ -15,7 +15,7 @@ export const createViewButton = () => {
       <button
         className="cursor-pointer"
         onClick={() => {
-          if (props.data?.order_id) handleView(props.data.order_id);
+          if (props.data?.id) handleView(props.data.id);
         }}
       >
         <RxEyeOpen />
