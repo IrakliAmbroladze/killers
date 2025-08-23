@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { TaskModal } from "@/components";
+import { CalendarHeader, TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import TechniciansOrder from "../../../components/technicians-order";
@@ -14,7 +14,6 @@ import { DayGrid } from "@/components";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
-import { monthNamesInGeoArray } from "@/constants";
 import {
   currentWeek,
   dayOfWeekOfFirstDayOfMonth,
@@ -38,9 +37,8 @@ export function Calendar({
     idx: number;
     text: string;
   } | null>(null);
-  const { month, setMonth } = useMonth();
-  console.log("month: ", month);
-  const { year, setYear } = useYear();
+  const { month } = useMonth();
+  const { year } = useYear();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [tasks, setTasks] = useState<CalendarTasksArray>(calendarTasks);
@@ -398,44 +396,13 @@ export function Calendar({
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div className="w-full flex justify-center items-center"></div>
-      <div className="flex my-2 justify-between text-xs">
-        <input
-          type="number"
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-          className="border w-12"
-        />
-        <button
-          className="border rounded-sm text-xs"
-          onClick={() => setShowCalendar((prev) => !prev)}
-        >
-          {showCalendar ? "Hide Calendar" : "Show Calendar"}
-        </button>
-
-        <select
-          value={month}
-          onChange={(e) => setMonth(Number(e.target.value))}
-          className="text-black bg-gray-100 text-xs"
-        >
-          {monthNamesInGeoArray.map((m, index) => (
-            <option key={index} value={index}>
-              {m}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={selectedWeek}
-          onChange={(e) => setSelectedWeek(Number(e.target.value))}
-          className="px-2 lg:hidden text-black bg-gray-100"
-        >
-          {Array.from({ length: weeksNumberInMonth(year, month) }, (_, idx) => (
-            <option key={idx} value={idx + 1}>
-              კვირა {idx + 1}
-            </option>
-          ))}
-        </select>
-      </div>
+      <CalendarHeader
+        showCalendar={showCalendar}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+        weeks={weeksNumberInMonth(year, month)}
+        setShowCalendar={setShowCalendar}
+      />
       {showCalendar && (
         <>
           <div className="w-full overflow-auto">
