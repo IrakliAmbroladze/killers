@@ -249,6 +249,11 @@ export function Calendar({
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    if (!over) {
+      console.warn("Dropped outside any droppable");
+      alert("❌ შეცდომა: ადგილი არაა განკუთვნილი გადასატანად");
+      return;
+    }
     const order = active.data.current;
     const updatedOrder = normalizeOrder({
       ...order,
