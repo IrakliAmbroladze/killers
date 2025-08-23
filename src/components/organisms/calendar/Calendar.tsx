@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { CalendarHeader, TaskModal } from "@/components";
+import { CalendarGrid, CalendarHeader, TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
@@ -8,13 +8,12 @@ import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import { CalendarTasksArray, OrderExtended } from "@/types";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { DayGrid } from "@/components";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 import {
   currentWeek,
-  dayOfWeekOfFirstDayOfMonth,
   daysInMonth,
   getDateKey,
   weeksNumberInMonth,
@@ -29,6 +28,8 @@ export function Calendar({
   calendarTasks: CalendarTasksArray;
 }) {
   const supabase = createClient();
+  const isSmallScreen = useIsSmallScreen();
+  const viewMode = isSmallScreen ? "week" : "month";
 
   const [editingTask, setEditingTask] = useState<{
     key: string;
@@ -180,65 +181,6 @@ export function Calendar({
 
   const techNames = useTechniciansAndManagersDisplayNames();
 
-  const MonthGrid = () => {
-    const emptyDays = Array.from(
-      { length: dayOfWeekOfFirstDayOfMonth(year, month) },
-      (_, i) => <div key={`empty-${i} `} className="border p-2" />
-    );
-    return (
-      <div className="lg:grid grid-cols-7 hidden min-w-[1500px] text-xs border">
-        {emptyDays}
-        {days.map((day, index) => (
-          <DayGrid
-            key={index}
-            date={day}
-            setSelectedDate={setSelectedDate}
-            tasks={tasks}
-            setTasks={setTasks}
-            handleEditClick={handleEditClick}
-            handleSaveClick={handleSaveClick}
-            editingTask={editingTask}
-            orders={orders}
-            techNames={techNames}
-            commentsQuantities={commentsQuantities}
-            toggleTask={toggleTask}
-            TaskInput={TaskInput}
-          />
-        ))}
-      </div>
-    );
-  };
-
-  const WeekGrid = ({ days }: { days: Date[] }) => {
-    const filtered = days.filter((date) => {
-      const dayIndex =
-        date.getDate() + dayOfWeekOfFirstDayOfMonth(year, month) - 1;
-      const week = Math.floor(dayIndex / 7) + 1;
-      return week === selectedWeek;
-    });
-    return (
-      <div className="grid grid-cols-1 gap-1 lg:hidden">
-        {filtered.map((day, index) => (
-          <DayGrid
-            key={index}
-            date={day}
-            setSelectedDate={setSelectedDate}
-            tasks={tasks}
-            setTasks={setTasks}
-            handleEditClick={handleEditClick}
-            handleSaveClick={handleSaveClick}
-            editingTask={editingTask}
-            orders={orders}
-            techNames={techNames}
-            commentsQuantities={commentsQuantities}
-            toggleTask={toggleTask}
-            TaskInput={TaskInput}
-          />
-        ))}
-      </div>
-    );
-  };
-
   function formatDate(input: string) {
     const [year, month, day] = input.split("-");
     const newMonth = Number(month) + 1;
@@ -275,8 +217,24 @@ export function Calendar({
       {showCalendar && (
         <>
           <div className="w-full overflow-auto">
-            <MonthGrid />
-            <WeekGrid days={days} />
+            <CalendarGrid
+              month={month}
+              year={year}
+              days={days}
+              setSelectedDate={setSelectedDate}
+              tasks={tasks}
+              setTasks={setTasks}
+              handleEditClick={handleEditClick}
+              handleSaveClick={handleSaveClick}
+              editingTask={editingTask}
+              orders={orders}
+              techNames={techNames}
+              commentsQuantities={commentsQuantities}
+              toggleTask={toggleTask}
+              TaskInput={TaskInput}
+              selectedWeek={selectedWeek}
+              viewMode={viewMode}
+            />
 
             {selectedDate && (
               <TaskModal
