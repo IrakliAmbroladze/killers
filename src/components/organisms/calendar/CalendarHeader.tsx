@@ -1,0 +1,62 @@
+"use client";
+
+import { monthNamesInGeoArray } from "@/constants";
+import { useMonth } from "@/hooks/useMonth";
+import { useYear } from "@/hooks/useYear";
+
+export const CalendarHeader = ({
+  selectedWeek,
+  setSelectedWeek,
+  weeks,
+  showCalendar,
+  setShowCalendar,
+}: {
+  selectedWeek: number;
+  setSelectedWeek: React.Dispatch<React.SetStateAction<number>>;
+  weeks: number;
+  showCalendar: boolean;
+  setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { month, setMonth } = useMonth();
+  const { year, setYear } = useYear();
+  return (
+    <div className="flex my-2 justify-between text-xs">
+      <input
+        type="number"
+        value={year}
+        onChange={(e) => setYear(Number(e.target.value))}
+        className="border w-12"
+      />
+      <button
+        className="border rounded-sm text-xs"
+        onClick={() => setShowCalendar((prev) => !prev)}
+      >
+        {showCalendar ? "Hide Calendar" : "Show Calendar"}
+      </button>
+
+      <select
+        value={month}
+        onChange={(e) => setMonth(Number(e.target.value))}
+        className="text-black bg-gray-100 text-xs"
+      >
+        {monthNamesInGeoArray.map((m, index) => (
+          <option key={index} value={index}>
+            {m}
+          </option>
+        ))}
+      </select>
+
+      <select
+        value={selectedWeek}
+        onChange={(e) => setSelectedWeek(Number(e.target.value))}
+        className="px-2 lg:hidden text-black bg-gray-100"
+      >
+        {Array.from({ length: weeks }, (_, idx) => (
+          <option key={idx} value={idx + 1}>
+            კვირა {idx + 1}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
