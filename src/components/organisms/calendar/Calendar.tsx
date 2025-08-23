@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { CalendarHeader, TaskModal } from "@/components";
+import { CalendarGrid, CalendarHeader, TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
@@ -180,35 +180,6 @@ export function Calendar({
 
   const techNames = useTechniciansAndManagersDisplayNames();
 
-  const MonthGrid = () => {
-    const emptyDays = Array.from(
-      { length: dayOfWeekOfFirstDayOfMonth(year, month) },
-      (_, i) => <div key={`empty-${i} `} className="border p-2" />
-    );
-    return (
-      <div className="lg:grid grid-cols-7 hidden min-w-[1500px] text-xs border">
-        {emptyDays}
-        {days.map((day, index) => (
-          <DayGrid
-            key={index}
-            date={day}
-            setSelectedDate={setSelectedDate}
-            tasks={tasks}
-            setTasks={setTasks}
-            handleEditClick={handleEditClick}
-            handleSaveClick={handleSaveClick}
-            editingTask={editingTask}
-            orders={orders}
-            techNames={techNames}
-            commentsQuantities={commentsQuantities}
-            toggleTask={toggleTask}
-            TaskInput={TaskInput}
-          />
-        ))}
-      </div>
-    );
-  };
-
   const WeekGrid = ({ days }: { days: Date[] }) => {
     const filtered = days.filter((date) => {
       const dayIndex =
@@ -275,7 +246,20 @@ export function Calendar({
       {showCalendar && (
         <>
           <div className="w-full overflow-auto">
-            <MonthGrid />
+            <CalendarGrid
+              days={days}
+              setSelectedDate={setSelectedDate}
+              tasks={tasks}
+              setTasks={setTasks}
+              handleEditClick={handleEditClick}
+              handleSaveClick={handleSaveClick}
+              editingTask={editingTask}
+              orders={orders}
+              techNames={techNames}
+              commentsQuantities={commentsQuantities}
+              toggleTask={toggleTask}
+              TaskInput={TaskInput}
+            />
             <WeekGrid days={days} />
 
             {selectedDate && (
