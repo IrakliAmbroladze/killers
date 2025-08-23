@@ -11,6 +11,7 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 import {
   currentWeek,
   daysInMonth,
@@ -27,6 +28,8 @@ export function Calendar({
   calendarTasks: CalendarTasksArray;
 }) {
   const supabase = createClient();
+  const isSmallScreen = useIsSmallScreen();
+  const viewMode = isSmallScreen ? "week" : "month";
 
   const [editingTask, setEditingTask] = useState<{
     key: string;
@@ -230,7 +233,7 @@ export function Calendar({
               toggleTask={toggleTask}
               TaskInput={TaskInput}
               selectedWeek={selectedWeek}
-              viewMode={showCalendar ? "month" : "week"}
+              viewMode={viewMode}
             />
 
             {selectedDate && (

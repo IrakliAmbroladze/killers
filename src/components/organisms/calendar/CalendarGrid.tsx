@@ -57,16 +57,20 @@ export const CalendarGrid = ({
   });
   const visibleDays = viewMode === "month" ? days : filteredDays;
 
-  const emptyDays = Array.from(
-    { length: dayOfWeekOfFirstDayOfMonth(year, month) },
-    (_, i) => <div key={`empty-${i} `} className="border p-2" />
-  );
+  const emptyDays =
+    viewMode === "month"
+      ? Array.from(
+          { length: dayOfWeekOfFirstDayOfMonth(year, month) },
+          (_, i) => <div key={`empty-${i}`} className="border p-2" />
+        )
+      : [];
+
   return (
     <>
       <div
         className={`grid ${
           viewMode === "month" ? "grid-cols-7" : "grid-cols-1"
-        } gap-1 min-w-[1500px] text-xs border`}
+        } text-xs`}
       >
         {viewMode === "month" && emptyDays}
         {visibleDays.map((day, index) => (
