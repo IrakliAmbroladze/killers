@@ -8,13 +8,11 @@ import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import { CalendarTasksArray, OrderExtended } from "@/types";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { DayGrid } from "@/components";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 import {
   currentWeek,
-  dayOfWeekOfFirstDayOfMonth,
   daysInMonth,
   getDateKey,
   weeksNumberInMonth,
@@ -180,36 +178,6 @@ export function Calendar({
 
   const techNames = useTechniciansAndManagersDisplayNames();
 
-  const WeekGrid = ({ days }: { days: Date[] }) => {
-    const filtered = days.filter((date) => {
-      const dayIndex =
-        date.getDate() + dayOfWeekOfFirstDayOfMonth(year, month) - 1;
-      const week = Math.floor(dayIndex / 7) + 1;
-      return week === selectedWeek;
-    });
-    return (
-      <div className="grid grid-cols-1 gap-1 lg:hidden">
-        {filtered.map((day, index) => (
-          <DayGrid
-            key={index}
-            date={day}
-            setSelectedDate={setSelectedDate}
-            tasks={tasks}
-            setTasks={setTasks}
-            handleEditClick={handleEditClick}
-            handleSaveClick={handleSaveClick}
-            editingTask={editingTask}
-            orders={orders}
-            techNames={techNames}
-            commentsQuantities={commentsQuantities}
-            toggleTask={toggleTask}
-            TaskInput={TaskInput}
-          />
-        ))}
-      </div>
-    );
-  };
-
   function formatDate(input: string) {
     const [year, month, day] = input.split("-");
     const newMonth = Number(month) + 1;
@@ -247,6 +215,8 @@ export function Calendar({
         <>
           <div className="w-full overflow-auto">
             <CalendarGrid
+              month={month}
+              year={year}
               days={days}
               setSelectedDate={setSelectedDate}
               tasks={tasks}
@@ -259,8 +229,9 @@ export function Calendar({
               commentsQuantities={commentsQuantities}
               toggleTask={toggleTask}
               TaskInput={TaskInput}
+              selectedWeek={selectedWeek}
+              viewMode={showCalendar ? "month" : "week"}
             />
-            <WeekGrid days={days} />
 
             {selectedDate && (
               <TaskModal
