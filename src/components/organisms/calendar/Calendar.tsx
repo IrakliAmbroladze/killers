@@ -27,6 +27,7 @@ export function Calendar({
   orders: OrderExtended[];
   calendarTasks: CalendarTasksArray;
 }) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const supabase = createClient();
   const isSmallScreen = useIsSmallScreen();
   const viewMode = isSmallScreen ? "week" : "month";
@@ -189,19 +190,27 @@ export function Calendar({
     return `${year}-${mm}-${dd}`;
   }
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
+    // const currentScroll = window.scrollY;
+    setIsLoading(true);
     const { active, over } = event;
     if (!over) {
       console.warn("Dropped outside any droppable");
       alert("❌ შეცდომა: ადგილი არაა განკუთვნილი გადასატანად");
       return;
     }
-    const order = active.data.current;
-    const updatedOrder = normalizeOrder({
-      ...order,
-      plan_time: formatDate(String(over?.id)),
-    });
-    editOrder(updatedOrder, proceduresPathName);
+    try {
+      const order = active.data.current;
+      const updatedOrder = normalizeOrder({
+        ...order,
+        plan_time: formatDate(String(over?.id)),
+      });
+      await editOrder(updatedOrder, proceduresPathName);
+    } catch (error) {
+      console.error("Error updating order:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -217,6 +226,11 @@ export function Calendar({
       {showCalendar && (
         <>
           <div className="w-full overflow-auto">
+            {isLoading && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80 text-white">
+                <div className="loader">Loading...</div>
+              </div>
+            )}
             <CalendarGrid
               month={month}
               year={year}
@@ -235,7 +249,6 @@ export function Calendar({
               selectedWeek={selectedWeek}
               viewMode={viewMode}
             />
-
             {selectedDate && (
               <TaskModal
                 date={selectedDate}
