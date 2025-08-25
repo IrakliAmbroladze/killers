@@ -7,18 +7,23 @@ import { OrderExtended } from "@/types";
 import { normalizeOrder } from "../order-table/utils/normalize";
 import { editOrder } from "@/lib";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { useOrderModal } from "@/hooks/useOrderModal";
 
 const TagPlanTime = ({
   order_id,
   order,
+  isInModal = false,
 }: {
   order_id: string;
   order: OrderExtended;
+  isInModal?: boolean;
 }): JSX.Element => {
+  const { refreshOrder } = useOrderModal();
+
   const currentDate = order?.plan_time ? new Date(order.plan_time) : null;
   const [selectedDate, setSelectedDate] = useState<Date | null>(currentDate);
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     if (!order) return;
     if (order.delivery_date) {
       alert("შესრულებულ შეკვეთას დაგეგმვის თარიღს ვერ შეუცვლი");
@@ -35,7 +40,11 @@ const TagPlanTime = ({
       ...order,
       plan_time: selectedDate ? selectedDate.toISOString() : "",
     });
-    editOrder(updatedOrder, proceduresPathName);
+    const result = await editOrder(updatedOrder, proceduresPathName);
+
+    if (result.status === "OK" && isInModal) {
+      await refreshOrder(order.id); // fetch updated order and update context
+    }
   };
 
   if (!order) return <div>Order not found</div>;

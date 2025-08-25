@@ -5,16 +5,21 @@ import { OrderExtended } from "@/types";
 import { normalizeOrder } from "../order-table/utils/normalize";
 import { editOrder } from "@/lib";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { useOrderModal } from "@/hooks/useOrderModal";
 
 interface InitialTechniciansContainerProps {
   initialTechnicians: string[];
   order: OrderExtended;
+  isInModal?: boolean;
 }
 
 const InitialTechniciansContainer = ({
   initialTechnicians,
   order,
+  isInModal = false,
 }: InitialTechniciansContainerProps) => {
+  const { refreshOrder } = useOrderModal();
+
   const selectedTechnicians = initialTechnicians;
 
   const displayNames = useTechniciansAndManagersDisplayNames();
@@ -31,7 +36,11 @@ const InitialTechniciansContainer = ({
       technician: newdata,
     });
 
-    editOrder(updatedOrder, proceduresPathName);
+    const result = await editOrder(updatedOrder, proceduresPathName);
+
+    if (result.status === "OK" && isInModal) {
+      await refreshOrder(order.id); // fetch updated order and update context
+    }
   };
 
   const handleTechnicianDelete = async (name: string) => {
@@ -54,7 +63,11 @@ const InitialTechniciansContainer = ({
       ...order,
       technician: newdata,
     });
-    editOrder(updatedOrder, proceduresPathName);
+    const result = await editOrder(updatedOrder, proceduresPathName);
+
+    if (result.status === "OK" && isInModal) {
+      await refreshOrder(order.id); // fetch updated order and update context
+    }
   };
 
   return (
