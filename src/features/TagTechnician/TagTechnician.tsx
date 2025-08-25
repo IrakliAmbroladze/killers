@@ -5,7 +5,13 @@ import { splitStr } from "@/utils/splitStr";
 import InitialTechniciansContainer from "./InitialTechniciansContainer";
 import { OrderExtended } from "@/types";
 
-const TagTechnician = ({ order }: { order: OrderExtended }) => {
+const TagTechnician = ({
+  order,
+  isInModal = false,
+}: {
+  order: OrderExtended;
+  isInModal?: boolean;
+}) => {
   const assignedTechnicians: string[] =
     (order && order.technician && splitStr(order.technician)) || [];
 
@@ -15,6 +21,7 @@ const TagTechnician = ({ order }: { order: OrderExtended }) => {
         <InitialTechniciansContainer
           initialTechnicians={assignedTechnicians}
           order={order}
+          isInModal={isInModal}
         />
       )}
     </>

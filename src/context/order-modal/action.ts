@@ -1,6 +1,11 @@
-const openOrder = (orderId: string) => ({
+import { OrderExtended } from "@/types";
+
+const openOrder = (orderId: string, order: OrderExtended) => ({
   type: "OPEN_ORDER" as const,
-  payload: orderId,
+  payload: {
+    openOrderId: orderId,
+    order,
+  },
 });
 
 const closeOrder = () => ({

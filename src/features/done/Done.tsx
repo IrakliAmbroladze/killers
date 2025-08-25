@@ -5,8 +5,18 @@ import { GrInProgress } from "react-icons/gr";
 import { normalizeOrder } from "../order-table/utils/normalize";
 import { editOrder } from "@/lib";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { useOrderModal } from "@/hooks/useOrderModal";
 
-const Done = ({ order }: { order: OrderExtended }): JSX.Element => {
+const Done = ({
+  order,
+  isInModal = false,
+}: {
+  order: OrderExtended;
+
+  isInModal?: boolean;
+}): JSX.Element => {
+  const { refreshOrder } = useOrderModal();
+
   const [done, setDone] = useState<boolean>(false);
 
   const date = new Date(order?.plan_time ?? "");
@@ -23,7 +33,7 @@ const Done = ({ order }: { order: OrderExtended }): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!order) return;
 
     if (!order.plan_time && !done) {
@@ -39,7 +49,11 @@ const Done = ({ order }: { order: OrderExtended }): JSX.Element => {
       delivery_date: newDone ? localDateString : null,
     });
 
-    editOrder(updatedOrder, proceduresPathName);
+    const result = await editOrder(updatedOrder, proceduresPathName);
+
+    if (result.status === "OK" && isInModal) {
+      await refreshOrder(order.id); // fetch updated order and update context
+    }
   };
 
   if (!order) return <div>Order not found</div>;

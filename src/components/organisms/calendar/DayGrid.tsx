@@ -154,6 +154,7 @@ export const DayGrid = ({
                       ? commentsQuantities[order.id] || 0
                       : 0
                   }
+                  isInModal={false}
                 />
               ))}
           </div>
