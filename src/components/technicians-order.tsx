@@ -12,9 +12,14 @@ import { useDraggable } from "@dnd-kit/core";
 interface TechniciansOrderProps {
   order: OrderExtended;
   comments_num: number;
+  isInModal?: boolean;
 }
 
-const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
+const TechniciansOrder = ({
+  order,
+  comments_num,
+  isInModal = false,
+}: TechniciansOrderProps) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: order.id,
     data: { ...order },
@@ -29,6 +34,8 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
 
   const handleClick = (id: string) => {
     openOrder(id);
+    console.log("we ar e here");
+    console.log("openOrder: ", id);
   };
 
   return (
@@ -49,7 +56,9 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         </div>
       </div>
 
-      {order.id && <TagPlanTime order_id={order.id} order={order} />}
+      {order.id && (
+        <TagPlanTime order_id={order.id} order={order} isInModal={isInModal} />
+      )}
       <div
         className={`justify-between items-center `}
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
@@ -57,9 +66,9 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         {order.delivery_date ? (
           order.technician
         ) : (
-          <TagTechnician order={order} />
+          <TagTechnician order={order} isInModal={isInModal} />
         )}{" "}
-        <Approve order={order} />
+        <Approve order={order} isInModal={isInModal} />
       </div>
       <div
         style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
@@ -68,7 +77,7 @@ const TechniciansOrder = ({ order, comments_num }: TechniciansOrderProps) => {
         <button {...listeners} {...attributes} className="border ">
           drag me
         </button>
-        <Done order={order} />
+        <Done order={order} isInModal={isInModal} />
       </div>
     </div>
   );
