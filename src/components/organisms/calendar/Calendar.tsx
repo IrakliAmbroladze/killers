@@ -191,20 +191,28 @@ export function Calendar({
   }
 
   const handleDragEnd = async (event: DragEndEvent) => {
-    // const currentScroll = window.scrollY;
     setIsLoading(true);
     const { active, over } = event;
+
     if (!over) {
       console.warn("Dropped outside any droppable");
       alert("❌ შეცდომა: ადგილი არაა განკუთვნილი გადასატანად");
       return;
     }
+
     try {
       const order = active.data.current;
+      if (!order) throw new Error("Order data missing");
+
+      const timePart = order.plan_time?.includes("T")
+        ? order.plan_time.split("T")[1]
+        : "00:00:00";
+
       const updatedOrder = normalizeOrder({
         ...order,
-        plan_time: formatDate(String(over?.id)),
+        plan_time: formatDate(`${String(over.id)}T${timePart}`),
       });
+
       await editOrder(updatedOrder, proceduresPathName);
     } catch (error) {
       console.error("Error updating order:", error);
