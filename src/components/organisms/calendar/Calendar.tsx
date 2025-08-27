@@ -210,7 +210,7 @@ export function Calendar({
 
       const updatedOrder = normalizeOrder({
         ...order,
-        plan_time: formatDate(`${String(over.id)}T${timePart}`),
+        plan_time: `${formatDate(`${String(over.id)}`)}T${timePart}`,
       });
 
       await editOrder(updatedOrder, proceduresPathName);
