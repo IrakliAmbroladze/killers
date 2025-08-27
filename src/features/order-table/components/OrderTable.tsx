@@ -1,25 +1,31 @@
 "use client";
-import { useRef, useMemo, useCallback } from "react";
+import { useRef, useMemo, useCallback, Suspense } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import * as constants from "../constants";
-import { ErrorBoundary } from "react-error-boundary";
 import Link from "next/link";
 import { OrderExtended } from "@/types";
 import DateRange from "./DateRange";
 import BulkActionButton from "./BulkActionButton";
 import DownloadCSV from "./DownloadCSV";
+import PromiseComponent from "./PromiseComponent";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
+const OrderTable = ({
+  ordersPromise,
+}: {
+  ordersPromise: Promise<{
+    orders: OrderExtended[];
+    totalCount: number;
+  }>;
+}) => {
   const gridRef = useRef<AgGridReact<OrderExtended> | null>(null);
 
   const columnDefs = useMemo(() => constants.getColumnDefs(gridRef), [gridRef]);
   const onBtnExport = useCallback(() => {
     gridRef.current!.api.exportDataAsCsv();
   }, []);
-
   return (
     <div style={{ height: "calc(100vh - 100px)" }}>
       <div className="flex justify-around mb-2">
@@ -43,21 +49,13 @@ const OrderTable = ({ orders }: { orders: OrderExtended[] }) => {
           />
         ))}
       </div>
-      <ErrorBoundary fallback={<div>Failed to load table</div>}>
-        <AgGridReact
-          ref={gridRef}
-          theme={constants.myTheme}
-          rowSelection={constants.rowSelection}
-          rowData={orders}
+      <Suspense fallback={<div>loading data ...</div>}>
+        <PromiseComponent
+          ordersPromise={ordersPromise}
           columnDefs={columnDefs}
-          pagination={constants.paginationConfig.pagination}
-          paginationPageSize={constants.paginationConfig.Size}
-          paginationPageSizeSelector={constants.paginationConfig.Selector}
-          defaultColDef={constants.defaultColumnDefs}
-          enableCellTextSelection={true}
-          getRowId={(params) => params.data.id}
+          gridRef={gridRef}
         />
-      </ErrorBoundary>
+      </Suspense>
     </div>
   );
 };
