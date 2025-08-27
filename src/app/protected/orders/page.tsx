@@ -15,12 +15,12 @@ const OrdersPage = async ({
 
   validateUrlForGettingOrders(params, header, ordersPathName);
   const { fromDate, toDate } = params;
-  const { orders } = await getOrders({ fromDate, toDate } as {
+  const ordersPromise = getOrders({ fromDate, toDate } as {
     fromDate: string;
     toDate: string;
   });
 
-  return <OrderTable orders={orders} />;
+  return <OrderTable ordersPromise={ordersPromise} />;
 };
 
 export default OrdersPage;
