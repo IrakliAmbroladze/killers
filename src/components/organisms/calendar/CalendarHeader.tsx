@@ -3,6 +3,9 @@
 import { monthNamesInGeoArray } from "@/constants";
 import { useMonth } from "@/hooks/useMonth";
 import { useYear } from "@/hooks/useYear";
+import { getFirstDateOfMonth, getLastDateOfMonth } from "@/utils";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export const CalendarHeader = ({
   selectedWeek,
@@ -17,8 +20,23 @@ export const CalendarHeader = ({
   showCalendar: boolean;
   setShowCalendar: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { month, setMonth } = useMonth();
   const { year, setYear } = useYear();
+  const fromDate = getFirstDateOfMonth(year, month + 1);
+  const toDate = getLastDateOfMonth(year, month + 1);
+  useEffect(() => {
+    if (!year || !month) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("fromDate", fromDate);
+    params.set("toDate", toDate);
+    console.log("start router push");
+    router.push(`${pathname}?${params.toString()}`);
+  }, [fromDate, month, pathname, router, searchParams, toDate, year]);
+
   return (
     <div className="flex my-2 justify-between text-xs">
       <input
