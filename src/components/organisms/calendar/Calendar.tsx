@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { CalendarGrid, CalendarHeader, TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
 import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
@@ -224,13 +224,15 @@ export function Calendar({
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div className="w-full flex justify-center items-center"></div>
-      <CalendarHeader
-        showCalendar={showCalendar}
-        selectedWeek={selectedWeek}
-        setSelectedWeek={setSelectedWeek}
-        weeks={weeksNumberInMonth(year, month)}
-        setShowCalendar={setShowCalendar}
-      />
+      <Suspense fallback={<div>waiting for headers</div>}>
+        <CalendarHeader
+          showCalendar={showCalendar}
+          selectedWeek={selectedWeek}
+          setSelectedWeek={setSelectedWeek}
+          weeks={weeksNumberInMonth(year, month)}
+          setShowCalendar={setShowCalendar}
+        />
+      </Suspense>
       {showCalendar && (
         <>
           <div className="w-full overflow-auto">
