@@ -1,4 +1,4 @@
-import { AuthUserEmail } from "@/components";
+import { AuthUserDisplayName } from "@/components";
 import { getAuthenticatedUser } from "@/lib";
 import { Suspense } from "react";
 
@@ -12,7 +12,7 @@ export default function Home() {
           <div>Welcome to Killers</div>
         </h2>
         <Suspense fallback={" ... "}>
-          <AuthUserEmail userPromise={userPromise} />
+          <AuthUserDisplayName userPromise={userPromise} />
         </Suspense>
       </main>
     </>

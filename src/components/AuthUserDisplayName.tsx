@@ -1,7 +1,7 @@
 import { getEmployeeDisplayName } from "@/lib";
 import { User } from "@supabase/supabase-js";
 
-export const AuthUserEmail = async ({
+export const AuthUserDisplayName = async ({
   userPromise,
 }: {
   userPromise: Promise<User | null>;
