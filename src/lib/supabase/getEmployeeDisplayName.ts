@@ -15,14 +15,13 @@ export const getEmployeeDisplayName = async (
     .from("employees")
     .select("display_name")
     .eq("id", user.id)
-    .select();
+    .single();
   if (error) {
     if (error instanceof Error) console.warn(error.message);
   }
-  console.log("data is: ", data);
   if (!data) {
     console.warn("No display name data");
     return null;
   }
-  return data[0].display_name;
+  return data.display_name;
 };
