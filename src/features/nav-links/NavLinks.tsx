@@ -4,12 +4,19 @@ import Image from "next/image";
 import React, { JSX } from "react";
 
 import { getNavLinks } from "./utils/navLinksService";
-import { getFirstDateOfMonth } from "@/utils";
+import { getFirstDateOfMonth, getLastDateOfMonth } from "@/utils";
 
 export default async function NavLinks(): Promise<JSX.Element> {
   const linksToShow = await getNavLinks();
-  // const fromDate = getFirstDateOfMonth(2025, 8);
-  // const toDate = getLastDateOfMonth(2025, 8);
+
+  const fromDate = getFirstDateOfMonth(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1
+  );
+  const toDate = getLastDateOfMonth(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1
+  );
 
   return (
     <div className={`flex flex-wrap gap-2 h-full`}>
@@ -27,7 +34,7 @@ export default async function NavLinks(): Promise<JSX.Element> {
             key={link.name}
             href={{
               pathname: link.href,
-              query: { fromDate: "2025-09-01", toDate: "2025-09-30" },
+              query: { fromDate, toDate },
             }}
             className="flex text-black grow items-center justify-center rounded-md bg-white text-xs font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:p-2 md:px-3"
           >
