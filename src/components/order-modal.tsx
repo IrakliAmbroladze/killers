@@ -10,10 +10,7 @@ import TechniciansOrder from "./technicians-order";
 const OrderModal = () => {
   const { openOrderId, closeOrder, order } = useOrderModal();
   const { commentsQuantities } = useCommentsQuantities();
-  if (!order) {
-    console.log("we have no order");
-    return null;
-  }
+  if (!order) return null;
 
   return (
     <Modal isOpen={!!openOrderId} onClose={closeOrder}>
