@@ -5,18 +5,13 @@ import React, { JSX } from "react";
 
 import { getNavLinks } from "./utils/navLinksService";
 import { getFirstDateOfMonth, getLastDateOfMonth } from "@/utils";
+import { currentMonth, currentYear } from "@/constants";
 
 export default async function NavLinks(): Promise<JSX.Element> {
   const linksToShow = await getNavLinks();
 
-  const fromDate = getFirstDateOfMonth(
-    new Date().getFullYear(),
-    new Date().getMonth() + 1
-  );
-  const toDate = getLastDateOfMonth(
-    new Date().getFullYear(),
-    new Date().getMonth() + 1
-  );
+  const fromDate = getFirstDateOfMonth(currentYear, currentMonth + 1);
+  const toDate = getLastDateOfMonth(currentYear, currentMonth + 1);
 
   return (
     <div className={`flex flex-wrap gap-2 h-full`}>
