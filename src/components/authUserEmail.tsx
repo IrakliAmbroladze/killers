@@ -1,13 +1,13 @@
-"use client";
-
+import { getEmployeeDisplayName } from "@/lib";
 import { User } from "@supabase/supabase-js";
-import { use } from "react";
 
-export const AuthUserEmail = ({
+export const AuthUserEmail = async ({
   userPromise,
 }: {
   userPromise: Promise<User | null>;
 }) => {
-  const user = use(userPromise);
-  return <div>{user?.email}</div>;
+  const user = await userPromise;
+
+  const displayName = await getEmployeeDisplayName(user);
+  return <div>{displayName}</div>;
 };
