@@ -2,9 +2,10 @@ import Link from "next/link";
 import React from "react";
 import { NewOrderForm } from "@/components";
 import { getAuthenticatedUser } from "@/lib";
+import { User } from "@supabase/supabase-js";
 
 const NewOrder = async () => {
-  const user = await getAuthenticatedUser();
+  const user: User | null = await getAuthenticatedUser();
 
   return (
     <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
