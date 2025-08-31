@@ -33,7 +33,6 @@ export const CalendarHeader = ({
     const params = new URLSearchParams(searchParams.toString());
     params.set("fromDate", fromDate);
     params.set("toDate", toDate);
-    console.log("start router push");
     router.push(`${pathname}?${params.toString()}`);
   }, [fromDate, month, pathname, router, searchParams, toDate, year]);
 
