@@ -5,7 +5,7 @@ import { getAuthenticatedUser } from "@/lib/auth/getAuthenticatedUser";
 export async function GET() {
   try {
     const user = await getAuthenticatedUser();
-    console.log("Authenticated request from:", user.email);
+    console.log("Authenticated request from:", user?.email);
     const commentsQuantities = await getCommentsQuantities();
     return NextResponse.json(commentsQuantities);
   } catch (error) {

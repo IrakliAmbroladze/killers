@@ -10,7 +10,7 @@ export async function getAuthenticatedUser() {
   } = await supabase.auth.getUser();
 
   if (!user || error) {
-    throw new Error("Unauthorized. You do not have access to the data");
+    if (error instanceof Error) console.warn(error.message);
   }
 
   return user;
