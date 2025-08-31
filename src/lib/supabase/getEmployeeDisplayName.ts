@@ -21,7 +21,7 @@ export const getEmployeeDisplayName = async (
   }
   if (!data) {
     console.warn("No display name data");
-    return null;
+    return user.email || "Unknown User";
   }
   return data.display_name;
 };
