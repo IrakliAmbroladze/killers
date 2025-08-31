@@ -18,8 +18,9 @@ const List = ({
   return (
     <>
       {tasks.map((task) => {
+        //i disable eslint as i just need order without status_id
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { status_id, ...order } = task;
-        console.log(status_id);
         return (
           task.status_id === statusId && (
             <div key={task.id}>
