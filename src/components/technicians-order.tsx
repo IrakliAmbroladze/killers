@@ -8,6 +8,7 @@ import CommentsQtyUI from "./ui/CommentsQtyUI";
 import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
+import { useMemo } from "react";
 
 interface TechniciansOrderProps {
   order: OrderExtended;
@@ -38,11 +39,16 @@ const TechniciansOrder = ({
     console.log("openOrder: ", id);
   };
 
+  const deliveryStyle = useMemo(
+    () => getDeliveryStyle(order.delivery_date ?? "", order.approve ?? ""),
+    [order.delivery_date, order.approve]
+  );
+
   return (
     <div className="border-b" ref={setNodeRef} style={style}>
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
-        style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
+        style={deliveryStyle}
         onClick={() => order.id && handleClick(order.id)}
       >
         <div className="flex justify-between">
@@ -59,10 +65,7 @@ const TechniciansOrder = ({
       {order.id && (
         <TagPlanTime order_id={order.id} order={order} isInModal={isInModal} />
       )}
-      <div
-        className={`justify-between items-center `}
-        style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
-      >
+      <div className={`justify-between items-center `} style={deliveryStyle}>
         {order.delivery_date ? (
           order.technician
         ) : (
@@ -71,7 +74,7 @@ const TechniciansOrder = ({
         <Approve order={order} isInModal={isInModal} />
       </div>
       <div
-        style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
+        style={deliveryStyle}
         className={`mt-[-10px] flex justify-end gap-1.5`}
       >
         <button {...listeners} {...attributes} className="border ">
