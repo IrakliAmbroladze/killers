@@ -1,3 +1,4 @@
+import React, { useCallback, useMemo } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
@@ -8,7 +9,6 @@ import CommentsQtyUI from "./ui/CommentsQtyUI";
 import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
-import { useCallback, useMemo } from "react";
 
 interface TechniciansOrderProps {
   order: OrderExtended;
@@ -21,11 +21,11 @@ const TechniciansOrder = ({
   comments_num,
   isInModal = false,
 }: TechniciansOrderProps) => {
-  console.log("render TechniciansOrders");
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: order.id,
     data: { ...order },
   });
+
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
@@ -47,7 +47,7 @@ const TechniciansOrder = ({
   );
 
   return (
-    <div className="border-b">
+    <div className="border-b" ref={setNodeRef} style={style}>
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={deliveryStyle}
@@ -67,7 +67,7 @@ const TechniciansOrder = ({
       {order.id && (
         <TagPlanTime order_id={order.id} order={order} isInModal={isInModal} />
       )}
-      <div className={`justify-between items-center `} style={deliveryStyle}>
+      <div className={`justify-between items-center`} style={deliveryStyle}>
         {order.delivery_date ? (
           order.technician
         ) : (
@@ -82,8 +82,6 @@ const TechniciansOrder = ({
         <button
           {...listeners}
           {...attributes}
-          ref={setNodeRef}
-          style={style}
           className="border active:w-60 active:h-10 active:bg-stone-400"
         >
           drag me
@@ -94,4 +92,6 @@ const TechniciansOrder = ({
   );
 };
 
-export default TechniciansOrder;
+TechniciansOrder.displayName = "TechniciansOrder";
+
+export default React.memo(TechniciansOrder);
