@@ -8,7 +8,7 @@ import CommentsQtyUI from "./ui/CommentsQtyUI";
 import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 interface TechniciansOrderProps {
   order: OrderExtended;
@@ -21,6 +21,7 @@ const TechniciansOrder = ({
   comments_num,
   isInModal = false,
 }: TechniciansOrderProps) => {
+  console.log("render TechniciansOrders");
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: order.id,
     data: { ...order },
@@ -33,11 +34,12 @@ const TechniciansOrder = ({
 
   const { openOrder } = useOrderModal();
 
-  const handleClick = (id: string) => {
-    openOrder(id);
-    console.log("we ar e here");
-    console.log("openOrder: ", id);
-  };
+  const handleClick = useCallback(
+    (id: string) => {
+      openOrder(id);
+    },
+    [openOrder]
+  );
 
   const deliveryStyle = useMemo(
     () => getDeliveryStyle(order.delivery_date ?? "", order.approve ?? ""),
@@ -45,7 +47,7 @@ const TechniciansOrder = ({
   );
 
   return (
-    <div className="border-b" ref={setNodeRef} style={style}>
+    <div className="border-b">
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={deliveryStyle}
@@ -77,7 +79,13 @@ const TechniciansOrder = ({
         style={deliveryStyle}
         className={`mt-[-10px] flex justify-end gap-1.5`}
       >
-        <button {...listeners} {...attributes} className="border ">
+        <button
+          {...listeners}
+          {...attributes}
+          ref={setNodeRef}
+          style={style}
+          className="border active:w-60 active:h-10 active:bg-stone-400"
+        >
           drag me
         </button>
         <Done order={order} isInModal={isInModal} />

@@ -222,7 +222,7 @@ export function Calendar({
   };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <>
       <div className="w-full flex justify-center items-center"></div>
       <Suspense fallback={<div>waiting for headers</div>}>
         <CalendarHeader
@@ -241,24 +241,27 @@ export function Calendar({
                 <div className="loader">Loading...</div>
               </div>
             )}
-            <CalendarGrid
-              month={month}
-              year={year}
-              days={days}
-              setSelectedDate={setSelectedDate}
-              tasks={tasks}
-              setTasks={setTasks}
-              handleEditClick={handleEditClick}
-              handleSaveClick={handleSaveClick}
-              editingTask={editingTask}
-              orders={orders}
-              techNames={techNames}
-              commentsQuantities={commentsQuantities}
-              toggleTask={toggleTask}
-              TaskInput={TaskInput}
-              selectedWeek={selectedWeek}
-              viewMode={viewMode}
-            />
+            <DndContext onDragEnd={handleDragEnd}>
+              <CalendarGrid
+                month={month}
+                year={year}
+                days={days}
+                setSelectedDate={setSelectedDate}
+                tasks={tasks}
+                setTasks={setTasks}
+                handleEditClick={handleEditClick}
+                handleSaveClick={handleSaveClick}
+                editingTask={editingTask}
+                orders={orders}
+                techNames={techNames}
+                commentsQuantities={commentsQuantities}
+                toggleTask={toggleTask}
+                TaskInput={TaskInput}
+                selectedWeek={selectedWeek}
+                viewMode={viewMode}
+              />
+            </DndContext>
+
             {selectedDate && (
               <TaskModal
                 date={selectedDate}
@@ -272,6 +275,6 @@ export function Calendar({
           </div>
         </>
       )}
-    </DndContext>
+    </>
   );
 }
