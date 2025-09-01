@@ -1,7 +1,7 @@
 "use client";
 import { dayOfWeekOfFirstDayOfMonth } from "@/utils";
 import React from "react";
-import { DayGrid } from "./DayGrid";
+import DayGrid from "./DayGrid";
 import { CalendarTasksArray, OrderExtended } from "@/types";
 
 export const CalendarGrid = ({

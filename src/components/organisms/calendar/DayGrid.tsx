@@ -1,14 +1,11 @@
 "use client";
 
-// import { CalendarTasksArray } from "@/types";
-// import { MdAddTask } from "react-icons/md";
-// import { toggleTask } from "@/utils";
-// import { useEffect, useRef, useState } from "react";
 import { CalendarTasksArray, OrderExtended } from "@/types";
 import { RxPencil1 } from "react-icons/rx";
 import TechniciansOrder from "../../technicians-order";
 import { useDroppable } from "@dnd-kit/core";
 import { getDateKey } from "@/utils";
+import React, { useMemo } from "react";
 
 type DayGridProps = {
   date: Date;
@@ -35,7 +32,7 @@ type DayGridProps = {
   }) => React.ReactElement;
 };
 
-export const DayGrid = ({
+const DayGrid = ({
   date,
   setSelectedDate,
   tasks,
@@ -50,11 +47,15 @@ export const DayGrid = ({
   TaskInput,
 }: DayGridProps) => {
   const key = getDateKey(date);
-  const dayOrders = orders.filter((order) => {
-    if (!order.plan_time) return false;
-    const myDate = new Date(order.plan_time);
-    return myDate.toLocaleDateString() === date.toLocaleDateString();
-  });
+  const dayOrders = useMemo(
+    () =>
+      orders.filter((order) => {
+        if (!order.plan_time) return false;
+        const myDate = new Date(order.plan_time);
+        return myDate.toLocaleDateString() === date.toLocaleDateString();
+      }),
+    [date, orders]
+  );
   const ordersByGroup: { [groupKey: string]: typeof orders } = {};
   const { isOver, setNodeRef } = useDroppable({
     id: key,
@@ -206,3 +207,5 @@ export const DayGrid = ({
     </div>
   );
 };
+
+export default React.memo(DayGrid);
