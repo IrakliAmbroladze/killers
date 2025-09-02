@@ -21,16 +21,10 @@ const TechniciansOrder = ({
   comments_num,
   isInModal = false,
 }: TechniciansOrderProps) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: order.id,
     data: { ...order },
   });
-
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
 
   const { openOrder } = useOrderModal();
 
@@ -47,7 +41,7 @@ const TechniciansOrder = ({
   );
 
   return (
-    <div className="border-b" ref={setNodeRef} style={style}>
+    <div className="border-b">
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
         style={deliveryStyle}
@@ -82,7 +76,8 @@ const TechniciansOrder = ({
         <button
           {...listeners}
           {...attributes}
-          className="border active:w-60 active:h-10 active:bg-stone-400"
+          ref={setNodeRef}
+          className="border"
         >
           drag me
         </button>

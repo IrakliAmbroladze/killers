@@ -57,12 +57,12 @@ const DayGrid = ({
     [date, orders]
   );
   const ordersByGroup: { [groupKey: string]: typeof orders } = {};
-  const { isOver, setNodeRef } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: key,
   });
-  const style = {
-    color: isOver ? "green" : undefined,
-  };
+  // const style = {
+  //   color: isOver ? "green" : undefined,
+  // };
   for (const order of dayOrders) {
     if (!order.technician) continue;
     let technicians = order.technician.split(" ");
@@ -105,7 +105,7 @@ const DayGrid = ({
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      // style={style}
       className={`border ${
         todaysDay == "Sunday" || todaysDay == "Saturday"
           ? "bg-[#e0a8fb] dark:bg-[#15031e]"
