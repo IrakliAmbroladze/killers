@@ -277,8 +277,7 @@ export function Calendar({
               />
               <DragOverlay>
                 {activeOrder ? (
-                  // Simplified version - much lighter than full component
-                  <div className="bg-white border shadow-lg p-2 rounded text-black font-semibold">
+                  <div className="bg-white border shadow-lg p-2 rounded text-black font-semibold w-48" style={{transform: "translate(-50%, -50%)"}}>
                     {activeOrder.customers?.name} - {activeOrder.customer_id}
                   </div>
                 ) : null}
