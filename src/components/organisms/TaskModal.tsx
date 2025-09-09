@@ -13,7 +13,7 @@ export function TaskModal({
   const [text, setText] = useState("");
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+    <div className="fixed inset-0 bg-black/70 bg-opacity-50 flex justify-center items-center z-10">
       <div className="bg-white p-4 rounded w-80 text-black">
         <h2 className="text-lg font-bold mb-2">
           Add Task for {date.toDateString()}
