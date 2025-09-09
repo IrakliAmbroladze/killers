@@ -7,7 +7,12 @@ import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAnd
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import { CalendarTasksArray, OrderExtended } from "@/types";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+} from "@dnd-kit/core";
 import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
@@ -190,8 +195,16 @@ export function Calendar({
     return `${year}-${mm}-${dd}`;
   }
 
+  const [activeOrder, setActiveOrder] = useState<OrderExtended | null>(null);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    setActiveOrder((active.data as { current: OrderExtended }).current);
+  };
+
   const handleDragEnd = async (event: DragEndEvent) => {
     setIsLoading(true);
+    setActiveOrder(null);
     const { active, over } = event;
 
     if (!over) {
@@ -221,8 +234,10 @@ export function Calendar({
     }
   };
 
+  console.log("active order is: ", activeOrder);
+
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <>
       <div className="w-full flex justify-center items-center"></div>
       <Suspense fallback={<div>waiting for headers</div>}>
         <CalendarHeader
@@ -241,24 +256,34 @@ export function Calendar({
                 <div className="loader">Loading...</div>
               </div>
             )}
-            <CalendarGrid
-              month={month}
-              year={year}
-              days={days}
-              setSelectedDate={setSelectedDate}
-              tasks={tasks}
-              setTasks={setTasks}
-              handleEditClick={handleEditClick}
-              handleSaveClick={handleSaveClick}
-              editingTask={editingTask}
-              orders={orders}
-              techNames={techNames}
-              commentsQuantities={commentsQuantities}
-              toggleTask={toggleTask}
-              TaskInput={TaskInput}
-              selectedWeek={selectedWeek}
-              viewMode={viewMode}
-            />
+            <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+              <CalendarGrid
+                month={month}
+                year={year}
+                days={days}
+                setSelectedDate={setSelectedDate}
+                tasks={tasks}
+                setTasks={setTasks}
+                handleEditClick={handleEditClick}
+                handleSaveClick={handleSaveClick}
+                editingTask={editingTask}
+                orders={orders}
+                techNames={techNames}
+                commentsQuantities={commentsQuantities}
+                toggleTask={toggleTask}
+                TaskInput={TaskInput}
+                selectedWeek={selectedWeek}
+                viewMode={viewMode}
+              />
+              <DragOverlay>
+                {activeOrder ? (
+                  <div className="bg-white border shadow-lg p-2 rounded text-black font-semibold w-48" style={{transform: "translate(-50%, -50%)"}}>
+                    {activeOrder.customers?.name} - {activeOrder.customer_id}
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
+
             {selectedDate && (
               <TaskModal
                 date={selectedDate}
@@ -272,6 +297,6 @@ export function Calendar({
           </div>
         </>
       )}
-    </DndContext>
+    </>
   );
 }
