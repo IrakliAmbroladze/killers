@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { CalendarGrid, CalendarHeader, TaskModal } from "@/components";
 import { createClient } from "@/utils/supabase/client";
-import { createCalendarTask } from "../../../lib/supabase/create-calendar-task";
 import { useTechniciansAndManagersDisplayNames } from "@/hooks/useTechniciansAndManagersDisplayNames";
 import { useYear } from "@/hooks/useYear";
 import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
@@ -17,12 +16,7 @@ import { editOrder } from "@/lib";
 import { normalizeOrder } from "@/features/order-table/utils/normalize";
 import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
-import {
-  currentWeek,
-  daysInMonth,
-  getDateKey,
-  weeksNumberInMonth,
-} from "@/utils";
+import { addTask, currentWeek, daysInMonth, weeksNumberInMonth } from "@/utils";
 import { useMonth } from "@/hooks/useMonth";
 
 export function Calendar({
@@ -54,28 +48,6 @@ export function Calendar({
     { length: daysInMonth(year, month) },
     (_, i) => new Date(year, month, i + 1)
   );
-
-  const addTask = async (date: Date, taskText: string) => {
-    const key = getDateKey(date);
-    const taskData = {
-      date_key: key,
-      task_text: taskText,
-      checked: false,
-    };
-    try {
-      await createCalendarTask(taskData);
-      setTasks((prev) => ({
-        ...prev,
-        [key]: [...(prev[key] || []), { text: taskText, checked: false }],
-      }));
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log("Error: " + error.message);
-      } else {
-        console.log("An unknown error occurred.");
-      }
-    }
-  };
 
   const toggleTask = async (key: string, idx: number) => {
     const taskToToggle = tasks[key][idx];
@@ -234,8 +206,6 @@ export function Calendar({
     }
   };
 
-  console.log("active order is: ", activeOrder);
-
   return (
     <>
       <div className="w-full flex justify-center items-center"></div>
@@ -277,7 +247,10 @@ export function Calendar({
               />
               <DragOverlay>
                 {activeOrder ? (
-                  <div className="bg-white border shadow-lg p-2 rounded text-black font-semibold w-48" style={{transform: "translate(-50%, -50%)"}}>
+                  <div
+                    className="bg-white border shadow-lg p-2 rounded text-black font-semibold w-48"
+                    style={{ transform: "translate(-50%, -50%)" }}
+                  >
                     {activeOrder.customers?.name} - {activeOrder.customer_id}
                   </div>
                 ) : null}
@@ -289,7 +262,7 @@ export function Calendar({
                 date={selectedDate}
                 onClose={() => setSelectedDate(null)}
                 onAdd={(text) => {
-                  addTask(selectedDate, text);
+                  addTask(selectedDate, text, setTasks);
                   setSelectedDate(null);
                 }}
               />

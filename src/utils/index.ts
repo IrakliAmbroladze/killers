@@ -21,3 +21,4 @@ export { dayOfWeekOfFirstDayOfMonth } from "./calendar/dayOfWeekOfFirstDayOfMont
 export { currentWeek } from "./calendar/currentWeek";
 export { getLastDateOfMonth } from "./getLastDateOfMonth";
 export { getFirstDateOfMonth } from "./getFirstDateOfMonth";
+export { addTask } from "./addTask";
