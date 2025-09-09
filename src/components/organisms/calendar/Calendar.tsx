@@ -234,7 +234,6 @@ export function Calendar({
     }
   };
 
-  console.log("active order is: ", activeOrder);
 
   return (
     <>
