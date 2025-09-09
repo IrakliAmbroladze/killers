@@ -2,15 +2,8 @@
 import type { Order, OrderExtended } from "@/types/Order";
 
 export function normalizeOrder(order: Partial<OrderExtended>): Partial<Order> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { customers, payment_types, providers, employees, ...rest } = order;
-
-  console.log(
-    "removed from order to normalize: ",
-    customers,
-    payment_types,
-    providers,
-    employees
-  );
 
   return {
     ...rest,
