@@ -1,3 +1,4 @@
+import React, { useCallback, useMemo } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { useOrderModal } from "@/hooks/useOrderModal";
 import TagTechnician from "@/features/TagTechnician/TagTechnician";
@@ -20,29 +21,30 @@ const TechniciansOrder = ({
   comments_num,
   isInModal = false,
 }: TechniciansOrderProps) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: order.id,
     data: { ...order },
   });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
 
   const { openOrder } = useOrderModal();
 
-  const handleClick = (id: string) => {
-    openOrder(id);
-    console.log("we ar e here");
-    console.log("openOrder: ", id);
-  };
+  const handleClick = useCallback(
+    (id: string) => {
+      openOrder(id);
+    },
+    [openOrder]
+  );
+
+  const deliveryStyle = useMemo(
+    () => getDeliveryStyle(order.delivery_date ?? "", order.approve ?? ""),
+    [order.delivery_date, order.approve]
+  );
 
   return (
-    <div className="border-b" ref={setNodeRef} style={style}>
+    <div className="border-b">
       <div
         className={`group p-0.5 cursor-pointer border border-transparent hover:border-gray-400 transition-transform duration-150 ease-in-out`}
-        style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
+        style={deliveryStyle}
         onClick={() => order.id && handleClick(order.id)}
       >
         <div className="flex justify-between">
@@ -59,10 +61,7 @@ const TechniciansOrder = ({
       {order.id && (
         <TagPlanTime order_id={order.id} order={order} isInModal={isInModal} />
       )}
-      <div
-        className={`justify-between items-center `}
-        style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
-      >
+      <div className={`justify-between items-center`} style={deliveryStyle}>
         {order.delivery_date ? (
           order.technician
         ) : (
@@ -71,10 +70,15 @@ const TechniciansOrder = ({
         <Approve order={order} isInModal={isInModal} />
       </div>
       <div
-        style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
+        style={deliveryStyle}
         className={`mt-[-10px] flex justify-end gap-1.5`}
       >
-        <button {...listeners} {...attributes} className="border ">
+        <button
+          {...listeners}
+          {...attributes}
+          ref={setNodeRef}
+          className="border"
+        >
           drag me
         </button>
         <Done order={order} isInModal={isInModal} />
@@ -83,4 +87,6 @@ const TechniciansOrder = ({
   );
 };
 
-export default TechniciansOrder;
+TechniciansOrder.displayName = "TechniciansOrder";
+
+export default React.memo(TechniciansOrder);
