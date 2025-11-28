@@ -22,6 +22,7 @@ export interface Order {
   document: string | null;
   plan_time: string | null;
   approve: string | null;
+  cancel: boolean | null;
 }
 
 export interface OrderExtended extends Order {
