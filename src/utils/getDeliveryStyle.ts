@@ -1,11 +1,14 @@
 export const getDeliveryStyle = (
   delivery_date: string | undefined,
-  approve: string
+  approve: string,
+  cancel: boolean | null,
 ) => ({
-  background: delivery_date
-    ? "green"
-    : approve === "TRUE"
-    ? "#03fcf4"
-    : "white",
+  background: cancel
+    ? "#B32504"
+    : delivery_date
+      ? "green"
+      : approve === "TRUE"
+        ? "#03fcf4"
+        : "white",
   color: "black",
 });

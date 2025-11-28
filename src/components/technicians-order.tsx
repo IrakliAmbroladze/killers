@@ -32,12 +32,17 @@ const TechniciansOrder = ({
     (id: string) => {
       openOrder(id);
     },
-    [openOrder]
+    [openOrder],
   );
 
   const deliveryStyle = useMemo(
-    () => getDeliveryStyle(order.delivery_date ?? "", order.approve ?? ""),
-    [order.delivery_date, order.approve]
+    () =>
+      getDeliveryStyle(
+        order.delivery_date ?? "",
+        order.approve ?? "",
+        order.cancel,
+      ),
+    [order.delivery_date, order.approve, order.cancel],
   );
 
   return (
