@@ -9,6 +9,7 @@ import CommentsQtyUI from "./ui/CommentsQtyUI";
 import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
+import Cancel from "@/features/cancel/Cancel";
 
 interface TechniciansOrderProps {
   order: OrderExtended;
@@ -73,6 +74,7 @@ const TechniciansOrder = ({
           <TagTechnician order={order} isInModal={isInModal} />
         )}{" "}
         <Approve order={order} isInModal={isInModal} />
+        <Cancel order={order} isInModal={isInModal} />
       </div>
       <div
         style={deliveryStyle}
