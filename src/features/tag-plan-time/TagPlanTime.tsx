@@ -31,7 +31,7 @@ const TagPlanTime = ({
     }
     if (!order.technician) {
       alert(
-        "ტექნიკოსი არაა მონიშნული. დაჯგუფებისთვის აუცილებელია ჯერ ვიცოდეთ ვინ აკეთებს პროცედურას"
+        "ტექნიკოსი არაა მონიშნული. დაჯგუფებისთვის აუცილებელია ჯერ ვიცოდეთ ვინ აკეთებს პროცედურას",
       );
       return;
     }
@@ -51,7 +51,11 @@ const TagPlanTime = ({
 
   return (
     <div
-      style={getDeliveryStyle(order.delivery_date ?? "", order.approve ?? "")}
+      style={getDeliveryStyle(
+        order.delivery_date ?? "",
+        order.approve ?? "",
+        order.cancel,
+      )}
       className={`flex gap-0.5 ${
         order.delivery_date
           ? "bg-green-200 dark:bg-green-950"
@@ -66,12 +70,12 @@ const TagPlanTime = ({
         <span>
           {selectedDate
             ? `${selectedDate.getFullYear()}-${String(
-                selectedDate.getMonth() + 1
+                selectedDate.getMonth() + 1,
               ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(
                 2,
-                "0"
+                "0",
               )} ${String(selectedDate.getHours()).padStart(2, "0")}:${String(
-                selectedDate.getMinutes()
+                selectedDate.getMinutes(),
               ).padStart(2, "0")}`
             : "თარიღი არ არის არჩეული"}
         </span>
