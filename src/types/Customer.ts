@@ -1,7 +1,8 @@
 // types/Customer.ts
 
-export interface Customer {
+export type Customer = {
   id: string;
   name: string;
   description: string | null;
-}
+  contractor?: boolean | null;
+};
