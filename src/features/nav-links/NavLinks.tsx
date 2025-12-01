@@ -14,7 +14,7 @@ export default async function NavLinks(): Promise<JSX.Element> {
   const toDate = getLastDateOfMonth(currentYear, currentMonth + 1);
 
   return (
-    <div className={`flex flex-wrap gap-2 h-full`}>
+    <div className={`flex flex-wrap gap-0.5 sm:gap-2 h-full`}>
       <Link
         href="/"
         className=" cursor-pointer flex justify-center rounded-md bg-[#222e46] items-center p-2"

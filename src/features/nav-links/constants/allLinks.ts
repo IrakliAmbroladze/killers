@@ -3,12 +3,12 @@ import { LinkItem } from "../types/LinkItem";
 export const allLinks: LinkItem[] = [
   { name: "Orders", href: "/protected/orders", visibleToTechnician: false },
   {
-    name: "Procedures",
+    name: "Proced",
     href: "/protected/procedures",
     visibleToTechnician: true,
   },
   {
-    name: "Customers",
+    name: "Cust",
     href: "/protected/customers",
     visibleToTechnician: false,
   },
