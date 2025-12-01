@@ -1,5 +1,6 @@
 export { updateOrder } from "./updateOrder";
 export { getCustomer } from "./getCustomer";
+export { getCustomers } from "./getCustomers";
 export { fetchCustomers } from "./fetchCustomers";
 export { getAuthenticatedUser } from "./auth/getAuthenticatedUser";
 export { insertCustomer } from "./insertCustomer";
