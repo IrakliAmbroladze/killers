@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <>
       <NavLinks />
-      <div className="flex gap-5 items-center">
+      <div className="flex sm:gap-5 items-center">
         {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
         <ThemeSwitcher />
       </div>
