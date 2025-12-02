@@ -11,7 +11,7 @@ import { validDecimalNumberRegex } from "@/constants/regex";
 // import * as Utils from "@/utils";
 
 export const getColumnDefs = (
-  gridRef: RefObject<AgGridReact<OrderExtended> | null>
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>,
 ): ColDef<OrderExtended>[] => {
   return [
     {
@@ -151,5 +151,12 @@ export const getColumnDefs = (
     { headerName: "Order_id", field: "id", editable: false },
     { field: "plan_time", editable: false },
     { field: "approve", editable: false },
+    {
+      headerName: "contractor",
+      field: "customers.contractor",
+      editable: false,
+      valueGetter: (params) =>
+        params.data?.customers.contractor ? "yes" : "No",
+    },
   ];
 };
