@@ -41,11 +41,11 @@ export const getOrders = async ({
       .select(
         `
         *,
-        customers (id, name, description),
+        customers (id, name, description, contractor),
         payment_types (id, name),
         providers (id, name),
         employees (id, display_name, role_id)
-        `
+        `,
       )
       .gte("created_at", fromDate)
       .lt("created_at", adjustedToDate)
