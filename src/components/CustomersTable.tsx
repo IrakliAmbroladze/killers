@@ -2,12 +2,20 @@
 
 import { useState, useMemo } from "react";
 import type { Customer } from "@/types";
+import { ContractorStatus } from "./atoms/ContractorStatus";
 
 type Props = {
   data: Customer[];
 };
 
 export default function CustomersTable({ data }: Props) {
+  /* const testCustomer: Customer = {
+    description: "something",
+    id: "60001128531",
+    name: "ambroladze",
+    contractor: true,
+  };*/
+
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof Customer>("name");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -113,7 +121,7 @@ export default function CustomersTable({ data }: Props) {
                 <td className="border px-3 py-2">{c.name}</td>
                 <td className="border px-3 py-2">{c.description ?? "-"}</td>
                 <td className="border px-3 py-2">
-                  {c.contractor ? "Yes" : "No"}
+                  <ContractorStatus customer={c} />
                 </td>
               </tr>
             ))}
