@@ -1,10 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { OrderExtended } from "@/types/Order";
-export const fetchOrderById = async (
-  id: string,
-): Promise<{
-  order: OrderExtended;
-}> => {
+export const fetchOrderById = async (id: string): Promise<OrderExtended> => {
   const supabase = await createClient();
 
   const { data: order, error } = await supabase
