@@ -174,7 +174,13 @@ export default async function AcceptanceDocument({
           </table>
           <div className="flex justify-between">
             <DoneAreas />
-            <ProcedureTime />
+            <div className="flex flex-col justify-between">
+              <ProcedureTime />
+              <div>
+                <div className="border-b my-2.5">ობიექტის მისამართი:</div>
+                <div className="border-b">{order.address}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
