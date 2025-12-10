@@ -4,6 +4,7 @@ import { SanitaryService } from "@/types/SanitaryServices";
 import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 import DoneAreas from "./DoneAreas";
 import ProcedureTime from "./ProcedureTime";
+import AcceptanceSignature from "./AcceptanceSignature";
 
 export default async function AcceptanceDocument({
   params,
@@ -182,6 +183,7 @@ export default async function AcceptanceDocument({
               </div>
             </div>
           </div>
+          <AcceptanceSignature />
         </div>
       </div>
     </div>
