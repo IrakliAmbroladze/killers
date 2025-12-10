@@ -19,7 +19,7 @@ export default function DoneAreas() {
     "მომარაგების ოთახი",
     "ნაგავსაყრელი",
     "გარე ტერიტორია",
-    "",
+    "__",
   ];
   return (
     <table className="text-sm">
@@ -34,22 +34,42 @@ export default function DoneAreas() {
       <tbody>
         <tr>
           {areas.slice(0, 5).map((area) => (
-            <td key={area}>{area}</td>
+            <td key={area} className="justify-items-center text-center">
+              <div>
+                <input type="checkbox" />
+              </div>
+              {area}
+            </td>
           ))}
         </tr>
         <tr>
           {areas.slice(5, 10).map((area) => (
-            <td key={area}>{area}</td>
+            <td key={area} className="justify-items-center text-center">
+              <div>
+                <input type="checkbox" />
+              </div>
+              {area}
+            </td>
           ))}
         </tr>
         <tr>
           {areas.slice(10, 15).map((area) => (
-            <td key={area}>{area}</td>
+            <td key={area} className="justify-items-center text-center">
+              <div>
+                <input type="checkbox" />
+              </div>
+              {area}
+            </td>
           ))}
         </tr>
         <tr>
           {areas.slice(15, 20).map((area) => (
-            <td key={area}>{area}</td>
+            <td key={area} className="justify-items-center text-center">
+              <div>
+                <input type="checkbox" />
+              </div>
+              {area}
+            </td>
           ))}
         </tr>
       </tbody>
