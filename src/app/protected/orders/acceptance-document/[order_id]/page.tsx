@@ -3,6 +3,7 @@ import { fetchOrderById } from "@/lib/supabase/fetchOrderById";
 import { SanitaryService } from "@/types/SanitaryServices";
 import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 import DoneAreas from "./DoneAreas";
+import ProcedureTime from "./ProcedureTime";
 
 export default async function AcceptanceDocument({
   params,
@@ -171,7 +172,10 @@ export default async function AcceptanceDocument({
               </tr>
             </tbody>
           </table>
-          <DoneAreas />
+          <div className="flex justify-between">
+            <DoneAreas />
+            <ProcedureTime />
+          </div>
         </div>
       </div>
     </div>
