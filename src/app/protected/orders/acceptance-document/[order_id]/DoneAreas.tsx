@@ -35,40 +35,48 @@ export default function DoneAreas() {
         <tr>
           {areas.slice(0, 5).map((area) => (
             <td key={area} className="justify-items-center text-center">
-              <div>
-                <input type="checkbox" />
-              </div>
-              {area}
+              <label>
+                <div>
+                  <input type="checkbox" />
+                </div>
+                {area}
+              </label>
             </td>
           ))}
         </tr>
         <tr>
           {areas.slice(5, 10).map((area) => (
             <td key={area} className="justify-items-center text-center">
-              <div>
-                <input type="checkbox" />
-              </div>
-              {area}
+              <label>
+                <div>
+                  <input type="checkbox" />
+                </div>
+                {area}
+              </label>
             </td>
           ))}
         </tr>
         <tr>
           {areas.slice(10, 15).map((area) => (
             <td key={area} className="justify-items-center text-center">
-              <div>
-                <input type="checkbox" />
-              </div>
-              {area}
+              <label>
+                <div>
+                  <input type="checkbox" />
+                </div>
+                {area}
+              </label>
             </td>
           ))}
         </tr>
         <tr>
           {areas.slice(15, 20).map((area) => (
             <td key={area} className="justify-items-center text-center">
-              <div>
-                <input type="checkbox" />
-              </div>
-              {area}
+              <label>
+                <div>
+                  <input type="checkbox" />
+                </div>
+                {area}
+              </label>
             </td>
           ))}
         </tr>
