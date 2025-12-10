@@ -2,6 +2,7 @@ import { LogoWhiteOnBlue } from "@/components/atoms/logoWhiteOnBlue";
 import { fetchOrderById } from "@/lib/supabase/fetchOrderById";
 import { SanitaryService } from "@/types/SanitaryServices";
 import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
+import DoneAreas from "./DoneAreas";
 
 export default async function AcceptanceDocument({
   params,
@@ -50,121 +51,128 @@ export default async function AcceptanceDocument({
           </div>
         ))}
       </div>
-      <div className="w-full overflow-auto">
-        <table className="border border-collapse min-w-[300px] mx-auto">
-          <tr>
-            <th colSpan={7}>
-              ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
-            </th>
-          </tr>
-          <tr>
-            <th rowSpan={3}>მავნებელი</th>
-            <th colSpan={3} rowSpan={2}>
-              გატარებული ღონისძიება
-            </th>
-            <th colSpan={3}>გამოყენებული საშუალებები</th>
-          </tr>
-          <tr>
-            <th>დასახელება</th>
-            <th>დოზირება</th>
-            <th>გახარჯული</th>
-          </tr>
-          <tr>
-            <th>მონიტორი</th>
-            <th>სპრეი</th>
-            <th>გელი</th>
-            <td>
-              <label className="flex gap-2.5 justify-between">
-                <input type="checkbox" />
-                მხოხავი მავნებლის ფირფიტა
-              </label>
-            </td>
-            <td>-</td>
-            <td></td>
-          </tr>
-          {tableData.map((td) => (
-            <tr key={td.pest}>
-              <td className="min-w-[250px] shrink-0">
-                <label className="flex gap-2.5 justify-between">
-                  <input type="checkbox" />
-                  {td.pest}
-                </label>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td className="min-w-[300px] shrink-0">
-                <label className="flex gap-2.5 justify-between">
-                  <input type="checkbox" />
-                  {td.chemic}
-                </label>
-              </td>
-              <td>{td.doze}</td>
-              <td></td>
-            </tr>
-          ))}
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th colSpan={3}>მიწოდებული ინვენტარი</th>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <th>დასახელება</th>
-            <th>ფასი</th>
-            <th>რაოდენობა</th>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </table>
+      <div className="w-full overflow-auto flex">
+        <div className="min-w-[300px] mx-auto">
+          <table className="border border-collapse ">
+            <thead>
+              <tr>
+                <th colSpan={7}>
+                  ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
+                </th>
+              </tr>
+              <tr>
+                <th rowSpan={3}>მავნებელი</th>
+                <th colSpan={3} rowSpan={2}>
+                  გატარებული ღონისძიება
+                </th>
+                <th colSpan={3}>გამოყენებული საშუალებები</th>
+              </tr>
+              <tr>
+                <th>დასახელება</th>
+                <th>დოზირება</th>
+                <th>გახარჯული</th>
+              </tr>
+              <tr>
+                <th>მონიტორი</th>
+                <th>სპრეი</th>
+                <th>გელი</th>
+                <td>
+                  <label className="flex gap-2.5 justify-between">
+                    <input type="checkbox" />
+                    მხოხავი მავნებლის ფირფიტა
+                  </label>
+                </td>
+                <td>-</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((td) => (
+                <tr key={td.pest}>
+                  <td className="min-w-[250px] shrink-0">
+                    <label className="flex gap-2.5 justify-between">
+                      <input type="checkbox" />
+                      {td.pest}
+                    </label>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className="min-w-[300px] shrink-0">
+                    <label className="flex gap-2.5 justify-between">
+                      <input type="checkbox" />
+                      {td.chemic}
+                    </label>
+                  </td>
+                  <td>{td.doze}</td>
+                  <td></td>
+                </tr>
+              ))}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th colSpan={3}>მიწოდებული ინვენტარი</th>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>დასახელება</th>
+                <th>ფასი</th>
+                <th>რაოდენობა</th>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <DoneAreas />
+        </div>
       </div>
     </div>
   );
