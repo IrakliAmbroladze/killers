@@ -1,3 +1,5 @@
+import { SignatureField } from "@/components/organisms/Signature/SignatureField";
+
 export default function AcceptanceSignature() {
   return (
     <div className="my-2.5 flex justify-between">
@@ -13,6 +15,10 @@ export default function AcceptanceSignature() {
           <label>
             ხელმოწერა <input type="text" className="border-b" />
           </label>
+          <div className="p-6">
+            + <h1 className="text-xl font-semibold mb-4">Customer Signature</h1>
+            + <SignatureField />
+          </div>
         </div>
       </div>
       <div>
