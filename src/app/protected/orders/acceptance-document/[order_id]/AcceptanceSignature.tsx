@@ -1,4 +1,4 @@
-import { SignatureField } from "@/components/organisms/Signature/SignatureField";
+import { SignatureField } from "@/components";
 
 export default function AcceptanceSignature() {
   return (
@@ -16,8 +16,7 @@ export default function AcceptanceSignature() {
             ხელმოწერა <input type="text" className="border-b" />
           </label>
           <div className="p-6">
-            + <h1 className="text-xl font-semibold mb-4">Customer Signature</h1>
-            + <SignatureField />
+            <SignatureField />
           </div>
         </div>
       </div>
@@ -28,6 +27,7 @@ export default function AcceptanceSignature() {
         </label>
         <div className="w-full border-b my-5 pl-5"></div>
         <div className="w-full border-b my-5 pl-5"></div>
+        <SignatureField />
       </div>
     </div>
   );
