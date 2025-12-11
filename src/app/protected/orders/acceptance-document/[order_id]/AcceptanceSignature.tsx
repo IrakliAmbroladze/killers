@@ -1,3 +1,5 @@
+import { SignatureField } from "@/components";
+
 export default function AcceptanceSignature() {
   return (
     <div className="my-2.5 flex justify-between">
@@ -13,6 +15,9 @@ export default function AcceptanceSignature() {
           <label>
             ხელმოწერა <input type="text" className="border-b" />
           </label>
+          <div className="p-6">
+            <SignatureField />
+          </div>
         </div>
       </div>
       <div>
@@ -22,6 +27,7 @@ export default function AcceptanceSignature() {
         </label>
         <div className="w-full border-b my-5 pl-5"></div>
         <div className="w-full border-b my-5 pl-5"></div>
+        <SignatureField />
       </div>
     </div>
   );
