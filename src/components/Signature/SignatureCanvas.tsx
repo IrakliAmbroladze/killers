@@ -2,7 +2,16 @@
 import { useEffect, useRef } from "react";
 import SignaturePad from "signature_pad";
 
-export const SignatureCanvas = () => {
+export type SignatureCanvasRef = {
+  clear: () => void;
+  getDataURL: () => string;
+};
+
+export const SignatureCanvas = ({
+  onReadyAction,
+}: {
+  onReadyAction: (ref: SignatureCanvasRef) => void;
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const padRef = useRef<SignaturePad | null>(null);
 
@@ -18,12 +27,11 @@ export const SignatureCanvas = () => {
       penColor: "#000080",
     });
 
-    /*   if (props.onReady) {
-      props.onReady({
-        clear: () => padRef.current?.clear(),
-        getDataURL: () => padRef.current!.toDataURL(),
-      });
-    }*/
+    onReadyAction({
+      clear: () => padRef.current?.clear(),
+      getDataURL: () => padRef.current!.toDataURL(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <canvas
