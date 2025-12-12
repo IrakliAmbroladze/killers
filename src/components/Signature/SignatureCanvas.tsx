@@ -36,7 +36,7 @@ export const SignatureCanvas = ({
   return (
     <canvas
       ref={canvasRef}
-      className="border rounded-md w-full h-56 bg-white"
+      className="border rounded-md w-full h-full bg-white"
     />
   );
 };

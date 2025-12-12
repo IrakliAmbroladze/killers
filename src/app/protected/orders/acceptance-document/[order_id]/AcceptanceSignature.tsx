@@ -2,32 +2,28 @@ import { SignatureField } from "@/components";
 
 export default function AcceptanceSignature() {
   return (
-    <div className="my-2.5 flex justify-between">
-      <div>
-        <h2 className="font-bold my-5">დამკვეთის წარმომადგენელი</h2>
-        <div className="flex flex-col pl-5">
+    <div className="my-2.5 flex sm:justify-between flex-col gap-10 md:gap-0 md:flex-row">
+      <div className="flex flex-col justify-between">
+        <h2 className="font-bold ">დამკვეთის წარმომადგენელი</h2>
+        <div className="flex flex-col ">
           <label>
             სახელი, გვარი <input type="text" className="border-b" />
           </label>{" "}
           <label>
             პირადი ნომერი <input type="text" className="border-b" />
           </label>{" "}
-          <label>
-            ხელმოწერა <input type="text" className="border-b" />
-          </label>
-          <div className="p-6">
+          <div>ხელმოწერა</div>
+          <div className="w-[320px] min-h-[150px]">
             <SignatureField />
           </div>
         </div>
       </div>
-      <div>
-        <h2 className="font-bold my-5">შემსრულებელი</h2>
-        <label className="pl-5">
-          ხელმოწერა <input type="text" className="border-b" />
-        </label>
-        <div className="w-full border-b my-5 pl-5"></div>
-        <div className="w-full border-b my-5 pl-5"></div>
-        <SignatureField />
+      <div className="flex flex-col justify-between">
+        <h2 className="font-bold ">შემსრულებელი</h2>
+        <div>ხელმოწერა</div>
+        <div className="w-[320px] min-h-[150px]">
+          <SignatureField />
+        </div>
       </div>
     </div>
   );
