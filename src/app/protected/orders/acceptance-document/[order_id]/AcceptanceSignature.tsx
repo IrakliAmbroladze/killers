@@ -13,7 +13,7 @@ export default function AcceptanceSignature() {
             პირადი ნომერი <input type="text" className="border-b" />
           </label>{" "}
           <div>ხელმოწერა</div>
-          <div className="w-[320px] min-h-[150px]">
+          <div className="w-[320px]">
             <SignatureField />
           </div>
         </div>
@@ -21,7 +21,7 @@ export default function AcceptanceSignature() {
       <div className="flex flex-col justify-between">
         <h2 className="font-bold ">შემსრულებელი</h2>
         <div>ხელმოწერა</div>
-        <div className="w-[320px] min-h-[150px]">
+        <div className="w-[320px]">
           <SignatureField />
         </div>
       </div>
