@@ -45,14 +45,53 @@ export default function AcceptanceSignature() {
         executorSignature: executorPng,
       }),
     });*/
+    const dataAcceptance = {
+      date: "2025-12-19",
+      services: {
+        disinsection: true,
+        deratization: false,
+        disinfection: true,
+        subcontractorPrevention: false,
+      },
+      pests: [
+        { name: "ბუზი", checked: true, monitor: "✓", spray: "", gel: "" },
+        // ... more pests
+      ],
+      products: [
+        {
+          name: "Killzone მღრღ. ფირფიტა",
+          checked: true,
+          dosage: "-",
+          used: "",
+        },
+        // ... more products
+      ],
+      inventory: [],
+      spaces: { სამზარეულო: true, ოფისი: true },
+      startTime: "09:00",
+      endTime: "11:00",
+      address: "საქანელას ქ.2",
+      customer: {
+        name: "John Doe",
+        personalNumber: "01234567890",
+        signature: customerPng,
+      },
+      executor: {
+        signature: executorPng,
+      },
+    };
+
     const res = await fetch("/api/documents/acceptance", {
       method: "POST",
-      body: JSON.stringify({
+      /*    body: JSON.stringify({
         customerName: "John Doe",
         orderId: "ORDER-123",
         customerSignature: customerPng,
         executorSignature: executorPng,
-      }),
+      }), */
+
+      body: JSON.stringify(dataAcceptance),
+
       headers: { "Content-Type": "application/json" },
     });
 
