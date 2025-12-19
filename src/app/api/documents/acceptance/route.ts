@@ -96,6 +96,56 @@ export async function POST(req: Request) {
       }
     };
 
+    const drawCheckbox = (
+      x: number,
+      y: number,
+      checked: boolean,
+      size = 12,
+    ) => {
+      // Box
+      page.drawRectangle({
+        x,
+        y,
+        width: size,
+        height: size,
+        borderWidth: 1,
+        borderColor: rgb(0, 0, 0),
+      });
+
+      // Checkmark
+      if (checked) {
+        page.drawLine({
+          start: { x: x + 2, y: y + size / 2 },
+          end: { x: x + size / 2, y: y + 2 },
+          thickness: 1.5,
+        });
+        page.drawLine({
+          start: { x: x + size / 2, y: y + 2 },
+          end: { x: x + size - 2, y: y + size - 2 },
+          thickness: 1.5,
+        });
+      }
+    };
+
+    const drawCheckboxWithLabel = (
+      label: string,
+      checked: boolean,
+      fontSize = 10,
+    ) => {
+      const boxSize = 10;
+
+      drawCheckbox(MARGIN_X, cursorY - boxSize, checked, boxSize);
+
+      page.drawText(label, {
+        x: MARGIN_X + boxSize + 8,
+        y: cursorY - boxSize + 1,
+        size: fontSize,
+        font,
+      });
+
+      cursorY -= fontSize + 8;
+    };
+
     /* ------------------ HEADER ------------------ */
 
     drawText("მიღება-ჩაბარების აქტი", 10);
@@ -115,11 +165,12 @@ export async function POST(req: Request) {
 
     cursorY -= 10;
 
-    drawText("მომსახურების ტიპები:", 13);
-    drawText("• დეზინსექცია");
-    drawText("• დერატიზაცია");
-    drawText("• დეზინფექცია");
-    drawText("• ქვეწარმავლების პრევენცია");
+    drawText("მომსახურების ტიპები:", 10, true);
+
+    drawCheckboxWithLabel("დეზინსექცია", true);
+    drawCheckboxWithLabel("დერატიზაცია", false);
+    drawCheckboxWithLabel("დეზინფექცია", true);
+    drawCheckboxWithLabel("ქვეწარმავლების პრევენცია", false);
 
     drawDivider();
 
