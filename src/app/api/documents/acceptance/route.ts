@@ -58,6 +58,44 @@ export async function POST(req: Request) {
       cursorY -= 20;
     };
 
+    const drawParagraph = (text: string, fontSize = 10, bold = false) => {
+      const activeFont = bold ? boldFont : font;
+      const maxWidth = PAGE_WIDTH - MARGIN_X * 2;
+
+      const words = text.split(" ");
+      let line = "";
+
+      for (const word of words) {
+        const testLine = line ? `${line} ${word}` : word;
+        const lineWidth = activeFont.widthOfTextAtSize(testLine, fontSize);
+
+        if (lineWidth > maxWidth) {
+          page.drawText(line, {
+            x: MARGIN_X,
+            y: cursorY,
+            size: fontSize,
+            font: activeFont,
+            color: rgb(0, 0, 0),
+          });
+          cursorY -= fontSize + 6;
+          line = word;
+        } else {
+          line = testLine;
+        }
+      }
+
+      if (line) {
+        page.drawText(line, {
+          x: MARGIN_X,
+          y: cursorY,
+          size: fontSize,
+          font: activeFont,
+          color: rgb(0, 0, 0),
+        });
+        cursorY -= fontSize + 10;
+      }
+    };
+
     /* ------------------ HEADER ------------------ */
 
     drawText("მიღება-ჩაბარების აქტი", 10);
@@ -70,7 +108,7 @@ export async function POST(req: Request) {
 
     /* ------------------ BODY TEXT ------------------ */
 
-    drawText(
+    drawParagraph(
       `ერთი მხრივ "${safeCustomerName}" და მეორე მხრივ შპს "ქილ" ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შესაბამისი მომსახურება.`,
       10,
     );
