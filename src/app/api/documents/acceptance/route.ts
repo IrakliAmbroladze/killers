@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
-const PAGE_WIDTH = 595; // A4
+const PAGE_WIDTH = 595;
 const PAGE_HEIGHT = 842;
 const MARGIN_X = 50;
 let cursorY = PAGE_HEIGHT - 50; // vertical flow cursor
@@ -15,25 +15,10 @@ export async function POST(req: Request) {
       await req.json();
 
     const safeCustomerName = customerName ?? "—";
-    const safeOrderId = orderId ?? "—";
-
     const pdf = await PDFDocument.create();
-
-    // ✅ REGISTER FONTKIT (THIS IS REQUIRED)
     pdf.registerFontkit(fontkit);
-
-    // ✅ LOAD TTF FONT
-    const fontPath = path.join(
-      process.cwd(),
-      "src/assets/fonts/NotoSansGeorgian-Regular.ttf",
-    );
-    const fontBytes = fs.readFileSync(fontPath);
-
     const page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
 
-    // const font = await pdf.embedFont(StandardFonts.Helvetica);
-    // const boldFont = await pdf.embedFont(StandardFonts.HelveticaBold);
-    //
     const regularFontPath = path.join(
       process.cwd(),
       "src/assets/fonts/NotoSansGeorgian-Regular.ttf",
@@ -52,7 +37,7 @@ export async function POST(req: Request) {
 
     /* ------------------ helpers ------------------ */
 
-    const drawText = (text: string, size = 12) => {
+    const drawText = (text: string, size = 10, bold = false) => {
       page.drawText(text, {
         x: 50,
         y: cursorY,
@@ -75,7 +60,7 @@ export async function POST(req: Request) {
 
     /* ------------------ HEADER ------------------ */
 
-    drawText("მიღება-ჩაბარების აქტი", 20);
+    drawText("მიღება-ჩაბარების აქტი", 10);
     cursorY -= 10;
 
     drawText(`Order ID: ${orderId}`, 11);
@@ -87,7 +72,7 @@ export async function POST(req: Request) {
 
     drawText(
       `ერთი მხრივ "${safeCustomerName}" და მეორე მხრივ შპს "ქილ" ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შესაბამისი მომსახურება.`,
-      12,
+      10,
     );
 
     cursorY -= 10;
@@ -102,10 +87,9 @@ export async function POST(req: Request) {
 
     /* ------------------ SIGNATURES ------------------ */
 
-    drawText("ხელმოწერები", 14);
+    drawText("ხელმოწერები", 14, true);
     cursorY -= 10;
 
-    // Decode base64
     const customerPngBytes = Uint8Array.from(
       atob(customerSignature.replace(/^data:image\/png;base64,/, "")),
       (c) => c.charCodeAt(0),
@@ -122,7 +106,6 @@ export async function POST(req: Request) {
     const sigWidth = 200;
     const sigHeight = 100;
 
-    // Customer
     page.drawText("დამკვეთის წარმომადგენელი", {
       x: MARGIN_X,
       y: cursorY,
@@ -137,7 +120,6 @@ export async function POST(req: Request) {
       height: sigHeight,
     });
 
-    // Executor
     page.drawText("შემსრულებელი", {
       x: PAGE_WIDTH / 2 + 20,
       y: cursorY,
