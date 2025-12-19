@@ -5,6 +5,7 @@ import SignaturePad from "signature_pad";
 export type SignatureCanvasRef = {
   clear: () => void;
   getDataURL: () => string;
+  isEmpty: () => boolean;
 };
 
 export const SignatureCanvas = ({
@@ -30,6 +31,7 @@ export const SignatureCanvas = ({
     onReadyAction({
       clear: () => padRef.current?.clear(),
       getDataURL: () => padRef.current!.toDataURL(),
+      isEmpty: () => padRef.current?.isEmpty() ?? true,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
