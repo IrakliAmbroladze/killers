@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     const safeCustomerName = customerName ?? "—";
     const pdf = await PDFDocument.create();
     pdf.registerFontkit(fontkit);
-    const page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    let page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
 
     const regularFontPath = path.join(
       process.cwd(),
@@ -38,11 +38,12 @@ export async function POST(req: Request) {
     /* ------------------ helpers ------------------ */
 
     const drawText = (text: string, size = 10, bold = false) => {
+      const activeFont = bold ? boldFont : font;
       page.drawText(text, {
         x: 50,
         y: cursorY,
         size,
-        font,
+        font: activeFont,
         color: rgb(0, 0, 0),
       });
       cursorY -= size + 8;
@@ -146,13 +147,87 @@ export async function POST(req: Request) {
       cursorY -= fontSize + 8;
     };
 
+    type TableColumn = {
+      header: string;
+      width: number;
+    };
+
+    type TableRow = string[];
+
+    const drawTable = (
+      columns: TableColumn[],
+      rows: TableRow[],
+      rowHeight = 20,
+      fontSize = 9,
+    ) => {
+      const tableWidth = columns.reduce((s, c) => s + c.width, 0);
+
+      // Header row
+      let x = MARGIN_X;
+
+      columns.forEach((col) => {
+        page.drawRectangle({
+          x,
+          y: cursorY - rowHeight,
+          width: col.width,
+          height: rowHeight,
+          borderWidth: 1,
+        });
+
+        page.drawText(col.header, {
+          x: x + 4,
+          y: cursorY - rowHeight + 6,
+          size: fontSize,
+          font: boldFont,
+        });
+
+        x += col.width;
+      });
+
+      cursorY -= rowHeight;
+
+      // Data rows
+      for (const row of rows) {
+        x = MARGIN_X;
+
+        row.forEach((cell, i) => {
+          page.drawRectangle({
+            x,
+            y: cursorY - rowHeight,
+            width: columns[i].width,
+            height: rowHeight,
+            borderWidth: 1,
+          });
+
+          page.drawText(cell, {
+            x: x + 4,
+            y: cursorY - rowHeight + 6,
+            size: fontSize,
+            font,
+          });
+
+          x += columns[i].width;
+        });
+
+        cursorY -= rowHeight;
+
+        // Page break safety
+        if (cursorY < 80) {
+          page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+          cursorY = PAGE_HEIGHT - 50;
+        }
+      }
+
+      cursorY -= 10;
+    };
+
     /* ------------------ HEADER ------------------ */
 
     drawText("მიღება-ჩაბარების აქტი", 10);
     cursorY -= 10;
 
     drawText(`Order ID: ${orderId}`, 11);
-    drawText(`თარიღი: ${new Date().toLocaleDateString()}`, 11);
+    drawText(`თარიღი: ${new Date().toLocaleDateString()}`, 10, false);
 
     drawDivider();
 
@@ -173,6 +248,28 @@ export async function POST(req: Request) {
     drawCheckboxWithLabel("ქვეწარმავლების პრევენცია", false);
 
     drawDivider();
+
+    /*------------------ TABLES --------------------*/
+    drawText(
+      "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
+      12,
+      true,
+    );
+
+    drawTable(
+      [
+        { header: "მავნებელი", width: 120 },
+        { header: "საშუალება", width: 200 },
+        { header: "დოზა", width: 80 },
+        { header: "შენიშვნა", width: 145 },
+      ],
+      [
+        ["ბუზი", "Killzone", "-", ""],
+        ["ტარაკანი", "BROMOBLEU", "-", ""],
+        ["ჭიანჭველა", "RATIMOR", "-", ""],
+        ["ბაღლინჯო", "RAPTOR GEL", "-", ""],
+      ],
+    );
 
     /* ------------------ SIGNATURES ------------------ */
 
