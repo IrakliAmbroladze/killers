@@ -37,7 +37,7 @@ export default function AcceptanceSignature() {
     const customerPng = customerSigRef.current.getDataURL();
     const executorPng = executorSigRef.current.getDataURL();
 
-    /* await fetch("/api/submit-signatures", {
+    /* await fetch("/api/documents/acceptance", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -45,6 +45,29 @@ export default function AcceptanceSignature() {
         executorSignature: executorPng,
       }),
     });*/
+    const res = await fetch("/api/documents/acceptance", {
+      method: "POST",
+      body: JSON.stringify({
+        customerName: "John Doe",
+        orderId: "ORDER-123",
+        customerSignature: customerPng,
+        executorSignature: executorPng,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      return alert("PDF generation failed.");
+    }
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+
+    // Trigger download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "acceptance_document.pdf";
+    a.click();
 
     console.log("Signatures accepted & sent");
     console.log(customerPng);
