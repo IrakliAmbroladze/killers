@@ -25,6 +25,15 @@ export default function AcceptanceSignature() {
       return;
     }
 
+    if (customerSigRef.current.isEmpty()) {
+      setError("Customer signature is required");
+      return;
+    }
+    if (executorSigRef.current.isEmpty()) {
+      setError("Executor signature is required");
+      return;
+    }
+
     const customerPng = customerSigRef.current.getDataURL();
     const executorPng = executorSigRef.current.getDataURL();
 
