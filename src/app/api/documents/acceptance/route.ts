@@ -255,7 +255,7 @@ export async function POST(req: Request) {
     cursorY -= 25;
 
     // === INTRODUCTORY TEXT ===
-    const introText = `ერთი მხრივ ${formData.customer.name} (ს/კ ${formData.customer.personalNumber}; შემდგომში "დამკვეთი") და მეორე მხრივ შპს "ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
+    const introText = `ერთი მხრივ "${formData.customer.name}" (ს/კ ${formData.customer.personalNumber}; შემდგომში "დამკვეთი") და მეორე მხრივ "შპს ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
 
     const textHeight = drawer.drawParagraph(
       introText,
@@ -277,11 +277,11 @@ export async function POST(req: Request) {
       },
     ];
 
-    const colWidth = (PAGE_WIDTH - MARGIN_X * 2) / 2;
+    const colWidth = (PAGE_WIDTH - MARGIN_X * 2) / 3;
     services.forEach((service, index) => {
       const col = index % 2;
       const row = Math.floor(index / 2);
-      const xPos = MARGIN_X + col * colWidth;
+      const xPos = MARGIN_X + 100 + col * colWidth;
       const yPos = cursorY - row * 20;
 
       drawer.drawCheckbox(xPos, yPos, service.checked, 10);
