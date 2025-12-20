@@ -4,55 +4,16 @@ import { PDFDocument, rgb, PDFPage, PDFFont } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
+import { AcceptanceFormData } from "@/types";
 
 const PAGE_WIDTH = 595;
 const PAGE_HEIGHT = 842;
 const MARGIN_X = 40;
 const MARGIN_Y = 40;
 
-interface FormData {
-  date: string;
-  services: {
-    disinsection: boolean;
-    deratization: boolean;
-    disinfection: boolean;
-    subcontractorPrevention: boolean;
-  };
-  pests: Array<{
-    name: string;
-    checked: boolean;
-    monitor: string;
-    spray: string;
-    gel: string;
-  }>;
-  products: Array<{
-    name: string;
-    checked: boolean;
-    dosage: string;
-    used: string;
-  }>;
-  inventory: Array<{
-    name: string;
-    price: string;
-    quantity: string;
-  }>;
-  spaces: { [key: string]: boolean };
-  startTime: string;
-  endTime: string;
-  address: string;
-  customer: {
-    name: string;
-    personalNumber: string;
-    signature: string;
-  };
-  executor: {
-    signature: string;
-  };
-}
-
 export async function POST(req: Request) {
   try {
-    const formData: FormData = await req.json();
+    const formData: AcceptanceFormData = await req.json();
 
     const pdf = await PDFDocument.create();
     pdf.registerFontkit(fontkit);
@@ -289,7 +250,8 @@ export async function POST(req: Request) {
     cursorY -= 25;
 
     // === INTRODUCTORY TEXT ===
-    const introText = `ერთი მხრივ "შპს იოლო-18" (ს/კ 405308821; შემდგომში "დამკვეთი") და მეორე მხრივ შპს "ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
+    const customer_name = "Irakli";
+    const introText = `ერთი მხრივ ${customer_name} (ს/კ 405308821; შემდგომში "დამკვეთი") და მეორე მხრივ შპს "ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
 
     const textHeight = drawer.drawParagraph(
       introText,

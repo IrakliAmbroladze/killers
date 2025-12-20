@@ -37,14 +37,6 @@ export default function AcceptanceSignature() {
     const customerPng = customerSigRef.current.getDataURL();
     const executorPng = executorSigRef.current.getDataURL();
 
-    /* await fetch("/api/documents/acceptance", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        customerSignature: customerPng,
-        executorSignature: executorPng,
-      }),
-    });*/
     const dataAcceptance = {
       date: "2025-12-19",
       services: {
@@ -83,15 +75,7 @@ export default function AcceptanceSignature() {
 
     const res = await fetch("/api/documents/acceptance", {
       method: "POST",
-      /*    body: JSON.stringify({
-        customerName: "John Doe",
-        orderId: "ORDER-123",
-        customerSignature: customerPng,
-        executorSignature: executorPng,
-      }), */
-
       body: JSON.stringify(dataAcceptance),
-
       headers: { "Content-Type": "application/json" },
     });
 
