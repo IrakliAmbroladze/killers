@@ -5,6 +5,7 @@ import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 import DoneAreas from "./DoneAreas";
 import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
+import { AcceptanceFormData } from "@/types";
 
 export default async function AcceptanceDocument({
   params,
@@ -32,6 +33,42 @@ export default async function AcceptanceDocument({
     { pest: "ბაქტერია", chemic: "REPTIL NATURAL STOP", doze: "-" },
     { pest: "ბზიკი", chemic: "ALFADOM", doze: "" },
   ];
+
+  const acceptanceFormData: AcceptanceFormData = {
+    date: "2025-12-19",
+    services: {
+      disinsection: true,
+      deratization: false,
+      disinfection: true,
+      subcontractorPrevention: false,
+    },
+    pests: [
+      { name: "ბუზი", checked: true, monitor: "✓", spray: "", gel: "" },
+      // ... more pests
+    ],
+    products: [
+      {
+        name: "Killzone მღრღ. ფირფიტა",
+        checked: true,
+        dosage: "-",
+        used: "",
+      },
+      // ... more products
+    ],
+    inventory: [],
+    spaces: { სამზარეულო: true, ოფისი: true },
+    startTime: "09:00",
+    endTime: "11:00",
+    address: "საქანელას ქ.2",
+    customer: {
+      name: order.customers.name,
+      personalNumber: order.customers.id,
+      signature: "",
+    },
+    executor: {
+      signature: "",
+    },
+  };
 
   return (
     <div className="flex justify-center items-center flex-col gap-5 px-2.5 ">
@@ -183,7 +220,7 @@ export default async function AcceptanceDocument({
               </div>
             </div>
           </div>
-          <AcceptanceSignature />
+          <AcceptanceSignature formData={acceptanceFormData} />
         </div>
       </div>
     </div>

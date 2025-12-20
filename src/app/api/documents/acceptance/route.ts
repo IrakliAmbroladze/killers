@@ -244,14 +244,18 @@ export async function POST(req: Request) {
     });
     cursorY -= 30;
 
-    drawer.drawText(`თარიღი: ${formData.date}`, MARGIN_X, cursorY, {
-      size: 10,
-    });
+    drawer.drawText(
+      `თარიღი: ${formData.date} (წელი-თვე-დღე)`,
+      MARGIN_X,
+      cursorY,
+      {
+        size: 10,
+      },
+    );
     cursorY -= 25;
 
     // === INTRODUCTORY TEXT ===
-    const customer_name = "Irakli";
-    const introText = `ერთი მხრივ ${customer_name} (ს/კ 405308821; შემდგომში "დამკვეთი") და მეორე მხრივ შპს "ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
+    const introText = `ერთი მხრივ ${formData.customer.name} (ს/კ ${formData.customer.personalNumber}; შემდგომში "დამკვეთი") და მეორე მხრივ შპს "ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
 
     const textHeight = drawer.drawParagraph(
       introText,
