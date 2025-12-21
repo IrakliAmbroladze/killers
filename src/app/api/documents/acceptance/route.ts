@@ -17,6 +17,14 @@ export async function POST(req: Request) {
 
     const pdf = await PDFDocument.create();
     pdf.registerFontkit(fontkit);
+    const form = pdf.getForm();
+
+    const disinfectionField = form.createCheckBox("service.disinfection");
+    const disinsectionField = form.createCheckBox("service.disinsection");
+    const deratizationField = form.createCheckBox("service.deratization");
+    const subcontractorPreventionField = form.createCheckBox(
+      "service.subcontractorPrevention",
+    );
 
     // Load fonts
     const regularFontPath = path.join(
@@ -287,6 +295,10 @@ export async function POST(req: Request) {
       drawer.drawCheckbox(xPos, yPos, service.checked, 10);
       drawer.drawText(service.label, xPos + 15, yPos - 10, { size: 10 });
     });
+
+    disinsectionField.addToPage(page, { x: 55, y: 55, width: 10, height: 10 });
+    disinsectionField.check();
+    form.flatten();
 
     cursorY -= Math.ceil(services.length / 2) * 20 + 15;
 
