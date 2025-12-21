@@ -276,12 +276,26 @@ export async function POST(req: Request) {
 
     // === SERVICE CHECKBOXES ===
     const services = [
-      { label: "დეზინსექცია", checked: formData.services.disinsection },
-      { label: "დერატიზაცია", checked: formData.services.deratization },
-      { label: "დეზინფექცია", checked: formData.services.disinfection },
+      {
+        label: "დეზინსექცია",
+        checked: formData.services.disinsection,
+        field: disinsectionField,
+      },
+      {
+        label: "დეზინფექცია",
+        checked: formData.services.disinfection,
+        field: disinfectionField,
+      },
+      {
+        label: "დერატიზაცია",
+        checked: formData.services.deratization,
+        field: deratizationField,
+      },
+
       {
         label: "ქვეწარმავლების პრევენცია",
         checked: formData.services.subcontractorPrevention,
+        field: subcontractorPreventionField,
       },
     ];
 
@@ -292,12 +306,18 @@ export async function POST(req: Request) {
       const xPos = MARGIN_X + 100 + col * colWidth;
       const yPos = cursorY - row * 20;
 
-      drawer.drawCheckbox(xPos, yPos, service.checked, 10);
-      drawer.drawText(service.label, xPos + 15, yPos - 10, { size: 10 });
+      service.field.addToPage(page, {
+        x: xPos,
+        y: yPos,
+        width: 10,
+        height: 10,
+      });
+      if (service.checked) {
+        service.field.check();
+      }
+      drawer.drawText(service.label, xPos + 15, yPos, { size: 10 });
     });
 
-    disinsectionField.addToPage(page, { x: 55, y: 55, width: 10, height: 10 });
-    disinsectionField.check();
     form.flatten();
 
     cursorY -= Math.ceil(services.length / 2) * 20 + 15;
