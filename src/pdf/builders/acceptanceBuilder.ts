@@ -15,6 +15,7 @@ import {
   PEST_TABLE_COL_WIDTHS,
 } from "../constants/pestTableCellSize";
 import { PDFDrawer } from "../classes/PDFDrawer";
+import { drawDocHeader, drawDocTitle } from "../layout/text";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -54,15 +55,9 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   // === HEADER ===
   // Logo would go here if you want to embed it
-  cursorY -= 20;
-
-  drawer.drawText("მიღება-ჩაბარების აქტი", PAGE_WIDTH / 2, cursorY, {
-    size: 16,
-    bold: true,
-    align: "center",
-    maxWidth: 0,
-  });
-  cursorY -= 30;
+  cursorY -= 50;
+  cursor.move(20);
+  drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
 
   drawer.drawText(
     `თარიღი: ${formData.date} (წელი-თვე-დღე)`,
