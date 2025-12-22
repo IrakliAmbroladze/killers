@@ -1,13 +1,20 @@
-import { PDFDocument, rgb, PDFPage, PDFFont } from "pdf-lib";
+import { PDFDocument, rgb, PDFPage } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
 import { AcceptanceFormData } from "@/types";
-
-const PAGE_WIDTH = 595;
-const PAGE_HEIGHT = 842;
-const MARGIN_X = 40;
-const MARGIN_Y = 40;
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  MARGIN_X,
+  MARGIN_Y,
+} from "../constants/pdfPageDimensions";
+import { createCursor } from "../layout/cursor";
+import {
+  PEST_TABLE_COL_HEIGHT,
+  PEST_TABLE_COL_WIDTHS,
+} from "../constants/pestTableCellSize";
+import { PDFDrawer } from "../classes/PDFDrawer";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -37,201 +44,11 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const font = await pdf.embedFont(regularFontBytes);
   const boldFont = await pdf.embedFont(boldFontBytes);
 
-  let page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  let page: PDFPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  const cursor = createCursor(page);
   let cursorY = PAGE_HEIGHT - MARGIN_Y;
 
   // Helper class for drawing
-  class PDFDrawer {
-    constructor(
-      private pdf: PDFDocument,
-      private page: PDFPage,
-      private font: PDFFont,
-      private boldFont: PDFFont,
-    ) {}
-
-    drawText(
-      text: string,
-      x: number,
-      y: number,
-      options: {
-        size?: number;
-        bold?: boolean;
-        color?: [number, number, number];
-        align?: "left" | "center" | "right";
-        maxWidth?: number;
-      } = {},
-    ): number {
-      const {
-        size = 10,
-        bold = false,
-        color = [0, 0, 0],
-        align = "left",
-        maxWidth,
-      } = options;
-
-      const activeFont = bold ? this.boldFont : this.font;
-      let finalX = x;
-
-      if (align === "center" && maxWidth) {
-        const textWidth = activeFont.widthOfTextAtSize(text, size);
-        finalX = x + (maxWidth - textWidth) / 2;
-      } else if (align === "right" && maxWidth) {
-        const textWidth = activeFont.widthOfTextAtSize(text, size);
-        finalX = x + maxWidth - textWidth;
-      }
-
-      this.page.drawText(text, {
-        x: finalX,
-        y,
-        size,
-        font: activeFont,
-        color: rgb(color[0], color[1], color[2]),
-      });
-
-      return activeFont.heightAtSize(size);
-    }
-
-    drawParagraph(
-      text: string,
-      x: number,
-      y: number,
-      maxWidth: number,
-      options: { size?: number; bold?: boolean; lineHeight?: number } = {},
-    ): number {
-      const { size = 10, bold = false, lineHeight = 1.4 } = options;
-      const activeFont = bold ? this.boldFont : this.font;
-      const words = text.split(" ");
-      let line = "";
-      let currentY = y;
-      let linesDrawn = 0;
-
-      for (const word of words) {
-        const testLine = line ? `${line} ${word}` : word;
-        const lineWidth = activeFont.widthOfTextAtSize(testLine, size);
-
-        if (lineWidth > maxWidth && line) {
-          this.drawText(line, x, currentY, { size, bold });
-          currentY -= size * lineHeight;
-          linesDrawn++;
-          line = word;
-        } else {
-          line = testLine;
-        }
-      }
-
-      if (line) {
-        this.drawText(line, x, currentY, { size, bold });
-        linesDrawn++;
-      }
-
-      return linesDrawn * size * lineHeight;
-    }
-
-    drawCheckbox(
-      x: number,
-      y: number,
-      checked: boolean,
-      size: number = 10,
-    ): void {
-      // Draw box
-      this.page.drawRectangle({
-        x,
-        y: y - size,
-        width: size,
-        height: size,
-        borderWidth: 1,
-        borderColor: rgb(0, 0, 0),
-        color: rgb(1, 1, 1),
-      });
-
-      // Draw checkmark
-      if (checked) {
-        this.page.drawText("✓", {
-          x: x + 1,
-          y: y - size + 1,
-          size: size,
-          font: this.font,
-          color: rgb(0, 0, 0),
-        });
-      }
-    }
-
-    drawTable(
-      x: number,
-      y: number,
-      data: {
-        headers: Array<{
-          text: string;
-          width: number;
-          rowspan?: number;
-          colspan?: number;
-        }>;
-        rows: Array<Array<{ text: string; colspan?: number }>>;
-      },
-      options: {
-        fontSize?: number;
-        rowHeight?: number;
-        headerBold?: boolean;
-      } = {},
-    ): number {
-      const { fontSize = 9, rowHeight = 20, headerBold = true } = options;
-      let currentY = y;
-      let currentX = x;
-
-      // Draw headers
-      data.headers.forEach((header) => {
-        const cellWidth = header.width * (header.colspan || 1);
-
-        this.page.drawRectangle({
-          x: currentX,
-          y: currentY - rowHeight,
-          width: cellWidth,
-          height: rowHeight,
-          borderWidth: 0.5,
-          borderColor: rgb(0, 0, 0),
-        });
-
-        this.drawText(header.text, currentX + 4, currentY - rowHeight + 6, {
-          size: fontSize,
-          bold: headerBold,
-        });
-
-        currentX += cellWidth;
-      });
-
-      currentY -= rowHeight;
-
-      // Draw rows
-      data.rows.forEach((row) => {
-        currentX = x;
-
-        row.forEach((cell, cellIndex) => {
-          const cellWidth =
-            data.headers[cellIndex]?.width * (cell.colspan || 1) ||
-            data.headers[cellIndex]?.width;
-
-          this.page.drawRectangle({
-            x: currentX,
-            y: currentY - rowHeight,
-            width: cellWidth,
-            height: rowHeight,
-            borderWidth: 0.5,
-            borderColor: rgb(0, 0, 0),
-          });
-
-          this.drawText(cell.text, currentX + 4, currentY - rowHeight + 6, {
-            size: fontSize,
-          });
-
-          currentX += cellWidth;
-        });
-
-        currentY -= rowHeight;
-      });
-
-      return y - currentY;
-    }
-  }
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
 
@@ -325,6 +142,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     { size: 11, bold: true },
   );
   cursorY -= 10;
+  cursor.move(200);
 
   // Complex table structure from your HTML
   /*    const tableData = {
@@ -359,44 +177,44 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
       page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
       cursorY = PAGE_HEIGHT - MARGIN_Y;
     } */
-  const PEST_TABLE_COL_WIDTHS = [100, 70, 50, 50, 100, 70, 50];
-  const PEST_TABLE_COL_HEIGHT = 20;
+
   page.drawRectangle({
     x: MARGIN_X,
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 3,
-    width: PEST_TABLE_COL_WIDTHS[0],
-    height: PEST_TABLE_COL_HEIGHT * 3,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  page.drawRectangle({
-    x: MARGIN_X + PEST_TABLE_COL_WIDTHS[0],
     y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
-    width:
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3],
-    height: PEST_TABLE_COL_HEIGHT * 2,
+    width: PEST_TABLE_COL_WIDTHS[0],
+    height: PEST_TABLE_COL_HEIGHT,
     borderWidth: 1,
     color: rgb(1, 1, 1),
-  });
-
-  drawer.drawText("მავნებლები", MARGIN_X, cursorY - 30, {
-    size: 10,
-    bold: true,
   });
   drawer.drawText(
-    "გატარებული ღონისძიება",
-    MARGIN_X + PEST_TABLE_COL_WIDTHS[0],
-    cursorY - 20,
+    "მავნებლები",
+    MARGIN_X,
+    cursorY - 15 - PEST_TABLE_COL_HEIGHT,
     {
       size: 10,
       bold: true,
     },
   );
   page.drawRectangle({
+    x: MARGIN_X,
+    y: cursorY - PEST_TABLE_COL_HEIGHT,
+    width:
+      PEST_TABLE_COL_WIDTHS[0] +
+      PEST_TABLE_COL_WIDTHS[1] +
+      PEST_TABLE_COL_WIDTHS[2] +
+      PEST_TABLE_COL_WIDTHS[3],
+    height: PEST_TABLE_COL_HEIGHT,
+    borderWidth: 1,
+    color: rgb(1, 1, 1),
+  });
+
+  drawer.drawText("გატარებული ღონისძიება", MARGIN_X, cursorY - 15, {
+    size: 10,
+    bold: true,
+  });
+  page.drawRectangle({
     x: MARGIN_X + PEST_TABLE_COL_WIDTHS[0],
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 3,
+    y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
     width: PEST_TABLE_COL_WIDTHS[1],
     height: PEST_TABLE_COL_HEIGHT,
     borderWidth: 1,
@@ -405,7 +223,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawer.drawText(
     "მონიტორი",
     MARGIN_X + PEST_TABLE_COL_WIDTHS[0],
-    cursorY - PEST_TABLE_COL_HEIGHT * 2 - 10,
+    cursorY - PEST_TABLE_COL_HEIGHT * 1 - 15,
     {
       size: 10,
       bold: true,
