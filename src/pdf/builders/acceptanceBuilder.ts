@@ -15,7 +15,7 @@ import {
   PEST_TABLE_COL_WIDTHS,
 } from "../constants/pestTableCellSize";
 import { PDFDrawer } from "../classes/PDFDrawer";
-import { drawDocHeader, drawDocTitle } from "../layout/text";
+import { drawDate, drawDocHeader, drawDocTitle } from "../layout/text";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -55,19 +55,10 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   // === HEADER ===
   // Logo would go here if you want to embed it
-  cursorY -= 50;
+  cursorY -= 75;
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
-
-  drawer.drawText(
-    `თარიღი: ${formData.date} (წელი-თვე-დღე)`,
-    MARGIN_X,
-    cursorY,
-    {
-      size: 10,
-    },
-  );
-  cursorY -= 25;
+  drawDate({ drawer, date: formData.date, cursor });
 
   // === INTRODUCTORY TEXT ===
   const introText = `ერთი მხრივ "${formData.customer.name}" (ს/კ ${formData.customer.personalNumber}; შემდგომში "დამკვეთი") და მეორე მხრივ "შპს ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;

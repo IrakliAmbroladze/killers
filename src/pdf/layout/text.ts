@@ -1,5 +1,5 @@
 import { PDFDrawer } from "../classes/PDFDrawer";
-import { PAGE_WIDTH } from "../constants/pdfPageDimensions";
+import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
 
 type drawDocTitleProps = {
@@ -16,4 +16,17 @@ export const drawDocTitle = ({ drawer, title, cursor }: drawDocTitleProps) => {
     maxWidth: 0,
   });
   cursor.move(30);
+};
+
+type drawDateProps = {
+  drawer: PDFDrawer;
+  date: string;
+  cursor: Cursor;
+};
+
+export const drawDate = ({ drawer, date, cursor }: drawDateProps) => {
+  drawer.drawText(`თარიღი: ${date} (წწ.თ.დ)`, MARGIN_X, cursor.y, {
+    size: 10,
+  });
+  cursor.move(25);
 };
