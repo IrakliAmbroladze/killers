@@ -15,7 +15,7 @@ import {
   PEST_TABLE_COL_WIDTHS,
 } from "../constants/pestTableCellSize";
 import { PDFDrawer } from "../classes/PDFDrawer";
-import { drawDate, drawDocHeader, drawDocTitle } from "../layout/text";
+import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -55,22 +55,16 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   // === HEADER ===
   // Logo would go here if you want to embed it
-  cursorY -= 75;
+  cursorY -= 130;
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
-
-  // === INTRODUCTORY TEXT ===
-  const introText = `ერთი მხრივ "${formData.customer.name}" (ს/კ ${formData.customer.personalNumber}; შემდგომში "დამკვეთი") და მეორე მხრივ "შპს ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
-
-  const textHeight = drawer.drawParagraph(
-    introText,
-    MARGIN_X,
-    cursorY,
-    PAGE_WIDTH - MARGIN_X * 2,
-    { size: 10 },
-  );
-  cursorY -= textHeight + 15;
+  drawIntro({
+    drawer,
+    cursor,
+    customerName: formData.customer.name,
+    customerId: formData.customer.personalNumber,
+  });
 
   // === SERVICE CHECKBOXES ===
   const services = [
