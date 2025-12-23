@@ -14,20 +14,32 @@ type DrawMainTableProps = {
   formData: AcceptanceFormData;
 };
 export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
+  let cursor_x = MARGIN_X;
   drawer.drawText(
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
-    MARGIN_X,
+    cursor_x,
     cursor.y,
     { size: 11, bold: true },
   );
-  cursor.move(10);
-  let cursor_x = MARGIN_X;
+  cursor.move(15);
+  cursor_x += 50;
+  drawer.drawText("გატარებული ღონისძიება", cursor_x, cursor.y, {
+    size: 9,
+    bold: true,
+  });
+  cursor_x += 270;
+  drawer.drawText("გამოყენებული საშუალებები", cursor_x, cursor.y, {
+    size: 9,
+    bold: true,
+  });
+  cursor.move(5);
+  cursor_x = MARGIN_X;
   const tableData = {
     headers: [
       { text: "მავნებელი", width: 80 },
       { text: "მონიტორი", width: 60 },
       { text: "სპრეი", width: 60 },
-      { text: "გელი", width: 60 },
+      { text: "გელი", width: 50 },
     ],
     rows: pestTableData.map((item) => [
       { text: item },
@@ -41,7 +53,7 @@ export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
     fontSize: 8,
     rowHeight: 18,
   });
-  cursor_x += 260;
+  cursor_x += 262;
   const tableData2 = {
     headers: [
       { text: "დასახელება", width: 140 },
