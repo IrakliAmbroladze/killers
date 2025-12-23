@@ -10,7 +10,7 @@ import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
 import { Services } from "../types/SanitaryServices";
 import { drawServicesCheckBoxes } from "../layout/checkboxes";
-import { drawMainTable } from "../layout/table";
+import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
@@ -18,7 +18,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   pdf.registerFontkit(fontkit);
 
   const form = pdf.getForm();
-  // Load fonts
   const regularFontPath = path.join(
     process.cwd(),
     "src/assets/fonts/NotoSansGeorgian-Regular.ttf",
@@ -53,56 +52,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawServicesCheckBoxes({ services, page, cursor, drawer });
 
   drawMainTable({ drawer, cursor, formData });
-
-  // === SPACES INSPECTED ===
-  /* drawer.drawText(
-    "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
-    MARGIN_X,
-    cursorY,
-    { size: 10, bold: true },
-  );
-  cursorY -= 20;
-
-
-
-  const spaceCols = 5;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
-  spacesList.forEach((space, index) => {
-    const col = index % spaceCols;
-    const row = Math.floor(index / spaceCols);
-    const xPos = MARGIN_X + col * spaceColWidth;
-    const yPos = cursorY - row * 18;
-
-    drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
-    drawer.drawText(space, xPos + 12, yPos - 8, { size: 7 });
-  });
-
-  cursorY -= Math.ceil(spacesList.length / spaceCols) * 18 + 20;
-
-  // === TIME AND ADDRESS ===
-  drawer.drawText("დაწყების დრო:", MARGIN_X, cursorY, {
-    size: 9,
-    bold: true,
-  });
-  drawer.drawText(formData.startTime, MARGIN_X + 150, cursorY, { size: 9 });
-  cursorY -= 18;
-
-  drawer.drawText("დასრულების დრო:", MARGIN_X, cursorY, {
-    size: 9,
-    bold: true,
-  });
-  drawer.drawText(formData.endTime, MARGIN_X + 150, cursorY, { size: 9 });
-  cursorY -= 18;
-
-  drawer.drawText("ობიექტის მისამართი:", MARGIN_X, cursorY, {
-    size: 9,
-    bold: true,
-  });
-  cursorY -= 15;
-  drawer.drawText(formData.address, MARGIN_X, cursorY, { size: 9 });
-  cursorY -= 30;
-
-   */
+  drawSpacesInspected({ drawer, cursor, formData });
 
   form.flatten();
   drawSignatures({ drawer, cursor, formData, page, pdf });

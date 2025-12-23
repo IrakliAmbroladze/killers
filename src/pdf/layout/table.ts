@@ -1,19 +1,19 @@
 import { AcceptanceFormData } from "@/types";
 import { PDFDrawer } from "../classes/PDFDrawer";
-import { MARGIN_X } from "../constants/pdfPageDimensions";
+import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
-import { materialsTableData, pestTableData } from "../constants/tableData";
+import {
+  materialsTableData,
+  pestTableData,
+  spacesList,
+} from "../constants/tableData";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
   cursor: Cursor;
   formData: AcceptanceFormData;
 };
-export const drawMainTable = ({
-  drawer,
-  cursor,
-  formData,
-}: DrawMainTableProps) => {
+export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
   drawer.drawText(
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
     MARGIN_X,
@@ -66,4 +66,59 @@ export const drawMainTable = ({
     page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     cursorY = PAGE_HEIGHT - MARGIN_Y;
   }*/
+};
+
+type DrawSpacesInspected = {
+  drawer: PDFDrawer;
+  cursor: Cursor;
+  formData: AcceptanceFormData;
+};
+export const drawSpacesInspected = ({
+  drawer,
+  cursor,
+  formData,
+}: DrawSpacesInspected) => {
+  drawer.drawText(
+    "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
+    MARGIN_X,
+    cursor.y,
+    { size: 10, bold: true },
+  );
+  cursor.move(20);
+
+  const spaceCols = 5;
+  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
+  spacesList.forEach((space, index) => {
+    const col = index % spaceCols;
+    const row = Math.floor(index / spaceCols);
+    const xPos = MARGIN_X + col * spaceColWidth;
+    const yPos = cursor.y - row * 18;
+
+    drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
+    drawer.drawText(space, xPos + 12, yPos - 8, { size: 7 });
+  });
+
+  cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 20);
+
+  drawer.drawText("დაწყების დრო:", MARGIN_X, cursor.y, {
+    size: 9,
+    bold: true,
+  });
+  drawer.drawText(formData.startTime, MARGIN_X + 150, cursor.y, { size: 9 });
+  cursor.move(18);
+
+  drawer.drawText("დასრულების დრო:", MARGIN_X, cursor.y, {
+    size: 9,
+    bold: true,
+  });
+  drawer.drawText(formData.endTime, MARGIN_X + 150, cursor.y, { size: 9 });
+  cursor.move(18);
+
+  drawer.drawText("ობიექტის მისამართი:", MARGIN_X, cursor.y, {
+    size: 9,
+    bold: true,
+  });
+  cursor.move(15);
+  drawer.drawText(formData.address, MARGIN_X, cursor.y, { size: 9 });
+  cursor.move(30);
 };
