@@ -19,6 +19,40 @@ export const drawSignatures = async ({
   formData,
   page,
 }: DrawSignaturesProps) => {
+  // === SIGNATURES ===
+  /* if (cursorY < 200) {
+    page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    cursorY = PAGE_HEIGHT - MARGIN_Y;
+  }*/
+
+  drawer.drawText("დამკვეთის წარმომადგენელი", MARGIN_X, cursor.y, {
+    size: 11,
+    bold: true,
+  });
+  drawer.drawText("შემსრულებელი", PAGE_WIDTH / 2 + 50, cursor.y, {
+    size: 11,
+    bold: true,
+  });
+  cursor.move(20);
+
+  // Customer info
+  drawer.drawText(
+    `სახელი, გვარი: ${formData.customer.name}`,
+    MARGIN_X,
+    cursor.y,
+    {
+      size: 9,
+    },
+  );
+  cursor.move(15);
+  drawer.drawText(
+    `პირადი ნომერი: ${formData.customer.personalNumber}`,
+    MARGIN_X,
+    cursor.y,
+    { size: 9 },
+  );
+  cursor.move(20);
+
   drawer.drawText("ხელმოწერა", MARGIN_X, cursor.y, { size: 9 });
   drawer.drawText("ხელმოწერა", PAGE_WIDTH / 2 + 50, cursor.y, { size: 9 });
   if (formData.customer.signature && formData.executor.signature) {

@@ -102,39 +102,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawer.drawText(formData.address, MARGIN_X, cursorY, { size: 9 });
   cursorY -= 30;
 
-  // === SIGNATURES ===
-  if (cursorY < 200) {
-    page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-    cursorY = PAGE_HEIGHT - MARGIN_Y;
-  }
-
-  drawer.drawText("დამკვეთის წარმომადგენელი", MARGIN_X, cursorY, {
-    size: 11,
-    bold: true,
-  });
-  drawer.drawText("შემსრულებელი", PAGE_WIDTH / 2 + 50, cursorY, {
-    size: 11,
-    bold: true,
-  });
-  cursorY -= 20;
-
-  // Customer info
-  drawer.drawText(
-    `სახელი, გვარი: ${formData.customer.name}`,
-    MARGIN_X,
-    cursorY,
-    {
-      size: 9,
-    },
-  );
-  cursorY -= 15;
-  drawer.drawText(
-    `პირადი ნომერი: ${formData.customer.personalNumber}`,
-    MARGIN_X,
-    cursorY,
-    { size: 9 },
-  );
-  cursorY -= 20; */
+   */
 
   form.flatten();
   drawSignatures({ drawer, cursor, formData, page, pdf });
