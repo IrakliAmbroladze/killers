@@ -16,19 +16,13 @@ import {
 } from "../constants/pestTableCellSize";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
+import { sanitaryServices } from "../utils/sanitaryServices";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
   pdf.registerFontkit(fontkit);
+
   const form = pdf.getForm();
-
-  const disinfectionField = form.createCheckBox("service.disinfection");
-  const disinsectionField = form.createCheckBox("service.disinsection");
-  const deratizationField = form.createCheckBox("service.deratization");
-  const subcontractorPreventionField = form.createCheckBox(
-    "service.subcontractorPrevention",
-  );
-
   // Load fonts
   const regularFontPath = path.join(
     process.cwd(),
@@ -53,8 +47,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
 
-  // === HEADER ===
-  // Logo would go here if you want to embed it
   cursorY -= 130;
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
@@ -67,29 +59,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   });
 
   // === SERVICE CHECKBOXES ===
-  const services = [
-    {
-      label: "დეზინსექცია",
-      checked: formData.services.disinsection,
-      field: disinsectionField,
-    },
-    {
-      label: "დეზინფექცია",
-      checked: formData.services.disinfection,
-      field: disinfectionField,
-    },
-    {
-      label: "დერატიზაცია",
-      checked: formData.services.deratization,
-      field: deratizationField,
-    },
-
-    {
-      label: "ქვეწარმავლების პრევენცია",
-      checked: formData.services.subcontractorPrevention,
-      field: subcontractorPreventionField,
-    },
-  ];
+  const services = sanitaryServices({ form, formData });
 
   const colWidth = (PAGE_WIDTH - MARGIN_X * 2) / 3;
   services.forEach((service, index) => {
@@ -109,8 +79,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     }
     drawer.drawText(service.label, xPos + 15, yPos, { size: 10 });
   });
-
-  form.flatten();
 
   cursorY -= Math.ceil(services.length / 2) * 20 + 15;
 
@@ -366,6 +334,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     "გარე ტერიტორია",
   ];
 
+  form.flatten();
   const spaceCols = 5;
   const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
   spacesList.forEach((space, index) => {
