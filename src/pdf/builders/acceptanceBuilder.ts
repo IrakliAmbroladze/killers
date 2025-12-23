@@ -19,6 +19,7 @@ import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
 import { Services } from "../types/SanitaryServices";
 import { drawServicesCheckBoxes } from "../layout/checkboxes";
+import { drawMainTable } from "../layout/table";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -41,14 +42,14 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const font = await pdf.embedFont(regularFontBytes);
   const boldFont = await pdf.embedFont(boldFontBytes);
 
-  let page: PDFPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  const page: PDFPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   const cursor = createCursor(page);
   let cursorY = PAGE_HEIGHT - MARGIN_Y;
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ form, formData });
 
-  cursorY -= 180;
+  cursorY -= 500;
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
@@ -60,51 +61,10 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   });
 
   drawServicesCheckBoxes({ services, page, cursor, drawer });
-  // === MAIN TABLE ===
-  drawer.drawText(
-    "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
-    MARGIN_X,
-    cursorY,
-    { size: 11, bold: true },
-  );
-  cursorY -= 10;
-  cursor.move(200);
 
-  // Complex table structure from your HTML
-  /*    const tableData = {
-      headers: [
-        { text: "მავნებელი", width: 100 },
-        { text: "მონიტორი", width: 60 },
-        { text: "სპრეი", width: 60 },
-        { text: "გელი", width: 60 },
-        { text: "დასახელება", width: 120 },
-        { text: "დოზირება", width: 50 },
-        { text: "გახარჯ", width: 45 },
-      ],
-      rows: formData.pests.map((pest) => [
-        { text: pest.name },
-        { text: pest.monitor },
-        { text: pest.spray },
-        { text: pest.gel },
-        { text: "" },
-        { text: "" },
-        { text: "" },
-      ]),
-    };
+  drawMainTable({ drawer, cursor, formData });
 
-    const tableHeight = drawer.drawTable(MARGIN_X, cursorY, tableData, {
-      fontSize: 8,
-      rowHeight: 18,
-    });
-    cursorY -= tableHeight + 20;
-
-    // Check if we need a new page
-    if (cursorY < 250) {
-      page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
-      cursorY = PAGE_HEIGHT - MARGIN_Y;
-    } */
-
-  page.drawRectangle({
+  /* page.drawRectangle({
     x: MARGIN_X,
     y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
     width: PEST_TABLE_COL_WIDTHS[0],
@@ -279,10 +239,10 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
       size: 10,
       bold: true,
     },
-  );
+  ); */
   cursorY -= PEST_TABLE_COL_HEIGHT * 4;
   // === SPACES INSPECTED ===
-  drawer.drawText(
+  /* drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
     MARGIN_X,
     cursorY,
@@ -312,7 +272,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     "გარე ტერიტორია",
   ];
 
-  form.flatten();
   const spaceCols = 5;
   const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
   spacesList.forEach((space, index) => {
@@ -382,8 +341,9 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     cursorY,
     { size: 9 },
   );
-  cursorY -= 20;
+  cursorY -= 20; */
 
+  form.flatten();
   drawer.drawText("ხელმოწერა", MARGIN_X, cursorY, { size: 9 });
   drawer.drawText("ხელმოწერა", PAGE_WIDTH / 2 + 50, cursorY, { size: 9 });
   cursorY -= 10;
