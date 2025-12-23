@@ -17,6 +17,8 @@ import {
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
+import { Services } from "../types/SanitaryServices";
+import { drawServicesCheckBoxes } from "../layout/checkboxes";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -43,11 +45,10 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const cursor = createCursor(page);
   let cursorY = PAGE_HEIGHT - MARGIN_Y;
 
-  // Helper class for drawing
-
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
+  const services: Services[] = sanitaryServices({ form, formData });
 
-  cursorY -= 130;
+  cursorY -= 180;
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
@@ -58,30 +59,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     customerId: formData.customer.personalNumber,
   });
 
-  // === SERVICE CHECKBOXES ===
-  const services = sanitaryServices({ form, formData });
-
-  const colWidth = (PAGE_WIDTH - MARGIN_X * 2) / 3;
-  services.forEach((service, index) => {
-    const col = index % 2;
-    const row = Math.floor(index / 2);
-    const xPos = MARGIN_X + 100 + col * colWidth;
-    const yPos = cursorY - row * 20;
-
-    service.field.addToPage(page, {
-      x: xPos,
-      y: yPos,
-      width: 10,
-      height: 10,
-    });
-    if (service.checked) {
-      service.field.check();
-    }
-    drawer.drawText(service.label, xPos + 15, yPos, { size: 10 });
-  });
-
-  cursorY -= Math.ceil(services.length / 2) * 20 + 15;
-
+  drawServicesCheckBoxes({ services, page, cursor, drawer });
   // === MAIN TABLE ===
   drawer.drawText(
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",

@@ -1,10 +1,4 @@
-import { AcceptanceFormData } from "@/types";
-import { PDFForm } from "pdf-lib";
-
-type SanitaryServices = {
-  form: PDFForm;
-  formData: AcceptanceFormData;
-};
+import { SanitaryServices } from "../types/SanitaryServices";
 
 export const sanitaryServices = ({ form, formData }: SanitaryServices) => {
   const disinfectionField = form.createCheckBox("service.disinfection");
