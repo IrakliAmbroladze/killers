@@ -3,20 +3,15 @@ import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
 import { AcceptanceFormData } from "@/types";
-import {
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-  MARGIN_X,
-  MARGIN_Y,
-} from "../constants/pdfPageDimensions";
+import { PAGE_WIDTH, PAGE_HEIGHT } from "../constants/pdfPageDimensions";
 import { createCursor } from "../layout/cursor";
-import { PEST_TABLE_COL_HEIGHT } from "../constants/pestTableCellSize";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
 import { Services } from "../types/SanitaryServices";
 import { drawServicesCheckBoxes } from "../layout/checkboxes";
 import { drawMainTable } from "../layout/table";
+import { drawSignatures } from "../layout/signatures";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -41,12 +36,10 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   const page: PDFPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   const cursor = createCursor(page);
-  let cursorY = PAGE_HEIGHT - MARGIN_Y;
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ form, formData });
 
-  cursorY -= 500;
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
@@ -61,7 +54,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   drawMainTable({ drawer, cursor, formData });
 
-  cursorY -= PEST_TABLE_COL_HEIGHT * 4;
   // === SPACES INSPECTED ===
   /* drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
@@ -71,27 +63,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   );
   cursorY -= 20;
 
-  const spacesList = [
-    "მიმღები",
-    "სასტუმრო ოთახი",
-    "სამზარეულო",
-    "ოფისი",
-    "დერეფანი",
-    "რესტორანი",
-    "ბარი",
-    "ტერასა",
-    "სველი წერტილები",
-    "საწყობი",
-    "საერთო სივრცე",
-    "სხვენი",
-    "სარდაფი",
-    "მარანი",
-    "ტექნიკური ოთახი",
-    "საწარმო",
-    "მომარაგების ოთახი",
-    "ნაგავსაყრელი",
-    "გარე ტერიტორია",
-  ];
+
 
   const spaceCols = 5;
   const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
@@ -165,41 +137,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   cursorY -= 20; */
 
   form.flatten();
-  drawer.drawText("ხელმოწერა", MARGIN_X, cursorY, { size: 9 });
-  drawer.drawText("ხელმოწერა", PAGE_WIDTH / 2 + 50, cursorY, { size: 9 });
-  cursorY -= 10;
-
-  // Embed signatures
-  if (formData.customer.signature && formData.executor.signature) {
-    const customerPngBytes = Uint8Array.from(
-      atob(formData.customer.signature.replace(/^data:image\/png;base64,/, "")),
-      (c) => c.charCodeAt(0),
-    );
-    const executorPngBytes = Uint8Array.from(
-      atob(formData.executor.signature.replace(/^data:image\/png;base64,/, "")),
-      (c) => c.charCodeAt(0),
-    );
-
-    const customerImg = await pdf.embedPng(customerPngBytes);
-    const executorImg = await pdf.embedPng(executorPngBytes);
-
-    const sigWidth = 150;
-    const sigHeight = 75;
-
-    page.drawImage(customerImg, {
-      x: MARGIN_X,
-      y: cursorY - sigHeight,
-      width: sigWidth,
-      height: sigHeight,
-    });
-
-    page.drawImage(executorImg, {
-      x: PAGE_WIDTH / 2 + 50,
-      y: cursorY - sigHeight,
-      width: sigWidth,
-      height: sigHeight,
-    });
-  }
+  drawSignatures({ drawer, cursor, formData, page, pdf });
 
   const pdfBytes = await pdf.save();
   return pdfBytes;
