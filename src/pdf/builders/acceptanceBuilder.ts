@@ -1,4 +1,4 @@
-import { PDFDocument, rgb, PDFPage } from "pdf-lib";
+import { PDFDocument, PDFPage } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
@@ -10,10 +10,7 @@ import {
   MARGIN_Y,
 } from "../constants/pdfPageDimensions";
 import { createCursor } from "../layout/cursor";
-import {
-  PEST_TABLE_COL_HEIGHT,
-  PEST_TABLE_COL_WIDTHS,
-} from "../constants/pestTableCellSize";
+import { PEST_TABLE_COL_HEIGHT } from "../constants/pestTableCellSize";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
@@ -64,182 +61,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   drawMainTable({ drawer, cursor, formData });
 
-  /* page.drawRectangle({
-    x: MARGIN_X,
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
-    width: PEST_TABLE_COL_WIDTHS[0],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "მავნებლები",
-    MARGIN_X,
-    cursorY - 15 - PEST_TABLE_COL_HEIGHT,
-    {
-      size: 10,
-      bold: true,
-    },
-  );
-  page.drawRectangle({
-    x: MARGIN_X,
-    y: cursorY - PEST_TABLE_COL_HEIGHT,
-    width:
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-
-  drawer.drawText("გატარებული ღონისძიება", MARGIN_X, cursorY - 15, {
-    size: 10,
-    bold: true,
-  });
-  page.drawRectangle({
-    x: MARGIN_X + PEST_TABLE_COL_WIDTHS[0],
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
-    width: PEST_TABLE_COL_WIDTHS[1],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "მონიტორი",
-    MARGIN_X + PEST_TABLE_COL_WIDTHS[0],
-    cursorY - PEST_TABLE_COL_HEIGHT * 1 - 15,
-    {
-      size: 10,
-      bold: true,
-    },
-  );
-  page.drawRectangle({
-    x: MARGIN_X + PEST_TABLE_COL_WIDTHS[0] + PEST_TABLE_COL_WIDTHS[1],
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 3,
-    width: PEST_TABLE_COL_WIDTHS[2],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "სპრეი",
-    MARGIN_X + PEST_TABLE_COL_WIDTHS[0] + PEST_TABLE_COL_WIDTHS[1],
-    cursorY - PEST_TABLE_COL_HEIGHT * 2 - 10,
-    {
-      size: 10,
-      bold: true,
-    },
-  );
-  page.drawRectangle({
-    x:
-      MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2],
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 3,
-    width: PEST_TABLE_COL_WIDTHS[3],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "გელი",
-    MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2],
-    cursorY - PEST_TABLE_COL_HEIGHT * 2 - 10,
-    {
-      size: 10,
-      bold: true,
-    },
-  );
-  page.drawRectangle({
-    x:
-      MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3],
-    y: cursorY - PEST_TABLE_COL_HEIGHT,
-    width:
-      PEST_TABLE_COL_WIDTHS[4] +
-      PEST_TABLE_COL_WIDTHS[5] +
-      PEST_TABLE_COL_WIDTHS[6],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "გამოყენებული საშუალებები",
-    MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3],
-    cursorY - 10,
-    {
-      size: 10,
-      bold: true,
-    },
-  );
-  page.drawRectangle({
-    x:
-      MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3],
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
-    width: PEST_TABLE_COL_WIDTHS[4],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "დასახელება",
-    MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3],
-    cursorY - PEST_TABLE_COL_HEIGHT - 10,
-    {
-      size: 10,
-      bold: true,
-    },
-  );
-
-  page.drawRectangle({
-    x:
-      MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3] +
-      PEST_TABLE_COL_WIDTHS[4],
-    y: cursorY - PEST_TABLE_COL_HEIGHT * 2,
-    width: PEST_TABLE_COL_WIDTHS[5],
-    height: PEST_TABLE_COL_HEIGHT,
-    borderWidth: 1,
-    color: rgb(1, 1, 1),
-  });
-  drawer.drawText(
-    "დოზირება",
-    MARGIN_X +
-      PEST_TABLE_COL_WIDTHS[0] +
-      PEST_TABLE_COL_WIDTHS[1] +
-      PEST_TABLE_COL_WIDTHS[2] +
-      PEST_TABLE_COL_WIDTHS[3] +
-      PEST_TABLE_COL_WIDTHS[4],
-    cursorY - PEST_TABLE_COL_HEIGHT - 10,
-    {
-      size: 10,
-      bold: true,
-    },
-  ); */
   cursorY -= PEST_TABLE_COL_HEIGHT * 4;
   // === SPACES INSPECTED ===
   /* drawer.drawText(
@@ -380,7 +201,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     });
   }
 
-  // === SAVE PDF ===
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }
