@@ -13,7 +13,12 @@ type DrawMainTableProps = {
   cursor: Cursor;
   formData: AcceptanceFormData;
 };
-export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
+export const drawMainTable = ({
+  drawer,
+  cursor,
+  formData,
+}: DrawMainTableProps) => {
+  const { pests } = formData;
   let cursor_x = MARGIN_X;
   drawer.drawText(
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
@@ -41,11 +46,11 @@ export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
       { text: "სპრეი", width: 60 },
       { text: "გელი", width: 50 },
     ],
-    rows: pestTableData.map((item) => [
-      { text: item },
-      { text: "" },
-      { text: "" },
-      { text: "" },
+    rows: pests.map((item) => [
+      { text: item.name },
+      { text: String(item.monitor) },
+      { text: String(item.spray) },
+      { text: String(item.gel) },
     ]),
   };
 

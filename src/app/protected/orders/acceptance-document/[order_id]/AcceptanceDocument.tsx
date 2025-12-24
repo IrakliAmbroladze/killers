@@ -41,7 +41,7 @@ export default function AcceptanceDocument({
       subcontractorPrevention: false,
     },
     pests: [
-      { name: "ბუზი", checked: true, monitor: "✓", spray: "", gel: "" },
+      { name: "ბუზი", checked: true, monitor: true, spray: true, gel: true },
       // ... more pests
     ],
     products: [
