@@ -9,6 +9,7 @@ export default function AcceptanceSignature({
 }: {
   formData: AcceptanceFormData;
 }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const customerSigRef = useRef<SignatureCanvasRef | null>(null);
   const executorSigRef = useRef<SignatureCanvasRef | null>(null);
 
@@ -66,14 +67,13 @@ export default function AcceptanceSignature({
     const url = URL.createObjectURL(blob);
 
     // Trigger download
-    const a = document.createElement("a");
+    /*   const a = document.createElement("a");
     a.href = url;
     a.download = "acceptance_document.pdf";
-    a.click();
-
-    console.log("Signatures accepted & sent");
-    console.log(customerPng);
-    console.log(executorPng);
+    a.click();*/
+    if (iframeRef.current) {
+      iframeRef.current.src = url;
+    }
   };
 
   return (
@@ -113,6 +113,14 @@ export default function AcceptanceSignature({
       >
         OK
       </button>
+      <iframe
+        ref={iframeRef}
+        style={{
+          width: "100%",
+          height: "100vh",
+          border: "1px solid #ccc",
+        }}
+      />
     </div>
   );
 }
