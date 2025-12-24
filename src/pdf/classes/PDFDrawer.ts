@@ -92,10 +92,9 @@ export class PDFDrawer {
     checked: boolean,
     size: number = 10,
   ): void {
-    // Draw box
     this.page.drawRectangle({
       x,
-      y: y - size,
+      y,
       width: size,
       height: size,
       borderWidth: 1,
@@ -103,13 +102,18 @@ export class PDFDrawer {
       color: rgb(1, 1, 1),
     });
 
-    // Draw checkmark
     if (checked) {
-      this.page.drawText("✓", {
-        x: x + 1,
-        y: y - size + 1,
-        size: size,
-        font: this.font,
+      this.page.drawLine({
+        start: { x, y: y + size / 2 },
+        end: { x: x + size / 2, y },
+        thickness: 1.5,
+        color: rgb(0, 0, 0),
+      });
+
+      this.page.drawLine({
+        start: { x: x + size / 2, y },
+        end: { x: x + size, y: y + size },
+        thickness: 1.5,
         color: rgb(0, 0, 0),
       });
     }

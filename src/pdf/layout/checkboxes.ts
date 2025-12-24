@@ -22,8 +22,9 @@ export const drawServicesCheckBoxes = ({
     const row = Math.floor(index / 2);
     const xPos = MARGIN_X + 100 + col * colWidth;
     const yPos = cursor.y - row * 20;
+    drawer.drawCheckbox(xPos, yPos, service.checked, 8);
 
-    service.field.addToPage(page, {
+    /* service.field.addToPage(page, {
       x: xPos,
       y: yPos,
       width: 10,
@@ -31,7 +32,7 @@ export const drawServicesCheckBoxes = ({
     });
     if (service.checked) {
       service.field.check();
-    }
+    }*/
     drawer.drawText(service.label, xPos + 15, yPos, { size: 10 });
   });
 
