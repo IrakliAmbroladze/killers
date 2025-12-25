@@ -2,11 +2,8 @@ import { AcceptanceFormData } from "@/types";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
-import {
-  materialsTableData,
-  pestTableData,
-  spacesList,
-} from "../constants/tableData";
+import { materialsTableData, spacesList } from "../constants/tableData";
+import { TableCell } from "../types/Table";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
@@ -18,7 +15,6 @@ export const drawMainTable = ({
   cursor,
   formData,
 }: DrawMainTableProps) => {
-  const { pests } = formData;
   let cursor_x = MARGIN_X;
   drawer.drawText(
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
@@ -39,6 +35,14 @@ export const drawMainTable = ({
   });
   cursor.move(5);
   cursor_x = MARGIN_X;
+
+  const rows: TableCell[][] = formData.pests.map((pest) => [
+    { type: "text", text: pest.name },
+    { type: "checkbox", checked: pest.monitor },
+    { type: "checkbox", checked: pest.spray },
+    { type: "checkbox", checked: pest.gel },
+  ]);
+
   const tableData = {
     headers: [
       { text: "მავნებელი", width: 80 },
@@ -46,19 +50,14 @@ export const drawMainTable = ({
       { text: "სპრეი", width: 60 },
       { text: "გელი", width: 50 },
     ],
-    rows: pests.map((item) => [
-      { text: item.name },
-      { text: String(item.monitor) },
-      { text: String(item.spray) },
-      { text: String(item.gel) },
-    ]),
+    rows,
   };
 
   const tableHeight = drawer.drawTable(cursor_x, cursor.y, tableData, {
     fontSize: 8,
     rowHeight: 18,
   });
-  cursor_x += 262;
+  /* cursor_x += 262;
   const tableData2 = {
     headers: [
       { text: "დასახელება", width: 140 },
@@ -75,8 +74,8 @@ export const drawMainTable = ({
     fontSize: 8,
     rowHeight: 18,
   });
-  const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;
-  cursor.move(height + 20);
+  const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;*/
+  cursor.move(tableHeight + 20);
 
   // Check if we need a new page
   /*if (cursorY < 250) {

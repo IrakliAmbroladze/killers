@@ -1,4 +1,5 @@
 import { PDFDocument, PDFFont, PDFPage, rgb } from "pdf-lib";
+import { TableCell, TableHeaderCell } from "../types/Table";
 
 export class PDFDrawer {
   constructor(
@@ -123,13 +124,8 @@ export class PDFDrawer {
     x: number,
     y: number,
     data: {
-      headers: Array<{
-        text: string;
-        width: number;
-        rowspan?: number;
-        colspan?: number;
-      }>;
-      rows: Array<Array<{ text: string; colspan?: number }>>;
+      headers: TableHeaderCell[];
+      rows: TableCell[][];
     },
     options: {
       fontSize?: number;
@@ -182,10 +178,26 @@ export class PDFDrawer {
           borderColor: rgb(0, 0, 0),
         });
 
-        this.drawText(cell.text, currentX + 4, currentY - rowHeight + 6, {
+        /*     this.drawText(cell.text, currentX + 4, currentY - rowHeight + 6, {
           size: fontSize,
-        });
+        });*/
 
+        switch (cell.type) {
+          case "text":
+            this.drawText(cell.text, currentX + 4, currentY - rowHeight + 6, {
+              size: fontSize,
+            });
+            break;
+
+          case "checkbox":
+            this.drawCheckbox(
+              currentX + cellWidth / 2 - 4,
+              currentY - rowHeight / 2 - 4,
+              cell.checked,
+              8,
+            );
+            break;
+        }
         currentX += cellWidth;
       });
 
