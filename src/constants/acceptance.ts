@@ -1,3 +1,5 @@
+import { SanitaryService } from "@/types/SanitaryServices";
+
 export const pestTableData: string[] = [
   "ბუზი",
   "ქინქლა",
@@ -25,4 +27,11 @@ export const productsTableData: string[] = [
   "SURFANIOS PREMIUM",
   "REPTIL NATURAL STOP",
   "ALFADOM",
+];
+
+export const services: SanitaryService[] = [
+  "დეზინსექცია",
+  "დერატიზაცია",
+  "დეზინფექცია",
+  "ქვეწარმავლების პრევენცია",
 ];
