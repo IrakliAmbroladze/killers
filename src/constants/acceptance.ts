@@ -11,3 +11,17 @@ export const pestTableData: string[] = [
   "ბაქტერია",
   "ბზიკი",
 ];
+
+export const productsTableData: string[] = [
+  "Killzone მღრღ. ფირფიტა",
+  "Killzone მწერის ფირფიტა",
+  "BROMOBLEU",
+  "RATIMOR",
+  "Cipex10e",
+  "RAPTOR GEL",
+  "BLEU DELTA",
+  "AGITA",
+  "SURFANIOS PREMIUM",
+  "REPTIL NATURAL STOP",
+  "ALFADOM",
+];
