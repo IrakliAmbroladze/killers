@@ -6,6 +6,8 @@ import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
 import { AcceptanceFormData, OrderExtended } from "@/types";
 import { useState } from "react";
+import { pestTableData } from "@/constants";
+import { productsTableData } from "@/constants/acceptance";
 
 export default function AcceptanceDocument({
   order,
@@ -40,19 +42,19 @@ export default function AcceptanceDocument({
       disinfection: false,
       subcontractorPrevention: false,
     },
-    pests: [
-      { name: "ბუზი", checked: true, monitor: "✓", spray: "", gel: "" },
-      // ... more pests
-    ],
-    products: [
-      {
-        name: "Killzone მღრღ. ფირფიტა",
-        checked: true,
-        dosage: "-",
-        used: "",
-      },
-      // ... more products
-    ],
+    pests: pestTableData.map((pest) => ({
+      name: pest,
+      checked: true,
+      monitor: false,
+      spray: false,
+      gel: true,
+    })),
+    products: productsTableData.map((product) => ({
+      name: product,
+      checked: true,
+      dosage: "-",
+      used: "",
+    })),
     inventory: [],
     spaces: { სამზარეულო: true, ოფისი: true },
     startTime: "09:00",
@@ -68,7 +70,6 @@ export default function AcceptanceDocument({
     },
   };
   const [formData, setFormData] = useState(acceptanceFormData);
-
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 

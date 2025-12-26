@@ -9,9 +9,9 @@ export type AcceptanceFormData = {
   pests: Array<{
     name: string;
     checked: boolean;
-    monitor: string;
-    spray: string;
-    gel: string;
+    monitor: boolean;
+    spray: boolean;
+    gel: boolean;
   }>;
   products: Array<{
     name: string;

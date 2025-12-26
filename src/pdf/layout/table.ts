@@ -2,18 +2,19 @@ import { AcceptanceFormData } from "@/types";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
-import {
-  materialsTableData,
-  pestTableData,
-  spacesList,
-} from "../constants/tableData";
+import { spacesList } from "../constants/tableData";
+import { TableCell } from "../types/Table";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
   cursor: Cursor;
   formData: AcceptanceFormData;
 };
-export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
+export const drawMainTable = ({
+  drawer,
+  cursor,
+  formData,
+}: DrawMainTableProps) => {
   let cursor_x = MARGIN_X;
   drawer.drawText(
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
@@ -34,6 +35,14 @@ export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
   });
   cursor.move(5);
   cursor_x = MARGIN_X;
+
+  const rows: TableCell[][] = formData.pests.map((pest) => [
+    { type: "text", text: pest.name },
+    { type: "checkbox", checked: pest.monitor },
+    { type: "checkbox", checked: pest.spray },
+    { type: "checkbox", checked: pest.gel },
+  ]);
+
   const tableData = {
     headers: [
       { text: "მავნებელი", width: 80 },
@@ -41,12 +50,7 @@ export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
       { text: "სპრეი", width: 60 },
       { text: "გელი", width: 50 },
     ],
-    rows: pestTableData.map((item) => [
-      { text: item },
-      { text: "" },
-      { text: "" },
-      { text: "" },
-    ]),
+    rows,
   };
 
   const tableHeight = drawer.drawTable(cursor_x, cursor.y, tableData, {
@@ -54,24 +58,27 @@ export const drawMainTable = ({ drawer, cursor }: DrawMainTableProps) => {
     rowHeight: 18,
   });
   cursor_x += 262;
+
+  const materialsRows: TableCell[][] = formData.products.map((product) => [
+    { type: "text", text: product.name },
+    { type: "text", text: product.dosage },
+    { type: "text", text: product.used },
+  ]);
+
   const tableData2 = {
     headers: [
       { text: "დასახელება", width: 140 },
       { text: "დოზირება", width: 55 },
       { text: "გახარჯული", width: 60 },
     ],
-    rows: materialsTableData.map((item) => [
-      { text: item },
-      { text: "" },
-      { text: "" },
-    ]),
+    rows: materialsRows,
   };
   const tableHeight2 = drawer.drawTable(cursor_x, cursor.y, tableData2, {
     fontSize: 8,
     rowHeight: 18,
   });
-  const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;
-  cursor.move(height + 20);
+  /*const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;*/
+  cursor.move((tableHeight > tableHeight2 ? tableHeight : tableHeight2) + 20);
 
   // Check if we need a new page
   /*if (cursorY < 250) {

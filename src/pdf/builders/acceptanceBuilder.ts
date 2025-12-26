@@ -17,7 +17,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
   pdf.registerFontkit(fontkit);
 
-  const form = pdf.getForm();
   const regularFontPath = path.join(
     process.cwd(),
     "src/assets/fonts/NotoSansGeorgian-Regular.ttf",
@@ -37,7 +36,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const cursor = createCursor(page);
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
-  const services: Services[] = sanitaryServices({ form, formData });
+  const services: Services[] = sanitaryServices({ formData });
 
   cursor.move(20);
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
@@ -49,12 +48,11 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     customerId: formData.customer.personalNumber,
   });
 
-  drawServicesCheckBoxes({ services, page, cursor, drawer });
+  drawServicesCheckBoxes({ services, cursor, drawer });
 
   drawMainTable({ drawer, cursor, formData });
   drawSpacesInspected({ drawer, cursor, formData });
 
-  form.flatten();
   drawSignatures({ drawer, cursor, formData, page, pdf });
 
   const pdfBytes = await pdf.save();
