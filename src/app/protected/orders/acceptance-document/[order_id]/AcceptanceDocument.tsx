@@ -6,6 +6,7 @@ import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
 import { AcceptanceFormData, OrderExtended } from "@/types";
 import { useState } from "react";
+import { pestTableData } from "@/constants";
 
 export default function AcceptanceDocument({
   order,
@@ -40,10 +41,13 @@ export default function AcceptanceDocument({
       disinfection: false,
       subcontractorPrevention: false,
     },
-    pests: [
-      { name: "ბუზი", checked: true, monitor: true, spray: true, gel: true },
-      // ... more pests
-    ],
+    pests: pestTableData.map((pest) => ({
+      name: pest,
+      checked: true,
+      monitor: false,
+      spray: false,
+      gel: true,
+    })),
     products: [
       {
         name: "Killzone მღრღ. ფირფიტა",

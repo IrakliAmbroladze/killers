@@ -14,7 +14,6 @@ import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
-  console.log(formData);
   const pdf = await PDFDocument.create();
   pdf.registerFontkit(fontkit);
 
