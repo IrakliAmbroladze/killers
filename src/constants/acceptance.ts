@@ -13,6 +13,7 @@ export const pestTableData: string[] = [
 ];
 
 export const productsTableData: string[] = [
+  "მხოხავი მავნებლის ფირფიტა",
   "Killzone მღრღ. ფირფიტა",
   "Killzone მწერის ფირფიტა",
   "BROMOBLEU",

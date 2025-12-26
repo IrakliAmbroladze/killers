@@ -2,7 +2,7 @@ import { AcceptanceFormData } from "@/types";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
-import { materialsTableData, spacesList } from "../constants/tableData";
+import { spacesList } from "../constants/tableData";
 import { TableCell } from "../types/Table";
 
 type DrawMainTableProps = {
@@ -57,25 +57,28 @@ export const drawMainTable = ({
     fontSize: 8,
     rowHeight: 18,
   });
-  /* cursor_x += 262;
+  cursor_x += 262;
+
+  const materialsRows: TableCell[][] = formData.products.map((product) => [
+    { type: "text", text: product.name },
+    { type: "text", text: product.dosage },
+    { type: "text", text: product.used },
+  ]);
+
   const tableData2 = {
     headers: [
       { text: "დასახელება", width: 140 },
       { text: "დოზირება", width: 55 },
       { text: "გახარჯული", width: 60 },
     ],
-    rows: materialsTableData.map((item) => [
-      { text: item },
-      { text: "" },
-      { text: "" },
-    ]),
+    rows: materialsRows,
   };
   const tableHeight2 = drawer.drawTable(cursor_x, cursor.y, tableData2, {
     fontSize: 8,
     rowHeight: 18,
   });
-  const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;*/
-  cursor.move(tableHeight + 20);
+  /*const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;*/
+  cursor.move((tableHeight > tableHeight2 ? tableHeight : tableHeight2) + 20);
 
   // Check if we need a new page
   /*if (cursorY < 250) {
