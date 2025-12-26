@@ -98,23 +98,23 @@ export class PDFDrawer {
       y,
       width: size,
       height: size,
-      borderWidth: 1,
+      borderWidth: 0.5,
       borderColor: rgb(0, 0, 0),
       color: rgb(1, 1, 1),
     });
 
     if (checked) {
       this.page.drawLine({
-        start: { x, y: y + size / 2 },
+        start: { x: x + 1, y: y + size / 2 },
         end: { x: x + size / 2, y },
-        thickness: 1.5,
+        thickness: 1,
         color: rgb(0, 0, 0),
       });
 
       this.page.drawLine({
         start: { x: x + size / 2, y },
-        end: { x: x + size, y: y + size },
-        thickness: 1.5,
+        end: { x: x + size - 1, y: y + size - 1 },
+        thickness: 1,
         color: rgb(0, 0, 0),
       });
     }
