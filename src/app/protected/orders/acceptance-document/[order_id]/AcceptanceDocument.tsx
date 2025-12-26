@@ -7,6 +7,7 @@ import AcceptanceSignature from "./AcceptanceSignature";
 import { AcceptanceFormData, OrderExtended } from "@/types";
 import { useState } from "react";
 import { pestTableData } from "@/constants";
+import { productsTableData } from "@/constants/acceptance";
 
 export default function AcceptanceDocument({
   order,
@@ -48,15 +49,12 @@ export default function AcceptanceDocument({
       spray: false,
       gel: true,
     })),
-    products: [
-      {
-        name: "Killzone მღრღ. ფირფიტა",
-        checked: true,
-        dosage: "-",
-        used: "",
-      },
-      // ... more products
-    ],
+    products: productsTableData.map((product) => ({
+      name: product,
+      checked: true,
+      dosage: "-",
+      used: "",
+    })),
     inventory: [],
     spaces: { სამზარეულო: true, ოფისი: true },
     startTime: "09:00",
@@ -72,7 +70,6 @@ export default function AcceptanceDocument({
     },
   };
   const [formData, setFormData] = useState(acceptanceFormData);
-
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
