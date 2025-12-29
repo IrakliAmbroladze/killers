@@ -8,6 +8,8 @@ import { AcceptanceFormData, OrderExtended } from "@/types";
 import { useState } from "react";
 import { pestTableData } from "@/constants";
 import { productsTableData } from "@/constants/acceptance";
+import { Table } from "./Table";
+import { TableCell } from "@/pdf/types/Table";
 
 export default function AcceptanceDocument({
   order,
@@ -64,19 +66,42 @@ export default function AcceptanceDocument({
     },
   };
   const [formData, setFormData] = useState(acceptanceFormData);
+
+  const pestRows: TableCell[][] = formData.pests.map((pest) => [
+    { type: "text", text: pest.name },
+    {
+      type: "checkbox",
+      checked: pest.monitor,
+      pestName: pest.name,
+      field: "monitor",
+    },
+    {
+      type: "checkbox",
+      checked: pest.spray,
+      pestName: pest.name,
+      field: "spray",
+    },
+    {
+      type: "checkbox",
+      checked: pest.gel,
+      pestName: pest.name,
+      field: "gel",
+    },
+  ]);
+
   const handlePestEventChange = (
     pestName: string,
-    e: React.ChangeEvent<HTMLInputElement>,
+    field: "monitor" | "spray" | "gel",
+    checked: boolean,
   ) => {
-    const { name, checked } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       pests: prev.pests.map((pest) =>
-        pest.name === pestName ? { ...pest, [name]: checked } : pest,
+        pest.name === pestName ? { ...pest, [field]: checked } : pest,
       ),
     }));
   };
+
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
@@ -146,18 +171,19 @@ export default function AcceptanceDocument({
       </div>
       <div className="w-full overflow-auto flex">
         <div className="min-w-[300px] mx-auto">
+          <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
+          <div>გატარებული ღონისძიება</div>
+          <Table
+            headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
+            rows={pestRows}
+            onCheckboxChange={handlePestEventChange}
+          />
+
           <table className="border border-collapse ">
             <thead>
               <tr>
-                <th colSpan={7}>
-                  ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
-                </th>
-              </tr>
-              <tr>
                 <th rowSpan={3}>მავნებელი</th>
-                <th colSpan={3} rowSpan={2}>
-                  გატარებული ღონისძიება
-                </th>
+                <th colSpan={3} rowSpan={2}></th>
                 <th colSpan={3}>გამოყენებული საშუალებები</th>
               </tr>
               <tr>
