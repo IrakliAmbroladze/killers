@@ -24,7 +24,7 @@ export const Table = ({
   onInventoryTextChange,
 }: TableProps) => {
   return (
-    <table className="border border-collapse">
+    <table className="border border-collapse text-xs">
       <thead>
         <tr>
           {headers.map((header) => (
