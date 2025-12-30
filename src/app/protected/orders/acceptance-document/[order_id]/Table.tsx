@@ -9,6 +9,11 @@ type TableProps = {
     checked: boolean,
   ) => void;
   onInputTextChange?: (materialName: string, value: string) => void;
+  onInventoryTextChange?: (
+    rowIndex: number,
+    field: "name" | "price" | "quantity",
+    value: string,
+  ) => void;
 };
 
 export const Table = ({
@@ -16,9 +21,10 @@ export const Table = ({
   rows,
   onCheckboxChange,
   onInputTextChange,
+  onInventoryTextChange,
 }: TableProps) => {
   return (
-    <table className="border border-collapse">
+    <table className="border border-collapse text-xs">
       <thead>
         <tr>
           {headers.map((header) => (
@@ -47,6 +53,24 @@ export const Table = ({
                   </td>
                 );
               }
+              if (cell.type === "inventoryInputText") {
+                return (
+                  <td key={cellIndex}>
+                    <input
+                      type="text"
+                      value={cell.value}
+                      onChange={(e) =>
+                        onInventoryTextChange?.(
+                          cell.rowIndex,
+                          cell.field,
+                          e.target.value,
+                        )
+                      }
+                    />
+                  </td>
+                );
+              }
+
               return (
                 <td key={cellIndex}>
                   <input

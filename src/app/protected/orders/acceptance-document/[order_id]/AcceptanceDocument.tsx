@@ -51,7 +51,11 @@ export default function AcceptanceDocument({
       dosage: "-",
       used: "",
     })),
-    inventory: [],
+    inventory: [
+      { name: "", price: "", quantity: "" },
+      { name: "", price: "", quantity: "" },
+      { name: "", price: "", quantity: "" },
+    ],
     spaces: { სამზარეულო: true, ოფისი: true },
     startTime: "09:00",
     endTime: "11:00",
@@ -94,6 +98,29 @@ export default function AcceptanceDocument({
     { type: "inputText", materialName: material.name, value: material.used },
   ]);
 
+  const inventoryRows: TableCell[][] = formData.inventory.map(
+    (item, rowIndex) => [
+      {
+        type: "inventoryInputText",
+        rowIndex,
+        field: "name",
+        value: item.name,
+      },
+      {
+        type: "inventoryInputText",
+        rowIndex,
+        field: "price",
+        value: item.price,
+      },
+      {
+        type: "inventoryInputText",
+        rowIndex,
+        field: "quantity",
+        value: item.quantity,
+      },
+    ],
+  );
+
   const handlePestEventChange = (
     pestName: string,
     field: "monitor" | "spray" | "gel",
@@ -111,6 +138,18 @@ export default function AcceptanceDocument({
       ...prev,
       products: prev.products.map((product) =>
         product.name === materialName ? { ...product, used: value } : product,
+      ),
+    }));
+  };
+  const handleSoldInventoryChange = (
+    rowIndex: number,
+    field: "name" | "price" | "quantity",
+    value: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      inventory: prev.inventory.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
       ),
     }));
   };
@@ -197,142 +236,13 @@ export default function AcceptanceDocument({
             rows={materialRows}
             onInputTextChange={handleMaterialEventChange}
           />
+          <div>მიწოდებული ინვენტარი</div>
+          <Table
+            headers={["დასახელება", "ფასი", "რაოდენობა"]}
+            rows={inventoryRows}
+            onInventoryTextChange={handleSoldInventoryChange}
+          />
 
-          <table className="border border-collapse ">
-            <thead>
-              <tr>
-                <th rowSpan={3}>მავნებელი</th>
-                <th colSpan={3} rowSpan={2}></th>
-                <th colSpan={3}>გამოყენებული საშუალებები</th>
-              </tr>
-              <tr>
-                <th>დასახელება</th>
-                <th>დოზირება</th>
-                <th>გახარჯული</th>
-              </tr>
-              <tr>
-                <th>მონიტორი</th>
-                <th>სპრეი</th>
-                <th>გელი</th>
-                <td>
-                  <label className="flex gap-2.5 justify-between">
-                    <input type="checkbox" />
-                    მხოხავი მავნებლის ფირფიტა
-                  </label>
-                </td>
-                <td>-</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((td) => (
-                <tr key={td.pest}>
-                  <td className="min-w-[250px] shrink-0">
-                    <label className="flex gap-2.5 justify-between">
-                      {/* <input type="checkbox" />*/}
-                      {td.pest}
-                    </label>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="monitor"
-                      onChange={() => {
-                        console.log("changed");
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="spray"
-                      onChange={() => {
-                        console.log("changed");
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="gel"
-                      onChange={() => {
-                        console.log("changed");
-                      }}
-                    />
-                  </td>
-                  <td className="min-w-[300px] shrink-0">
-                    <label className="flex gap-2.5 justify-between">
-                      {/* <input type="checkbox" />*/}
-                      {td.chemic}
-                    </label>
-                  </td>
-                  <td>{td.doze}</td>
-                  <td></td>
-                </tr>
-              ))}
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <th colSpan={3}>მიწოდებული ინვენტარი</th>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <th>დასახელება</th>
-                <th>ფასი</th>
-                <th>რაოდენობა</th>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
           <div className="flex justify-between">
             <DoneAreas />
             <div className="flex flex-col justify-between">
