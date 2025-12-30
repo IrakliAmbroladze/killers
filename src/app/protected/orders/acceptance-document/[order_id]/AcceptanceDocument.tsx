@@ -6,8 +6,7 @@ import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
 import { AcceptanceFormData, OrderExtended } from "@/types";
 import { useState } from "react";
-import { pestTableData } from "@/constants";
-import { productsTableData } from "@/constants/acceptance";
+import { acceptanceFormData } from "@/constants";
 import { Table } from "./Table";
 import { TableCell } from "@/pdf/types/Table";
 
@@ -16,60 +15,9 @@ export default function AcceptanceDocument({
 }: {
   order: OrderExtended;
 }) {
-  /*  const tableData = [
-    { pest: "ბუზი", chemic: "Killzone მღრღ. ფირფიტა", doze: "-" },
-    { pest: "ქინქლა", chemic: "Killzone მწერის ფირფიტა", doze: "-" },
-    { pest: "ტარაკანი", chemic: "BROMOBLEU", doze: "-" },
-    { pest: "ჭიანჭველა", chemic: "RATIMOR", doze: "-" },
-    { pest: "რწყილი", chemic: "Cipex10e", doze: "" },
-    { pest: "ბაღლინჯო", chemic: "RAPTOR GEL", doze: "-" },
-    { pest: "თაგვი", chemic: "BLEU DELTA", doze: "" },
-    { pest: "ვირთხა", chemic: "AGITA", doze: "" },
-    { pest: "ქვეწარმავალი", chemic: "SURFANIOS PREMIUM", doze: "" },
-    { pest: "ბაქტერია", chemic: "REPTIL NATURAL STOP", doze: "-" },
-    { pest: "ბზიკი", chemic: "ALFADOM", doze: "" },
-  ];*/
-
-  const acceptanceFormData: AcceptanceFormData = {
-    date: "2025-12-19",
-    services: {
-      disinsection: false,
-      deratization: false,
-      disinfection: false,
-      subcontractorPrevention: false,
-    },
-    pests: pestTableData.map((pest) => ({
-      name: pest,
-      checked: true,
-      monitor: false,
-      spray: false,
-      gel: false,
-    })),
-    products: productsTableData.map((product) => ({
-      name: product,
-      checked: true,
-      dosage: "-",
-      used: "",
-    })),
-    inventory: [
-      { name: "", price: "", quantity: "" },
-      { name: "", price: "", quantity: "" },
-      { name: "", price: "", quantity: "" },
-    ],
-    spaces: { სამზარეულო: true, ოფისი: true },
-    startTime: "09:00",
-    endTime: "11:00",
-    address: "საქანელას ქ.2",
-    customer: {
-      name: order.customers.name,
-      personalNumber: order.customers.id,
-      signature: "",
-    },
-    executor: {
-      signature: "",
-    },
-  };
-  const [formData, setFormData] = useState(acceptanceFormData);
+  const [formData, setFormData] = useState<AcceptanceFormData>(
+    acceptanceFormData(order),
+  );
 
   const pestRows: TableCell[][] = formData.pests.map((pest) => [
     { type: "text", text: pest.name },
