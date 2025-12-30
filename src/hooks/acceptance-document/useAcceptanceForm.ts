@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
-import { AcceptanceFormData } from "@/types";
-import { TableCell } from "@/pdf/types/Table";
+import { AcceptanceFormData, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
@@ -52,7 +51,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const pestRows: TableCell[][] = useMemo(
+  const pestRows: UiTableCell[][] = useMemo(
     () =>
       formData.pests.map((pest) => [
         { type: "text", text: pest.name },
@@ -78,7 +77,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     [formData.pests],
   );
 
-  const materialRows: TableCell[][] = useMemo(
+  const materialRows: UiTableCell[][] = useMemo(
     () =>
       formData.products.map((material) => [
         { type: "text", text: material.name },
@@ -92,7 +91,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     [formData.products],
   );
 
-  const inventoryRows: TableCell[][] = useMemo(
+  const inventoryRows: UiTableCell[][] = useMemo(
     () =>
       formData.inventory.map((item, rowIndex) => [
         {

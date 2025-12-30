@@ -1,5 +1,5 @@
 import { PDFDocument, PDFFont, PDFPage, rgb } from "pdf-lib";
-import { TableCell, TableHeaderCell } from "../types/Table";
+import { PdfTableCell, TableHeaderCell } from "../types/Table";
 
 export class PDFDrawer {
   constructor(
@@ -125,7 +125,7 @@ export class PDFDrawer {
     y: number,
     data: {
       headers: TableHeaderCell[];
-      rows: TableCell[][];
+      rows: PdfTableCell[][];
     },
     options: {
       fontSize?: number;

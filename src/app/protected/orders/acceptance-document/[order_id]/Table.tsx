@@ -1,8 +1,8 @@
-import { TableCell } from "@/pdf/types/Table";
+import { UiTableCell } from "@/types";
 
 type TableProps = {
   headers: string[];
-  rows: TableCell[][];
+  rows: UiTableCell[][];
   onCheckboxChange?: (
     pestName: string,
     field: "monitor" | "spray" | "gel",
