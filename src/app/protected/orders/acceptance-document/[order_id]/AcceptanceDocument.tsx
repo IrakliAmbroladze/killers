@@ -113,7 +113,6 @@ export default function AcceptanceDocument({
         product.name === materialName ? { ...product, used: value } : product,
       ),
     }));
-    console.log("Material Event Change");
   };
 
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -192,6 +191,7 @@ export default function AcceptanceDocument({
             rows={pestRows}
             onCheckboxChange={handlePestEventChange}
           />
+          <div>გამოყენებული საშუალებები</div>
           <Table
             headers={["დასახელება", "დოზირება", "გახარჯული"]}
             rows={materialRows}
