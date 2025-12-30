@@ -20,7 +20,7 @@ export const drawMainTable = ({
     "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
     cursor_x,
     cursor.y,
-    { size: 11, bold: true },
+    { size: 10, bold: true },
   );
   cursor.move(15);
   cursor_x += 50;
@@ -103,7 +103,7 @@ export const drawSpacesInspected = ({
     cursor.y,
     { size: 10, bold: true },
   );
-  cursor.move(20);
+  cursor.move(15);
 
   const spaceCols = 5;
   const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
@@ -114,10 +114,10 @@ export const drawSpacesInspected = ({
     const yPos = cursor.y - row * 18;
 
     drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
-    drawer.drawText(space, xPos + 12, yPos - 8, { size: 7 });
+    drawer.drawText(space, xPos + 12, yPos, { size: 7 });
   });
 
-  cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 20);
+  cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
 
   drawer.drawText("დაწყების დრო:", MARGIN_X, cursor.y, {
     size: 9,
@@ -140,4 +140,49 @@ export const drawSpacesInspected = ({
   cursor.move(15);
   drawer.drawText(formData.address, MARGIN_X, cursor.y, { size: 9 });
   cursor.move(30);
+};
+
+type DrawSoldInventoryTable = {
+  drawer: PDFDrawer;
+  cursor: Cursor;
+  formData: AcceptanceFormData;
+};
+export const drawSoldInventoryTable = ({
+  drawer,
+  cursor,
+  formData,
+}: DrawSoldInventoryTable) => {
+  let cursor_x = MARGIN_X;
+  let cursor_y = cursor.y;
+  cursor_y += 95;
+  cursor_x += 50;
+  cursor_x += 270;
+  drawer.drawText("მიწოდებული ინვენტარი", cursor_x, cursor_y, {
+    size: 9,
+    bold: true,
+  });
+
+  const rows: TableCell[][] = formData.inventory.map((item) => [
+    { type: "text", text: item.name },
+    { type: "text", text: item.price },
+    { type: "text", text: item.quantity },
+  ]);
+
+  const tableData = {
+    headers: [
+      { text: "დასახელება", width: 150 },
+      { text: "ერთეულის ფასი", width: 100 },
+      { text: "რაოდენობა", width: 60 },
+    ],
+    rows,
+  };
+
+  cursor_y -= 5;
+  cursor_x -= 120;
+
+  drawer.drawTable(cursor_x, cursor_y, tableData, {
+    fontSize: 8,
+    rowHeight: 18,
+  });
+  cursor_x += 262;
 };

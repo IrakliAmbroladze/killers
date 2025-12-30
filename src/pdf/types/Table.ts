@@ -3,8 +3,8 @@ export type TableCell =
   | {
       type: "checkbox";
       checked: boolean;
-      pestName: string;
-      field: "monitor" | "spray" | "gel";
+      pestName?: string;
+      field?: "monitor" | "spray" | "gel";
       colspan?: number;
     }
   | {

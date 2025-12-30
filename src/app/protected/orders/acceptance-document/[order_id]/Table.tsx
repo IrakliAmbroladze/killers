@@ -76,13 +76,14 @@ export const Table = ({
                   <input
                     type="checkbox"
                     checked={cell.checked}
-                    onChange={(e) =>
-                      onCheckboxChange?.(
+                    onChange={(e) => {
+                      if (!cell.pestName || !cell.field) return;
+                      return onCheckboxChange?.(
                         cell.pestName,
                         cell.field,
                         e.target.checked,
-                      )
-                    }
+                      );
+                    }}
                   />
                 </td>
               );
