@@ -8,18 +8,14 @@ import { AcceptanceFormData, OrderExtended } from "@/types";
 import { useState } from "react";
 import { pestTableData } from "@/constants";
 import { productsTableData } from "@/constants/acceptance";
+import { Table } from "./Table";
+import { TableCell } from "@/pdf/types/Table";
 
 export default function AcceptanceDocument({
   order,
 }: {
   order: OrderExtended;
 }) {
-  /*const services: SanitaryService[] = [
-    "დეზინსექცია",
-    "დერატიზაცია",
-    "დეზინფექცია",
-    "ქვეწარმავლების პრევენცია",
-  ];*/
   const tableData = [
     { pest: "ბუზი", chemic: "Killzone მღრღ. ფირფიტა", doze: "-" },
     { pest: "ქინქლა", chemic: "Killzone მწერის ფირფიტა", doze: "-" },
@@ -47,7 +43,7 @@ export default function AcceptanceDocument({
       checked: true,
       monitor: false,
       spray: false,
-      gel: true,
+      gel: false,
     })),
     products: productsTableData.map((product) => ({
       name: product,
@@ -70,6 +66,42 @@ export default function AcceptanceDocument({
     },
   };
   const [formData, setFormData] = useState(acceptanceFormData);
+
+  const pestRows: TableCell[][] = formData.pests.map((pest) => [
+    { type: "text", text: pest.name },
+    {
+      type: "checkbox",
+      checked: pest.monitor,
+      pestName: pest.name,
+      field: "monitor",
+    },
+    {
+      type: "checkbox",
+      checked: pest.spray,
+      pestName: pest.name,
+      field: "spray",
+    },
+    {
+      type: "checkbox",
+      checked: pest.gel,
+      pestName: pest.name,
+      field: "gel",
+    },
+  ]);
+
+  const handlePestEventChange = (
+    pestName: string,
+    field: "monitor" | "spray" | "gel",
+    checked: boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      pests: prev.pests.map((pest) =>
+        pest.name === pestName ? { ...pest, [field]: checked } : pest,
+      ),
+    }));
+  };
+
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
@@ -139,18 +171,19 @@ export default function AcceptanceDocument({
       </div>
       <div className="w-full overflow-auto flex">
         <div className="min-w-[300px] mx-auto">
+          <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
+          <div>გატარებული ღონისძიება</div>
+          <Table
+            headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
+            rows={pestRows}
+            onCheckboxChange={handlePestEventChange}
+          />
+
           <table className="border border-collapse ">
             <thead>
               <tr>
-                <th colSpan={7}>
-                  ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
-                </th>
-              </tr>
-              <tr>
                 <th rowSpan={3}>მავნებელი</th>
-                <th colSpan={3} rowSpan={2}>
-                  გატარებული ღონისძიება
-                </th>
+                <th colSpan={3} rowSpan={2}></th>
                 <th colSpan={3}>გამოყენებული საშუალებები</th>
               </tr>
               <tr>
@@ -177,16 +210,34 @@ export default function AcceptanceDocument({
                 <tr key={td.pest}>
                   <td className="min-w-[250px] shrink-0">
                     <label className="flex gap-2.5 justify-between">
-                      <input type="checkbox" />
+                      {/* <input type="checkbox" />*/}
                       {td.pest}
                     </label>
                   </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="monitor"
+                      onChange={(e) => handlePestEventChange(td.pest, e)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="spray"
+                      onChange={(e) => handlePestEventChange(td.pest, e)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="gel"
+                      onChange={(e) => handlePestEventChange(td.pest, e)}
+                    />
+                  </td>
                   <td className="min-w-[300px] shrink-0">
                     <label className="flex gap-2.5 justify-between">
-                      <input type="checkbox" />
+                      {/* <input type="checkbox" />*/}
                       {td.chemic}
                     </label>
                   </td>

@@ -1,6 +1,11 @@
 export type TableCell =
-  | { type: "text"; text: string; colspan?: number }
-  | { type: "checkbox"; checked: boolean; colspan?: number };
+  | { type: "text"; text: string }
+  | {
+      type: "checkbox";
+      checked: boolean;
+      pestName: string;
+      field: "monitor" | "spray" | "gel";
+    };
 
 export type TableHeaderCell = {
   text: string;
