@@ -23,5 +23,5 @@ export const drawServicesCheckBoxes = ({
     drawer.drawText(service.label, xPos + 15, yPos, { size: 10 });
   });
 
-  cursor.move(Math.ceil(services.length / 2) * 20 + 15);
+  cursor.move(Math.ceil(services.length / 2) * 20);
 };

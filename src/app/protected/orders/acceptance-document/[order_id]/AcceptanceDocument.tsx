@@ -16,7 +16,7 @@ export default function AcceptanceDocument({
 }: {
   order: OrderExtended;
 }) {
-  const tableData = [
+  /*  const tableData = [
     { pest: "ბუზი", chemic: "Killzone მღრღ. ფირფიტა", doze: "-" },
     { pest: "ქინქლა", chemic: "Killzone მწერის ფირფიტა", doze: "-" },
     { pest: "ტარაკანი", chemic: "BROMOBLEU", doze: "-" },
@@ -28,7 +28,7 @@ export default function AcceptanceDocument({
     { pest: "ქვეწარმავალი", chemic: "SURFANIOS PREMIUM", doze: "" },
     { pest: "ბაქტერია", chemic: "REPTIL NATURAL STOP", doze: "-" },
     { pest: "ბზიკი", chemic: "ALFADOM", doze: "" },
-  ];
+  ];*/
 
   const acceptanceFormData: AcceptanceFormData = {
     date: "2025-12-19",
