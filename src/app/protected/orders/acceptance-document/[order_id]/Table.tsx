@@ -3,14 +3,20 @@ import { TableCell } from "@/pdf/types/Table";
 type TableProps = {
   headers: string[];
   rows: TableCell[][];
-  onCheckboxChange: (
+  onCheckboxChange?: (
     pestName: string,
     field: "monitor" | "spray" | "gel",
     checked: boolean,
   ) => void;
+  onInputTextChange?: (materialName: string, value: string) => void;
 };
 
-export const Table = ({ headers, rows, onCheckboxChange }: TableProps) => {
+export const Table = ({
+  headers,
+  rows,
+  onCheckboxChange,
+  onInputTextChange,
+}: TableProps) => {
   return (
     <table className="border border-collapse">
       <thead>
@@ -28,14 +34,26 @@ export const Table = ({ headers, rows, onCheckboxChange }: TableProps) => {
               if (cell.type === "text") {
                 return <td key={cellIndex}>{cell.text}</td>;
               }
-
+              if (cell.type === "inputText") {
+                return (
+                  <td key={cellIndex}>
+                    <input
+                      type="text"
+                      value={cell.value}
+                      onChange={(e) =>
+                        onInputTextChange?.(cell.materialName, e.target.value)
+                      }
+                    />
+                  </td>
+                );
+              }
               return (
                 <td key={cellIndex}>
                   <input
                     type="checkbox"
                     checked={cell.checked}
                     onChange={(e) =>
-                      onCheckboxChange(
+                      onCheckboxChange?.(
                         cell.pestName,
                         cell.field,
                         e.target.checked,
