@@ -88,6 +88,11 @@ export default function AcceptanceDocument({
       field: "gel",
     },
   ]);
+  const materialRows: TableCell[][] = formData.products.map((material) => [
+    { type: "text", text: material.name },
+    { type: "text", text: material.dosage },
+    { type: "inputText", materialName: material.name, value: material.used },
+  ]);
 
   const handlePestEventChange = (
     pestName: string,
@@ -100,6 +105,15 @@ export default function AcceptanceDocument({
         pest.name === pestName ? { ...pest, [field]: checked } : pest,
       ),
     }));
+  };
+  const handleMaterialEventChange = (materialName: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      products: prev.products.map((product) =>
+        product.name === materialName ? { ...product, used: value } : product,
+      ),
+    }));
+    console.log("Material Event Change");
   };
 
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,6 +192,11 @@ export default function AcceptanceDocument({
             rows={pestRows}
             onCheckboxChange={handlePestEventChange}
           />
+          <Table
+            headers={["დასახელება", "დოზირება", "გახარჯული"]}
+            rows={materialRows}
+            onInputTextChange={handleMaterialEventChange}
+          />
 
           <table className="border border-collapse ">
             <thead>
@@ -218,21 +237,27 @@ export default function AcceptanceDocument({
                     <input
                       type="checkbox"
                       name="monitor"
-                      onChange={(e) => handlePestEventChange(td.pest, e)}
+                      onChange={() => {
+                        console.log("changed");
+                      }}
                     />
                   </td>
                   <td>
                     <input
                       type="checkbox"
                       name="spray"
-                      onChange={(e) => handlePestEventChange(td.pest, e)}
+                      onChange={() => {
+                        console.log("changed");
+                      }}
                     />
                   </td>
                   <td>
                     <input
                       type="checkbox"
                       name="gel"
-                      onChange={(e) => handlePestEventChange(td.pest, e)}
+                      onChange={() => {
+                        console.log("changed");
+                      }}
                     />
                   </td>
                   <td className="min-w-[300px] shrink-0">
