@@ -61,12 +61,12 @@ export const acceptanceFormData = (
       dosage: "-",
       used: "",
     })),
-    inventory: [
-      { name: "", price: "", quantity: "" },
-      { name: "", price: "", quantity: "" },
-      { name: "", price: "", quantity: "" },
-    ],
-    spaces: { სამზარეულო: true, ოფისი: true },
+    inventory: Array.from({ length: 3 }, () => ({
+      name: "",
+      price: "",
+      quantity: "",
+    })),
+    spaces: Object.fromEntries(DONE_AREAS.map((area) => [area, false])),
     startTime: "09:00",
     endTime: "11:00",
     address: "საქანელას ქ.2",
@@ -80,3 +80,25 @@ export const acceptanceFormData = (
     },
   };
 };
+
+export const DONE_AREAS = [
+  "მიმღები",
+  "სასტუმრო ოთახი",
+  "სამზარეულო",
+  "ოფისი",
+  "დერეფანი",
+  "რესტორანი",
+  "ბარი",
+  "ტერასა",
+  "სველი წერტილები",
+  "საწყობი",
+  "საერთო სივრცე",
+  "სხვენი",
+  "სარდაფი",
+  "მარანი",
+  "ტექნიკური ოთახი",
+  "საწარმო",
+  "მომარაგების ოთახი",
+  "ნაგავსაყრელი",
+  "გარე ტერიტორია",
+];

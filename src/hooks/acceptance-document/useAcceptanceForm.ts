@@ -4,6 +4,16 @@ import { AcceptanceFormData, UiTableCell } from "@/types";
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
 
+  const handleSpaceChange = (area: string, checked: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      spaces: {
+        ...prev.spaces,
+        [area]: checked,
+      },
+    }));
+  };
+
   const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
@@ -126,5 +136,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     pestRows,
     materialRows,
     inventoryRows,
+    handleSpaceChange,
   };
 }

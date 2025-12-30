@@ -23,6 +23,7 @@ export default function AcceptanceDocument({
     pestRows,
     materialRows,
     inventoryRows,
+    handleSpaceChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -103,7 +104,7 @@ export default function AcceptanceDocument({
           />
 
           <div className="flex justify-between">
-            <DoneAreas />
+            <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
             <div className="flex flex-col justify-between">
               <ProcedureTime />
               <div className="max-w-72">
