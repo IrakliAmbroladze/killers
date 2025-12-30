@@ -12,6 +12,13 @@ export type TableCell =
       materialName: string;
       value: string;
       colspan?: number;
+    }
+  | {
+      type: "inventoryInputText";
+      rowIndex: number;
+      field: "name" | "price" | "quantity";
+      value: string;
+      colspan?: number;
     };
 
 export type TableHeaderCell = {

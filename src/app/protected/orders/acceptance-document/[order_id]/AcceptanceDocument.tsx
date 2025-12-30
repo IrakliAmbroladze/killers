@@ -51,7 +51,11 @@ export default function AcceptanceDocument({
       dosage: "-",
       used: "",
     })),
-    inventory: [],
+    inventory: [
+      { name: "", price: "", quantity: "" },
+      { name: "", price: "", quantity: "" },
+      { name: "", price: "", quantity: "" },
+    ],
     spaces: { სამზარეულო: true, ოფისი: true },
     startTime: "09:00",
     endTime: "11:00",
@@ -94,6 +98,29 @@ export default function AcceptanceDocument({
     { type: "inputText", materialName: material.name, value: material.used },
   ]);
 
+  const inventoryRows: TableCell[][] = formData.inventory.map(
+    (item, rowIndex) => [
+      {
+        type: "inventoryInputText",
+        rowIndex,
+        field: "name",
+        value: item.name,
+      },
+      {
+        type: "inventoryInputText",
+        rowIndex,
+        field: "price",
+        value: item.price,
+      },
+      {
+        type: "inventoryInputText",
+        rowIndex,
+        field: "quantity",
+        value: item.quantity,
+      },
+    ],
+  );
+
   const handlePestEventChange = (
     pestName: string,
     field: "monitor" | "spray" | "gel",
@@ -111,6 +138,18 @@ export default function AcceptanceDocument({
       ...prev,
       products: prev.products.map((product) =>
         product.name === materialName ? { ...product, used: value } : product,
+      ),
+    }));
+  };
+  const handleSoldInventoryChange = (
+    rowIndex: number,
+    field: "name" | "price" | "quantity",
+    value: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      inventory: prev.inventory.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
       ),
     }));
   };
@@ -196,6 +235,12 @@ export default function AcceptanceDocument({
             headers={["დასახელება", "დოზირება", "გახარჯული"]}
             rows={materialRows}
             onInputTextChange={handleMaterialEventChange}
+          />
+          <div>მიწოდებული ინვენტარი</div>
+          <Table
+            headers={["დასახელება", "ფასი", "რაოდენობა"]}
+            rows={inventoryRows}
+            onInventoryTextChange={handleSoldInventoryChange}
           />
 
           <table className="border border-collapse ">
