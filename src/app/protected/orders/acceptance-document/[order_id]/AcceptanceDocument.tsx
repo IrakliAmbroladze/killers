@@ -24,6 +24,7 @@ export default function AcceptanceDocument({
     materialRows,
     inventoryRows,
     handleSpaceChange,
+    handleProcedureTimeChange
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -106,7 +107,7 @@ export default function AcceptanceDocument({
           <div className="flex justify-between">
             <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
             <div className="flex flex-col justify-between">
-              <ProcedureTime />
+              <ProcedureTime onProcedureTimeChange={handleProcedureTimeChange} startTime={formData.startTime} endTime={formData.endTime}/>
               <div className="max-w-72">
                 <div className="border-b my-2.5">ობიექტის მისამართი:</div>
                 <div className="border-b text-wrap">{order.address}</div>
