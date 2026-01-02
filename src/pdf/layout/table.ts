@@ -3,7 +3,7 @@ import { PDFDrawer } from "../classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
 import { spacesList } from "../constants/tableData";
-import { TableCell } from "../types/Table";
+import { PdfTableCell } from "../types/Table";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
@@ -36,7 +36,7 @@ export const drawMainTable = ({
   cursor.move(5);
   cursor_x = MARGIN_X;
 
-  const rows: TableCell[][] = formData.pests.map((pest) => [
+  const rows: PdfTableCell[][] = formData.pests.map((pest) => [
     { type: "text", text: pest.name },
     { type: "checkbox", checked: pest.monitor },
     { type: "checkbox", checked: pest.spray },
@@ -59,7 +59,7 @@ export const drawMainTable = ({
   });
   cursor_x += 262;
 
-  const materialsRows: TableCell[][] = formData.products.map((product) => [
+  const materialsRows: PdfTableCell[][] = formData.products.map((product) => [
     { type: "text", text: product.name },
     { type: "text", text: product.dosage },
     { type: "text", text: product.used },
@@ -162,7 +162,7 @@ export const drawSoldInventoryTable = ({
     bold: true,
   });
 
-  const rows: TableCell[][] = formData.inventory.map((item) => [
+  const rows: PdfTableCell[][] = formData.inventory.map((item) => [
     { type: "text", text: item.name },
     { type: "text", text: item.price },
     { type: "text", text: item.quantity },
