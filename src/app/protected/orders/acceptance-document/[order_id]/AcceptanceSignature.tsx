@@ -2,8 +2,14 @@
 import { SignatureField } from "@/components";
 import { useState, useRef } from "react";
 import { SignatureCanvasRef } from "@/components/Signature/SignatureCanvas";
+import { AcceptanceFormData } from "@/types";
 
-export default function AcceptanceSignature() {
+export default function AcceptanceSignature({
+  formData,
+}: {
+  formData: AcceptanceFormData;
+}) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const customerSigRef = useRef<SignatureCanvasRef | null>(null);
   const executorSigRef = useRef<SignatureCanvasRef | null>(null);
 
@@ -37,61 +43,19 @@ export default function AcceptanceSignature() {
     const customerPng = customerSigRef.current.getDataURL();
     const executorPng = executorSigRef.current.getDataURL();
 
-    /* await fetch("/api/documents/acceptance", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        customerSignature: customerPng,
-        executorSignature: executorPng,
-      }),
-    });*/
-    const dataAcceptance = {
-      date: "2025-12-19",
-      services: {
-        disinsection: true,
-        deratization: false,
-        disinfection: true,
-        subcontractorPrevention: false,
-      },
-      pests: [
-        { name: "ბუზი", checked: true, monitor: "✓", spray: "", gel: "" },
-        // ... more pests
-      ],
-      products: [
-        {
-          name: "Killzone მღრღ. ფირფიტა",
-          checked: true,
-          dosage: "-",
-          used: "",
-        },
-        // ... more products
-      ],
-      inventory: [],
-      spaces: { სამზარეულო: true, ოფისი: true },
-      startTime: "09:00",
-      endTime: "11:00",
-      address: "საქანელას ქ.2",
+    const acceptanceData: AcceptanceFormData = {
+      ...formData,
       customer: {
-        name: "John Doe",
-        personalNumber: "01234567890",
+        name: formData.customer.name,
         signature: customerPng,
+        personalNumber: formData.customer.personalNumber,
       },
-      executor: {
-        signature: executorPng,
-      },
+      executor: { signature: executorPng },
     };
 
     const res = await fetch("/api/documents/acceptance", {
       method: "POST",
-      /*    body: JSON.stringify({
-        customerName: "John Doe",
-        orderId: "ORDER-123",
-        customerSignature: customerPng,
-        executorSignature: executorPng,
-      }), */
-
-      body: JSON.stringify(dataAcceptance),
-
+      body: JSON.stringify(acceptanceData),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -103,14 +67,13 @@ export default function AcceptanceSignature() {
     const url = URL.createObjectURL(blob);
 
     // Trigger download
-    const a = document.createElement("a");
+    /*   const a = document.createElement("a");
     a.href = url;
     a.download = "acceptance_document.pdf";
-    a.click();
-
-    console.log("Signatures accepted & sent");
-    console.log(customerPng);
-    console.log(executorPng);
+    a.click();*/
+    if (iframeRef.current) {
+      iframeRef.current.src = url;
+    }
   };
 
   return (
@@ -150,6 +113,14 @@ export default function AcceptanceSignature() {
       >
         OK
       </button>
+      <iframe
+        ref={iframeRef}
+        style={{
+          width: "100%",
+          height: "100vh",
+          border: "1px solid #ccc",
+        }}
+      />
     </div>
   );
 }
