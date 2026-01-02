@@ -4,6 +4,14 @@ import { AcceptanceFormData, UiTableCell } from "@/types";
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
 
+  const handleProcedureTimeChange = (field: "startTime" | "endTime",value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+       startTime: field === "startTime" ? value : prev.startTime,
+       endTime: field === "endTime" ? value : prev.endTime,
+    }));
+  };
+
   const handleSpaceChange = (area: string, checked: boolean) => {
     setFormData((prev) => ({
       ...prev,
@@ -137,5 +145,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     materialRows,
     inventoryRows,
     handleSpaceChange,
+    handleProcedureTimeChange
   };
 }
