@@ -67,8 +67,8 @@ export const acceptanceFormData = (
       quantity: "",
     })),
     spaces: Object.fromEntries(DONE_AREAS.map((area) => [area, false])),
-    startTime: "09:00",
-    endTime: "11:00",
+    startTime: "",
+    endTime: "",
     address: "საქანელას ქ.2",
     customer: {
       name: order.customers.name,

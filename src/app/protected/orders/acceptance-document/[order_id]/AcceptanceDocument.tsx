@@ -24,11 +24,11 @@ export default function AcceptanceDocument({
     materialRows,
     inventoryRows,
     handleSpaceChange,
-    handleProcedureTimeChange
+    handleProcedureTimeChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
-    <div className="flex justify-center items-center flex-col gap-5 px-2.5 ">
+    <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
       <LogoWhiteOnBlue />
       <h1>მიღება-ჩაბარების აქტი</h1>
       <input
@@ -104,15 +104,15 @@ export default function AcceptanceDocument({
             onInventoryTextChange={handleSoldInventoryChange}
           />
 
-          <div className="flex justify-between">
-            <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-            <div className="flex flex-col justify-between">
-              <ProcedureTime onProcedureTimeChange={handleProcedureTimeChange} startTime={formData.startTime} endTime={formData.endTime}/>
-              <div className="max-w-72">
-                <div className="border-b my-2.5">ობიექტის მისამართი:</div>
-                <div className="border-b text-wrap">{order.address}</div>
-              </div>
-            </div>
+          <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
+          <ProcedureTime
+            onProcedureTimeChange={handleProcedureTimeChange}
+            startTime={formData.startTime}
+            endTime={formData.endTime}
+          />
+          <div className="max-w-72">
+            <div className="border-b my-2.5">ობიექტის მისამართი:</div>
+            <div className="border-b text-wrap">{order.address}</div>
           </div>
           <AcceptanceSignature formData={formData} />
         </div>
