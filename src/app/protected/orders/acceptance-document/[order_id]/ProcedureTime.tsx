@@ -2,37 +2,38 @@ export default function ProcedureTime({
   onProcedureTimeChange,
   startTime,
   endTime,
-}:{
-  onProcedureTimeChange: (field: "startTime" | "endTime",value: string) =>void; 
-  startTime: string; 
+}: {
+  onProcedureTimeChange: (
+    field: "startTime" | "endTime",
+    value: string,
+  ) => void;
+  startTime: string;
   endTime: string;
 }) {
+  const data = [
+    { label: "დაწყების დრო: ", value: startTime },
+    { label: "დასრულების დრო: ", value: endTime },
+  ];
   return (
-    <div>
-      <div className="w-48 h-20">პროცედურების დაწყების დრო</div>
+    <>
+      {data.map((d) => (
+        <div key={d.label} className="max-w-[320px] m-2">
+          <label className="flex justify-between">
+            {d.label}
             <input
-              className="w-24"
+              className="w-24 border rounded-md px-2 text-center"
               type="text"
-              value={startTime}
+              value={d.value}
               onChange={(e) =>
                 onProcedureTimeChange(
-                "startTime",
-                e.target.value,
+                  d.value === startTime ? "startTime" : "endTime",
+                  e.target.value,
                 )
               }
             />
-            <div className="h-20">პროცედურების დასრულების დრო</div>
-            <input
-              className="w-24"
-              type="text"
-              value={endTime}
-              onChange={(e) =>
-                onProcedureTimeChange(
-                "endTime",
-                e.target.value,
-                )
-              }
-            />
-    </div>
+          </label>
+        </div>
+      ))}
+    </>
   );
 }
