@@ -3,7 +3,6 @@ import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
-  console.log("initial data is: ", initialData);
 
   const handleProcedureTimeChange = (
     field: "startTime" | "endTime" | "name" | "personalNumber",
@@ -23,6 +22,14 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
               : prev.customer.representative.id,
         },
       },
+    }));
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLDataElement>) => {
+    const { value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      date: value,
     }));
   };
 
@@ -162,5 +169,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
+    handleDateChange,
   };
 }
