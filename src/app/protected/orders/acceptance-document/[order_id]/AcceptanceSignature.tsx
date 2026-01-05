@@ -49,6 +49,10 @@ export default function AcceptanceSignature({
         name: formData.customer.name,
         signature: customerPng,
         personalNumber: formData.customer.personalNumber,
+        representative: {
+          name: formData.customer.representative.name,
+          id: formData.customer.representative.id,
+        },
       },
       executor: { signature: executorPng },
     };
@@ -82,12 +86,6 @@ export default function AcceptanceSignature({
         <div className="flex flex-col justify-between">
           <h2 className="font-bold ">დამკვეთის წარმომადგენელი</h2>
           <div className="flex flex-col ">
-            <label>
-              სახელი, გვარი <input type="text" className="border-b" />
-            </label>{" "}
-            <label>
-              პირადი ნომერი <input type="text" className="border-b" />
-            </label>{" "}
             <div>ხელმოწერა</div>
             <div className="w-[320px]">
               <SignatureField

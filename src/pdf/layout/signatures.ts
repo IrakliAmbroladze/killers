@@ -38,7 +38,7 @@ export const drawSignatures = async ({
 
   // Customer info
   drawer.drawText(
-    `სახელი, გვარი: ${formData.customer.name}`,
+    `სახელი, გვარი: ${formData.customer.representative.name}`,
     MARGIN_X,
     cursor.y,
     {
@@ -47,7 +47,7 @@ export const drawSignatures = async ({
   );
   cursor.move(15);
   drawer.drawText(
-    `პირადი ნომერი: ${formData.customer.personalNumber}`,
+    `პირადი ნომერი: ${formData.customer.representative.id}`,
     MARGIN_X,
     cursor.y,
     { size: 9 },
