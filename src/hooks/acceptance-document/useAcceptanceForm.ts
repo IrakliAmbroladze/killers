@@ -3,12 +3,16 @@ import { AcceptanceFormData, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
+  console.log("initial data is: ", initialData);
 
-  const handleProcedureTimeChange = (field: "startTime" | "endTime",value: string) => {
+  const handleProcedureTimeChange = (
+    field: "startTime" | "endTime",
+    value: string,
+  ) => {
     setFormData((prev) => ({
       ...prev,
-       startTime: field === "startTime" ? value : prev.startTime,
-       endTime: field === "endTime" ? value : prev.endTime,
+      startTime: field === "startTime" ? value : prev.startTime,
+      endTime: field === "endTime" ? value : prev.endTime,
     }));
   };
 
@@ -145,6 +149,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     materialRows,
     inventoryRows,
     handleSpaceChange,
-    handleProcedureTimeChange
+    handleProcedureTimeChange,
   };
 }
