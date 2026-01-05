@@ -73,6 +73,10 @@ export const acceptanceFormData = (
     customer: {
       name: order.customers.name,
       personalNumber: order.customers.id,
+      representative: {
+        name: "",
+        id: "",
+      },
       signature: "",
     },
     executor: {

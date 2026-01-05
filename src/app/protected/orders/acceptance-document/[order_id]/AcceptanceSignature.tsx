@@ -49,6 +49,10 @@ export default function AcceptanceSignature({
         name: formData.customer.name,
         signature: customerPng,
         personalNumber: formData.customer.personalNumber,
+        representative: {
+          name: formData.customer.representative.name,
+          id: formData.customer.representative.id,
+        },
       },
       executor: { signature: executorPng },
     };

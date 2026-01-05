@@ -84,8 +84,8 @@ export default function AcceptanceDocument({
 
           <CustomerNamePersonalNumber
             onProcedureTimeChange={handleProcedureTimeChange}
-            name={formData.customer.name}
-            personalNumber={formData.customer.personalNumber}
+            name={formData.customer.representative.name}
+            personalNumber={formData.customer.representative.id}
           />
           <AcceptanceSignature formData={formData} />
         </div>

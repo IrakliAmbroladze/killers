@@ -15,8 +15,13 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       endTime: field === "endTime" ? value : prev.endTime,
       customer: {
         ...prev.customer,
-        name: field === "name" ? value : prev.startTime,
-        personalNumber: field === "personalNumber" ? value : prev.startTime,
+        representative: {
+          name: field === "name" ? value : prev.customer.representative.name,
+          id:
+            field === "personalNumber"
+              ? value
+              : prev.customer.representative.id,
+        },
       },
     }));
   };
