@@ -10,6 +10,7 @@ import { Table } from "./Table";
 import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
+import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
 
 export default function AcceptanceDocument({
   order,
@@ -80,6 +81,12 @@ export default function AcceptanceDocument({
             endTime={formData.endTime}
           />
           <Address address={order.address} />
+
+          <CustomerNamePersonalNumber
+            onProcedureTimeChange={handleProcedureTimeChange}
+            name={formData.customer.name}
+            personalNumber={formData.customer.personalNumber}
+          />
           <AcceptanceSignature formData={formData} />
         </div>
       </div>
