@@ -8,6 +8,8 @@ import { OrderExtended } from "@/types";
 import { acceptanceFormData } from "@/constants";
 import { Table } from "./Table";
 import { useAcceptanceForm } from "@/hooks";
+import { Address } from "./Address";
+import { ServicesCheckboxes } from "./ServicesCheckboxes";
 
 export default function AcceptanceDocument({
   order,
@@ -30,6 +32,7 @@ export default function AcceptanceDocument({
   return (
     <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
       <LogoWhiteOnBlue />
+
       <h1>მიღება-ჩაბარების აქტი</h1>
       <input
         type="date"
@@ -44,44 +47,10 @@ export default function AcceptanceDocument({
         შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი
         (მარკირებული/აღნიშნული) სახის მომსახურება:
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <label>
-          <input
-            type="checkbox"
-            name="disinsection"
-            checked={formData.services.disinsection}
-            onChange={handleServicesChange}
-          />
-          დეზინსექცია
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="disinfection"
-            checked={formData.services.disinfection}
-            onChange={handleServicesChange}
-          />
-          დეზინფექცია
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="deratization"
-            checked={formData.services.deratization}
-            onChange={handleServicesChange}
-          />
-          დერატიზაცია
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="subcontractorPrevention"
-            checked={formData.services.subcontractorPrevention}
-            onChange={handleServicesChange}
-          />
-          ქვეწარმავლების პრევენცია
-        </label>
-      </div>
+      <ServicesCheckboxes
+        formData={formData}
+        handleServicesChange={handleServicesChange}
+      />
       <div className="w-full overflow-auto flex">
         <div className="min-w-[300px] mx-auto">
           <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
@@ -110,10 +79,7 @@ export default function AcceptanceDocument({
             startTime={formData.startTime}
             endTime={formData.endTime}
           />
-          <div className="max-w-72">
-            <div className="border-b my-2.5">ობიექტის მისამართი:</div>
-            <div className="border-b text-wrap">{order.address}</div>
-          </div>
+          <Address address={order.address} />
           <AcceptanceSignature formData={formData} />
         </div>
       </div>
