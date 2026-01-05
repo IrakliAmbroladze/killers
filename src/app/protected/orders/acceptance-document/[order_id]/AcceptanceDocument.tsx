@@ -8,6 +8,7 @@ import { OrderExtended } from "@/types";
 import { acceptanceFormData } from "@/constants";
 import { Table } from "./Table";
 import { useAcceptanceForm } from "@/hooks";
+import { Address } from "./Address";
 
 export default function AcceptanceDocument({
   order,
@@ -110,10 +111,7 @@ export default function AcceptanceDocument({
             startTime={formData.startTime}
             endTime={formData.endTime}
           />
-          <div className="max-w-72">
-            <div className="border-b my-2.5">ობიექტის მისამართი:</div>
-            <div className="border-b text-wrap">{order.address}</div>
-          </div>
+          <Address address={order.address} />
           <AcceptanceSignature formData={formData} />
         </div>
       </div>
