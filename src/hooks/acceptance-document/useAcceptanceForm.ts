@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { AcceptanceFormData, UiTableCell } from "@/types";
+import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
@@ -26,7 +26,9 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const handleServicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleServicesChange: HandleServicesChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { name, checked } = e.target;
 
     setFormData((prev) => ({
