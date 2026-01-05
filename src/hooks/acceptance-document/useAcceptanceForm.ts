@@ -6,13 +6,18 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
   console.log("initial data is: ", initialData);
 
   const handleProcedureTimeChange = (
-    field: "startTime" | "endTime",
+    field: "startTime" | "endTime" | "name" | "personalNumber",
     value: string,
   ) => {
     setFormData((prev) => ({
       ...prev,
       startTime: field === "startTime" ? value : prev.startTime,
       endTime: field === "endTime" ? value : prev.endTime,
+      customer: {
+        ...prev.customer,
+        name: field === "name" ? value : prev.startTime,
+        personalNumber: field === "personalNumber" ? value : prev.startTime,
+      },
     }));
   };
 
