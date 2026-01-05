@@ -17,3 +17,7 @@ export type UiTableCell =
       field: "name" | "price" | "quantity";
       value: string;
     };
+
+export type HandleServicesChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+) => void;

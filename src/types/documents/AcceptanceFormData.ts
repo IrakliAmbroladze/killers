@@ -31,6 +31,10 @@ export type AcceptanceFormData = {
   customer: {
     name: string;
     personalNumber: string;
+    representative: {
+      name: string;
+      id: string;
+    };
     signature: string;
   };
   executor: {

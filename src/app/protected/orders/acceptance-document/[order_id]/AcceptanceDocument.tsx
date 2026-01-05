@@ -10,6 +10,7 @@ import { Table } from "./Table";
 import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
+import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
 
 export default function AcceptanceDocument({
   order,
@@ -27,6 +28,7 @@ export default function AcceptanceDocument({
     inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
+    handleDateChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -38,7 +40,7 @@ export default function AcceptanceDocument({
         type="date"
         name="date"
         defaultValue={getTodaysYYYY_MM_DDString()}
-        onChange={handleServicesChange}
+        onChange={handleDateChange}
       />
       <p className="max-w-[780px]">
         ერთი მხრივ &quot;{order.customers.name}&quot; (ს/კ {order.customer_id};
@@ -80,6 +82,12 @@ export default function AcceptanceDocument({
             endTime={formData.endTime}
           />
           <Address address={order.address} />
+
+          <CustomerNamePersonalNumber
+            onProcedureTimeChange={handleProcedureTimeChange}
+            name={formData.customer.representative.name}
+            personalNumber={formData.customer.representative.id}
+          />
           <AcceptanceSignature formData={formData} />
         </div>
       </div>

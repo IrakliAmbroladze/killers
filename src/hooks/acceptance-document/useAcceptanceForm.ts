@@ -3,16 +3,33 @@ import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
-  console.log("initial data is: ", initialData);
 
   const handleProcedureTimeChange = (
-    field: "startTime" | "endTime",
+    field: "startTime" | "endTime" | "name" | "personalNumber",
     value: string,
   ) => {
     setFormData((prev) => ({
       ...prev,
       startTime: field === "startTime" ? value : prev.startTime,
       endTime: field === "endTime" ? value : prev.endTime,
+      customer: {
+        ...prev.customer,
+        representative: {
+          name: field === "name" ? value : prev.customer.representative.name,
+          id:
+            field === "personalNumber"
+              ? value
+              : prev.customer.representative.id,
+        },
+      },
+    }));
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLDataElement>) => {
+    const { value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      date: value,
     }));
   };
 
@@ -152,5 +169,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
+    handleDateChange,
   };
 }
