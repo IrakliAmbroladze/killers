@@ -41,7 +41,7 @@ export const acceptanceFormData = (
   order: OrderExtended,
 ): AcceptanceFormData => {
   return {
-    date: "2025-12-19",
+    date: order.created_at.slice(0, 10),
     services: {
       disinsection: false,
       deratization: false,
@@ -69,7 +69,7 @@ export const acceptanceFormData = (
     spaces: Object.fromEntries(DONE_AREAS.map((area) => [area, false])),
     startTime: "",
     endTime: "",
-    address: "საქანელას ქ.2",
+    address: order.address,
     customer: {
       name: order.customers.name,
       personalNumber: order.customers.id,
