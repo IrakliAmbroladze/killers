@@ -28,6 +28,7 @@ export default function AcceptanceDocument({
     inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
+    handleDateChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -39,7 +40,7 @@ export default function AcceptanceDocument({
         type="date"
         name="date"
         defaultValue={getTodaysYYYY_MM_DDString()}
-        onChange={handleServicesChange}
+        onChange={handleDateChange}
       />
       <p className="max-w-[780px]">
         ერთი მხრივ &quot;{order.customers.name}&quot; (ს/კ {order.customer_id};
