@@ -16,12 +16,13 @@ export default function CustomerNamePersonalNumber({
   ];
   return (
     <>
+      <h2 className="font-bold mt-2">დამკვეთის წარმომადგენელი</h2>
       {data.map((d) => (
         <div key={d.label} className="max-w-[320px] m-2">
           <label className="flex justify-between">
             {d.label}
             <input
-              className="w-24 border rounded-md px-2 text-center"
+              className="w-[180px] border rounded-md px-2 text-center"
               type="text"
               value={d.value}
               onChange={(e) =>
