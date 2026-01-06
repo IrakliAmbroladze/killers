@@ -44,6 +44,7 @@ export const Table = ({
                 return (
                   <td key={cellIndex}>
                     <input
+                      className="w-full min-w-0"
                       type="text"
                       value={cell.value}
                       onChange={(e) =>
@@ -58,6 +59,7 @@ export const Table = ({
                   <td key={cellIndex}>
                     <input
                       type="text"
+                      className="w-full min-w-0"
                       value={cell.value}
                       onChange={(e) =>
                         onInventoryTextChange?.(
@@ -75,6 +77,7 @@ export const Table = ({
                 <td key={cellIndex}>
                   <input
                     type="checkbox"
+                    className="w-full min-w-0"
                     checked={cell.checked}
                     onChange={(e) => {
                       if (!cell.pestName || !cell.field) return;
