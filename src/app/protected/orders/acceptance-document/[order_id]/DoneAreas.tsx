@@ -18,7 +18,7 @@ export default function DoneAreas({ spaces, onChange }: DoneAreasProps) {
     <table className="text-sm">
       <thead>
         <tr>
-          <th colSpan={5}>
+          <th colSpan={3}>
             დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი
             სივრცეები:
           </th>
@@ -26,7 +26,7 @@ export default function DoneAreas({ spaces, onChange }: DoneAreasProps) {
       </thead>
 
       <tbody>
-        {chunk(entries, 5).map((row, rowIndex) => (
+        {chunk(entries, 3).map((row, rowIndex) => (
           <tr key={rowIndex}>
             {row.map(([area, checked]) => (
               <td key={area} className="text-center">

@@ -147,12 +147,11 @@ export default function AcceptanceSignature({
 
   return (
     <div className="flex flex-col">
-      <div className="my-2.5 flex sm:justify-between flex-col gap-10 md:gap-0 md:flex-row">
+      <div className="my-2.5 flex sm:justify-between flex-col gap-10 md:flex-row">
         <div className="flex flex-col justify-between">
-          <h2 className="font-bold ">დამკვეთის წარმომადგენელი</h2>
           <div className="flex flex-col ">
             <div>ხელმოწერა</div>
-            <div className="w-[320px]">
+            <div className="w-[300px]">
               <SignatureField
                 onReadyAction={(api) => (customerSigRef.current = api)}
               />
@@ -162,7 +161,7 @@ export default function AcceptanceSignature({
         <div className="flex flex-col justify-between">
           <h2 className="font-bold ">შემსრულებელი</h2>
           <div>ხელმოწერა</div>
-          <div className="w-[320px]">
+          <div className="w-[300px]">
             <SignatureField
               onReadyAction={(api) => (executorSigRef.current = api)}
             />
