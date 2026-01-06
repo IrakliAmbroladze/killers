@@ -22,7 +22,7 @@ export default function CustomerNamePersonalNumber({
           <label className="flex justify-between">
             {d.label}
             <input
-              className="w-[180px] border rounded-md px-2 text-center"
+              className="w-[160px] border rounded-md px-2 text-center"
               type="text"
               value={d.value}
               onChange={(e) =>
