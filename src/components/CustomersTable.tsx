@@ -10,13 +10,7 @@ type Props = {
 };
 
 export default function CustomersTable({ data }: Props) {
-  /* const testCustomer: Customer = {
-    description: "something",
-    id: "60001128531",
-    name: "ambroladze",
-    contractor: true,
-  };*/
-
+  const [customers, setCustomers] = useState<Customer[]>(data);
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof Customer>("name");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -32,7 +26,7 @@ export default function CustomersTable({ data }: Props) {
 
   // ---- Search + Sorting + Pagination ----
   const processed = useMemo(() => {
-    let filtered = data;
+    let filtered = customers;
 
     // SEARCH
     if (search) {
@@ -55,7 +49,7 @@ export default function CustomersTable({ data }: Props) {
     });
 
     return filtered;
-  }, [data, search, sortKey, sortDir]);
+  }, [customers, search, sortKey, sortDir]);
 
   // PAGINATION
   const totalPages = Math.ceil(processed.length / pageSize);
@@ -77,28 +71,43 @@ export default function CustomersTable({ data }: Props) {
   };
 
   const handleSave = async (customer: Customer) => {
-    setIsSaving(true);
-    try {
-      const updatedCustomer = {
-        ...customer,
-        name: editedName,
-        description: editedDescription || null,
-      };
+    // Store previous values for rollback
+    const previousName = customer.name;
+    const previousDescription = customer.description;
 
+    const updatedCustomer = {
+      ...customer,
+      name: editedName,
+      description: editedDescription || null,
+    };
+
+    // Optimistic update - update state immediately
+    setCustomers((prev) =>
+      prev.map((c) => (c.id === customer.id ? updatedCustomer : c)),
+    );
+
+    setEditingId(null);
+    setIsSaving(true);
+
+    try {
       const response = await editCustomer(updatedCustomer);
 
       if (response.status !== "OK") {
         throw new Error("Update failed");
       }
-
-      // Update local data
-      const index = data.findIndex((c) => c.id === customer.id);
-      if (index !== -1) {
-        data[index] = updatedCustomer;
-      }
-
-      setEditingId(null);
     } catch (error) {
+      // Rollback on error
+      setCustomers((prev) =>
+        prev.map((c) =>
+          c.id === customer.id
+            ? {
+                ...customer,
+                name: previousName,
+                description: previousDescription,
+              }
+            : c,
+        ),
+      );
       console.error("Update failed:", error);
       alert("❌ დაფიქსირდა შეცდომა");
     } finally {
@@ -155,7 +164,7 @@ export default function CustomersTable({ data }: Props) {
               {["id", "name", "description", "contractor"].map((key) => (
                 <th
                   key={key}
-                  className=" border-x border-b px-3 py-2 text-left cursor-pointer select-none"
+                  className="border-x border-b px-3 py-2 text-left cursor-pointer select-none"
                   onClick={() => toggleSort(key as keyof Customer)}
                 >
                   {key.toUpperCase()}{" "}
@@ -231,7 +240,7 @@ export default function CustomersTable({ data }: Props) {
 
             {paginated.length === 0 && (
               <tr>
-                <td className="px-3 py-2 border text-center" colSpan={4}>
+                <td className="px-3 py-2 border text-center" colSpan={5}>
                   No customers found.
                 </td>
               </tr>
