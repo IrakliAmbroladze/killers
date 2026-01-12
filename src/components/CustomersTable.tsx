@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import type { Customer } from "@/types";
 import { ContractorStatus } from "./atoms/ContractorStatus";
+import { editCustomer } from "@/lib/editCustomer";
 
 type Props = {
   data: Customer[];
@@ -20,6 +21,12 @@ export default function CustomersTable({ data }: Props) {
   const [sortKey, setSortKey] = useState<keyof Customer>("name");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [page, setPage] = useState(1);
+
+  // Edit state
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editedName, setEditedName] = useState("");
+  const [editedDescription, setEditedDescription] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const pageSize = 50;
 
@@ -63,6 +70,48 @@ export default function CustomersTable({ data }: Props) {
     }
   };
 
+  const handleEdit = (customer: Customer) => {
+    setEditingId(customer.id);
+    setEditedName(customer.name);
+    setEditedDescription(customer.description ?? "");
+  };
+
+  const handleSave = async (customer: Customer) => {
+    setIsSaving(true);
+    try {
+      const updatedCustomer = {
+        ...customer,
+        name: editedName,
+        description: editedDescription || null,
+      };
+
+      const response = await editCustomer(updatedCustomer);
+
+      if (response.status !== "OK") {
+        throw new Error("Update failed");
+      }
+
+      // Update local data
+      const index = data.findIndex((c) => c.id === customer.id);
+      if (index !== -1) {
+        data[index] = updatedCustomer;
+      }
+
+      setEditingId(null);
+    } catch (error) {
+      console.error("Update failed:", error);
+      alert("❌ დაფიქსირდა შეცდომა");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditedName("");
+    setEditedDescription("");
+  };
+
   return (
     <div>
       <div className="flex flex-col items-center sm:flex-row justify-between gap-2 my-2">
@@ -102,6 +151,7 @@ export default function CustomersTable({ data }: Props) {
         <table className="min-w-full border-gray-300">
           <thead className="sticky top-0 bg-[#6b7280] dark:bg-[#19171c]">
             <tr>
+              <th className="border-x border-b px-3 py-2 text-left">ACTION</th>
               {["id", "name", "description", "contractor"].map((key) => (
                 <th
                   key={key}
@@ -115,16 +165,69 @@ export default function CustomersTable({ data }: Props) {
             </tr>
           </thead>
           <tbody>
-            {paginated.map((c) => (
-              <tr key={c.id}>
-                <td className="border px-3 py-2">{c.id}</td>
-                <td className="border px-3 py-2">{c.name}</td>
-                <td className="border px-3 py-2">{c.description ?? "-"}</td>
-                <td className="border px-3 py-2">
-                  <ContractorStatus customer={c} />
-                </td>
-              </tr>
-            ))}
+            {paginated.map((c) => {
+              const isEditing = editingId === c.id;
+
+              return (
+                <tr key={c.id}>
+                  <td className="border px-3 py-2">
+                    {isEditing ? (
+                      <div className="flex gap-2">
+                        <button
+                          className="text-green-600 hover:text-green-800 disabled:opacity-50"
+                          onClick={() => handleSave(c)}
+                          disabled={isSaving}
+                        >
+                          {isSaving ? "..." : "Save"}
+                        </button>
+                        <button
+                          className="text-gray-600 hover:text-gray-800"
+                          onClick={handleCancel}
+                          disabled={isSaving}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        className="text-blue-600 hover:text-blue-800"
+                        onClick={() => handleEdit(c)}
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </td>
+                  <td className="border px-3 py-2">{c.id}</td>
+                  <td className="border px-3 py-2">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        className="border px-2 py-1 rounded w-full"
+                        value={editedName}
+                        onChange={(e) => setEditedName(e.target.value)}
+                      />
+                    ) : (
+                      c.name
+                    )}
+                  </td>
+                  <td className="border px-3 py-2">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        className="border px-2 py-1 rounded w-full"
+                        value={editedDescription}
+                        onChange={(e) => setEditedDescription(e.target.value)}
+                      />
+                    ) : (
+                      (c.description ?? "-")
+                    )}
+                  </td>
+                  <td className="border px-3 py-2">
+                    <ContractorStatus customer={c} />
+                  </td>
+                </tr>
+              );
+            })}
 
             {paginated.length === 0 && (
               <tr>
