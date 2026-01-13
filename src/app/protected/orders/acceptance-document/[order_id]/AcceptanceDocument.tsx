@@ -12,6 +12,7 @@ import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
 import { use } from "react";
+import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -36,8 +37,7 @@ export default function AcceptanceDocument({
   return (
     <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
       <LogoWhiteOnBlue />
-
-      <h1>მიღება-ჩაბარების აქტი</h1>
+      <AcceptanceDocumentTitle />
       <input
         type="date"
         name="date"
