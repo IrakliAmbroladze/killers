@@ -1,6 +1,7 @@
 import { fetchOrderById } from "@/lib/supabase/fetchOrderById";
-import { OrderExtended } from "@/types";
+import type { OrderExtended } from "@/types";
 import AcceptanceDocument from "./AcceptanceDocument";
+import { Suspense } from "react";
 
 export default async function AcceptancePage({
   params,
@@ -8,7 +9,11 @@ export default async function AcceptancePage({
   params: Promise<{ order_id: string }>;
 }) {
   const { order_id } = await params;
-  const order: OrderExtended = await fetchOrderById(order_id);
+  const order: Promise<OrderExtended> = fetchOrderById(order_id);
 
-  return <AcceptanceDocument order={order} />;
+  return (
+    <Suspense fallback={<div>Loading data ... </div>}>
+      <AcceptanceDocument orderPromise={order} />;
+    </Suspense>
+  );
 }

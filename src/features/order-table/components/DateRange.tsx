@@ -2,32 +2,29 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDateParams } from "../hooks/useDateParam";
+import { InputDate } from "@/components";
 
 export default function DateRange() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-
-  const fromDate = searchParams.get("fromDate") || "";
-  const toDate = searchParams.get("toDate") || "";
-
   const { updateDateParam } = useDateParams(pathname, router, searchParams);
+
+  const DATE_RANGE = [
+    { name: "fromDate" as const, value: searchParams.get("fromDate") || "" },
+    { name: "toDate" as const, value: searchParams.get("toDate") || "" },
+  ];
 
   return (
     <div className="flex gap-2">
-      <input
-        type="date"
-        value={fromDate}
-        className="bg-stone-100 dark:bg-stone-500 text-stone-800 dark:text-gray-200 px-4 py-0.5 rounded-lg"
-        onChange={(e) => updateDateParam("fromDate", e.target.value)}
-      />
-
-      <input
-        type="date"
-        value={toDate}
-        className="bg-stone-100 dark:bg-stone-500 text-stone-800 dark:text-gray-200 px-4 py-0.5 rounded-lg"
-        onChange={(e) => updateDateParam("toDate", e.target.value)}
-      />
+      {DATE_RANGE.map(({ name, value }) => (
+        <InputDate
+          key={name}
+          name={name}
+          value={value}
+          handleChange={(e) => updateDateParam(name, e.target.value)}
+        />
+      ))}
     </div>
   );
 }

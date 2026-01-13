@@ -1,5 +1,6 @@
 import { AcceptanceFormData, OrderExtended } from "@/types";
 import { SanitaryService } from "@/types/SanitaryServices";
+import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 
 export const pestTableData: string[] = [
   "ბუზი",
@@ -41,7 +42,7 @@ export const acceptanceFormData = (
   order: OrderExtended,
 ): AcceptanceFormData => {
   return {
-    date: order.created_at.slice(0, 10),
+    date: getTodaysYYYY_MM_DDString(),
     services: {
       disinsection: false,
       deratization: false,

@@ -1,6 +1,5 @@
 "use client";
 import { LogoWhiteOnBlue } from "@/components/atoms/logoWhiteOnBlue";
-import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 import DoneAreas from "./DoneAreas";
 import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
@@ -11,12 +10,16 @@ import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
+import { use } from "react";
+import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
+import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 
 export default function AcceptanceDocument({
-  order,
+  orderPromise,
 }: {
-  order: OrderExtended;
+  orderPromise: Promise<OrderExtended>;
 }) {
+  const order = use(orderPromise);
   const {
     formData,
     handleServicesChange,
@@ -34,14 +37,8 @@ export default function AcceptanceDocument({
   return (
     <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
       <LogoWhiteOnBlue />
-
-      <h1>მიღება-ჩაბარების აქტი</h1>
-      <input
-        type="date"
-        name="date"
-        defaultValue={getTodaysYYYY_MM_DDString()}
-        onChange={handleDateChange}
-      />
+      <AcceptanceDocumentTitle />
+      <AcceptanceDocumentDate handleChange={handleDateChange} />
       <p className="max-w-[780px]">
         ერთი მხრივ &quot;{order.customers.name}&quot; (ს/კ {order.customer_id};
         შემდგომში &quot;დამკვეთი&quot;) და მეორე მხრივ შპს &quot;ქილ&quot; (ს/კ{" "}
