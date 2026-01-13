@@ -1,3 +1,4 @@
+import { InputDate } from "@/components";
 import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 
 export const AcceptanceDocumentDate = ({
@@ -6,13 +7,10 @@ export const AcceptanceDocumentDate = ({
   handleChange: (e: React.ChangeEvent<HTMLDataElement>) => void;
 }) => {
   return (
-    <>
-      <input
-        type="date"
-        name="date"
-        defaultValue={getTodaysYYYY_MM_DDString()}
-        onChange={handleChange}
-      />
-    </>
+    <InputDate
+      name="date"
+      defaultValue={getTodaysYYYY_MM_DDString()}
+      handleChange={handleChange}
+    />
   );
 };
