@@ -1,6 +1,5 @@
 "use client";
 import { LogoWhiteOnBlue } from "@/components/atoms/logoWhiteOnBlue";
-import { getTodaysYYYY_MM_DDString } from "@/utils/calendar/getTodaysString";
 import DoneAreas from "./DoneAreas";
 import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
@@ -13,6 +12,7 @@ import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
 import { use } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
+import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -38,12 +38,7 @@ export default function AcceptanceDocument({
     <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
       <LogoWhiteOnBlue />
       <AcceptanceDocumentTitle />
-      <input
-        type="date"
-        name="date"
-        defaultValue={getTodaysYYYY_MM_DDString()}
-        onChange={handleDateChange}
-      />
+      <AcceptanceDocumentDate handleChange={handleDateChange} />
       <p className="max-w-[780px]">
         ერთი მხრივ &quot;{order.customers.name}&quot; (ს/კ {order.customer_id};
         შემდგომში &quot;დამკვეთი&quot;) და მეორე მხრივ შპს &quot;ქილ&quot; (ს/კ{" "}
