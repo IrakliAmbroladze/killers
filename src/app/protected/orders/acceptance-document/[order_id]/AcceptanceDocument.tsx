@@ -11,12 +11,14 @@ import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
+import { use } from "react";
 
 export default function AcceptanceDocument({
-  order,
+  orderPromise,
 }: {
-  order: OrderExtended;
+  orderPromise: Promise<OrderExtended>;
 }) {
+  const order = use(orderPromise);
   const {
     formData,
     handleServicesChange,
