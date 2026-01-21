@@ -10,9 +10,9 @@ type DrawImapeProps = {
 };
 
 export const drawLogo = async ({ drawer, cursor, image }: DrawImapeProps) => {
+  const LOGO_HEIGHT = 40;
+  cursor.move(LOGO_HEIGHT);
   drawer.drawImage(image, PAGE_WIDTH / 2 - 40, cursor.y, {
-    width: 72,
-    height: 54,
+    height: LOGO_HEIGHT,
   });
-  cursor.move(20);
 };
