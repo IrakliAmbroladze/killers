@@ -1,4 +1,4 @@
-import { PDFDocument, PDFFont, PDFPage, rgb } from "pdf-lib";
+import { PDFDocument, PDFFont, PDFImage, PDFPage, rgb } from "pdf-lib";
 import { PdfTableCell, TableHeaderCell } from "../types/Table";
 
 export class PDFDrawer {
@@ -205,5 +205,22 @@ export class PDFDrawer {
     });
 
     return y - currentY;
+  }
+
+  drawImage(
+    image: PDFImage,
+    x: number,
+    y: number,
+    options?: {
+      width?: number;
+      height?: number;
+    },
+  ) {
+    this.page.drawImage(image, {
+      x,
+      y,
+      width: options?.width,
+      height: options?.height,
+    });
   }
 }
