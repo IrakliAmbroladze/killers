@@ -215,12 +215,17 @@ export class PDFDrawer {
       width?: number;
       height?: number;
     },
-  ) {
+  ): number {
+    const width = options?.width ?? image.width;
+    const height = options?.height ?? image.height;
+
     this.page.drawImage(image, {
       x,
       y,
-      width: options?.width,
-      height: options?.height,
+      width,
+      height,
     });
+
+    return height;
   }
 }
