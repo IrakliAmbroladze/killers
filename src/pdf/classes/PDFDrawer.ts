@@ -211,21 +211,23 @@ export class PDFDrawer {
     image: PDFImage,
     x: number,
     y: number,
-    options?: {
-      width?: number;
-      height?: number;
-    },
+    options?: { width?: number; height?: number },
   ): number {
-    const width = options?.width ?? image.width;
-    const height = options?.height ?? image.height;
+    let width = options?.width;
+    let height = options?.height;
 
-    this.page.drawImage(image, {
-      x,
-      y,
-      width,
-      height,
-    });
+    if (width && !height) {
+      height = (image.height / image.width) * width;
+    }
 
+    if (height && !width) {
+      width = (image.width / image.height) * height;
+    }
+
+    width ??= image.width;
+    height ??= image.height;
+
+    this.page.drawImage(image, { x, y, width, height });
     return height;
   }
 }
