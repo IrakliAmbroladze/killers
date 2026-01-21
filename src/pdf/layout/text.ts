@@ -27,7 +27,7 @@ type DrawDate = BaseDraw & {
 };
 
 export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
-  drawer.drawText(`თარიღი: ${date} (წწ.თ.დ)`, MARGIN_X, cursor.y, {
+  drawer.drawText(`${date} (წწ.თ.დ)`, MARGIN_X, cursor.y, {
     size: 10,
   });
   cursor.move(25);
