@@ -16,9 +16,14 @@ import {
   drawSpacesInspected,
 } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
+import { drawLogo } from "../layout/images";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
+  const logoPath = path.join(process.cwd(), "public", "logoBlue.png");
+  const logoBytes = fs.readFileSync(logoPath);
+  const logoImage = await pdf.embedPng(logoBytes);
+
   pdf.registerFontkit(fontkit);
 
   const regularFontPath = path.join(
@@ -41,8 +46,8 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ formData });
-
   cursor.move(20);
+  drawLogo({ drawer, cursor, image: logoImage });
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
   drawIntro({
