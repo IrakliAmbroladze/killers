@@ -46,7 +46,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ formData });
-  console.log("cursor y in builder: ", cursor.y);
   drawLogo({ drawer, cursor, image: logoImage });
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
