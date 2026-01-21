@@ -16,3 +16,10 @@ export const drawLogo = async ({ drawer, cursor, image }: DrawImapeProps) => {
     height: LOGO_HEIGHT,
   });
 };
+
+export const drawStamp = async ({ drawer, cursor, image }: DrawImapeProps) => {
+  const STAMP_HEIGHT = 80;
+  drawer.drawImage(image, PAGE_WIDTH / 2 - 40, cursor.y, {
+    height: STAMP_HEIGHT,
+  });
+};
