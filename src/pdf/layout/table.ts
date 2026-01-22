@@ -67,9 +67,9 @@ export const drawMainTable = ({
 
   const tableData2 = {
     headers: [
-      { text: "დასახელება", width: 140 },
-      { text: "დოზირება", width: 55 },
-      { text: "გახარჯული", width: 60 },
+      { text: "დასახელება", width: 130 },
+      { text: "დოზირება", width: 60 },
+      { text: "გახარჯული", width: 70 },
     ],
     rows: materialsRows,
   };
