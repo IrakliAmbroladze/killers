@@ -29,6 +29,7 @@ export const productsTableData: string[] = [
   "SURFANIOS PREMIUM",
   "REPTIL NATURAL STOP",
   "ALFADOM",
+  "permex 22e",
 ];
 
 export const services: SanitaryService[] = [
