@@ -1,4 +1,4 @@
-import { PDFDocument, PDFFont, PDFPage, rgb } from "pdf-lib";
+import { PDFDocument, PDFFont, PDFImage, PDFPage, rgb } from "pdf-lib";
 import { PdfTableCell, TableHeaderCell } from "../types/Table";
 
 export class PDFDrawer {
@@ -205,5 +205,29 @@ export class PDFDrawer {
     });
 
     return y - currentY;
+  }
+
+  drawImage(
+    image: PDFImage,
+    x: number,
+    y: number,
+    options?: { width?: number; height?: number },
+  ): number {
+    let width = options?.width;
+    let height = options?.height;
+
+    if (width && !height) {
+      height = (image.height / image.width) * width;
+    }
+
+    if (height && !width) {
+      width = (image.width / image.height) * height;
+    }
+
+    width ??= image.width;
+    height ??= image.height;
+
+    this.page.drawImage(image, { x, y, width, height });
+    return height;
   }
 }

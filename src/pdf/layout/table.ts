@@ -67,9 +67,9 @@ export const drawMainTable = ({
 
   const tableData2 = {
     headers: [
-      { text: "დასახელება", width: 140 },
-      { text: "დოზირება", width: 55 },
-      { text: "გახარჯული", width: 60 },
+      { text: "დასახელება", width: 130 },
+      { text: "დოზირება", width: 60 },
+      { text: "გახარჯული", width: 70 },
     ],
     rows: materialsRows,
   };
@@ -123,14 +123,14 @@ export const drawSpacesInspected = ({
     size: 9,
     bold: true,
   });
-  drawer.drawText(formData.startTime, MARGIN_X + 150, cursor.y, { size: 9 });
+  drawer.drawText(formData.startTime, MARGIN_X + 80, cursor.y, { size: 9 });
   cursor.move(18);
 
   drawer.drawText("დასრულების დრო:", MARGIN_X, cursor.y, {
     size: 9,
     bold: true,
   });
-  drawer.drawText(formData.endTime, MARGIN_X + 150, cursor.y, { size: 9 });
+  drawer.drawText(formData.endTime, MARGIN_X + 100, cursor.y, { size: 9 });
   cursor.move(18);
 
   drawer.drawText("ობიექტის მისამართი:", MARGIN_X, cursor.y, {
@@ -138,8 +138,16 @@ export const drawSpacesInspected = ({
     bold: true,
   });
   cursor.move(15);
-  drawer.drawText(formData.address, MARGIN_X, cursor.y, { size: 9 });
-  cursor.move(30);
+
+  const usedHeight = drawer.drawParagraph(
+    formData.address,
+    MARGIN_X,
+    cursor.y,
+    200,
+    { size: 9, lineHeight: 1.3 },
+  );
+
+  cursor.move(usedHeight + 15);
 };
 
 type DrawSoldInventoryTable = {

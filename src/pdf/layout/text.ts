@@ -12,13 +12,14 @@ type DrawDocTitle = BaseDraw & {
 };
 
 export const drawDocTitle = ({ drawer, title, cursor }: DrawDocTitle) => {
+  const TEXT_HEIGHT = 14;
+  cursor.move(TEXT_HEIGHT + 5);
   drawer.drawText(title, PAGE_WIDTH / 3, cursor.y, {
-    size: 14,
+    size: TEXT_HEIGHT,
     bold: true,
     align: "center",
     maxWidth: 0,
   });
-  cursor.move(30);
 };
 
 type DrawDate = BaseDraw & {
@@ -26,7 +27,7 @@ type DrawDate = BaseDraw & {
 };
 
 export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
-  drawer.drawText(`თარიღი: ${date} (წწ.თ.დ)`, MARGIN_X, cursor.y, {
+  drawer.drawText(`${date} (წწ.თ.დ)`, MARGIN_X, cursor.y, {
     size: 10,
   });
   cursor.move(25);

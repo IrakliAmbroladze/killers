@@ -16,9 +16,17 @@ import {
   drawSpacesInspected,
 } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
+import { drawLogo, drawStamp } from "../layout/images";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
+  const logoPath = path.join(process.cwd(), "public", "logoBlue.png");
+  const logoBytes = fs.readFileSync(logoPath);
+  const logoImage = await pdf.embedPng(logoBytes);
+  const stampPath = path.join(process.cwd(), "public", "stamp.png");
+  const stampBytes = fs.readFileSync(stampPath);
+  const stampImage = await pdf.embedPng(stampBytes);
+
   pdf.registerFontkit(fontkit);
 
   const regularFontPath = path.join(
@@ -41,8 +49,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ formData });
-
-  cursor.move(20);
+  drawLogo({ drawer, cursor, image: logoImage });
   drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
   drawDate({ drawer, date: formData.date, cursor });
   drawIntro({
@@ -58,6 +65,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawSpacesInspected({ drawer, cursor, formData });
   drawSoldInventoryTable({ drawer, cursor, formData });
   drawSignatures({ drawer, cursor, formData, page, pdf });
+  drawStamp({ drawer, cursor, image: stampImage });
 
   const pdfBytes = await pdf.save();
   return pdfBytes;
