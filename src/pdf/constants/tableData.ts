@@ -1,18 +1,3 @@
-export const materialsTableData: string[] = [
-  "მხოხავი მავნებლის ფირფიტა",
-  "Killzone მღრღ. ფირფიტა",
-  "Killzone მწერის ფირფიტა",
-  "BROMOBLEU",
-  "RATIMOR",
-  "Cipex10e",
-  "RAPTOR GEL",
-  "BLEU DELTA",
-  "AGITA",
-  "SURFANIOS PREMIUM",
-  "REPTIL NATURAL STOP",
-  "ALFADOM",
-];
-
 export const spacesList = [
   "მიმღები",
   "სასტუმრო ოთახი",
