@@ -22,14 +22,14 @@ export const productsTableData: { name: string; dosage: string }[] = [
   { name: "Killzone მწერის ფირფიტა", dosage: "-" },
   { name: "BROMOBLEU", dosage: "-" },
   { name: "RATIMOR", dosage: "-" },
-  { name: "Cipex10e", dosage: "-" },
+  { name: "Cipex10e", dosage: "10მლ/1ლ" },
   { name: "RAPTOR GEL", dosage: "-" },
   { name: "BLEU DELTA", dosage: "-" },
-  { name: "AGITA", dosage: "-" },
-  { name: "SURFANIOS PREMIUM", dosage: "-" },
+  { name: "AGITA", dosage: "30-130გრ/1ლ" },
+  { name: "SURFANIOS PREMIUM", dosage: "2.5მლ/1ლ" },
   { name: "REPTIL NATURAL STOP", dosage: "-" },
-  { name: "ALFADOM", dosage: "-" },
-  { name: "permex 22e", dosage: "-" },
+  { name: "ALFADOM 10SC", dosage: "2-5მლ/1ლ" },
+  { name: "permex 22e", dosage: "8მლ/1ლ" },
 ];
 
 export const services: SanitaryService[] = [
