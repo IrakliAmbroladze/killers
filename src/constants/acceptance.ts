@@ -16,20 +16,20 @@ export const pestTableData: string[] = [
   "ბზიკი",
 ];
 
-export const productsTableData: string[] = [
-  "მხოხავი მავნებლის ფირფიტა",
-  "Killzone მღრღ. ფირფიტა",
-  "Killzone მწერის ფირფიტა",
-  "BROMOBLEU",
-  "RATIMOR",
-  "Cipex10e",
-  "RAPTOR GEL",
-  "BLEU DELTA",
-  "AGITA",
-  "SURFANIOS PREMIUM",
-  "REPTIL NATURAL STOP",
-  "ALFADOM",
-  "permex 22e",
+export const productsTableData: { name: string; dosage: string }[] = [
+  { name: "მხოხავი მავნებლის ფირფიტა", dosage: "-" },
+  { name: "Killzone მღრღ. ფირფიტა", dosage: "-" },
+  { name: "Killzone მწერის ფირფიტა", dosage: "-" },
+  { name: "BROMOBLEU", dosage: "-" },
+  { name: "RATIMOR", dosage: "-" },
+  { name: "Cipex10e", dosage: "-" },
+  { name: "RAPTOR GEL", dosage: "-" },
+  { name: "BLEU DELTA", dosage: "-" },
+  { name: "AGITA", dosage: "-" },
+  { name: "SURFANIOS PREMIUM", dosage: "-" },
+  { name: "REPTIL NATURAL STOP", dosage: "-" },
+  { name: "ALFADOM", dosage: "-" },
+  { name: "permex 22e", dosage: "-" },
 ];
 
 export const services: SanitaryService[] = [
@@ -58,9 +58,9 @@ export const acceptanceFormData = (
       gel: false,
     })),
     products: productsTableData.map((product) => ({
-      name: product,
+      name: product.name,
       checked: true,
-      dosage: "-",
+      dosage: product.dosage,
       used: "",
     })),
     inventory: Array.from({ length: 3 }, () => ({
