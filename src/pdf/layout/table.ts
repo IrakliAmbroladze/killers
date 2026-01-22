@@ -138,8 +138,16 @@ export const drawSpacesInspected = ({
     bold: true,
   });
   cursor.move(15);
-  drawer.drawText(formData.address, MARGIN_X, cursor.y, { size: 9 });
-  cursor.move(30);
+
+  const usedHeight = drawer.drawParagraph(
+    formData.address,
+    MARGIN_X,
+    cursor.y,
+    200,
+    { size: 9, lineHeight: 1.3 },
+  );
+
+  cursor.move(usedHeight + 15);
 };
 
 type DrawSoldInventoryTable = {
