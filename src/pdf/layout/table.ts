@@ -123,14 +123,14 @@ export const drawSpacesInspected = ({
     size: 9,
     bold: true,
   });
-  drawer.drawText(formData.startTime, MARGIN_X + 150, cursor.y, { size: 9 });
+  drawer.drawText(formData.startTime, MARGIN_X + 80, cursor.y, { size: 9 });
   cursor.move(18);
 
   drawer.drawText("დასრულების დრო:", MARGIN_X, cursor.y, {
     size: 9,
     bold: true,
   });
-  drawer.drawText(formData.endTime, MARGIN_X + 150, cursor.y, { size: 9 });
+  drawer.drawText(formData.endTime, MARGIN_X + 100, cursor.y, { size: 9 });
   cursor.move(18);
 
   drawer.drawText("ობიექტის მისამართი:", MARGIN_X, cursor.y, {
