@@ -21,6 +21,8 @@ export const pestTableData: string[] = [
   "",
   "",
   "",
+  "",
+  "",
 ];
 
 export const productsTableData: { name: string; dosage: string }[] = [

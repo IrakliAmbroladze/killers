@@ -158,7 +158,7 @@ export const drawSoldInventoryTable = ({
   let cursor_x = MARGIN_X;
   let cursor_y = cursor.y;
   cursor_x += 350;
-  cursor_y += 97;
+  cursor_y += 133;
   drawer.drawText("მიწოდებული ინვენტარი", cursor_x, cursor_y, {
     size: 9,
     bold: true,
