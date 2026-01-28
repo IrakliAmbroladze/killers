@@ -18,9 +18,11 @@ export const drawMainTable = ({
   let cursor_x = MARGIN_X;
   cursor.move(5);
   cursor_x += 50;
-  drawer.drawText("გატარებული ღონისძიება", cursor_x, cursor.y, {
+  drawer.drawText("გატარებული ღონისძიება", cursor_x - 50, cursor.y, {
     size: 9,
     bold: true,
+    align: "center",
+    maxWidth: 250,
   });
   cursor_x += 270;
   drawer.drawText("გამოყენებული საშუალებები", cursor_x, cursor.y, {

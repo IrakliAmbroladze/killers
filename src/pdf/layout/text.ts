@@ -14,11 +14,11 @@ type DrawDocTitle = BaseDraw & {
 export const drawDocTitle = ({ drawer, title, cursor }: DrawDocTitle) => {
   const TEXT_HEIGHT = 14;
   cursor.move(TEXT_HEIGHT + 5 - 50);
-  drawer.drawText(title, PAGE_WIDTH / 3, cursor.y, {
+  drawer.drawText(title, 0, cursor.y, {
     size: TEXT_HEIGHT,
     bold: true,
     align: "center",
-    maxWidth: 0,
+    maxWidth: PAGE_WIDTH,
   });
 
   cursor.move(30);
