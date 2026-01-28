@@ -16,12 +16,6 @@ export const drawMainTable = ({
   formData,
 }: DrawMainTableProps) => {
   let cursor_x = MARGIN_X;
-  drawer.drawText(
-    "ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:",
-    cursor_x,
-    cursor.y,
-    { size: 10, bold: true },
-  );
   cursor.move(15);
   cursor_x += 50;
   drawer.drawText("გატარებული ღონისძიება", cursor_x, cursor.y, {
@@ -33,7 +27,7 @@ export const drawMainTable = ({
     size: 9,
     bold: true,
   });
-  cursor.move(5);
+  cursor.move(10);
   cursor_x = MARGIN_X;
 
   const rows: PdfTableCell[][] = formData.pests.map((pest) => [
