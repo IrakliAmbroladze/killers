@@ -5,32 +5,23 @@ import { Cursor } from "../types/Cursor";
 import { spacesList } from "../constants/tableData";
 import { PdfTableCell } from "../types/Table";
 
-type DrawMainTableProps = {
-  drawer: PDFDrawer;
-  cursor: Cursor;
-  formData: AcceptanceFormData;
-};
-export const drawMainTable = ({
+function createPestsTable({
   drawer,
-  cursor,
+  x,
+  y,
   formData,
-}: DrawMainTableProps) => {
-  let cursor_x = MARGIN_X;
-  cursor.move(5);
-  cursor_x += 50;
-  drawer.drawText("გატარებული ღონისძიება", cursor_x - 50, cursor.y, {
+}: {
+  drawer: PDFDrawer;
+  x: number;
+  y: number;
+  formData: AcceptanceFormData;
+}) {
+  drawer.drawText("გატარებული ღონისძიება", x, y, {
     size: 9,
     bold: true,
     align: "center",
     maxWidth: 250,
   });
-  cursor_x += 270;
-  drawer.drawText("გამოყენებული საშუალებები", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  cursor.move(5);
-  cursor_x = MARGIN_X;
 
   const rows: PdfTableCell[][] = formData.pests.map((pest) => [
     { type: "text", text: pest.name },
@@ -49,12 +40,29 @@ export const drawMainTable = ({
     rows,
   };
 
-  const tableHeight = drawer.drawTable(cursor_x, cursor.y, tableData, {
+  const pestsTableHeight = drawer.drawTable(x, y, tableData, {
     fontSize: 8,
     rowHeight: 18,
   });
-  cursor_x += 262;
 
+  return { pestsTableWidth: 250, pestsTableHeight };
+}
+
+function createProductsTable({
+  drawer,
+  x,
+  y,
+  formData,
+}: {
+  drawer: PDFDrawer;
+  x: number;
+  y: number;
+  formData: AcceptanceFormData;
+}) {
+  drawer.drawText("გამოყენებული საშუალებები", x, y, {
+    size: 9,
+    bold: true,
+  });
   const materialsRows: PdfTableCell[][] = formData.products.map((product) => [
     { type: "text", text: product.name },
     { type: "text", text: product.dosage },
@@ -69,12 +77,46 @@ export const drawMainTable = ({
     ],
     rows: materialsRows,
   };
-  const tableHeight2 = drawer.drawTable(cursor_x, cursor.y, tableData2, {
+  const productsTableHeight = drawer.drawTable(x, y, tableData2, {
     fontSize: 8,
     rowHeight: 18,
   });
+
+  return { productsTableWidth: 260, productsTableHeight };
+}
+
+type DrawMainTableProps = {
+  drawer: PDFDrawer;
+  cursor: Cursor;
+  formData: AcceptanceFormData;
+};
+export const drawMainTable = ({
+  drawer,
+  cursor,
+  formData,
+}: DrawMainTableProps) => {
+  const gapBetweenTables = 10;
+  cursor.move(5);
+  const { pestsTableWidth, pestsTableHeight } = createPestsTable({
+    drawer,
+    x: MARGIN_X,
+    y: cursor.y,
+    formData,
+  });
+  const { productsTableHeight } = createProductsTable({
+    drawer,
+    x: MARGIN_X + pestsTableWidth + gapBetweenTables,
+    y: cursor.y,
+    formData,
+  });
+  cursor.move(5);
+
   /*const height = tableHeight > tableHeight2 ? tableHeight : tableHeight2;*/
-  cursor.move((tableHeight > tableHeight2 ? tableHeight : tableHeight2) + 20);
+  cursor.move(
+    (pestsTableHeight > productsTableHeight
+      ? pestsTableHeight
+      : productsTableHeight) + 20,
+  );
 
   // Check if we need a new page
   /*if (cursorY < 250) {
