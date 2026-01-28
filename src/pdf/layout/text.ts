@@ -32,7 +32,7 @@ export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
   drawer.drawText(`${date} (წწ.თ.დ)`, PAGE_WIDTH - 120, cursor.y + 15, {
     size: 10,
   });
-  cursor.move(25);
+  cursor.move(15);
 };
 
 type DrawIntro = BaseDraw & {
@@ -46,6 +46,7 @@ export const drawIntro = ({
   customerName,
   customerId,
 }: DrawIntro) => {
+  cursor.move(5);
   const introText = `ერთი მხრივ "${customerName}" (ს/კ ${customerId}; შემდგომში "დამკვეთი") და მეორე მხრივ "შპს ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
 
   const textHeight = drawer.drawParagraph(
@@ -55,5 +56,5 @@ export const drawIntro = ({
     PAGE_WIDTH - MARGIN_X * 2,
     { size: 10 },
   );
-  cursor.move(textHeight + 15);
+  cursor.move(textHeight + 10);
 };

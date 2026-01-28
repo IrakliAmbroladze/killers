@@ -16,7 +16,7 @@ export const drawMainTable = ({
   formData,
 }: DrawMainTableProps) => {
   let cursor_x = MARGIN_X;
-  cursor.move(15);
+  cursor.move(5);
   cursor_x += 50;
   drawer.drawText("გატარებული ღონისძიება", cursor_x, cursor.y, {
     size: 9,
@@ -27,7 +27,7 @@ export const drawMainTable = ({
     size: 9,
     bold: true,
   });
-  cursor.move(10);
+  cursor.move(5);
   cursor_x = MARGIN_X;
 
   const rows: PdfTableCell[][] = formData.pests.map((pest) => [
@@ -100,7 +100,7 @@ export const drawSpacesInspected = ({
   cursor.move(20);
 
   const spaceCols = 4;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 4) / spaceCols;
+  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 5) / spaceCols;
   spacesList.forEach((space, index) => {
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
