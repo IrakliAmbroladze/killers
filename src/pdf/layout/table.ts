@@ -91,16 +91,17 @@ export const drawSpacesInspected = ({
   cursor,
   formData,
 }: DrawSpacesInspected) => {
+  cursor.move(5);
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
     MARGIN_X,
     cursor.y,
-    { size: 10, bold: true },
+    { size: 8, bold: true },
   );
-  cursor.move(15);
+  cursor.move(25);
 
-  const spaceCols = 5;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
+  const spaceCols = 4;
+  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 4) / spaceCols;
   spacesList.forEach((space, index) => {
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
@@ -113,7 +114,7 @@ export const drawSpacesInspected = ({
 
   cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
 
-  drawer.drawText("დაწყების დრო:", MARGIN_X, cursor.y, {
+  drawer.drawText("დაწყების დრო:", PAGE_WIDTH - 100, cursor.y, {
     size: 9,
     bold: true,
   });
@@ -156,9 +157,8 @@ export const drawSoldInventoryTable = ({
 }: DrawSoldInventoryTable) => {
   let cursor_x = MARGIN_X;
   let cursor_y = cursor.y;
-  cursor_y += 95;
   cursor_x += 50;
-  cursor_x += 270;
+  cursor_x += 280;
   drawer.drawText("მიწოდებული ინვენტარი", cursor_x, cursor_y, {
     size: 9,
     bold: true,
@@ -172,17 +172,16 @@ export const drawSoldInventoryTable = ({
 
   const tableData = {
     headers: [
-      { text: "დასახელება", width: 150 },
-      { text: "ერთეულის ფასი", width: 100 },
-      { text: "რაოდენობა", width: 60 },
+      { text: "დასახელება", width: 130 },
+      { text: "ფასი", width: 60 },
+      { text: "რაოდენობა", width: 70 },
     ],
     rows,
   };
 
   cursor_y -= 5;
-  cursor_x -= 120;
 
-  drawer.drawTable(cursor_x, cursor_y, tableData, {
+  drawer.drawTable(PAGE_WIDTH - MARGIN_X - 252, cursor_y, tableData, {
     fontSize: 8,
     rowHeight: 18,
   });

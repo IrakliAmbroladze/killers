@@ -62,8 +62,8 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawServicesCheckBoxes({ services, cursor, drawer });
 
   drawMainTable({ drawer, cursor, formData });
-  drawSpacesInspected({ drawer, cursor, formData });
   drawSoldInventoryTable({ drawer, cursor, formData });
+  drawSpacesInspected({ drawer, cursor, formData });
   drawSignatures({ drawer, cursor, formData, page, pdf });
   drawStamp({ drawer, cursor, image: stampImage });
 
