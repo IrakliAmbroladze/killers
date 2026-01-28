@@ -70,7 +70,7 @@ export const acceptanceFormData = (
       dosage: product.dosage,
       used: "",
     })),
-    inventory: Array.from({ length: 3 }, () => ({
+    inventory: Array.from({ length: 5 }, () => ({
       name: "",
       price: "",
       quantity: "",
