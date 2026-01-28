@@ -24,14 +24,14 @@ export const drawSignatures = async ({
     page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     cursorY = PAGE_HEIGHT - MARGIN_Y;
   }*/
-  cursor.move(10);
+  cursor.move(30);
 
   drawer.drawText("დამკვეთის წარმომადგენელი", MARGIN_X, cursor.y, {
-    size: 11,
+    size: 10,
     bold: true,
   });
   drawer.drawText("შემსრულებელი", PAGE_WIDTH / 2 + 50, cursor.y, {
-    size: 11,
+    size: 10,
     bold: true,
   });
   cursor.move(20);

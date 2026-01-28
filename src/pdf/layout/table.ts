@@ -91,14 +91,13 @@ export const drawSpacesInspected = ({
   cursor,
   formData,
 }: DrawSpacesInspected) => {
-  cursor.move(5);
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
     MARGIN_X,
     cursor.y,
     { size: 8, bold: true },
   );
-  cursor.move(25);
+  cursor.move(20);
 
   const spaceCols = 4;
   const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 4) / spaceCols;
@@ -106,43 +105,43 @@ export const drawSpacesInspected = ({
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
     const xPos = MARGIN_X + col * spaceColWidth;
-    const yPos = cursor.y - row * 18;
+    const yPos = cursor.y - row * 12;
 
     drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
     drawer.drawText(space, xPos + 12, yPos, { size: 7 });
   });
 
-  cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
+  // cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
 
-  drawer.drawText("დაწყების დრო:", PAGE_WIDTH - 100, cursor.y, {
+  const cursor_x = PAGE_WIDTH - 180;
+
+  cursor.move(-6);
+  drawer.drawText("დაწყების დრო:", cursor_x, cursor.y, {
     size: 9,
     bold: true,
   });
-  drawer.drawText(formData.startTime, MARGIN_X + 80, cursor.y, { size: 9 });
+  drawer.drawText(formData.startTime, cursor_x + 80, cursor.y, { size: 9 });
+  cursor.move(12);
+
+  drawer.drawText("დასრულების დრო:", cursor_x, cursor.y, {
+    size: 9,
+    bold: true,
+  });
+  drawer.drawText(formData.endTime, cursor_x + 100, cursor.y, { size: 9 });
   cursor.move(18);
 
-  drawer.drawText("დასრულების დრო:", MARGIN_X, cursor.y, {
+  drawer.drawText("ობიექტის მისამართი:", cursor_x, cursor.y, {
     size: 9,
     bold: true,
   });
-  drawer.drawText(formData.endTime, MARGIN_X + 100, cursor.y, { size: 9 });
-  cursor.move(18);
+  cursor.move(10);
 
-  drawer.drawText("ობიექტის მისამართი:", MARGIN_X, cursor.y, {
+  drawer.drawParagraph(formData.address, cursor_x, cursor.y, 170, {
     size: 9,
-    bold: true,
+    lineHeight: 1.3,
   });
-  cursor.move(15);
 
-  const usedHeight = drawer.drawParagraph(
-    formData.address,
-    MARGIN_X,
-    cursor.y,
-    200,
-    { size: 9, lineHeight: 1.3 },
-  );
-
-  cursor.move(usedHeight + 15);
+  //cursor.move(usedHeight + 15);
 };
 
 type DrawSoldInventoryTable = {
@@ -173,7 +172,7 @@ export const drawSoldInventoryTable = ({
   const tableData = {
     headers: [
       { text: "დასახელება", width: 130 },
-      { text: "ფასი", width: 60 },
+      { text: "ერთ.ფასი", width: 60 },
       { text: "რაოდენობა", width: 70 },
     ],
     rows,
