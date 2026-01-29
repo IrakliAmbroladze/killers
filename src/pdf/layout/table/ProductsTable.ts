@@ -1,5 +1,10 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
-import { SPACE_BETWEEN_TITLE_AND_TABLE } from "@/pdf/constants/tableData";
+import {
+  SPACE_BETWEEN_TITLE_AND_TABLE,
+  W_FIRST_COL,
+  W_SECOND_COL,
+  W_THIRD_COL,
+} from "@/pdf/constants/tableData";
 import { PdfTableCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
 
@@ -14,9 +19,6 @@ export const createProductsTable = ({
   y: number;
   formData: AcceptanceFormData;
 }) => {
-  const W_FIRST_COL = 130;
-  const W_SECOND_COL = 60;
-  const W_THIRD_COL = 70;
   const productsTableWidth = W_FIRST_COL + W_SECOND_COL + W_THIRD_COL;
   drawer.drawText("გამოყენებული საშუალებები", x, y, {
     size: 9,

@@ -2,10 +2,14 @@ import { AcceptanceFormData } from "@/types";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
-import { spacesList } from "../constants/tableData";
-import { PdfTableCell } from "../types/Table";
+import {
+  SPACE_BETWEEN_TITLE_AND_TABLE,
+  spacesList,
+  TABLE_ROW_HEIGHT,
+} from "../constants/tableData";
 import { createPestsTable } from "./table/PestsTable";
 import { createProductsTable } from "./table/ProductsTable";
+import { drawSoldInventoryTable } from "./table/SoldInventoryTable";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
@@ -31,8 +35,15 @@ export const drawMainTable = ({
     y: cursor.y,
     formData,
   });
-  cursor.move(5);
 
+  cursor.move(TABLE_ROW_HEIGHT - SPACE_BETWEEN_TITLE_AND_TABLE);
+  drawSoldInventoryTable({
+    drawer,
+    cursor,
+    formData,
+    x: MARGIN_X + pestsTableWidth + gapBetweenTables,
+    y: cursor.y - productsTableHeight,
+  });
   cursor.move(
     (pestsTableHeight > productsTableHeight
       ? pestsTableHeight
@@ -101,47 +112,4 @@ export const drawSpacesInspected = ({
   });
 
   //cursor.move(usedHeight + 15);
-};
-
-type DrawSoldInventoryTable = {
-  drawer: PDFDrawer;
-  cursor: Cursor;
-  formData: AcceptanceFormData;
-};
-export const drawSoldInventoryTable = ({
-  drawer,
-  cursor,
-  formData,
-}: DrawSoldInventoryTable) => {
-  let cursor_x = MARGIN_X;
-  let cursor_y = cursor.y;
-  cursor_x += 350;
-  cursor_y += 133;
-  drawer.drawText("მიწოდებული ინვენტარი", cursor_x, cursor_y, {
-    size: 9,
-    bold: true,
-  });
-
-  const rows: PdfTableCell[][] = formData.inventory.map((item) => [
-    { type: "text", text: item.name },
-    { type: "text", text: item.price },
-    { type: "text", text: item.quantity },
-  ]);
-
-  const tableData = {
-    headers: [
-      { text: "დასახელება", width: 130 },
-      { text: "ერთ.ფასი", width: 60 },
-      { text: "რაოდენობა", width: 70 },
-    ],
-    rows,
-  };
-
-  cursor_y -= 5;
-
-  drawer.drawTable(PAGE_WIDTH - MARGIN_X - 252, cursor_y, tableData, {
-    fontSize: 8,
-    rowHeight: 18,
-  });
-  cursor_x += 262;
 };
