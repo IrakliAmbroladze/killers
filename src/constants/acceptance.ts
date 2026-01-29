@@ -14,6 +14,15 @@ export const pestTableData: string[] = [
   "ქვეწარმავალი",
   "ბაქტერია",
   "ბზიკი",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
 ];
 
 export const productsTableData: { name: string; dosage: string }[] = [
@@ -63,7 +72,7 @@ export const acceptanceFormData = (
       dosage: product.dosage,
       used: "",
     })),
-    inventory: Array.from({ length: 3 }, () => ({
+    inventory: Array.from({ length: 5 }, () => ({
       name: "",
       price: "",
       quantity: "",

@@ -24,17 +24,19 @@ export const drawSignatures = async ({
     page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     cursorY = PAGE_HEIGHT - MARGIN_Y;
   }*/
-  cursor.move(10);
+  cursor.move(50);
 
+  const cursor_x = PAGE_WIDTH / 2 + 150;
+  const line_y = 12.5;
   drawer.drawText("დამკვეთის წარმომადგენელი", MARGIN_X, cursor.y, {
-    size: 11,
+    size: 10,
     bold: true,
   });
-  drawer.drawText("შემსრულებელი", PAGE_WIDTH / 2 + 50, cursor.y, {
-    size: 11,
+  drawer.drawText("შემსრულებელი", cursor_x - 20, cursor.y, {
+    size: 10,
     bold: true,
   });
-  cursor.move(20);
+  cursor.move(line_y);
 
   // Customer info
   drawer.drawText(
@@ -45,17 +47,21 @@ export const drawSignatures = async ({
       size: 9,
     },
   );
-  cursor.move(15);
+  drawer.drawText("შპს ქილ", cursor_x, cursor.y, { size: 9 });
+  cursor.move(line_y);
   drawer.drawText(
     `პირადი ნომერი: ${formData.customer.representative.id}`,
     MARGIN_X,
     cursor.y,
     { size: 9 },
   );
-  cursor.move(20);
+  drawer.drawText("ს/კ: 405049923", cursor_x, cursor.y, { size: 9 });
+  cursor.move(line_y);
 
   drawer.drawText("ხელმოწერა", MARGIN_X, cursor.y, { size: 9 });
-  drawer.drawText("ხელმოწერა", PAGE_WIDTH / 2 + 50, cursor.y, { size: 9 });
+  drawer.drawText("ხელმოწერა", cursor_x, cursor.y, {
+    size: 9,
+  });
   if (formData.customer.signature && formData.executor.signature) {
     const customerPngBytes = Uint8Array.from(
       atob(formData.customer.signature.replace(/^data:image\/png;base64,/, "")),
@@ -80,7 +86,7 @@ export const drawSignatures = async ({
     });
 
     page.drawImage(executorImg, {
-      x: PAGE_WIDTH / 2 + 50,
+      x: cursor_x - 50,
       y: cursor.y - sigHeight,
       width: sigWidth,
       height: sigHeight,

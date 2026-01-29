@@ -13,13 +13,15 @@ type DrawDocTitle = BaseDraw & {
 
 export const drawDocTitle = ({ drawer, title, cursor }: DrawDocTitle) => {
   const TEXT_HEIGHT = 14;
-  cursor.move(TEXT_HEIGHT + 5);
-  drawer.drawText(title, PAGE_WIDTH / 3, cursor.y, {
+  cursor.move(TEXT_HEIGHT + 5 - 50);
+  drawer.drawText(title, 0, cursor.y, {
     size: TEXT_HEIGHT,
     bold: true,
     align: "center",
-    maxWidth: 0,
+    maxWidth: PAGE_WIDTH,
   });
+
+  cursor.move(30);
 };
 
 type DrawDate = BaseDraw & {
@@ -27,10 +29,12 @@ type DrawDate = BaseDraw & {
 };
 
 export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
-  drawer.drawText(`${date} (წწ.თ.დ)`, MARGIN_X, cursor.y, {
+  drawer.drawText(`${date} (წწ.თ.დ)`, MARGIN_X, cursor.y + 15, {
     size: 10,
+    align: "right",
+    maxWidth: PAGE_WIDTH - MARGIN_X * 2,
   });
-  cursor.move(25);
+  cursor.move(15);
 };
 
 type DrawIntro = BaseDraw & {
@@ -44,6 +48,7 @@ export const drawIntro = ({
   customerName,
   customerId,
 }: DrawIntro) => {
+  cursor.move(5);
   const introText = `ერთი მხრივ "${customerName}" (ს/კ ${customerId}; შემდგომში "დამკვეთი") და მეორე მხრივ "შპს ქილ" (ს/კ 405049923; შემდგომში "შემსრულებელი") ვადასტურებთ, რომ შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი (მარკირებული/აღნიშნული) სახის მომსახურება:`;
 
   const textHeight = drawer.drawParagraph(
@@ -53,5 +58,5 @@ export const drawIntro = ({
     PAGE_WIDTH - MARGIN_X * 2,
     { size: 10 },
   );
-  cursor.move(textHeight + 15);
+  cursor.move(textHeight + 10);
 };

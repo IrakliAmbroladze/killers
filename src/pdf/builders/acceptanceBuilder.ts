@@ -10,11 +10,7 @@ import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
 import { Services } from "../types/SanitaryServices";
 import { drawServicesCheckBoxes } from "../layout/checkboxes";
-import {
-  drawMainTable,
-  drawSoldInventoryTable,
-  drawSpacesInspected,
-} from "../layout/table";
+import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
 import { drawLogo, drawStamp } from "../layout/images";
 
@@ -63,7 +59,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   drawMainTable({ drawer, cursor, formData });
   drawSpacesInspected({ drawer, cursor, formData });
-  drawSoldInventoryTable({ drawer, cursor, formData });
   drawSignatures({ drawer, cursor, formData, page, pdf });
   drawStamp({ drawer, cursor, image: stampImage });
 
