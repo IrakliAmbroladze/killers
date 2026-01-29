@@ -1,4 +1,5 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
+import { SPACE_BETWEEN_TITLE_AND_TABLE } from "@/pdf/constants/tableData";
 import { PdfTableCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
 
@@ -19,7 +20,6 @@ export const createPestsTable = ({
   const W_FOURTH_COL = 50;
   const pestsTableWidth =
     W_FIRST_COL + W_SECOND_COL + W_THIRD_COL + W_FOURTH_COL;
-  const SPACE_BETWEEN_TITLE_AND_TABLE = 5;
 
   drawer.drawText("გატარებული ღონისძიება", x, y, {
     size: 9,

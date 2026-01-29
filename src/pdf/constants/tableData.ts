@@ -19,3 +19,5 @@ export const spacesList = [
   "ნაგავსაყრელი",
   "გარე ტერიტორია",
 ];
+
+export const SPACE_BETWEEN_TITLE_AND_TABLE = 5;
