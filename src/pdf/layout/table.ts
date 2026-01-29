@@ -2,7 +2,11 @@ import { AcceptanceFormData } from "@/types";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
-import { spacesList } from "../constants/tableData";
+import {
+  SPACE_BETWEEN_TITLE_AND_TABLE,
+  spacesList,
+  TABLE_ROW_HEIGHT,
+} from "../constants/tableData";
 import { createPestsTable } from "./table/PestsTable";
 import { createProductsTable } from "./table/ProductsTable";
 import { drawSoldInventoryTable } from "./table/SoldInventoryTable";
@@ -31,19 +35,20 @@ export const drawMainTable = ({
     y: cursor.y,
     formData,
   });
-  cursor.move(5);
 
-  cursor.move(
-    (pestsTableHeight > productsTableHeight
-      ? pestsTableHeight
-      : productsTableHeight) + 20,
-  );
+  cursor.move(TABLE_ROW_HEIGHT - SPACE_BETWEEN_TITLE_AND_TABLE);
   drawSoldInventoryTable({
     drawer,
     cursor,
     formData,
     x: MARGIN_X + pestsTableWidth + gapBetweenTables,
+    y: cursor.y - productsTableHeight,
   });
+  cursor.move(
+    (pestsTableHeight > productsTableHeight
+      ? pestsTableHeight
+      : productsTableHeight) + 20,
+  );
 };
 
 type DrawSpacesInspected = {

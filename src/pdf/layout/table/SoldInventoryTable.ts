@@ -1,5 +1,10 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
-import { MARGIN_X, PAGE_WIDTH } from "@/pdf/constants/pdfPageDimensions";
+import {
+  SPACE_BETWEEN_TITLE_AND_TABLE,
+  W_FIRST_COL,
+  W_SECOND_COL,
+  W_THIRD_COL,
+} from "@/pdf/constants/tableData";
 import { Cursor } from "@/pdf/types/Cursor";
 import { PdfTableCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
@@ -9,18 +14,20 @@ type DrawSoldInventoryTable = {
   cursor: Cursor;
   formData: AcceptanceFormData;
   x: number;
+  y: number;
 };
 export const drawSoldInventoryTable = ({
   drawer,
-  cursor,
   formData,
   x,
+  y,
 }: DrawSoldInventoryTable) => {
-  let cursor_y = cursor.y;
-  cursor_y += 133;
-  drawer.drawText("მიწოდებული ინვენტარი", x, cursor_y, {
+  const soldInventoryTableWidth = W_FIRST_COL + W_SECOND_COL + W_THIRD_COL;
+  drawer.drawText("მიწოდებული ინვენტარი", x, y, {
     size: 9,
     bold: true,
+    align: "center",
+    maxWidth: soldInventoryTableWidth,
   });
 
   const rows: PdfTableCell[][] = formData.inventory.map((item) => [
@@ -38,9 +45,7 @@ export const drawSoldInventoryTable = ({
     rows,
   };
 
-  cursor_y -= 0;
-
-  drawer.drawTable(x, cursor_y, tableData, {
+  drawer.drawTable(x, y - SPACE_BETWEEN_TITLE_AND_TABLE, tableData, {
     fontSize: 8,
     rowHeight: 18,
   });
