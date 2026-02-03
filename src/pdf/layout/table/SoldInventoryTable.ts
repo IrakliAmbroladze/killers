@@ -35,9 +35,12 @@ export const drawSoldInventoryTable = ({
 
   const tableData = {
     headers: [
-      { text: "დასახელება", width: W_FIRST_COL },
-      { text: "ერთ.ფასი", width: W_SECOND_COL },
-      { text: "რაოდენობა", width: W_THIRD_COL },
+      {
+        text: "                                დასახელება",
+        width: W_FIRST_COL,
+      },
+      { text: "      ერთ.ფასი", width: W_SECOND_COL },
+      { text: "      რაოდენობა", width: W_THIRD_COL },
     ],
     rows,
   };
