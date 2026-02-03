@@ -16,13 +16,6 @@ export const pestTableData: string[] = [
   "ბზიკი",
   "",
   "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
 ];
 
 export const productsTableData: { name: string; dosage: string }[] = [
