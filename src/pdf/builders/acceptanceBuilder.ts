@@ -3,11 +3,7 @@ import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
 import { AcceptanceFormData } from "@/types";
-import {
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-  MARGIN_X,
-} from "../constants/pdfPageDimensions";
+import { PAGE_WIDTH, PAGE_HEIGHT } from "../constants/pdfPageDimensions";
 import { createCursor } from "../layout/cursor";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
@@ -67,8 +63,6 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     drawer,
     cursor,
     formData,
-    x: MARGIN_X,
-    y: cursor.y,
   });
 
   drawSpacesInspected({ drawer, cursor, formData });

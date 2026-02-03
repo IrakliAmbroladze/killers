@@ -1,10 +1,6 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
-import {
-  SPACE_BETWEEN_TITLE_AND_TABLE,
-  W_FIRST_COL,
-  W_SECOND_COL,
-  W_THIRD_COL,
-} from "@/pdf/constants/tableData";
+import { MARGIN_X } from "@/pdf/constants/pdfPageDimensions";
+import { SPACE_BETWEEN_TITLE_AND_TABLE } from "@/pdf/constants/tableData";
 import { Cursor } from "@/pdf/types/Cursor";
 import { PdfTableCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
@@ -13,17 +9,18 @@ type DrawSoldInventoryTable = {
   drawer: PDFDrawer;
   cursor: Cursor;
   formData: AcceptanceFormData;
-  x: number;
-  y: number;
 };
 export const drawSoldInventoryTable = ({
   drawer,
   formData,
-  x,
-  y,
+  cursor,
 }: DrawSoldInventoryTable) => {
+  const W_FIRST_COL = 200;
+  const W_SECOND_COL = 95;
+  const W_THIRD_COL = 95;
+
   const soldInventoryTableWidth = W_FIRST_COL + W_SECOND_COL + W_THIRD_COL;
-  drawer.drawText("მიწოდებული ინვენტარი", x, y, {
+  drawer.drawText("მიწოდებული ინვენტარი", MARGIN_X, cursor.y, {
     size: 9,
     bold: true,
     align: "center",
@@ -38,15 +35,21 @@ export const drawSoldInventoryTable = ({
 
   const tableData = {
     headers: [
-      { text: "დასახელება", width: 130 },
-      { text: "ერთ.ფასი", width: 60 },
-      { text: "რაოდენობა", width: 70 },
+      { text: "დასახელება", width: W_FIRST_COL },
+      { text: "ერთ.ფასი", width: W_SECOND_COL },
+      { text: "რაოდენობა", width: W_THIRD_COL },
     ],
     rows,
   };
 
-  drawer.drawTable(x, y - SPACE_BETWEEN_TITLE_AND_TABLE, tableData, {
-    fontSize: 8,
-    rowHeight: 18,
-  });
+  const table_height = drawer.drawTable(
+    MARGIN_X,
+    cursor.y - SPACE_BETWEEN_TITLE_AND_TABLE,
+    tableData,
+    {
+      fontSize: 8,
+      rowHeight: 18,
+    },
+  );
+  cursor.move(table_height + 9 + SPACE_BETWEEN_TITLE_AND_TABLE);
 };
