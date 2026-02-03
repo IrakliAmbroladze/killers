@@ -3,7 +3,11 @@ import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
 import { AcceptanceFormData } from "@/types";
-import { PAGE_WIDTH, PAGE_HEIGHT } from "../constants/pdfPageDimensions";
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  MARGIN_X,
+} from "../constants/pdfPageDimensions";
 import { createCursor } from "../layout/cursor";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
@@ -13,6 +17,7 @@ import { drawServicesCheckBoxes } from "../layout/checkboxes";
 import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
 import { drawLogo, drawStamp } from "../layout/images";
+import { drawSoldInventoryTable } from "../layout/table/SoldInventoryTable";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -58,6 +63,14 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawServicesCheckBoxes({ services, cursor, drawer });
 
   drawMainTable({ drawer, cursor, formData });
+  drawSoldInventoryTable({
+    drawer,
+    cursor,
+    formData,
+    x: MARGIN_X,
+    y: cursor.y,
+  });
+
   drawSpacesInspected({ drawer, cursor, formData });
   drawSignatures({ drawer, cursor, formData, page, pdf });
   drawStamp({ drawer, cursor, image: stampImage });

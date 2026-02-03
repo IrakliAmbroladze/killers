@@ -9,7 +9,6 @@ import {
 } from "../constants/tableData";
 import { createPestsTable } from "./table/PestsTable";
 import { createProductsTable } from "./table/ProductsTable";
-import { drawSoldInventoryTable } from "./table/SoldInventoryTable";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
@@ -37,17 +36,10 @@ export const drawMainTable = ({
   });
 
   cursor.move(TABLE_ROW_HEIGHT - SPACE_BETWEEN_TITLE_AND_TABLE);
-  drawSoldInventoryTable({
-    drawer,
-    cursor,
-    formData,
-    x: MARGIN_X + pestsTableWidth + gapBetweenTables,
-    y: cursor.y - productsTableHeight,
-  });
   cursor.move(
-    (pestsTableHeight > productsTableHeight
+    pestsTableHeight > productsTableHeight
       ? pestsTableHeight
-      : productsTableHeight) + 20,
+      : productsTableHeight,
   );
 };
 
