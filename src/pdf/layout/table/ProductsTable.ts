@@ -34,9 +34,9 @@ export const createProductsTable = ({
 
   const tableData2 = {
     headers: [
-      { text: "დასახელება", width: W_FIRST_COL },
-      { text: "დოზირება", width: W_SECOND_COL },
-      { text: "გახარჯული", width: W_THIRD_COL },
+      { text: "                დასახელება", width: W_FIRST_COL },
+      { text: " დოზირება", width: W_SECOND_COL },
+      { text: "  გახარჯული", width: W_THIRD_COL },
     ],
     rows: materialsRows,
   };

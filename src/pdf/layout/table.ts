@@ -9,7 +9,6 @@ import {
 } from "../constants/tableData";
 import { createPestsTable } from "./table/PestsTable";
 import { createProductsTable } from "./table/ProductsTable";
-import { drawSoldInventoryTable } from "./table/SoldInventoryTable";
 
 type DrawMainTableProps = {
   drawer: PDFDrawer;
@@ -37,79 +36,51 @@ export const drawMainTable = ({
   });
 
   cursor.move(TABLE_ROW_HEIGHT - SPACE_BETWEEN_TITLE_AND_TABLE);
-  drawSoldInventoryTable({
-    drawer,
-    cursor,
-    formData,
-    x: MARGIN_X + pestsTableWidth + gapBetweenTables,
-    y: cursor.y - productsTableHeight,
-  });
   cursor.move(
-    (pestsTableHeight > productsTableHeight
+    pestsTableHeight > productsTableHeight
       ? pestsTableHeight
-      : productsTableHeight) + 20,
+      : productsTableHeight,
   );
 };
 
 type DrawSpacesInspected = {
   drawer: PDFDrawer;
-  cursor: Cursor;
+  x: number;
+  y: number;
   formData: AcceptanceFormData;
 };
 export const drawSpacesInspected = ({
   drawer,
-  cursor,
   formData,
+  x,
+  y,
 }: DrawSpacesInspected) => {
+  const initial_y = y;
+  const ROW_HEIGHT = 18;
+  y -= 10;
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
-    MARGIN_X,
-    cursor.y,
-    { size: 8, bold: true },
+    x,
+    y,
+    { size: 9, bold: true },
   );
-  cursor.move(20);
+  y -= 20;
 
-  const spaceCols = 4;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 5) / spaceCols;
+  const spaceCols = 5;
+  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
   spacesList.forEach((space, index) => {
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
     const xPos = MARGIN_X + col * spaceColWidth;
-    const yPos = cursor.y - row * 12;
+    const yPos = y - row * ROW_HEIGHT;
 
     drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
     drawer.drawText(space, xPos + 12, yPos, { size: 7 });
   });
-
+  y -= Math.ceil(spacesList.length / spaceCols) * ROW_HEIGHT;
+  const usedHeight = initial_y - y;
+  return [usedHeight];
   // cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
-
-  const cursor_x = PAGE_WIDTH - 180;
-
-  cursor.move(-6);
-  drawer.drawText("დაწყების დრო:", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  drawer.drawText(formData.startTime, cursor_x + 80, cursor.y, { size: 9 });
-  cursor.move(12);
-
-  drawer.drawText("დასრულების დრო:", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  drawer.drawText(formData.endTime, cursor_x + 100, cursor.y, { size: 9 });
-  cursor.move(18);
-
-  drawer.drawText("ობიექტის მისამართი:", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  cursor.move(10);
-
-  drawer.drawParagraph(formData.address, cursor_x, cursor.y, 170, {
-    size: 9,
-    lineHeight: 1.3,
-  });
 
   //cursor.move(usedHeight + 15);
 };
