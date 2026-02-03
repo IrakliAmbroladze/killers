@@ -37,10 +37,10 @@ export const createPestsTable = ({
 
   const tableData = {
     headers: [
-      { text: "მავნებელი", width: W_FIRST_COL },
-      { text: "მონიტორი", width: W_SECOND_COL },
-      { text: "სპრეი", width: W_THIRD_COL },
-      { text: "გელი", width: W_FOURTH_COL },
+      { text: "     მავნებელი", width: W_FIRST_COL },
+      { text: " მონიტორი", width: W_SECOND_COL },
+      { text: "       სპრეი", width: W_THIRD_COL },
+      { text: "    გელი", width: W_FOURTH_COL },
     ],
     rows,
   };

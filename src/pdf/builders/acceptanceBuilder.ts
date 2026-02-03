@@ -3,7 +3,11 @@ import fontkit from "@pdf-lib/fontkit";
 import fs from "node:fs";
 import path from "node:path";
 import { AcceptanceFormData } from "@/types";
-import { PAGE_WIDTH, PAGE_HEIGHT } from "../constants/pdfPageDimensions";
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  MARGIN_X,
+} from "../constants/pdfPageDimensions";
 import { createCursor } from "../layout/cursor";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
@@ -13,6 +17,8 @@ import { drawServicesCheckBoxes } from "../layout/checkboxes";
 import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
 import { drawLogo, drawStamp } from "../layout/images";
+import { drawSoldInventoryTable } from "../layout/table/SoldInventoryTable";
+import { drawTimeAndAddress } from "../layout/text/drawTimeAndAddress";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -58,7 +64,29 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawServicesCheckBoxes({ services, cursor, drawer });
 
   drawMainTable({ drawer, cursor, formData });
-  drawSpacesInspected({ drawer, cursor, formData });
+  const [sold_inventory_height, sold_inventory_width] = drawSoldInventoryTable({
+    drawer,
+    cursor,
+    formData,
+  });
+  const [time_address_height] = drawTimeAndAddress({
+    drawer,
+    formData,
+    x: MARGIN_X + sold_inventory_width + 10,
+    y: cursor.y,
+  });
+  cursor.move(
+    sold_inventory_height > time_address_height
+      ? sold_inventory_height
+      : time_address_height,
+  );
+  const [spaces_inspected_height] = drawSpacesInspected({
+    drawer,
+    formData,
+    x: MARGIN_X,
+    y: cursor.y,
+  });
+  cursor.move(spaces_inspected_height);
   drawSignatures({ drawer, cursor, formData, page, pdf });
   drawStamp({ drawer, cursor, image: stampImage });
 
