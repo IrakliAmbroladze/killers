@@ -59,11 +59,12 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawServicesCheckBoxes({ services, cursor, drawer });
 
   drawMainTable({ drawer, cursor, formData });
-  drawSoldInventoryTable({
+  const [sold_inventory_height, sold_inventory_width] = drawSoldInventoryTable({
     drawer,
     cursor,
     formData,
   });
+  cursor.move(sold_inventory_height);
 
   drawSpacesInspected({ drawer, cursor, formData });
   drawSignatures({ drawer, cursor, formData, page, pdf });

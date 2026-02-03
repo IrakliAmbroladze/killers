@@ -51,5 +51,7 @@ export const drawSoldInventoryTable = ({
       rowHeight: 18,
     },
   );
-  cursor.move(table_height + 9 + SPACE_BETWEEN_TITLE_AND_TABLE);
+  const height = table_height + 9 + SPACE_BETWEEN_TITLE_AND_TABLE;
+  const width = W_FIRST_COL + W_SECOND_COL + W_THIRD_COL;
+  return [height, width];
 };
