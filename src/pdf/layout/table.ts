@@ -75,33 +75,7 @@ export const drawSpacesInspected = ({
 
   // cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
 
-  const cursor_x = PAGE_WIDTH - 180;
-
   cursor.move(-6);
-  drawer.drawText("დაწყების დრო:", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  drawer.drawText(formData.startTime, cursor_x + 80, cursor.y, { size: 9 });
-  cursor.move(12);
-
-  drawer.drawText("დასრულების დრო:", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  drawer.drawText(formData.endTime, cursor_x + 100, cursor.y, { size: 9 });
-  cursor.move(18);
-
-  drawer.drawText("ობიექტის მისამართი:", cursor_x, cursor.y, {
-    size: 9,
-    bold: true,
-  });
-  cursor.move(10);
-
-  drawer.drawParagraph(formData.address, cursor_x, cursor.y, 170, {
-    size: 9,
-    lineHeight: 1.3,
-  });
 
   //cursor.move(usedHeight + 15);
 };
