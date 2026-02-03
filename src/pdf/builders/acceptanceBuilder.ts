@@ -80,7 +80,13 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
       ? sold_inventory_height
       : time_address_height,
   );
-  drawSpacesInspected({ drawer, cursor, formData });
+  const [spaces_inspected_height] = drawSpacesInspected({
+    drawer,
+    formData,
+    x: MARGIN_X,
+    y: cursor.y,
+  });
+  cursor.move(spaces_inspected_height);
   drawSignatures({ drawer, cursor, formData, page, pdf });
   drawStamp({ drawer, cursor, image: stampImage });
 

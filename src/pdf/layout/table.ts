@@ -45,37 +45,42 @@ export const drawMainTable = ({
 
 type DrawSpacesInspected = {
   drawer: PDFDrawer;
-  cursor: Cursor;
+  x: number;
+  y: number;
   formData: AcceptanceFormData;
 };
 export const drawSpacesInspected = ({
   drawer,
-  cursor,
   formData,
+  x,
+  y,
 }: DrawSpacesInspected) => {
+  const initial_y = y;
+  const ROW_HEIGHT = 18;
+  y -= 5;
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
-    MARGIN_X,
-    cursor.y,
-    { size: 8, bold: true },
+    x,
+    y,
+    { size: 9, bold: true },
   );
-  cursor.move(20);
+  y -= 20;
 
-  const spaceCols = 4;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 5) / spaceCols;
+  const spaceCols = 5;
+  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
   spacesList.forEach((space, index) => {
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
     const xPos = MARGIN_X + col * spaceColWidth;
-    const yPos = cursor.y - row * 12;
+    const yPos = y - row * ROW_HEIGHT;
 
     drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
     drawer.drawText(space, xPos + 12, yPos, { size: 7 });
   });
-
+  y -= Math.ceil(spacesList.length / spaceCols) * ROW_HEIGHT;
+  const usedHeight = initial_y - y;
+  return [usedHeight];
   // cursor.move(Math.ceil(spacesList.length / spaceCols) * 18 + 15);
-
-  cursor.move(-6);
 
   //cursor.move(usedHeight + 15);
 };
