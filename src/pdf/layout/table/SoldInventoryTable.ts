@@ -19,6 +19,8 @@ export const drawSoldInventoryTable = ({
   const W_SECOND_COL = 95;
   const W_THIRD_COL = 95;
 
+  cursor.move(5);
+
   const soldInventoryTableWidth = W_FIRST_COL + W_SECOND_COL + W_THIRD_COL;
   drawer.drawText("მიწოდებული ინვენტარი", MARGIN_X, cursor.y, {
     size: 9,

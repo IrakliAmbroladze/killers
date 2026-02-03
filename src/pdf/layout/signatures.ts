@@ -24,7 +24,7 @@ export const drawSignatures = async ({
     page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
     cursorY = PAGE_HEIGHT - MARGIN_Y;
   }*/
-
+  cursor.move(10);
   const cursor_x = PAGE_WIDTH / 2 + 150;
   const line_y = 12.5;
   drawer.drawText("დამკვეთის წარმომადგენელი", MARGIN_X, cursor.y, {

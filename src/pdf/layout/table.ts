@@ -57,7 +57,7 @@ export const drawSpacesInspected = ({
 }: DrawSpacesInspected) => {
   const initial_y = y;
   const ROW_HEIGHT = 18;
-  y -= 5;
+  y -= 10;
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
     x,
