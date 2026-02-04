@@ -3,14 +3,35 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getCommentsQuantities() {
-  const supabase = createClient();
-  const { data, error } = await (await supabase).from("tasks").select("*");
-  if (error instanceof Error) {
-    console.log("Error: " + error.message);
-  } else {
-    console.log(error);
-  }
-  console.log("getCommentsQuantities:", data?.length);
+  const supabase = await createClient();
 
-  return data ? data : [];
+  const { count, error: countError } = await supabase
+    .from("tasks")
+    .select("*", { count: "exact", head: true });
+
+  if (countError) {
+    throw new Error("Failed to count comments");
+  }
+
+  if (!count) {
+    return [];
+  }
+
+  const batchSize = 1000;
+  let allData: { id: string; comments_num: number }[] = [];
+
+  for (let i = 0; i < count; i += batchSize) {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .range(i, i + batchSize - 1);
+
+    if (error) {
+      console.error("Error fetching batch of comments:", error);
+      throw new Error("Error while fetching batch of comments");
+    }
+    allData = allData.concat(data ?? []);
+  }
+
+  return allData ? allData : [];
 }
