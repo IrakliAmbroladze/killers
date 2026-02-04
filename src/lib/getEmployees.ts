@@ -8,6 +8,5 @@ export const getEmployees = async () => {
   if (error) {
     throw new Error("Error while fetching employees data");
   }
-  console.log("getEmployees:", employees?.length);
   return employees;
 };

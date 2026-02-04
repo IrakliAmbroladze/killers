@@ -28,7 +28,7 @@ const Comments = ({ id }: { id: string }): JSX.Element => {
       />
       {commentList && <CommentsHeader commentsNumber={commentList.length} />}
 
-      <div className="overflow-y-auto max-h-64 pr-2">
+      <div className="pr-2">
         {commentList &&
           commentList.map((comment) => {
             return (
