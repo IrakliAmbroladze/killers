@@ -5,7 +5,7 @@ import {
   W_SECOND_COL,
   W_THIRD_COL,
 } from "@/pdf/constants/tableData";
-import { PdfTableCell } from "@/pdf/types/Table";
+import { PdfTableCell, TableHeaderCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
 
 export const createProductsTable = ({
@@ -27,17 +27,18 @@ export const createProductsTable = ({
     maxWidth: productsTableWidth,
   });
   const materialsRows: PdfTableCell[][] = formData.products.map((product) => [
-    { type: "text", text: product.name },
+    { type: "text", text: product.name, align: "left" },
     { type: "text", text: product.dosage, align: "center" },
-    { type: "text", text: product.used },
+    { type: "text", text: product.used, align: "center" },
   ]);
+  const headers: TableHeaderCell[] = [
+    { text: "დასახელება", width: W_FIRST_COL, align: "center" },
+    { text: "დოზირება", width: W_SECOND_COL, align: "center" },
+    { text: "გახარჯული", width: W_THIRD_COL, align: "center" },
+  ];
 
   const tableData2 = {
-    headers: [
-      { text: "                დასახელება", width: W_FIRST_COL },
-      { text: " დოზირება", width: W_SECOND_COL },
-      { text: "  გახარჯული", width: W_THIRD_COL },
-    ],
+    headers,
     rows: materialsRows,
   };
   const productsTableHeight =
