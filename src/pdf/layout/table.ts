@@ -57,17 +57,23 @@ export const drawSpacesInspected = ({
 }: DrawSpacesInspected) => {
   const initial_y = y;
   const ROW_HEIGHT = 18;
+  const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
   y -= 10;
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
     x,
     y,
-    { size: 9, bold: true },
+    {
+      size: 9,
+      align: "center",
+      maxWidth: CONTENT_WIDTH,
+      bold: true,
+    },
   );
   y -= 20;
 
   const spaceCols = 5;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
+  const spaceColWidth = CONTENT_WIDTH / spaceCols;
   spacesList.forEach((space, index) => {
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
@@ -75,7 +81,7 @@ export const drawSpacesInspected = ({
     const yPos = y - row * ROW_HEIGHT;
 
     drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
-    drawer.drawText(space, xPos + 12, yPos, { size: 7 });
+    drawer.drawText(space, xPos + 15, yPos, { size: 7 });
   });
   y -= Math.ceil(spacesList.length / spaceCols) * ROW_HEIGHT;
   const usedHeight = initial_y - y;

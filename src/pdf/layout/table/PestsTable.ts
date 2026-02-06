@@ -1,6 +1,6 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
 import { SPACE_BETWEEN_TITLE_AND_TABLE } from "@/pdf/constants/tableData";
-import { PdfTableCell } from "@/pdf/types/Table";
+import { PdfTableCell, TableHeaderCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
 
 export const createPestsTable = ({
@@ -29,19 +29,21 @@ export const createPestsTable = ({
   });
 
   const rows: PdfTableCell[][] = formData.pests.map((pest) => [
-    { type: "text", text: pest.name },
+    { type: "text", text: pest.name, align: "left" },
     { type: "checkbox", checked: pest.monitor },
     { type: "checkbox", checked: pest.spray },
     { type: "checkbox", checked: pest.gel },
   ]);
 
+  const headers: TableHeaderCell[] = [
+    { text: "მავნებელი", width: W_FIRST_COL, align: "center" },
+    { text: "მონიტორი", width: W_SECOND_COL, align: "center" },
+    { text: "სპრეი", width: W_THIRD_COL, align: "center" },
+    { text: "გელი", width: W_FOURTH_COL, align: "center" },
+  ];
+
   const tableData = {
-    headers: [
-      { text: "     მავნებელი", width: W_FIRST_COL },
-      { text: " მონიტორი", width: W_SECOND_COL },
-      { text: "       სპრეი", width: W_THIRD_COL },
-      { text: "    გელი", width: W_FOURTH_COL },
-    ],
+    headers,
     rows,
   };
 

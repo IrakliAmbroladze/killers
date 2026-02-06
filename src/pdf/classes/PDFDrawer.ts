@@ -136,6 +136,8 @@ export class PDFDrawer {
     const { fontSize = 9, rowHeight = 20, headerBold = true } = options;
     let currentY = y;
     let currentX = x;
+    const marginLeft: number = 2;
+    const marginRight: number = 2;
 
     // Draw headers
     data.headers.forEach((header) => {
@@ -150,9 +152,17 @@ export class PDFDrawer {
         borderColor: rgb(0, 0, 0),
       });
 
-      this.drawText(header.text, currentX + 4, currentY - rowHeight + 6, {
+      const headerX =
+        header.align === "left"
+          ? currentX + marginLeft
+          : header.align === "right"
+            ? currentX - marginRight
+            : currentX;
+
+      this.drawText(header.text, headerX, currentY - rowHeight + 6, {
         size: fontSize,
         bold: headerBold,
+        align: header.align || "left",
       });
 
       currentX += cellWidth;
@@ -182,10 +192,18 @@ export class PDFDrawer {
           size: fontSize,
         });*/
 
+        const rowX =
+          cell.align === "left"
+            ? currentX + marginLeft
+            : cell.align === "right"
+              ? currentX - marginRight
+              : currentX;
         switch (cell.type) {
           case "text":
-            this.drawText(cell.text, currentX + 4, currentY - rowHeight + 6, {
+            this.drawText(cell.text, rowX, currentY - rowHeight + 6, {
               size: fontSize,
+              maxWidth: cellWidth,
+              align: cell.align || "left",
             });
             break;
 

@@ -41,8 +41,8 @@ export const drawSoldInventoryTable = ({
         text: "                                დასახელება",
         width: W_FIRST_COL,
       },
-      { text: "      ერთ.ფასი", width: W_SECOND_COL },
-      { text: "      რაოდენობა", width: W_THIRD_COL },
+      { text: "          ერთ.ფასი", width: W_SECOND_COL },
+      { text: "        რაოდენობა", width: W_THIRD_COL },
     ],
     rows,
   };

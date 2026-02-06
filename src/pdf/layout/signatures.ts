@@ -25,13 +25,13 @@ export const drawSignatures = async ({
     cursorY = PAGE_HEIGHT - MARGIN_Y;
   }*/
   cursor.move(10);
-  const cursor_x = PAGE_WIDTH / 2 + 150;
+  const cursor_x = PAGE_WIDTH / 2 + 120;
   const line_y = 12.5;
   drawer.drawText("დამკვეთის წარმომადგენელი", MARGIN_X, cursor.y, {
     size: 10,
     bold: true,
   });
-  drawer.drawText("შემსრულებელი", cursor_x - 20, cursor.y, {
+  drawer.drawText("შემსრულებელი", cursor_x, cursor.y, {
     size: 10,
     bold: true,
   });
