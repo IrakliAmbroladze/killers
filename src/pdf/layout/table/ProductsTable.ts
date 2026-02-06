@@ -28,7 +28,7 @@ export const createProductsTable = ({
   });
   const materialsRows: PdfTableCell[][] = formData.products.map((product) => [
     { type: "text", text: product.name },
-    { type: "text", text: product.dosage },
+    { type: "text", text: product.dosage, align: "center" },
     { type: "text", text: product.used },
   ]);
 
