@@ -56,19 +56,24 @@ export const drawSpacesInspected = ({
   y,
 }: DrawSpacesInspected) => {
   const initial_y = y;
-  x += 50;
   const ROW_HEIGHT = 18;
+  const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
   y -= 10;
   drawer.drawText(
     "დეტალურად დათვალიერდა და საჭიროებისამებრ დამუშავდა შემდეგი სივრცეები:",
     x,
     y,
-    { size: 9, bold: true },
+    {
+      size: 9,
+      align: "center",
+      maxWidth: CONTENT_WIDTH,
+      bold: true,
+    },
   );
   y -= 20;
 
   const spaceCols = 5;
-  const spaceColWidth = (PAGE_WIDTH - MARGIN_X * 2) / spaceCols;
+  const spaceColWidth = CONTENT_WIDTH / spaceCols;
   spacesList.forEach((space, index) => {
     const col = index % spaceCols;
     const row = Math.floor(index / spaceCols);
