@@ -7,17 +7,16 @@ export const sanitaryServices = ({ formData }: SanitaryServices) => {
       checked: formData.services.disinsection,
     },
     {
-      label: "დეზინფექცია",
-      checked: formData.services.disinfection,
-    },
-    {
       label: "დერატიზაცია",
       checked: formData.services.deratization,
     },
-
     {
       label: "ქვეწარმავლების პრევენცია",
       checked: formData.services.subcontractorPrevention,
+    },
+    {
+      label: "დეზინფექცია",
+      checked: formData.services.disinfection,
     },
   ];
 };
