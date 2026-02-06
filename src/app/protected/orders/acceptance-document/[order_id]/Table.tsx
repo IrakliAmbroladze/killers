@@ -9,6 +9,7 @@ type TableProps = {
     checked: boolean,
   ) => void;
   onInputTextChange?: (materialName: string, value: string) => void;
+  onPestTextChange?: () => void;
   onInventoryTextChange?: (
     rowIndex: number,
     field: "name" | "price" | "quantity",
@@ -22,6 +23,7 @@ export const Table = ({
   onCheckboxChange,
   onInputTextChange,
   onInventoryTextChange,
+  onPestTextChange,
 }: TableProps) => {
   return (
     <table className="border border-collapse text-xs">
@@ -68,6 +70,18 @@ export const Table = ({
                           e.target.value,
                         )
                       }
+                    />
+                  </td>
+                );
+              }
+              if (cell.type === "pestInputText") {
+                return (
+                  <td key={cellIndex}>
+                    <input
+                      type="text"
+                      className="w-full min-w-0"
+                      value={cell.text}
+                      onChange={onPestTextChange}
                     />
                   </td>
                 );

@@ -32,6 +32,7 @@ export default function AcceptanceDocument({
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,
+    handlePestTextChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -58,6 +59,7 @@ export default function AcceptanceDocument({
             headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
             rows={pestRows}
             onCheckboxChange={handlePestEventChange}
+            onPestTextChange={handlePestTextChange}
           />
           <div>გამოყენებული საშუალებები</div>
           <Table

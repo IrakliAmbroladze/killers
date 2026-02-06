@@ -95,7 +95,9 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const pestRows: UiTableCell[][] = useMemo(
     () =>
       formData.pests.map((pest) => [
-        { type: "text", text: pest.name },
+        pest.name
+          ? { type: "text", text: pest.name }
+          : { type: "pestInputText", text: pest.name },
         {
           type: "checkbox",
           checked: pest.monitor,
@@ -157,7 +159,12 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     [formData.inventory],
   );
 
+  const handlePestTextChange = () => {
+    console.log("changed input text");
+  };
+
   return {
+    handlePestTextChange,
     formData,
     setFormData,
     handleServicesChange,

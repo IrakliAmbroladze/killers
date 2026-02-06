@@ -16,6 +16,10 @@ export type UiTableCell =
       rowIndex: number;
       field: "name" | "price" | "quantity";
       value: string;
+    }
+  | {
+      type: "pestInputText";
+      text: string;
     };
 
 export type HandleServicesChange = (
