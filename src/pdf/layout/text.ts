@@ -29,11 +29,16 @@ type DrawDate = BaseDraw & {
 };
 
 export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
-  drawer.drawText(`${date} (წწ.თ.დ)`, MARGIN_X, cursor.y + 15, {
-    size: 10,
-    align: "right",
-    maxWidth: PAGE_WIDTH - MARGIN_X * 2,
-  });
+  drawer.drawText(
+    `${date.slice(8, 10)}.${date.slice(5, 7)}.${date.slice(0, 4)}`,
+    MARGIN_X,
+    cursor.y + 15,
+    {
+      size: 10,
+      align: "right",
+      maxWidth: PAGE_WIDTH - MARGIN_X * 2,
+    },
+  );
   cursor.move(15);
 };
 

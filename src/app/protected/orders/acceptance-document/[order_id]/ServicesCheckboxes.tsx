@@ -20,15 +20,6 @@ export const ServicesCheckboxes = ({
     <label>
       <input
         type="checkbox"
-        name="disinfection"
-        checked={formData.services.disinfection}
-        onChange={handleServicesChange}
-      />
-      დეზინფექცია
-    </label>
-    <label>
-      <input
-        type="checkbox"
         name="deratization"
         checked={formData.services.deratization}
         onChange={handleServicesChange}
@@ -43,6 +34,15 @@ export const ServicesCheckboxes = ({
         onChange={handleServicesChange}
       />
       ქვეწარმავლების პრევენცია
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        name="disinfection"
+        checked={formData.services.disinfection}
+        onChange={handleServicesChange}
+      />
+      დეზინფექცია
     </label>
   </div>
 );
