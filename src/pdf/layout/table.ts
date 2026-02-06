@@ -56,6 +56,7 @@ export const drawSpacesInspected = ({
   y,
 }: DrawSpacesInspected) => {
   const initial_y = y;
+  x += 50;
   const ROW_HEIGHT = 18;
   y -= 10;
   drawer.drawText(
@@ -75,7 +76,7 @@ export const drawSpacesInspected = ({
     const yPos = y - row * ROW_HEIGHT;
 
     drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
-    drawer.drawText(space, xPos + 12, yPos, { size: 7 });
+    drawer.drawText(space, xPos + 15, yPos, { size: 7 });
   });
   y -= Math.ceil(spacesList.length / spaceCols) * ROW_HEIGHT;
   const usedHeight = initial_y - y;
