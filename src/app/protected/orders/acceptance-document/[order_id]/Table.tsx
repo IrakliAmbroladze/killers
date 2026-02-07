@@ -9,7 +9,7 @@ type TableProps = {
     checked: boolean,
   ) => void;
   onInputTextChange?: (materialName: string, value: string) => void;
-  onPestTextChange?: () => void;
+  onPestTextChange?: (index: number, text: string) => void;
   onInventoryTextChange?: (
     rowIndex: number,
     field: "name" | "price" | "quantity",
@@ -81,7 +81,9 @@ export const Table = ({
                       type="text"
                       className="w-full min-w-0"
                       value={cell.text}
-                      onChange={onPestTextChange}
+                      onChange={(e) =>
+                        onPestTextChange?.(rowIndex, e.target.value)
+                      }
                     />
                   </td>
                 );

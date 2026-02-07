@@ -83,6 +83,18 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
+  const handlePestTextChange = (index: number, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      pests: prev.pests.toSpliced(index, 1, {
+        name: value,
+        checked: false,
+        monitor: false,
+        spray: false,
+        gel: false,
+      }),
+    }));
+  };
   const handleMaterialEventChange = (materialName: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -94,8 +106,8 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
 
   const pestRows: UiTableCell[][] = useMemo(
     () =>
-      formData.pests.map((pest) => [
-        pest.name
+      formData.pests.map((pest, index) => [
+        index < 10
           ? { type: "text", text: pest.name }
           : { type: "pestInputText", text: pest.name },
         {
@@ -158,10 +170,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       ]),
     [formData.inventory],
   );
-
-  const handlePestTextChange = () => {
-    console.log("changed input text");
-  };
 
   return {
     handlePestTextChange,
