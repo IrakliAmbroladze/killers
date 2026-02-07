@@ -1,6 +1,7 @@
 import { UiTableCell } from "@/types";
 import { PestInput } from "./PestInput";
 import { MaterialInput } from "./MaterialInput";
+import { InventoryInput } from "./InventoryInput";
 
 type TableProps = {
   headers: string[];
@@ -58,17 +59,11 @@ export const Table = ({
               if (cell.type === "inventoryInputText") {
                 return (
                   <td key={cellIndex}>
-                    <input
-                      type="text"
-                      className="w-full min-w-0"
+                    <InventoryInput
                       value={cell.value}
-                      onChange={(e) =>
-                        onInventoryTextChange?.(
-                          cell.rowIndex,
-                          cell.field,
-                          e.target.value,
-                        )
-                      }
+                      rowIndex={cell.rowIndex}
+                      field={cell.field}
+                      onChange={onInventoryTextChange}
                     />
                   </td>
                 );
