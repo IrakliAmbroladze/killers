@@ -3,8 +3,11 @@ import { useDebouncedCallback } from "use-debounce";
 
 type Props = {
   value: string;
-  field: "startTime" | "endTime";
-  onChange: (field: "startTime" | "endTime", value: string) => void;
+  field: "startTime" | "endTime" | "name" | "personalNumber";
+  onChange: (
+    field: "startTime" | "endTime" | "name" | "personalNumber",
+    value: string,
+  ) => void;
 };
 
 export const TimeInput = ({ value, onChange, field }: Props) => {
@@ -19,7 +22,7 @@ export const TimeInput = ({ value, onChange, field }: Props) => {
 
   return (
     <input
-      className="w-24 border rounded-md px-2 text-center"
+      className="w-44 border rounded-md px-2 text-center"
       type="text"
       value={localValue}
       onChange={(e) => {

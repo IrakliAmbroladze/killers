@@ -5,7 +5,7 @@ export default function ProcedureTime({
   endTime,
 }: {
   onProcedureTimeChange: (
-    field: "startTime" | "endTime",
+    field: "startTime" | "endTime" | "name" | "personalNumber",
     value: string,
   ) => void;
   startTime: string;
