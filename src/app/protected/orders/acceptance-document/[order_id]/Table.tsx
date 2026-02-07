@@ -1,4 +1,5 @@
 import { UiTableCell } from "@/types";
+import { PestInput } from "./PestInput";
 
 type TableProps = {
   headers: string[];
@@ -77,13 +78,11 @@ export const Table = ({
               if (cell.type === "pestInputText") {
                 return (
                   <td key={cellIndex}>
-                    <input
-                      type="text"
-                      className="w-full min-w-0"
+                    <PestInput
+                      key={cellIndex}
                       value={cell.text}
-                      onChange={(e) =>
-                        onPestTextChange?.(rowIndex, e.target.value)
-                      }
+                      rowIndex={rowIndex}
+                      onChange={onPestTextChange}
                     />
                   </td>
                 );
