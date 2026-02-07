@@ -1,10 +1,12 @@
+import { TimeInput } from "./TimeInput";
+
 export default function CustomerNamePersonalNumber({
   onProcedureTimeChange,
   name,
   personalNumber,
 }: {
   onProcedureTimeChange: (
-    field: "name" | "personalNumber",
+    field: "startTime" | "endTime" | "name" | "personalNumber",
     value: string,
   ) => void;
   name: string;
@@ -21,16 +23,10 @@ export default function CustomerNamePersonalNumber({
         <div key={d.label} className="max-w-[320px] m-2">
           <label className="flex justify-between">
             {d.label}
-            <input
-              className="w-[160px] border rounded-md px-2 text-center"
-              type="text"
+            <TimeInput
               value={d.value}
-              onChange={(e) =>
-                onProcedureTimeChange(
-                  d.value === name ? "name" : "personalNumber",
-                  e.target.value,
-                )
-              }
+              field={d.value === name ? "name" : "personalNumber"}
+              onChange={onProcedureTimeChange}
             />
           </label>
         </div>

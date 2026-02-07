@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
@@ -25,13 +25,16 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLDataElement>) => {
-    const { value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      date: value,
-    }));
-  };
+  const handleDateChange = useCallback(
+    (e: React.ChangeEvent<HTMLDataElement>) => {
+      const { value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        date: value,
+      }));
+    },
+    [],
+  );
 
   const handleSpaceChange = (area: string, checked: boolean) => {
     setFormData((prev) => ({
