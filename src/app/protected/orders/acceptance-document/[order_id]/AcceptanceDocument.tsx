@@ -19,6 +19,7 @@ export default function AcceptanceDocument({
 }: {
   orderPromise: Promise<OrderExtended>;
 }) {
+  console.log("render AcceptanceDocument");
   const order = use(orderPromise);
   const {
     formData,
