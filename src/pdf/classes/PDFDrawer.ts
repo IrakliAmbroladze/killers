@@ -151,7 +151,6 @@ export class PDFDrawer {
         borderWidth: 0.5,
         borderColor: rgb(0, 0, 0),
       });
-
       const headerX =
         header.align === "left"
           ? currentX + marginLeft
@@ -162,6 +161,7 @@ export class PDFDrawer {
       this.drawText(header.text, headerX, currentY - rowHeight + 6, {
         size: fontSize,
         bold: headerBold,
+        maxWidth: header.width,
         align: header.align || "left",
       });
 

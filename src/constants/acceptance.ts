@@ -16,6 +16,15 @@ export const pestTableData: string[] = [
   "ბაქტერია",
   "",
   "",
+  // in case i add some staff have to remember that i use this array
+  // in this context
+  //   const pestRows: UiTableCell[][] = useMemo(
+  /*() =>
+      formData.pests.map((pest, index) => [
+        index < 10
+          ? { type: "text", text: pest.name }
+          : { type: "pestInputText", text: pest.name },
+        {*/
 ];
 
 export const productsTableData: { name: string; dosage: string }[] = [

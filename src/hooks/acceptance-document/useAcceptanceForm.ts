@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
@@ -25,13 +25,16 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLDataElement>) => {
-    const { value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      date: value,
-    }));
-  };
+  const handleDateChange = useCallback(
+    (e: React.ChangeEvent<HTMLDataElement>) => {
+      const { value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        date: value,
+      }));
+    },
+    [],
+  );
 
   const handleSpaceChange = (area: string, checked: boolean) => {
     setFormData((prev) => ({
@@ -83,6 +86,18 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
+  const handlePestTextChange = (index: number, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      pests: prev.pests.toSpliced(index, 1, {
+        name: value,
+        checked: false,
+        monitor: false,
+        spray: false,
+        gel: false,
+      }),
+    }));
+  };
   const handleMaterialEventChange = (materialName: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -94,8 +109,10 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
 
   const pestRows: UiTableCell[][] = useMemo(
     () =>
-      formData.pests.map((pest) => [
-        { type: "text", text: pest.name },
+      formData.pests.map((pest, index) => [
+        index < 10
+          ? { type: "text", text: pest.name }
+          : { type: "pestInputText", text: pest.name },
         {
           type: "checkbox",
           checked: pest.monitor,
@@ -158,6 +175,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
   );
 
   return {
+    handlePestTextChange,
     formData,
     setFormData,
     handleServicesChange,
