@@ -1,12 +1,14 @@
 import Image from "next/image";
+import { memo } from "react";
 
-export const LogoWhiteOnBlue = ({
+export const LogoWhiteOnBlue = memo(function LogoWhiteOnBlue({
   width = 100,
   height = 100,
 }: {
   width?: number;
   height?: number;
-}) => {
+}) {
+  console.log("render LogoWhiteOnBlue");
   if (isNaN(width) || isNaN(height)) {
     throw new Error(
       "LogoWhiteOnBlue width and height properties must be numbers",
@@ -21,4 +23,4 @@ export const LogoWhiteOnBlue = ({
       height={height}
     />
   );
-};
+});

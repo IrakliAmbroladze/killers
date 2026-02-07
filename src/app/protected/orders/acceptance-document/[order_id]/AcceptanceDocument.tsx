@@ -13,12 +13,14 @@ import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
 import { use } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
+import { MainText } from "./MainText";
 
 export default function AcceptanceDocument({
   orderPromise,
 }: {
   orderPromise: Promise<OrderExtended>;
 }) {
+  console.log("render AcceptanceDocument");
   const order = use(orderPromise);
   const {
     formData,
@@ -32,6 +34,7 @@ export default function AcceptanceDocument({
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,
+    handlePestTextChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -39,13 +42,10 @@ export default function AcceptanceDocument({
       <LogoWhiteOnBlue />
       <AcceptanceDocumentTitle />
       <AcceptanceDocumentDate handleChange={handleDateChange} />
-      <p className="max-w-[780px]">
-        ერთი მხრივ &quot;{order.customers.name}&quot; (ს/კ {order.customer_id};
-        შემდგომში &quot;დამკვეთი&quot;) და მეორე მხრივ შპს &quot;ქილ&quot; (ს/კ{" "}
-        405049923; შემდგომში &quot;შემსრულებელი&quot;) ვადასტურებთ, რომ
-        შემსრულებელმა მიაწოდა, ხოლო დამკვეთმა მიიღო შემდეგი
-        (მარკირებული/აღნიშნული) სახის მომსახურება:
-      </p>
+      <MainText
+        customer_name={order.customers.name}
+        customer_id={order.customer_id}
+      />
       <ServicesCheckboxes
         formData={formData}
         handleServicesChange={handleServicesChange}
@@ -58,6 +58,7 @@ export default function AcceptanceDocument({
             headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
             rows={pestRows}
             onCheckboxChange={handlePestEventChange}
+            onPestTextChange={handlePestTextChange}
           />
           <div>გამოყენებული საშუალებები</div>
           <Table

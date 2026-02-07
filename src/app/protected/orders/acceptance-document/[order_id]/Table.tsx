@@ -1,4 +1,7 @@
 import { UiTableCell } from "@/types";
+import { PestInput } from "./PestInput";
+import { MaterialInput } from "./MaterialInput";
+import { InventoryInput } from "./InventoryInput";
 
 type TableProps = {
   headers: string[];
@@ -9,6 +12,7 @@ type TableProps = {
     checked: boolean,
   ) => void;
   onInputTextChange?: (materialName: string, value: string) => void;
+  onPestTextChange?: (index: number, text: string) => void;
   onInventoryTextChange?: (
     rowIndex: number,
     field: "name" | "price" | "quantity",
@@ -22,6 +26,7 @@ export const Table = ({
   onCheckboxChange,
   onInputTextChange,
   onInventoryTextChange,
+  onPestTextChange,
 }: TableProps) => {
   return (
     <table className="border border-collapse text-xs">
@@ -43,13 +48,10 @@ export const Table = ({
               if (cell.type === "inputText") {
                 return (
                   <td key={cellIndex}>
-                    <input
-                      className="w-full min-w-0"
-                      type="text"
+                    <MaterialInput
                       value={cell.value}
-                      onChange={(e) =>
-                        onInputTextChange?.(cell.materialName, e.target.value)
-                      }
+                      name={cell.materialName}
+                      onChange={onInputTextChange}
                     />
                   </td>
                 );
@@ -57,17 +59,23 @@ export const Table = ({
               if (cell.type === "inventoryInputText") {
                 return (
                   <td key={cellIndex}>
-                    <input
-                      type="text"
-                      className="w-full min-w-0"
+                    <InventoryInput
                       value={cell.value}
-                      onChange={(e) =>
-                        onInventoryTextChange?.(
-                          cell.rowIndex,
-                          cell.field,
-                          e.target.value,
-                        )
-                      }
+                      rowIndex={cell.rowIndex}
+                      field={cell.field}
+                      onChange={onInventoryTextChange}
+                    />
+                  </td>
+                );
+              }
+              if (cell.type === "pestInputText") {
+                return (
+                  <td key={cellIndex}>
+                    <PestInput
+                      key={cellIndex}
+                      value={cell.text}
+                      rowIndex={rowIndex}
+                      onChange={onPestTextChange}
                     />
                   </td>
                 );

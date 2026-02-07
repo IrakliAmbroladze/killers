@@ -2,7 +2,7 @@ import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
 import { MARGIN_X } from "@/pdf/constants/pdfPageDimensions";
 import { SPACE_BETWEEN_TITLE_AND_TABLE } from "@/pdf/constants/tableData";
 import { Cursor } from "@/pdf/types/Cursor";
-import { PdfTableCell } from "@/pdf/types/Table";
+import { PdfTableCell, TableHeaderCell } from "@/pdf/types/Table";
 import { AcceptanceFormData } from "@/types";
 
 type DrawSoldInventoryTable = {
@@ -30,20 +30,22 @@ export const drawSoldInventoryTable = ({
   });
 
   const rows: PdfTableCell[][] = formData.inventory.map((item) => [
-    { type: "text", text: item.name },
-    { type: "text", text: item.price },
-    { type: "text", text: item.quantity },
+    { type: "text", text: item.name, align: "left" },
+    { type: "text", text: item.price, align: "center" },
+    { type: "text", text: item.quantity, align: "center" },
   ]);
 
+  const headers: TableHeaderCell[] = [
+    {
+      text: "დასახელება",
+      width: W_FIRST_COL,
+      align: "center",
+    },
+    { text: "ერთ.ფასი", width: W_SECOND_COL, align: "center" },
+    { text: "რაოდენობა", width: W_THIRD_COL, align: "center" },
+  ];
   const tableData = {
-    headers: [
-      {
-        text: "                                დასახელება",
-        width: W_FIRST_COL,
-      },
-      { text: "          ერთ.ფასი", width: W_SECOND_COL },
-      { text: "        რაოდენობა", width: W_THIRD_COL },
-    ],
+    headers,
     rows,
   };
 
