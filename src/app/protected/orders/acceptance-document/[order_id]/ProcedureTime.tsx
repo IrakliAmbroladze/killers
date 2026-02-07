@@ -1,3 +1,4 @@
+import { TimeInput } from "./TimeInput";
 export default function ProcedureTime({
   onProcedureTimeChange,
   startTime,
@@ -20,16 +21,10 @@ export default function ProcedureTime({
         <div key={d.label} className="max-w-[320px] m-2">
           <label className="flex justify-between">
             {d.label}
-            <input
-              className="w-24 border rounded-md px-2 text-center"
-              type="text"
+            <TimeInput
               value={d.value}
-              onChange={(e) =>
-                onProcedureTimeChange(
-                  d.value === startTime ? "startTime" : "endTime",
-                  e.target.value,
-                )
-              }
+              field={d.value === startTime ? "startTime" : "endTime"}
+              onChange={onProcedureTimeChange}
             />
           </label>
         </div>
