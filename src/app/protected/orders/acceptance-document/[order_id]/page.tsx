@@ -13,7 +13,7 @@ export default async function AcceptancePage({
 
   return (
     <Suspense fallback={<div>Loading data ... </div>}>
-      <AcceptanceDocument orderPromise={order} />;
+      <AcceptanceDocument orderPromise={order} />
     </Suspense>
   );
 }

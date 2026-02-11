@@ -38,57 +38,67 @@ export default function AcceptanceDocument({
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
-    <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
-      <LogoWhiteOnBlue />
-      <AcceptanceDocumentTitle />
-      <AcceptanceDocumentDate handleChange={handleDateChange} />
-      <MainText
-        customer_name={order.customers.name}
-        customer_id={order.customer_id}
-      />
-      <ServicesCheckboxes
-        formData={formData}
-        handleServicesChange={handleServicesChange}
-      />
-      <div className="w-full overflow-auto flex">
-        <div className="min-w-[300px] mx-auto">
-          <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
-          <div>გატარებული ღონისძიება</div>
-          <Table
-            headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
-            rows={pestRows}
-            onCheckboxChange={handlePestEventChange}
-            onPestTextChange={handlePestTextChange}
+    <>
+      {order.acceptance && (
+        <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
+          <LogoWhiteOnBlue />
+          <AcceptanceDocumentTitle />
+          <AcceptanceDocumentDate handleChange={handleDateChange} />
+          <MainText
+            customer_name={order.customers.name}
+            customer_id={order.customer_id}
           />
-          <div>გამოყენებული საშუალებები</div>
-          <Table
-            headers={["დასახელება", "დოზირება", "გახარჯული"]}
-            rows={materialRows}
-            onInputTextChange={handleMaterialEventChange}
+          <ServicesCheckboxes
+            formData={formData}
+            handleServicesChange={handleServicesChange}
           />
-          <div>მიწოდებული ინვენტარი</div>
-          <Table
-            headers={["დასახელება", "ფასი", "რაოდენობა"]}
-            rows={inventoryRows}
-            onInventoryTextChange={handleSoldInventoryChange}
-          />
+          <div className="w-full overflow-auto flex">
+            <div className="min-w-[300px] mx-auto">
+              <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
+              <div>გატარებული ღონისძიება</div>
+              <Table
+                headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
+                rows={pestRows}
+                onCheckboxChange={handlePestEventChange}
+                onPestTextChange={handlePestTextChange}
+              />
+              <div>გამოყენებული საშუალებები</div>
+              <Table
+                headers={["დასახელება", "დოზირება", "გახარჯული"]}
+                rows={materialRows}
+                onInputTextChange={handleMaterialEventChange}
+              />
+              <div>მიწოდებული ინვენტარი</div>
+              <Table
+                headers={["დასახელება", "ფასი", "რაოდენობა"]}
+                rows={inventoryRows}
+                onInventoryTextChange={handleSoldInventoryChange}
+              />
 
-          <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          <ProcedureTime
-            onProcedureTimeChange={handleProcedureTimeChange}
-            startTime={formData.startTime}
-            endTime={formData.endTime}
-          />
-          <Address address={order.address} />
+              <DoneAreas
+                spaces={formData.spaces}
+                onChange={handleSpaceChange}
+              />
+              <ProcedureTime
+                onProcedureTimeChange={handleProcedureTimeChange}
+                startTime={formData.startTime}
+                endTime={formData.endTime}
+              />
+              <Address address={order.address} />
 
-          <CustomerNamePersonalNumber
-            onProcedureTimeChange={handleProcedureTimeChange}
-            name={formData.customer.representative.name}
-            personalNumber={formData.customer.representative.id}
-          />
-          <AcceptanceSignature formData={formData} />
+              <CustomerNamePersonalNumber
+                onProcedureTimeChange={handleProcedureTimeChange}
+                name={formData.customer.representative.name}
+                personalNumber={formData.customer.representative.id}
+              />
+              <AcceptanceSignature formData={formData} />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+      {order.inspection_doc && (
+        <div>Inspection document is: {order.inspection_doc}</div>
+      )}
+    </>
   );
 }
