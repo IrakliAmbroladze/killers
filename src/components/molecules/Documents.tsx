@@ -51,7 +51,10 @@ export const Documents = ({
     setSelectedInspectionDocument(newSelectedInspectionDocument);
     const updatedOrder = normalizeOrder({
       ...order,
-      inspection_doc: newSelectedInspectionDocument,
+      inspection_doc: newSelectedInspectionDocument as
+        | "default"
+        | "unplanned"
+        | "follow_up",
     });
 
     const result = await editOrder(updatedOrder, proceduresPathName);
