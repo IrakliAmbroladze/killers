@@ -27,12 +27,31 @@ export const Documents = ({
     setIsChecked(order.acceptance);
   }, [order.acceptance]);
 
+  useEffect(() => {
+    setSelectedInspectionDocument(order.inspection_doc);
+  }, [order.inspection_doc]);
+
   const handleAcceptance = async () => {
     const newChecked = !isChecked;
     setIsChecked(newChecked);
     const updatedOrder = normalizeOrder({
       ...order,
       acceptance: newChecked,
+    });
+
+    const result = await editOrder(updatedOrder, proceduresPathName);
+
+    if (result.status === "OK" && isInModal) {
+      refreshOrder(order.id);
+    }
+  };
+
+  const handleInspectionDocumentChange = async (value: string) => {
+    const newSelectedInspectionDocument = value;
+    setSelectedInspectionDocument(newSelectedInspectionDocument);
+    const updatedOrder = normalizeOrder({
+      ...order,
+      inspection_doc: newSelectedInspectionDocument,
     });
 
     const result = await editOrder(updatedOrder, proceduresPathName);
@@ -60,7 +79,7 @@ export const Documents = ({
         <select
           id="fruit-select"
           value={selectedInspectionDocument}
-          onChange={(e) => setSelectedInspectionDocument(e.target.value)}
+          onChange={(e) => handleInspectionDocumentChange(e.target.value)}
         >
           {inspection_doc_options.map((option) => (
             <option key={option.value} value={option.value}>
