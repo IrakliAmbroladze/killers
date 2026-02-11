@@ -92,7 +92,7 @@ const TechniciansOrder = ({
         <Done order={order} isInModal={isInModal} />
       </div>
       <div style={deliveryStyle}>
-        <Documents />
+        <Documents order={order} isInModal={isInModal} />
       </div>
     </div>
   );

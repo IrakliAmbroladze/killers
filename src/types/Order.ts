@@ -23,6 +23,8 @@ export interface Order {
   plan_time: string | null;
   approve: string | null;
   cancel: boolean | null;
+  acceptance: boolean;
+  inspection_doc?: string;
 }
 
 export interface OrderExtended extends Order {

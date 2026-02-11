@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { proceduresPathName } from "@/app/protected/procedures/constants/proceduresPathName";
+import { normalizeOrder } from "@/features/order-table/utils/normalize";
+import { useOrderModal } from "@/hooks/useOrderModal";
+import { editOrder } from "@/lib";
+import { OrderExtended } from "@/types";
+import { useEffect, useState } from "react";
 
-export const Documents = () => {
-  const [isChecked, setIsChecked] = useState(true);
+export const Documents = ({
+  order,
+  isInModal,
+}: {
+  order: OrderExtended;
+  isInModal: boolean;
+}) => {
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [selectedInspectionDocument, setSelectedInspectionDocument] =
     useState("default");
 
@@ -10,7 +21,28 @@ export const Documents = () => {
     { value: "unplanned", label: "unplanned" },
     { value: "follow_up", label: "follow_up" },
   ];
+  const { refreshOrder } = useOrderModal();
 
+  useEffect(() => {
+    setIsChecked(order.acceptance);
+  }, [order.acceptance]);
+
+  const handleAcceptance = async () => {
+    const newChecked = !isChecked;
+    setIsChecked(newChecked);
+    const updatedOrder = normalizeOrder({
+      ...order,
+      acceptance: newChecked,
+    });
+
+    const result = await editOrder(updatedOrder, proceduresPathName);
+
+    if (result.status === "OK" && isInModal) {
+      refreshOrder(order.id);
+    }
+  };
+
+  if (!order) return <div>Order not found</div>;
   return (
     <div className="text-sm flex gap-5">
       <div>
@@ -18,7 +50,7 @@ export const Documents = () => {
           <input
             type="checkbox"
             checked={isChecked}
-            onChange={(e) => setIsChecked(e.target.checked)}
+            onChange={handleAcceptance}
           />
           მიღება-ჩაბარება
         </label>
