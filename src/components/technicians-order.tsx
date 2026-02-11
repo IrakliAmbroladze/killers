@@ -10,6 +10,7 @@ import Approve from "@/features/approve/Approve";
 import { OrderExtended } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
 import Cancel from "@/features/cancel/Cancel";
+import { Documents } from "./molecules/Documents";
 
 interface TechniciansOrderProps {
   order: OrderExtended;
@@ -89,6 +90,9 @@ const TechniciansOrder = ({
           drag me
         </button>
         <Done order={order} isInModal={isInModal} />
+      </div>
+      <div style={deliveryStyle}>
+        <Documents order={order} isInModal={isInModal} />
       </div>
     </div>
   );
