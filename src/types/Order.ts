@@ -24,7 +24,7 @@ export interface Order {
   approve: string | null;
   cancel: boolean | null;
   acceptance: boolean;
-  inspection_doc: string;
+  inspection_doc: "default" | "unplanned" | "follow_up";
 }
 
 export interface OrderExtended extends Order {

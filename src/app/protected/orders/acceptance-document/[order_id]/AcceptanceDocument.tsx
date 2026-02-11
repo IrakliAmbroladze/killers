@@ -14,6 +14,7 @@ import { use } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
+import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -96,9 +97,7 @@ export default function AcceptanceDocument({
           </div>
         </div>
       )}
-      {order.inspection_doc && (
-        <div>Inspection document is: {order.inspection_doc}</div>
-      )}
+      <InspectionDocument inspection_doc={order.inspection_doc} />
     </>
   );
 }
