@@ -23,6 +23,8 @@ export interface Order {
   plan_time: string | null;
   approve: string | null;
   cancel: boolean | null;
+  acceptance: boolean;
+  inspection_doc: "default" | "unplanned" | "follow_up";
 }
 
 export interface OrderExtended extends Order {

@@ -23,7 +23,7 @@ const OrderModal = () => {
             className="border py-1.5 px-2.5 rounded-md active:scale-95 transition-transform duration-150 ease-in-out cursor-pointer hover:scale-105"
             onClick={closeOrder}
           >
-            მიღება-ჩაბარება
+            საბუთი
           </button>
         </Link>
         <h2>{order.customers.name}</h2>
