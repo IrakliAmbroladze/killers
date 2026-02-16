@@ -1,33 +1,38 @@
 import { CheckBox } from "@/components/atoms/CheckBox";
-import type { AcceptanceFormData, HandleServicesChange } from "@/types";
+import type { HandleServicesChange } from "@/types";
 
 export const ServicesCheckboxes = ({
-  formData,
+  checkStatus,
   handleServicesChange,
 }: {
-  formData: AcceptanceFormData;
+  checkStatus: {
+    disinsection: boolean;
+    deratization: boolean;
+    subcontractorPrevention: boolean;
+    disinfection: boolean;
+  };
   handleServicesChange: HandleServicesChange;
 }) => {
   const data = [
     {
       name: "disinsection",
       label: "დეზინსექცია",
-      checked: formData.services.disinsection,
+      checked: checkStatus.disinsection,
     },
     {
       name: "deratization",
       label: "დერატიზაცია",
-      checked: formData.services.deratization,
+      checked: checkStatus.deratization,
     },
     {
       name: "subcontractorPrevention",
       label: "ქვეწარმავლების პრევენცია",
-      checked: formData.services.subcontractorPrevention,
+      checked: checkStatus.subcontractorPrevention,
     },
     {
       name: "disinfection",
       label: "დეზინფექცია",
-      checked: formData.services.disinfection,
+      checked: checkStatus.disinfection,
     },
   ];
 

@@ -51,7 +51,12 @@ export default function AcceptanceDocument({
         customer_id={order.customer_id}
       />
       <ServicesCheckboxes
-        formData={formData}
+        checkStatus={{
+          disinsection: formData.services.disinsection,
+          deratization: formData.services.deratization,
+          subcontractorPrevention: formData.services.subcontractorPrevention,
+          disinfection: formData.services.disinfection,
+        }}
         handleServicesChange={handleServicesChange}
       />
       <div className="w-full overflow-auto flex">
