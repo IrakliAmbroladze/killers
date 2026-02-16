@@ -60,7 +60,7 @@ export default function AcceptanceDocument({
         handleServicesChange={handleServicesChange}
       />
       <div className="w-full overflow-auto flex">
-        <div className="min-w-[300px] mx-auto">
+        <div className="max-w-[800px] w-full mx-auto">
           <h3 className="font-georgian font-bold">
             ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
           </h3>
@@ -70,6 +70,7 @@ export default function AcceptanceDocument({
             rows={pestRows}
             onCheckboxChange={handlePestEventChange}
             onPestTextChange={handlePestTextChange}
+            columns_number={4}
           />
           <div>გამოყენებული საშუალებები</div>
           <Table

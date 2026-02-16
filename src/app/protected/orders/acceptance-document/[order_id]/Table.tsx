@@ -18,6 +18,7 @@ type TableProps = {
     field: "name" | "price" | "quantity",
     value: string,
   ) => void;
+  columns_number?: number;
 };
 
 export const Table = ({
@@ -27,81 +28,78 @@ export const Table = ({
   onInputTextChange,
   onInventoryTextChange,
   onPestTextChange,
+  columns_number = 3,
 }: TableProps) => {
   return (
-    <table className="border border-collapse text-xs">
-      <thead>
-        <tr>
-          {headers.map((header) => (
-            <th key={header}>{header}</th>
-          ))}
-        </tr>
-      </thead>
+    <div
+      className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"}`}
+    >
+      {headers.map((header) => (
+        <div key={header}>{header}</div>
+      ))}
 
-      <tbody>
-        {rows.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, cellIndex) => {
-              if (cell.type === "text") {
-                return <td key={cellIndex}>{cell.text}</td>;
-              }
-              if (cell.type === "inputText") {
-                return (
-                  <td key={cellIndex}>
-                    <MaterialInput
-                      value={cell.value}
-                      name={cell.materialName}
-                      onChange={onInputTextChange}
-                    />
-                  </td>
-                );
-              }
-              if (cell.type === "inventoryInputText") {
-                return (
-                  <td key={cellIndex}>
-                    <InventoryInput
-                      value={cell.value}
-                      rowIndex={cell.rowIndex}
-                      field={cell.field}
-                      onChange={onInventoryTextChange}
-                    />
-                  </td>
-                );
-              }
-              if (cell.type === "pestInputText") {
-                return (
-                  <td key={cellIndex}>
-                    <PestInput
-                      key={cellIndex}
-                      value={cell.text}
-                      rowIndex={rowIndex}
-                      onChange={onPestTextChange}
-                    />
-                  </td>
-                );
-              }
-
+      {rows.map((row, rowIndex) => (
+        <>
+          {row.map((cell, cellIndex) => {
+            if (cell.type === "text") {
+              return <div key={cellIndex}>{cell.text}</div>;
+            }
+            if (cell.type === "inputText") {
               return (
-                <td key={cellIndex}>
-                  <input
-                    type="checkbox"
-                    className="w-full min-w-0"
-                    checked={cell.checked}
-                    onChange={(e) => {
-                      if (!cell.pestName || !cell.field) return;
-                      return onCheckboxChange?.(
-                        cell.pestName,
-                        cell.field,
-                        e.target.checked,
-                      );
-                    }}
+                <div key={cellIndex}>
+                  <MaterialInput
+                    value={cell.value}
+                    name={cell.materialName}
+                    onChange={onInputTextChange}
                   />
-                </td>
+                </div>
               );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            }
+            if (cell.type === "inventoryInputText") {
+              return (
+                <div key={cellIndex}>
+                  <InventoryInput
+                    value={cell.value}
+                    rowIndex={cell.rowIndex}
+                    field={cell.field}
+                    onChange={onInventoryTextChange}
+                  />
+                </div>
+              );
+            }
+            if (cell.type === "pestInputText") {
+              return (
+                <div key={cellIndex}>
+                  <PestInput
+                    key={cellIndex}
+                    value={cell.text}
+                    rowIndex={rowIndex}
+                    onChange={onPestTextChange}
+                  />
+                </div>
+              );
+            }
+
+            return (
+              <div key={cellIndex}>
+                <input
+                  type="checkbox"
+                  className="w-full min-w-0"
+                  checked={cell.checked}
+                  onChange={(e) => {
+                    if (!cell.pestName || !cell.field) return;
+                    return onCheckboxChange?.(
+                      cell.pestName,
+                      cell.field,
+                      e.target.checked,
+                    );
+                  }}
+                />
+              </div>
+            );
+          })}
+        </>
+      ))}
+    </div>
   );
 };
