@@ -39,65 +39,58 @@ export default function AcceptanceDocument({
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
-    <>
-      {order.acceptance && (
-        <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
-          <LogoWhiteOnBlue />
-          <AcceptanceDocumentTitle />
-          <AcceptanceDocumentDate handleChange={handleDateChange} />
-          <MainText
-            customer_name={order.customers.name}
-            customer_id={order.customer_id}
+    <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
+      <LogoWhiteOnBlue />
+      <AcceptanceDocumentTitle />
+      <AcceptanceDocumentDate handleChange={handleDateChange} />
+      <MainText
+        customer_name={order.customers.name}
+        customer_id={order.customer_id}
+      />
+      <ServicesCheckboxes
+        formData={formData}
+        handleServicesChange={handleServicesChange}
+      />
+      <div className="w-full overflow-auto flex">
+        <div className="min-w-[300px] mx-auto">
+          <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
+          <div>გატარებული ღონისძიება</div>
+          <Table
+            headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
+            rows={pestRows}
+            onCheckboxChange={handlePestEventChange}
+            onPestTextChange={handlePestTextChange}
           />
-          <ServicesCheckboxes
-            formData={formData}
-            handleServicesChange={handleServicesChange}
+          <div>გამოყენებული საშუალებები</div>
+          <Table
+            headers={["დასახელება", "დოზირება", "გახარჯული"]}
+            rows={materialRows}
+            onInputTextChange={handleMaterialEventChange}
           />
-          <div className="w-full overflow-auto flex">
-            <div className="min-w-[300px] mx-auto">
-              <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
-              <div>გატარებული ღონისძიება</div>
-              <Table
-                headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
-                rows={pestRows}
-                onCheckboxChange={handlePestEventChange}
-                onPestTextChange={handlePestTextChange}
-              />
-              <div>გამოყენებული საშუალებები</div>
-              <Table
-                headers={["დასახელება", "დოზირება", "გახარჯული"]}
-                rows={materialRows}
-                onInputTextChange={handleMaterialEventChange}
-              />
-              <div>მიწოდებული ინვენტარი</div>
-              <Table
-                headers={["დასახელება", "ფასი", "რაოდენობა"]}
-                rows={inventoryRows}
-                onInventoryTextChange={handleSoldInventoryChange}
-              />
+          <div>მიწოდებული ინვენტარი</div>
+          <Table
+            headers={["დასახელება", "ფასი", "რაოდენობა"]}
+            rows={inventoryRows}
+            onInventoryTextChange={handleSoldInventoryChange}
+          />
 
-              <DoneAreas
-                spaces={formData.spaces}
-                onChange={handleSpaceChange}
-              />
-              <ProcedureTime
-                onProcedureTimeChange={handleProcedureTimeChange}
-                startTime={formData.startTime}
-                endTime={formData.endTime}
-              />
-              <Address address={order.address} />
+          <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
+          <InspectionDocument inspection_doc={order.inspection_doc} />
+          <ProcedureTime
+            onProcedureTimeChange={handleProcedureTimeChange}
+            startTime={formData.startTime}
+            endTime={formData.endTime}
+          />
+          <Address address={order.address} />
 
-              <CustomerNamePersonalNumber
-                onProcedureTimeChange={handleProcedureTimeChange}
-                name={formData.customer.representative.name}
-                personalNumber={formData.customer.representative.id}
-              />
-              <AcceptanceSignature formData={formData} />
-            </div>
-          </div>
+          <CustomerNamePersonalNumber
+            onProcedureTimeChange={handleProcedureTimeChange}
+            name={formData.customer.representative.name}
+            personalNumber={formData.customer.representative.id}
+          />
+          <AcceptanceSignature formData={formData} />
         </div>
-      )}
-      <InspectionDocument inspection_doc={order.inspection_doc} />
-    </>
+      </div>
+    </div>
   );
 }
