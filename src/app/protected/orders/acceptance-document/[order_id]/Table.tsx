@@ -33,21 +33,33 @@ export const Table = ({
 }: TableProps) => {
   return (
     <div
-      className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"}`}
+      className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
     >
       {headers.map((header) => (
-        <div key={header}>{header}</div>
+        <div
+          key={header}
+          className="border p-2.5 flex items-center justify-center"
+        >
+          {header}
+        </div>
       ))}
 
       {rows.map((row, rowIndex) => (
         <>
           {row.map((cell, cellIndex) => {
             if (cell.type === "text") {
-              return <div key={cellIndex}>{cell.text}</div>;
+              return (
+                <div
+                  key={cellIndex}
+                  className="border p-2.5 h-full flex items-center"
+                >
+                  {cell.text}
+                </div>
+              );
             }
             if (cell.type === "inputText") {
               return (
-                <div key={cellIndex}>
+                <div key={cellIndex} className="border p-2.5">
                   <MaterialInput
                     value={cell.value}
                     name={cell.materialName}
@@ -82,7 +94,10 @@ export const Table = ({
             }
 
             return (
-              <div key={cellIndex}>
+              <div
+                key={cellIndex}
+                className="border p-2.5 flex items-center justify-center"
+              >
                 <CheckBox
                   checked={cell.checked}
                   onChange={(e) => {
