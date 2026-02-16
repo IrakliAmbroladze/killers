@@ -15,6 +15,7 @@ import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/componen
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
 import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
+import { notoSansGeorgian } from "@/fonts";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -39,7 +40,9 @@ export default function AcceptanceDocument({
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
-    <div className="flex justify-center items-center flex-col gap-5 px-2.5 text-sm">
+    <div
+      className={`${notoSansGeorgian.className} flex justify-center items-center flex-col gap-5 px-2.5 text-sm`}
+    >
       <LogoWhiteOnBlue />
       <AcceptanceDocumentTitle />
       <AcceptanceDocumentDate handleChange={handleDateChange} />
@@ -53,7 +56,9 @@ export default function AcceptanceDocument({
       />
       <div className="w-full overflow-auto flex">
         <div className="min-w-[300px] mx-auto">
-          <h3>ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:</h3>
+          <h3 className="font-georgian font-bold">
+            ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
+          </h3>
           <div>გატარებული ღონისძიება</div>
           <Table
             headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}

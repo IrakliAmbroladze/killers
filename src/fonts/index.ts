@@ -1,4 +1,15 @@
+import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
+
+export const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+export const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const notoSansGeorgian = localFont({
   src: [
@@ -13,5 +24,6 @@ export const notoSansGeorgian = localFont({
       style: "normal",
     },
   ],
+  variable: "--font-noto-georgian",
   display: "swap",
 });
