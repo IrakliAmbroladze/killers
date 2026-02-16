@@ -2,6 +2,7 @@ import { UiTableCell } from "@/types";
 import { PestInput } from "./PestInput";
 import { MaterialInput } from "./MaterialInput";
 import { InventoryInput } from "./InventoryInput";
+import { CheckBox } from "@/components/atoms/CheckBox";
 
 type TableProps = {
   headers: string[];
@@ -82,9 +83,7 @@ export const Table = ({
 
             return (
               <div key={cellIndex}>
-                <input
-                  type="checkbox"
-                  className="w-full min-w-0"
+                <CheckBox
                   checked={cell.checked}
                   onChange={(e) => {
                     if (!cell.pestName || !cell.field) return;
