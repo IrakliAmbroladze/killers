@@ -37,7 +37,7 @@ export const ServicesCheckboxes = ({
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:translate-x-20">
       {data.map((item) => (
         <CheckBox
           key={item.name}

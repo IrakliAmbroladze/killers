@@ -1,16 +1,16 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-export const InventoryInput = ({
+export const MaterialInput = ({
   value,
-  rowIndex,
-  field,
+  name,
   onChange,
 }: {
   value: string;
-  rowIndex: number;
-  field: "name" | "price" | "quantity";
-  onChange?: (i: number, f: "name" | "price" | "quantity", v: string) => void;
+  name: string;
+  onChange?: (n: string, v: string) => void;
 }) => {
   const [localValue, setLocalValue] = useState(value);
 
@@ -19,14 +19,14 @@ export const InventoryInput = ({
   }, [value]);
 
   const debounced = useDebouncedCallback(
-    (v: string) => onChange?.(rowIndex, field, v),
+    (v: string) => onChange?.(name, v),
     500,
   );
 
   return (
     <input
-      type="text"
       className="w-full min-w-0"
+      type="text"
       value={localValue}
       onChange={(e) => {
         const v = e.target.value;

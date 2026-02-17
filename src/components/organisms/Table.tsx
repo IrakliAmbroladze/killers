@@ -1,9 +1,10 @@
 import { UiTableCell } from "@/types";
-import { PestInput } from "./PestInput";
-import { MaterialInput } from "./MaterialInput";
-import { InventoryInput } from "./InventoryInput";
+import { PestInput, MaterialInput, InventoryInput } from "@/components";
+import { CheckBox } from "@/components/atoms/CheckBox";
+import { Fragment } from "react";
 
 type TableProps = {
+  title?: { title: string; position?: "left" | "center" | "right" };
   headers: string[];
   rows: UiTableCell[][];
   onCheckboxChange?: (
@@ -18,74 +19,96 @@ type TableProps = {
     field: "name" | "price" | "quantity",
     value: string,
   ) => void;
+  columns_number?: number;
 };
 
 export const Table = ({
+  title,
   headers,
   rows,
   onCheckboxChange,
   onInputTextChange,
   onInventoryTextChange,
   onPestTextChange,
+  columns_number = 3,
 }: TableProps) => {
+  const styleCellLeft = "border p-2.5 flex items-center h-full";
+  const styleCellCenter = `${styleCellLeft} justify-center`;
   return (
-    <table className="border border-collapse text-xs">
-      <thead>
-        <tr>
-          {headers.map((header) => (
-            <th key={header}>{header}</th>
-          ))}
-        </tr>
-      </thead>
+    <>
+      {title && (
+        <h2
+          style={{ textAlign: title.position }}
+          className="mt-5 mb-2.5 tracking-widest font-bold"
+        >
+          {title.title}
+        </h2>
+      )}
+      <div
+        className={`border border-collapse text-xs grid ${columns_number === 5 ? "grid-cols-5" : columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
+      >
+        {headers.map((header) => (
+          <div key={header} className={styleCellCenter}>
+            {header}
+          </div>
+        ))}
 
-      <tbody>
         {rows.map((row, rowIndex) => (
-          <tr key={rowIndex}>
+          <Fragment key={rowIndex}>
             {row.map((cell, cellIndex) => {
               if (cell.type === "text") {
-                return <td key={cellIndex}>{cell.text}</td>;
+                return (
+                  <div
+                    key={cellIndex}
+                    className={
+                      cell.text === "-" || cell.text.includes("/")
+                        ? styleCellCenter
+                        : styleCellLeft
+                    }
+                  >
+                    {cell.text}
+                  </div>
+                );
               }
               if (cell.type === "inputText") {
                 return (
-                  <td key={cellIndex}>
+                  <div key={cellIndex} className={styleCellLeft}>
                     <MaterialInput
                       value={cell.value}
                       name={cell.materialName}
                       onChange={onInputTextChange}
                     />
-                  </td>
+                  </div>
                 );
               }
               if (cell.type === "inventoryInputText") {
                 return (
-                  <td key={cellIndex}>
+                  <div key={cellIndex} className={styleCellLeft}>
                     <InventoryInput
                       value={cell.value}
                       rowIndex={cell.rowIndex}
                       field={cell.field}
                       onChange={onInventoryTextChange}
                     />
-                  </td>
+                  </div>
                 );
               }
               if (cell.type === "pestInputText") {
                 return (
-                  <td key={cellIndex}>
+                  <div key={cellIndex} className={styleCellLeft}>
                     <PestInput
                       key={cellIndex}
                       value={cell.text}
                       rowIndex={rowIndex}
                       onChange={onPestTextChange}
                     />
-                  </td>
+                  </div>
                 );
               }
 
               return (
-                <td key={cellIndex}>
-                  <input
-                    type="checkbox"
-                    className="w-full min-w-0"
+                <div key={cellIndex} className={styleCellCenter}>
+                  <CheckBox
                     checked={cell.checked}
                     onChange={(e) => {
                       if (!cell.pestName || !cell.field) return;
@@ -96,12 +119,12 @@ export const Table = ({
                       );
                     }}
                   />
-                </td>
+                </div>
               );
             })}
-          </tr>
+          </Fragment>
         ))}
-      </tbody>
-    </table>
+      </div>
+    </>
   );
 };

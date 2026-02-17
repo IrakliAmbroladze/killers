@@ -5,7 +5,7 @@ import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
 import { OrderExtended } from "@/types";
 import { acceptanceFormData } from "@/constants";
-import { Table } from "./Table";
+import { Table } from "@/components";
 import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
@@ -60,25 +60,26 @@ export default function AcceptanceDocument({
         handleServicesChange={handleServicesChange}
       />
       <div className="w-full overflow-auto flex">
-        <div className="min-w-[300px] mx-auto">
-          <h3 className="font-georgian font-bold">
+        <div className="max-w-[800px] w-full mx-auto">
+          <h3 className="font-georgian font-bold text-center mt-5">
             ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
           </h3>
-          <div>გატარებული ღონისძიება</div>
           <Table
+            title={{ title: "გატარებული ღონისძიება", position: "center" }}
             headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
             rows={pestRows}
             onCheckboxChange={handlePestEventChange}
             onPestTextChange={handlePestTextChange}
+            columns_number={4}
           />
-          <div>გამოყენებული საშუალებები</div>
           <Table
+            title={{ title: "გამოყენებული საშუალებები", position: "center" }}
             headers={["დასახელება", "დოზირება", "გახარჯული"]}
             rows={materialRows}
             onInputTextChange={handleMaterialEventChange}
           />
-          <div>მიწოდებული ინვენტარი</div>
           <Table
+            title={{ title: "მიწოდებული ინვენტარი", position: "center" }}
             headers={["დასახელება", "ფასი", "რაოდენობა"]}
             rows={inventoryRows}
             onInventoryTextChange={handleSoldInventoryChange}
