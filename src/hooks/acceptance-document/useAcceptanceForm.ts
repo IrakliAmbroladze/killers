@@ -72,7 +72,18 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       ),
     }));
   };
-
+  const handleFlyingPestMonitorChange = (
+    rowIndex: number,
+    field: "id" | "fly" | "kinkla" | "plate_was_changed",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      flying_pest_monitor: prev.flying_pest_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
   const handlePestEventChange = (
     pestName: string,
     field: "monitor" | "spray" | "gel",
@@ -188,5 +199,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,
+    handleFlyingPestMonitorChange,
   };
 }

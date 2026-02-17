@@ -1,39 +1,20 @@
-import { UiTableCell } from "@/types";
-import { PestInput, MaterialInput, InventoryInput } from "@/components";
-import { CheckBox } from "@/components/atoms/CheckBox";
-import { Fragment } from "react";
+import { ReactNode, Fragment } from "react";
+
+export type Cell = ReactNode;
 
 type TableProps = {
+  id: string;
   title?: { title: string; position?: "left" | "center" | "right" };
-  headers: string[];
-  rows: UiTableCell[][];
-  onCheckboxChange?: (
-    pestName: string,
-    field: "monitor" | "spray" | "gel",
-    checked: boolean,
-  ) => void;
-  onInputTextChange?: (materialName: string, value: string) => void;
-  onPestTextChange?: (index: number, text: string) => void;
-  onInventoryTextChange?: (
-    rowIndex: number,
-    field: "name" | "price" | "quantity",
-    value: string,
-  ) => void;
-  columns_number?: number;
+  headers: Cell[];
+  rows: Cell[][];
 };
 
-export const Table = ({
-  title,
-  headers,
-  rows,
-  onCheckboxChange,
-  onInputTextChange,
-  onInventoryTextChange,
-  onPestTextChange,
-  columns_number = 3,
-}: TableProps) => {
+export const Table = ({ title, headers, rows }: TableProps) => {
   const styleCellLeft = "border p-2.5 flex items-center h-full";
   const styleCellCenter = `${styleCellLeft} justify-center`;
+
+  const columnsNumber = headers.length;
+
   return (
     <>
       {title && (
@@ -45,83 +26,22 @@ export const Table = ({
         </h2>
       )}
       <div
-        className={`border border-collapse text-xs grid ${columns_number === 5 ? "grid-cols-5" : columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
+        className="border grid"
+        style={{ gridTemplateColumns: `repeat(${columnsNumber}, 1fr)` }}
       >
-        {headers.map((header) => (
-          <div key={header} className={styleCellCenter}>
+        {headers.map((header, index) => (
+          <div key={`header-${index}`} className={styleCellCenter}>
             {header}
           </div>
         ))}
 
         {rows.map((row, rowIndex) => (
           <Fragment key={rowIndex}>
-            {row.map((cell, cellIndex) => {
-              if (cell.type === "text") {
-                return (
-                  <div
-                    key={cellIndex}
-                    className={
-                      cell.text === "-" || cell.text.includes("/")
-                        ? styleCellCenter
-                        : styleCellLeft
-                    }
-                  >
-                    {cell.text}
-                  </div>
-                );
-              }
-              if (cell.type === "inputText") {
-                return (
-                  <div key={cellIndex} className={styleCellLeft}>
-                    <MaterialInput
-                      value={cell.value}
-                      name={cell.materialName}
-                      onChange={onInputTextChange}
-                    />
-                  </div>
-                );
-              }
-              if (cell.type === "inventoryInputText") {
-                return (
-                  <div key={cellIndex} className={styleCellLeft}>
-                    <InventoryInput
-                      value={cell.value}
-                      rowIndex={cell.rowIndex}
-                      field={cell.field}
-                      onChange={onInventoryTextChange}
-                    />
-                  </div>
-                );
-              }
-              if (cell.type === "pestInputText") {
-                return (
-                  <div key={cellIndex} className={styleCellLeft}>
-                    <PestInput
-                      key={cellIndex}
-                      value={cell.text}
-                      rowIndex={rowIndex}
-                      onChange={onPestTextChange}
-                    />
-                  </div>
-                );
-              }
-
-              return (
-                <div key={cellIndex} className={styleCellCenter}>
-                  <CheckBox
-                    checked={cell.checked}
-                    onChange={(e) => {
-                      if (!cell.pestName || !cell.field) return;
-                      return onCheckboxChange?.(
-                        cell.pestName,
-                        cell.field,
-                        e.target.checked,
-                      );
-                    }}
-                  />
-                </div>
-              );
-            })}
+            {row.map((cell, cellIndex) => (
+              <div key={`${rowIndex}-${cellIndex}`} className={styleCellLeft}>
+                {cell}
+              </div>
+            ))}
           </Fragment>
         ))}
       </div>

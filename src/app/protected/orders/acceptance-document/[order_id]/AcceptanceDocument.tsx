@@ -37,6 +37,7 @@ export default function AcceptanceDocument({
     handleProcedureTimeChange,
     handleDateChange,
     handlePestTextChange,
+    handleFlyingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   return (
@@ -86,7 +87,10 @@ export default function AcceptanceDocument({
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          <InspectionDocument inspection_doc={order.inspection_doc} />
+          <InspectionDocument
+            inspection_doc={order.inspection_doc}
+            handleFlyingPestMonitorChange={handleFlyingPestMonitorChange}
+          />
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
             startTime={formData.startTime}

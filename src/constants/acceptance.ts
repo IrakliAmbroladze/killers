@@ -95,6 +95,12 @@ export const acceptanceFormData = (
     executor: {
       signature: "",
     },
+    flying_pest_monitor: Array.from({ length: 5 }, () => ({
+      id: "",
+      fly: "",
+      kinkla: "",
+      plate_was_changed: true,
+    })),
   };
 };
 
