@@ -5,7 +5,7 @@ import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
 import { OrderExtended } from "@/types";
 import { acceptanceFormData } from "@/constants";
-import { Table } from "./Table";
+import { Table } from "@/components";
 import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";

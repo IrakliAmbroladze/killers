@@ -1,7 +1,5 @@
 import { UiTableCell } from "@/types";
-import { PestInput } from "./PestInput";
-import { MaterialInput } from "./MaterialInput";
-import { InventoryInput } from "./InventoryInput";
+import { PestInput, MaterialInput, InventoryInput } from "@/components";
 import { CheckBox } from "@/components/atoms/CheckBox";
 import { Fragment } from "react";
 
@@ -47,7 +45,7 @@ export const Table = ({
         </h2>
       )}
       <div
-        className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
+        className={`border border-collapse text-xs grid ${columns_number === 5 ? "grid-cols-5" : columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
       >
         {headers.map((header) => (
           <div key={header} className={styleCellCenter}>
