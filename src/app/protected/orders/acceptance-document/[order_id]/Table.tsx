@@ -31,15 +31,14 @@ export const Table = ({
   onPestTextChange,
   columns_number = 3,
 }: TableProps) => {
+  const styleCellLeft = "border p-2.5 flex items-center h-full";
+  const styleCellCenter = `${styleCellLeft} justify-center`;
   return (
     <div
       className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
     >
       {headers.map((header) => (
-        <div
-          key={header}
-          className="border p-2.5 flex items-center justify-center"
-        >
+        <div key={header} className={styleCellCenter}>
           {header}
         </div>
       ))}
@@ -51,7 +50,11 @@ export const Table = ({
               return (
                 <div
                   key={cellIndex}
-                  className="border p-2.5 h-full flex items-center"
+                  className={
+                    cell.text === "-" || cell.text.includes("/")
+                      ? styleCellCenter
+                      : styleCellLeft
+                  }
                 >
                   {cell.text}
                 </div>
@@ -59,7 +62,7 @@ export const Table = ({
             }
             if (cell.type === "inputText") {
               return (
-                <div key={cellIndex} className="border p-2.5">
+                <div key={cellIndex} className={styleCellLeft}>
                   <MaterialInput
                     value={cell.value}
                     name={cell.materialName}
@@ -70,7 +73,7 @@ export const Table = ({
             }
             if (cell.type === "inventoryInputText") {
               return (
-                <div key={cellIndex}>
+                <div key={cellIndex} className={styleCellLeft}>
                   <InventoryInput
                     value={cell.value}
                     rowIndex={cell.rowIndex}
@@ -82,7 +85,7 @@ export const Table = ({
             }
             if (cell.type === "pestInputText") {
               return (
-                <div key={cellIndex}>
+                <div key={cellIndex} className={styleCellLeft}>
                   <PestInput
                     key={cellIndex}
                     value={cell.text}
@@ -94,10 +97,7 @@ export const Table = ({
             }
 
             return (
-              <div
-                key={cellIndex}
-                className="border p-2.5 flex items-center justify-center"
-              >
+              <div key={cellIndex} className={styleCellCenter}>
                 <CheckBox
                   checked={cell.checked}
                   onChange={(e) => {
