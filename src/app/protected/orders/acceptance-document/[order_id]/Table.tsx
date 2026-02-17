@@ -3,8 +3,10 @@ import { PestInput } from "./PestInput";
 import { MaterialInput } from "./MaterialInput";
 import { InventoryInput } from "./InventoryInput";
 import { CheckBox } from "@/components/atoms/CheckBox";
+import { Fragment } from "react";
 
 type TableProps = {
+  title?: { title: string; position?: "left" | "center" | "right" };
   headers: string[];
   rows: UiTableCell[][];
   onCheckboxChange?: (
@@ -23,6 +25,7 @@ type TableProps = {
 };
 
 export const Table = ({
+  title,
   headers,
   rows,
   onCheckboxChange,
@@ -34,86 +37,96 @@ export const Table = ({
   const styleCellLeft = "border p-2.5 flex items-center h-full";
   const styleCellCenter = `${styleCellLeft} justify-center`;
   return (
-    <div
-      className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
-    >
-      {headers.map((header) => (
-        <div key={header} className={styleCellCenter}>
-          {header}
-        </div>
-      ))}
+    <>
+      {title && (
+        <h2
+          style={{ textAlign: title.position }}
+          className="mt-5 mb-2.5 tracking-widest font-bold"
+        >
+          {title.title}
+        </h2>
+      )}
+      <div
+        className={`border border-collapse text-xs grid ${columns_number === 4 ? "grid-cols-4" : "grid-cols-3"} items-center justify-center`}
+      >
+        {headers.map((header) => (
+          <div key={header} className={styleCellCenter}>
+            {header}
+          </div>
+        ))}
 
-      {rows.map((row, rowIndex) => (
-        <>
-          {row.map((cell, cellIndex) => {
-            if (cell.type === "text") {
-              return (
-                <div
-                  key={cellIndex}
-                  className={
-                    cell.text === "-" || cell.text.includes("/")
-                      ? styleCellCenter
-                      : styleCellLeft
-                  }
-                >
-                  {cell.text}
-                </div>
-              );
-            }
-            if (cell.type === "inputText") {
-              return (
-                <div key={cellIndex} className={styleCellLeft}>
-                  <MaterialInput
-                    value={cell.value}
-                    name={cell.materialName}
-                    onChange={onInputTextChange}
-                  />
-                </div>
-              );
-            }
-            if (cell.type === "inventoryInputText") {
-              return (
-                <div key={cellIndex} className={styleCellLeft}>
-                  <InventoryInput
-                    value={cell.value}
-                    rowIndex={cell.rowIndex}
-                    field={cell.field}
-                    onChange={onInventoryTextChange}
-                  />
-                </div>
-              );
-            }
-            if (cell.type === "pestInputText") {
-              return (
-                <div key={cellIndex} className={styleCellLeft}>
-                  <PestInput
+        {rows.map((row, rowIndex) => (
+          <Fragment key={rowIndex}>
+            {row.map((cell, cellIndex) => {
+              if (cell.type === "text") {
+                return (
+                  <div
                     key={cellIndex}
-                    value={cell.text}
-                    rowIndex={rowIndex}
-                    onChange={onPestTextChange}
+                    className={
+                      cell.text === "-" || cell.text.includes("/")
+                        ? styleCellCenter
+                        : styleCellLeft
+                    }
+                  >
+                    {cell.text}
+                  </div>
+                );
+              }
+              if (cell.type === "inputText") {
+                return (
+                  <div key={cellIndex} className={styleCellLeft}>
+                    <MaterialInput
+                      value={cell.value}
+                      name={cell.materialName}
+                      onChange={onInputTextChange}
+                    />
+                  </div>
+                );
+              }
+              if (cell.type === "inventoryInputText") {
+                return (
+                  <div key={cellIndex} className={styleCellLeft}>
+                    <InventoryInput
+                      value={cell.value}
+                      rowIndex={cell.rowIndex}
+                      field={cell.field}
+                      onChange={onInventoryTextChange}
+                    />
+                  </div>
+                );
+              }
+              if (cell.type === "pestInputText") {
+                return (
+                  <div key={cellIndex} className={styleCellLeft}>
+                    <PestInput
+                      key={cellIndex}
+                      value={cell.text}
+                      rowIndex={rowIndex}
+                      onChange={onPestTextChange}
+                    />
+                  </div>
+                );
+              }
+
+              return (
+                <div key={cellIndex} className={styleCellCenter}>
+                  <CheckBox
+                    checked={cell.checked}
+                    onChange={(e) => {
+                      if (!cell.pestName || !cell.field) return;
+                      return onCheckboxChange?.(
+                        cell.pestName,
+                        cell.field,
+                        e.target.checked,
+                      );
+                    }}
                   />
                 </div>
               );
-            }
-
-            return (
-              <div key={cellIndex} className={styleCellCenter}>
-                <CheckBox
-                  checked={cell.checked}
-                  onChange={(e) => {
-                    if (!cell.pestName || !cell.field) return;
-                    return onCheckboxChange?.(
-                      cell.pestName,
-                      cell.field,
-                      e.target.checked,
-                    );
-                  }}
-                />
-              </div>
-            );
-          })}
-        </>
-      ))}
-    </div>
+            })}
+          </Fragment>
+        ))}
+      </div>
+    </>
   );
 };
