@@ -1,14 +1,16 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-export const MaterialInput = ({
+export const PestInput = ({
   value,
-  name,
+  rowIndex,
   onChange,
 }: {
   value: string;
-  name: string;
-  onChange?: (n: string, v: string) => void;
+  rowIndex: number;
+  onChange?: (i: number, v: string) => void;
 }) => {
   const [localValue, setLocalValue] = useState(value);
 
@@ -17,14 +19,13 @@ export const MaterialInput = ({
   }, [value]);
 
   const debounced = useDebouncedCallback(
-    (v: string) => onChange?.(name, v),
+    (v: string) => onChange?.(rowIndex, v),
     500,
   );
 
   return (
     <input
       className="w-full min-w-0"
-      type="text"
       value={localValue}
       onChange={(e) => {
         const v = e.target.value;

@@ -1,48 +1,53 @@
-import type { AcceptanceFormData, HandleServicesChange } from "@/types";
+import { CheckBox } from "@/components/atoms/CheckBox";
+import type { HandleServicesChange } from "@/types";
 
 export const ServicesCheckboxes = ({
-  formData,
+  checkStatus,
   handleServicesChange,
 }: {
-  formData: AcceptanceFormData;
+  checkStatus: {
+    disinsection: boolean;
+    deratization: boolean;
+    subcontractorPrevention: boolean;
+    disinfection: boolean;
+  };
   handleServicesChange: HandleServicesChange;
-}) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <label>
-      <input
-        type="checkbox"
-        name="disinsection"
-        checked={formData.services.disinsection}
-        onChange={handleServicesChange}
-      />
-      დეზინსექცია
-    </label>
-    <label>
-      <input
-        type="checkbox"
-        name="deratization"
-        checked={formData.services.deratization}
-        onChange={handleServicesChange}
-      />
-      დერატიზაცია
-    </label>
-    <label>
-      <input
-        type="checkbox"
-        name="subcontractorPrevention"
-        checked={formData.services.subcontractorPrevention}
-        onChange={handleServicesChange}
-      />
-      ქვეწარმავლების პრევენცია
-    </label>
-    <label>
-      <input
-        type="checkbox"
-        name="disinfection"
-        checked={formData.services.disinfection}
-        onChange={handleServicesChange}
-      />
-      დეზინფექცია
-    </label>
-  </div>
-);
+}) => {
+  const data = [
+    {
+      name: "disinsection",
+      label: "დეზინსექცია",
+      checked: checkStatus.disinsection,
+    },
+    {
+      name: "deratization",
+      label: "დერატიზაცია",
+      checked: checkStatus.deratization,
+    },
+    {
+      name: "subcontractorPrevention",
+      label: "ქვეწარმავლების პრევენცია",
+      checked: checkStatus.subcontractorPrevention,
+    },
+    {
+      name: "disinfection",
+      label: "დეზინფექცია",
+      checked: checkStatus.disinfection,
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:translate-x-20">
+      {data.map((item) => (
+        <CheckBox
+          key={item.name}
+          name={item.name}
+          checked={item.checked}
+          onChange={handleServicesChange}
+        >
+          {item.label}
+        </CheckBox>
+      ))}
+    </div>
+  );
+};
