@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
@@ -118,34 +118,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const pestRows: UiTableCell[][] = useMemo(
-    () =>
-      formData.pests.map((pest, index) => [
-        index < 10
-          ? { type: "text", text: pest.name }
-          : { type: "pestInputText", text: pest.name },
-        {
-          type: "checkbox",
-          checked: pest.monitor,
-          pestName: pest.name,
-          field: "monitor",
-        },
-        {
-          type: "checkbox",
-          checked: pest.spray,
-          pestName: pest.name,
-          field: "spray",
-        },
-        {
-          type: "checkbox",
-          checked: pest.gel,
-          pestName: pest.name,
-          field: "gel",
-        },
-      ]),
-    [formData.pests],
-  );
-
   const materialRows: UiTableCell[][] = useMemo(
     () =>
       formData.products.map((material) => [
@@ -193,7 +165,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    pestRows,
     materialRows,
     inventoryRows,
     handleSpaceChange,

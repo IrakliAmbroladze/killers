@@ -10,12 +10,13 @@ import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
-import { use } from "react";
+import { ReactNode, use, useMemo } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
 import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 import { notoSansGeorgian } from "@/fonts";
+import { CheckBox } from "@/components/atoms/CheckBox";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -30,7 +31,6 @@ export default function AcceptanceDocument({
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    pestRows,
     materialRows,
     inventoryRows,
     handleSpaceChange,
@@ -39,6 +39,31 @@ export default function AcceptanceDocument({
     handlePestTextChange,
     handleFlyingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
+
+  const pestRows: ReactNode[][] = useMemo(
+    () =>
+      formData.pests.map((pest, index) => [
+        pest.name,
+        <CheckBox
+          key={index}
+          checked={pest.monitor}
+          onChange={() =>
+            handlePestEventChange(pest.name, "monitor", !pest.monitor)
+          }
+        />,
+        <CheckBox
+          key={index}
+          checked={pest.spray}
+          onChange={(e) => console.log("something", e.target.value)}
+        />,
+        <CheckBox
+          key={index}
+          checked={pest.gel}
+          onChange={(e) => console.log("something", e.target.value)}
+        />,
+      ]),
+    [formData.pests],
+  );
 
   return (
     <div
@@ -66,31 +91,29 @@ export default function AcceptanceDocument({
             ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
           </h3>
           <Table
+            id="pests"
             title={{ title: "გატარებული ღონისძიება", position: "center" }}
             headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
             rows={pestRows}
-            onCheckboxChange={handlePestEventChange}
-            onPestTextChange={handlePestTextChange}
-            columns_number={4}
           />
-          <Table
-            title={{ title: "გამოყენებული საშუალებები", position: "center" }}
-            headers={["დასახელება", "დოზირება", "გახარჯული"]}
-            rows={materialRows}
-            onInputTextChange={handleMaterialEventChange}
-          />
-          <Table
-            title={{ title: "მიწოდებული ინვენტარი", position: "center" }}
-            headers={["დასახელება", "ფასი", "რაოდენობა"]}
-            rows={inventoryRows}
-            onInventoryTextChange={handleSoldInventoryChange}
-          />
+          {/* <Table */}
+          {/*   title={{ title: "გამოყენებული საშუალებები", position: "center" }} */}
+          {/*   headers={["დასახელება", "დოზირება", "გახარჯული"]} */}
+          {/*   rows={materialRows} */}
+          {/*   onInputTextChange={handleMaterialEventChange} */}
+          {/* /> */}
+          {/* <Table */}
+          {/*   title={{ title: "მიწოდებული ინვენტარი", position: "center" }} */}
+          {/*   headers={["დასახელება", "ფასი", "რაოდენობა"]} */}
+          {/*   rows={inventoryRows} */}
+          {/*   onInventoryTextChange={handleSoldInventoryChange} */}
+          {/* /> */}
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          <InspectionDocument
-            inspection_doc={order.inspection_doc}
-            handleFlyingPestMonitorChange={handleFlyingPestMonitorChange}
-          />
+          {/* <InspectionDocument */}
+          {/*   inspection_doc={order.inspection_doc} */}
+          {/*   handleFlyingPestMonitorChange={handleFlyingPestMonitorChange} */}
+          {/* /> */}
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
             startTime={formData.startTime}
