@@ -38,7 +38,10 @@ export const Table = ({ title, headers, rows }: TableProps) => {
         {rows.map((row, rowIndex) => (
           <Fragment key={rowIndex}>
             {row.map((cell, cellIndex) => (
-              <div key={`${rowIndex}-${cellIndex}`} className={styleCellLeft}>
+              <div
+                key={`${rowIndex}-${cellIndex}`}
+                className={cellIndex === 0 ? styleCellLeft : styleCellCenter}
+              >
                 {cell}
               </div>
             ))}

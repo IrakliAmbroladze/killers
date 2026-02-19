@@ -54,15 +54,17 @@ export default function AcceptanceDocument({
         <CheckBox
           key={index}
           checked={pest.spray}
-          onChange={(e) => console.log("something", e.target.value)}
+          onChange={() =>
+            handlePestEventChange(pest.name, "spray", !pest.spray)
+          }
         />,
         <CheckBox
           key={index}
           checked={pest.gel}
-          onChange={(e) => console.log("something", e.target.value)}
+          onChange={() => handlePestEventChange(pest.name, "gel", !pest.gel)}
         />,
       ]),
-    [formData.pests],
+    [formData.pests, handlePestEventChange],
   );
 
   return (
