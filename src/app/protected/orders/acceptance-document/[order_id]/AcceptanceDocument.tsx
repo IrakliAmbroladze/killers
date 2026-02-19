@@ -176,7 +176,7 @@ export default function AcceptanceDocument({
               className="w-full"
             />
           ),
-          justify_content: "start",
+          justify_content: "center",
         },
         {
           node: (
@@ -185,6 +185,36 @@ export default function AcceptanceDocument({
               value={item.fly}
               onChange={(e) =>
                 handleFlyingPestMonitorChange(rowIndex, "fly", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.kinkla}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(
+                  rowIndex,
+                  "kinkla",
+                  e.target.value,
+                )
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.blank}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(rowIndex, "blank", e.target.value)
               }
               className="w-full text-center"
             />
@@ -205,7 +235,7 @@ export default function AcceptanceDocument({
               }
             />
           ),
-          justify_content: "start",
+          justify_content: "center",
         },
       ]),
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],

@@ -99,7 +99,8 @@ export const acceptanceFormData = (
       id: "",
       fly: "",
       kinkla: "",
-      plate_was_changed: true,
+      blank: "",
+      plate_was_changed: false,
     })),
   };
 };

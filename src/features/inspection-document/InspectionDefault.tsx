@@ -12,56 +12,18 @@ export const InspectionDefault = ({
       <Table
         id="flying_pest_monitor"
         title={{
-          title: "მიწოდებული ინვენტარი",
+          title: "მფრინავი მავნებლის მონიტორი",
           justify_content: "center",
         }}
         headers={[
-          { node: "დასახელება", justify_content: "center" },
-          { node: "ფასი", justify_content: "center" },
-          { node: "რაოდენობა", justify_content: "center" },
+          { node: "#", justify_content: "center" },
+          { node: "ბუზი", justify_content: "center" },
+          { node: "ქინქლა", justify_content: "center" },
+          { node: "", justify_content: "center" },
+          { node: "შეიცვალა ფირფიტა", justify_content: "center" },
         ]}
         rows={flyingPestMonitorRows}
       />
-      {/* <Table */}
-      {/*   title={{ title: "მფრინავი მავნებლის მონიტორი", position: "center" }} */}
-      {/*   headers={["#", "ბუზი", "ქინქლა", "", "შეიცვალა ფირფიტა"]} */}
-      {/*   columns_number={5} */}
-      {/*   onFlyingPestMonitorChange={handleFlyingPestMonitorChange} */}
-      {/*   rows={[ */}
-      {/*     [ */}
-      {/*       { */}
-      {/*         type: "inventoryInputText", */}
-      {/*         rowIndex: 1, */}
-      {/*         field: "id", */}
-      {/*         value: "", */}
-      {/*       }, */}
-      {/*       { */}
-      {/*         type: "inventoryInputText", */}
-      {/*         rowIndex: 1, */}
-      {/*         field: "price", */}
-      {/*         value: "", */}
-      {/*       }, */}
-      {/*       { */}
-      {/*         type: "inventoryInputText", */}
-      {/*         rowIndex: 1, */}
-      {/*         field: "quantity", */}
-      {/*         value: "", */}
-      {/*       }, */}
-      {/*       { */}
-      {/*         type: "inventoryInputText", */}
-      {/*         rowIndex: 1, */}
-      {/*         field: "price", */}
-      {/*         value: "", */}
-      {/*       }, */}
-      {/*       { */}
-      {/*         type: "inventoryInputText", */}
-      {/*         rowIndex: 1, */}
-      {/*         field: "quantity", */}
-      {/*         value: "", */}
-      {/*       }, */}
-      {/*     ], */}
-      {/*   ]} */}
-      {/* /> */}
     </div>
   );
 };
