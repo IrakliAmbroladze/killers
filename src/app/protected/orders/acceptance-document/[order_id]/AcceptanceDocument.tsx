@@ -37,6 +37,7 @@ export default function AcceptanceDocument({
     handlePestTextChange,
     handleFlyingPestMonitorChange,
     handleCrawlingPestMonitorChange,
+    handleRodentMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -241,6 +242,7 @@ export default function AcceptanceDocument({
       ]),
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
   );
+
   const crawlingPestMonitorRows: Cell[][] = useMemo(
     () =>
       formData.crawling_pest_monitor.map((item, rowIndex) => [
@@ -322,6 +324,71 @@ export default function AcceptanceDocument({
         },
       ]),
     [formData.crawling_pest_monitor, handleCrawlingPestMonitorChange],
+  );
+
+  const rodentMonitorRows: Cell[][] = useMemo(
+    () =>
+      formData.rodent_monitor.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.id}
+              onChange={(e) =>
+                handleRodentMonitorChange(rowIndex, "id", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.captured}
+              onChange={(e) =>
+                handleRodentMonitorChange(rowIndex, "captured", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.plate_was_changed}
+              onChange={() =>
+                handleRodentMonitorChange(
+                  rowIndex,
+                  "plate_was_changed",
+                  !item.plate_was_changed,
+                )
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.chemical_was_added}
+              onChange={() =>
+                handleRodentMonitorChange(
+                  rowIndex,
+                  "chemical_was_added",
+                  !item.chemical_was_added,
+                )
+              }
+            />
+          ),
+          justify_content: "start",
+        },
+      ]),
+    [formData.rodent_monitor, handleRodentMonitorChange],
   );
   return (
     <div
