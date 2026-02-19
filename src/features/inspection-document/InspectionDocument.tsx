@@ -6,9 +6,11 @@ import { InspectionUnplanned } from "./InspectionUnplanned";
 export const InspectionDocument = ({
   inspection_doc,
   flyingPestMonitorRows,
+  crawlingPestMonitorRows,
 }: {
   inspection_doc: "default" | "unplanned" | "follow_up";
   flyingPestMonitorRows: Cell[][];
+  crawlingPestMonitorRows: Cell[][];
 }) => {
   switch (inspection_doc) {
     case "unplanned":
@@ -18,7 +20,10 @@ export const InspectionDocument = ({
       return <InspectionFollowUp />;
     default:
       return (
-        <InspectionDefault flyingPestMonitorRows={flyingPestMonitorRows} />
+        <InspectionDefault
+          flyingPestMonitorRows={flyingPestMonitorRows}
+          crawlingPestMonitorRows={crawlingPestMonitorRows}
+        />
       );
   }
 };

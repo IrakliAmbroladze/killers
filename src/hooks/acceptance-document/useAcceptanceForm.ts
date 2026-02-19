@@ -118,6 +118,18 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
+  const handleCrawlingPestMonitorChange = (
+    rowIndex: number,
+    field: "id" | "ant" | "cockroach" | "blank" | "plate_was_changed",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      crawling_pest_monitor: prev.crawling_pest_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
   return {
     handlePestTextChange,
     formData,
@@ -130,5 +142,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleProcedureTimeChange,
     handleDateChange,
     handleFlyingPestMonitorChange,
+    handleCrawlingPestMonitorChange,
   };
 }

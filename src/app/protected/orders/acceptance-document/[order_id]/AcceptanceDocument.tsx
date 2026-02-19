@@ -36,6 +36,7 @@ export default function AcceptanceDocument({
     handleDateChange,
     handlePestTextChange,
     handleFlyingPestMonitorChange,
+    handleCrawlingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -240,6 +241,88 @@ export default function AcceptanceDocument({
       ]),
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
   );
+  const crawlingPestMonitorRows: Cell[][] = useMemo(
+    () =>
+      formData.crawling_pest_monitor.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.id}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(rowIndex, "id", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.ant}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(rowIndex, "ant", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.cockroach}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(
+                  rowIndex,
+                  "cockroach",
+                  e.target.value,
+                )
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.blank}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(
+                  rowIndex,
+                  "blank",
+                  e.target.value,
+                )
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.plate_was_changed}
+              onChange={() =>
+                handleCrawlingPestMonitorChange(
+                  rowIndex,
+                  "plate_was_changed",
+                  !item.plate_was_changed,
+                )
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+      ]),
+    [formData.crawling_pest_monitor, handleCrawlingPestMonitorChange],
+  );
   return (
     <div
       className={`${notoSansGeorgian.className} flex justify-center items-center flex-col gap-5 px-2.5 text-sm`}
@@ -310,6 +393,7 @@ export default function AcceptanceDocument({
           <InspectionDocument
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
+            crawlingPestMonitorRows={crawlingPestMonitorRows}
           />
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
