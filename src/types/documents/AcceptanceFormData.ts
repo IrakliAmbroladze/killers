@@ -40,4 +40,10 @@ export type AcceptanceFormData = {
   executor: {
     signature: string;
   };
+  flying_pest_monitor: Array<{
+    id: string;
+    fly: string;
+    kinkla: string;
+    plate_was_changed: boolean;
+  }>;
 };

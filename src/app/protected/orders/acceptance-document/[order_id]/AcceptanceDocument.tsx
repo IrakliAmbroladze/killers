@@ -3,19 +3,20 @@ import { LogoWhiteOnBlue } from "@/components/atoms/logoWhiteOnBlue";
 import DoneAreas from "./DoneAreas";
 import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
-import { OrderExtended } from "@/types";
+import { Cell, OrderExtended } from "@/types";
 import { acceptanceFormData } from "@/constants";
 import { Table } from "@/components";
 import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
-import { use } from "react";
+import { use, useMemo } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
-import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
+// import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 import { notoSansGeorgian } from "@/fonts";
+import { CheckBox } from "@/components/atoms/CheckBox";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -30,14 +31,136 @@ export default function AcceptanceDocument({
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    pestRows,
-    materialRows,
-    inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,
     handlePestTextChange,
+    // handleFlyingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
+
+  const pestRows: Cell[][] = useMemo(
+    () =>
+      formData.pests.map((pest, index) => [
+        {
+          node:
+            index < 11 ? (
+              pest.name
+            ) : (
+              <input
+                type="text"
+                value={pest.name}
+                onChange={(e) => handlePestTextChange(index, e.target.value)}
+              />
+            ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <CheckBox
+              key={index}
+              checked={pest.monitor}
+              onChange={() =>
+                handlePestEventChange(pest.name, "monitor", !pest.monitor)
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={index}
+              checked={pest.spray}
+              onChange={() =>
+                handlePestEventChange(pest.name, "spray", !pest.spray)
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={index}
+              checked={pest.gel}
+              onChange={() =>
+                handlePestEventChange(pest.name, "gel", !pest.gel)
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+      ]),
+    [formData.pests, handlePestEventChange, handlePestTextChange],
+  );
+
+  const materialRows: Cell[][] = useMemo(
+    () =>
+      formData.products.map((material) => [
+        { node: material.name, justify_content: "start" },
+        { node: material.dosage, justify_content: "center" },
+        {
+          node: (
+            <input
+              type="text"
+              value={material.used}
+              onChange={(e) =>
+                handleMaterialEventChange(material.name, e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+      ]),
+    [formData.products, handleMaterialEventChange],
+  );
+
+  const inventoryRows: Cell[][] = useMemo(
+    () =>
+      formData.inventory.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.name}
+              onChange={(e) =>
+                handleSoldInventoryChange(rowIndex, "name", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.price}
+              onChange={(e) =>
+                handleSoldInventoryChange(rowIndex, "price", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.quantity}
+              onChange={(e) =>
+                handleSoldInventoryChange(rowIndex, "quantity", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+      ]),
+    [formData.inventory, handleSoldInventoryChange],
+  );
 
   return (
     <div
@@ -65,28 +188,51 @@ export default function AcceptanceDocument({
             ტერიტორიაზე ჩატარებული სამუშაოები და სამიზნე მავნებლები:
           </h3>
           <Table
-            title={{ title: "გატარებული ღონისძიება", position: "center" }}
-            headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
+            id="pests"
+            title={{
+              title: "გატარებული ღონისძიება",
+              justify_content: "center",
+            }}
+            headers={[
+              { node: "მავნებელი", justify_content: "center" },
+              { node: "მონიტორი", justify_content: "center" },
+              { node: "სპრეი", justify_content: "center" },
+              { node: "გელი", justify_content: "center" },
+            ]}
             rows={pestRows}
-            onCheckboxChange={handlePestEventChange}
-            onPestTextChange={handlePestTextChange}
-            columns_number={4}
           />
           <Table
-            title={{ title: "გამოყენებული საშუალებები", position: "center" }}
-            headers={["დასახელება", "დოზირება", "გახარჯული"]}
+            id="materials"
+            title={{
+              title: "გამოყენებული საშუალებები",
+              justify_content: "center",
+            }}
+            headers={[
+              { node: "დასახელება", justify_content: "center" },
+              { node: "დოზირება", justify_content: "center" },
+              { node: "გახარჯული", justify_content: "center" },
+            ]}
             rows={materialRows}
-            onInputTextChange={handleMaterialEventChange}
           />
           <Table
-            title={{ title: "მიწოდებული ინვენტარი", position: "center" }}
-            headers={["დასახელება", "ფასი", "რაოდენობა"]}
+            id="inventory"
+            title={{
+              title: "მიწოდებული ინვენტარი",
+              justify_content: "center",
+            }}
+            headers={[
+              { node: "დასახელება", justify_content: "center" },
+              { node: "ფასი", justify_content: "center" },
+              { node: "რაოდენობა", justify_content: "center" },
+            ]}
             rows={inventoryRows}
-            onInventoryTextChange={handleSoldInventoryChange}
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          <InspectionDocument inspection_doc={order.inspection_doc} />
+          {/* <InspectionDocument */}
+          {/*   inspection_doc={order.inspection_doc} */}
+          {/*   handleFlyingPestMonitorChange={handleFlyingPestMonitorChange} */}
+          {/* /> */}
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
             startTime={formData.startTime}

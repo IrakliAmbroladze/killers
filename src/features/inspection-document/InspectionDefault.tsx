@@ -1,6 +1,14 @@
 import { Table } from "@/components";
 
-export const InspectionDefault = () => {
+export const InspectionDefault = ({
+  handleFlyingPestMonitorChange,
+}: {
+  handleFlyingPestMonitorChange: (
+    rowIndex: number,
+    field: "id" | "fly" | "kinkla" | "plate_was_changed",
+    value: string | boolean,
+  ) => void;
+}) => {
   return (
     <div>
       this is default component
@@ -8,12 +16,13 @@ export const InspectionDefault = () => {
         title={{ title: "მფრინავი მავნებლის მონიტორი", position: "center" }}
         headers={["#", "ბუზი", "ქინქლა", "", "შეიცვალა ფირფიტა"]}
         columns_number={5}
+        onFlyingPestMonitorChange={handleFlyingPestMonitorChange}
         rows={[
           [
             {
               type: "inventoryInputText",
               rowIndex: 1,
-              field: "name",
+              field: "id",
               value: "",
             },
             {
