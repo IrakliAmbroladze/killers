@@ -23,6 +23,7 @@ import { drawTimeAndAddress } from "../layout/text/drawTimeAndAddress";
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   console.log(formData.flying_pest_monitor);
   console.log(formData.crawling_pest_monitor);
+  console.log(formData.rodent_monitor);
   const pdf = await PDFDocument.create();
   const logoPath = path.join(process.cwd(), "public", "logoBlue.png");
   const logoBytes = fs.readFileSync(logoPath);

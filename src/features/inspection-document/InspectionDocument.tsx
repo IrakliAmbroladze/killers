@@ -7,10 +7,12 @@ export const InspectionDocument = ({
   inspection_doc,
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
+  rodentMonitorRows,
 }: {
   inspection_doc: "default" | "unplanned" | "follow_up";
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
+  rodentMonitorRows: Cell[][];
 }) => {
   switch (inspection_doc) {
     case "unplanned":
@@ -23,6 +25,7 @@ export const InspectionDocument = ({
         <InspectionDefault
           flyingPestMonitorRows={flyingPestMonitorRows}
           crawlingPestMonitorRows={crawlingPestMonitorRows}
+          rodentMonitorRows={rodentMonitorRows}
         />
       );
   }

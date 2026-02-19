@@ -4,9 +4,11 @@ import { Cell } from "@/types";
 export const InspectionDefault = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
+  rodentMonitorRows,
 }: {
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
+  rodentMonitorRows: Cell[][];
 }) => {
   return (
     <div>
@@ -40,6 +42,20 @@ export const InspectionDefault = ({
           { node: "შეიცვალა ფირფიტა", justify_content: "center" },
         ]}
         rows={crawlingPestMonitorRows}
+      />
+      <Table
+        id="rodent_monitor"
+        title={{
+          title: "მღრღნელის მონიტორი",
+          justify_content: "center",
+        }}
+        headers={[
+          { node: "#", justify_content: "center" },
+          { node: "დაჭერილი", justify_content: "center" },
+          { node: "შეიცვალა ფირფიტა", justify_content: "center" },
+          { node: "დაემატა ქიმიკატი", justify_content: "center" },
+        ]}
+        rows={rodentMonitorRows}
       />
     </div>
   );

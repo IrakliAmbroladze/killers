@@ -385,7 +385,7 @@ export default function AcceptanceDocument({
               }
             />
           ),
-          justify_content: "start",
+          justify_content: "center",
         },
       ]),
     [formData.rodent_monitor, handleRodentMonitorChange],
@@ -461,6 +461,7 @@ export default function AcceptanceDocument({
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
             crawlingPestMonitorRows={crawlingPestMonitorRows}
+            rodentMonitorRows={rodentMonitorRows}
           />
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
