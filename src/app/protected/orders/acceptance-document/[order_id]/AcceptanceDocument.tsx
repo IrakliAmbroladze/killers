@@ -31,7 +31,6 @@ export default function AcceptanceDocument({
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    materialRows,
     inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
@@ -84,6 +83,19 @@ export default function AcceptanceDocument({
     [formData.pests, handlePestEventChange],
   );
 
+  const materialRows: Cell[][] = useMemo(
+    () =>
+      formData.products.map((material) => [
+        { node: material.name, justify_content: "start" },
+        { node: material.dosage, justify_content: "center" },
+        {
+          node: material.used,
+          justify_content: "center",
+        },
+      ]),
+    [formData.products],
+  );
+
   return (
     <div
       className={`${notoSansGeorgian.className} flex justify-center items-center flex-col gap-5 px-2.5 text-sm`}
@@ -122,6 +134,19 @@ export default function AcceptanceDocument({
               { node: "გელი", justify_content: "center" },
             ]}
             rows={pestRows}
+          />
+          <Table
+            id="materials"
+            title={{
+              title: "გამოყენებული საშუალებები",
+              justify_content: "center",
+            }}
+            headers={[
+              { node: "დასახელება", justify_content: "center" },
+              { node: "დოზირება", justify_content: "center" },
+              { node: "გახარჯული", justify_content: "center" },
+            ]}
+            rows={materialRows}
           />
           {/* <Table */}
           {/*   title={{ title: "გამოყენებული საშუალებები", position: "center" }} */}
