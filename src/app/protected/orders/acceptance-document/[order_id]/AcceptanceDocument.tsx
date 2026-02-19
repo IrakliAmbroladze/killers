@@ -89,11 +89,19 @@ export default function AcceptanceDocument({
         { node: material.name, justify_content: "start" },
         { node: material.dosage, justify_content: "center" },
         {
-          node: material.used,
-          justify_content: "center",
+          node: (
+            <input
+              value={material.used}
+              onChange={(e) =>
+                handleMaterialEventChange(material.name, e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
         },
       ]),
-    [formData.products],
+    [formData.products, handleMaterialEventChange],
   );
 
   return (
