@@ -102,6 +102,19 @@ export const acceptanceFormData = (
       blank: "",
       plate_was_changed: false,
     })),
+    crawling_pest_monitor: Array.from({ length: 5 }, () => ({
+      id: "",
+      ant: "",
+      cockroach: "",
+      blank: "",
+      plate_was_changed: false,
+    })),
+    rodent_monitor: Array.from({ length: 5 }, () => ({
+      id: "",
+      captured: "",
+      plate_was_changed: false,
+      chemical_was_added: false,
+    })),
   };
 };
 
