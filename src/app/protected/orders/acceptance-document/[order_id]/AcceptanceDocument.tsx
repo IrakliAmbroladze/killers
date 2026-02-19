@@ -42,7 +42,19 @@ export default function AcceptanceDocument({
   const pestRows: Cell[][] = useMemo(
     () =>
       formData.pests.map((pest, index) => [
-        { node: pest.name, justify_content: "start" },
+        {
+          node:
+            index < 11 ? (
+              pest.name
+            ) : (
+              <input
+                type="text"
+                value={pest.name}
+                onChange={(e) => handlePestTextChange(index, e.target.value)}
+              />
+            ),
+          justify_content: "start",
+        },
         {
           node: (
             <CheckBox
@@ -80,7 +92,7 @@ export default function AcceptanceDocument({
           justify_content: "center",
         },
       ]),
-    [formData.pests, handlePestEventChange],
+    [formData.pests, handlePestEventChange, handlePestTextChange],
   );
 
   const materialRows: Cell[][] = useMemo(
@@ -91,6 +103,7 @@ export default function AcceptanceDocument({
         {
           node: (
             <input
+              type="text"
               value={material.used}
               onChange={(e) =>
                 handleMaterialEventChange(material.name, e.target.value)
