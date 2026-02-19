@@ -130,6 +130,19 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       ),
     }));
   };
+  const handleRodentMonitorChange = (
+    rowIndex: number,
+    field: "id" | "captured" | "plate_was_changed" | "chemical_was_added",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      rodent_monitor: prev.rodent_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
+
   return {
     handlePestTextChange,
     formData,
@@ -143,5 +156,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleDateChange,
     handleFlyingPestMonitorChange,
     handleCrawlingPestMonitorChange,
+    handleRodentMonitorChange,
   };
 }
