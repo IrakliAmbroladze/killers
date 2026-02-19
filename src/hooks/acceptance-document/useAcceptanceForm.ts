@@ -1,5 +1,5 @@
-import { ReactNode, useCallback, useMemo, useState } from "react";
-import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
+import { useCallback, useState } from "react";
+import { AcceptanceFormData, HandleServicesChange } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
@@ -118,45 +118,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const materialRows: UiTableCell[][] = useMemo(
-    () =>
-      formData.products.map((material) => [
-        { type: "text", text: material.name },
-        { type: "text", text: material.dosage },
-        {
-          type: "inputText",
-          materialName: material.name,
-          value: material.used,
-        },
-      ]),
-    [formData.products],
-  );
-
-  const inventoryRows: UiTableCell[][] = useMemo(
-    () =>
-      formData.inventory.map((item, rowIndex) => [
-        {
-          type: "inventoryInputText",
-          rowIndex,
-          field: "name",
-          value: item.name,
-        },
-        {
-          type: "inventoryInputText",
-          rowIndex,
-          field: "price",
-          value: item.price,
-        },
-        {
-          type: "inventoryInputText",
-          rowIndex,
-          field: "quantity",
-          value: item.quantity,
-        },
-      ]),
-    [formData.inventory],
-  );
-
   return {
     handlePestTextChange,
     formData,
@@ -165,8 +126,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    materialRows,
-    inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,

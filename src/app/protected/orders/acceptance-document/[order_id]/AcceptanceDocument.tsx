@@ -14,7 +14,7 @@ import { use, useMemo } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
-import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
+// import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 import { notoSansGeorgian } from "@/fonts";
 import { CheckBox } from "@/components/atoms/CheckBox";
 
@@ -31,12 +31,11 @@ export default function AcceptanceDocument({
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,
     handlePestTextChange,
-    handleFlyingPestMonitorChange,
+    // handleFlyingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -117,6 +116,52 @@ export default function AcceptanceDocument({
     [formData.products, handleMaterialEventChange],
   );
 
+  const inventoryRows: Cell[][] = useMemo(
+    () =>
+      formData.inventory.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.name}
+              onChange={(e) =>
+                handleSoldInventoryChange(rowIndex, "name", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.price}
+              onChange={(e) =>
+                handleSoldInventoryChange(rowIndex, "price", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.quantity}
+              onChange={(e) =>
+                handleSoldInventoryChange(rowIndex, "quantity", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+      ]),
+    [formData.inventory, handleSoldInventoryChange],
+  );
+
   return (
     <div
       className={`${notoSansGeorgian.className} flex justify-center items-center flex-col gap-5 px-2.5 text-sm`}
@@ -169,18 +214,19 @@ export default function AcceptanceDocument({
             ]}
             rows={materialRows}
           />
-          {/* <Table */}
-          {/*   title={{ title: "გამოყენებული საშუალებები", position: "center" }} */}
-          {/*   headers={["დასახელება", "დოზირება", "გახარჯული"]} */}
-          {/*   rows={materialRows} */}
-          {/*   onInputTextChange={handleMaterialEventChange} */}
-          {/* /> */}
-          {/* <Table */}
-          {/*   title={{ title: "მიწოდებული ინვენტარი", position: "center" }} */}
-          {/*   headers={["დასახელება", "ფასი", "რაოდენობა"]} */}
-          {/*   rows={inventoryRows} */}
-          {/*   onInventoryTextChange={handleSoldInventoryChange} */}
-          {/* /> */}
+          <Table
+            id="inventory"
+            title={{
+              title: "მიწოდებული ინვენტარი",
+              justify_content: "center",
+            }}
+            headers={[
+              { node: "დასახელება", justify_content: "center" },
+              { node: "ფასი", justify_content: "center" },
+              { node: "რაოდენობა", justify_content: "center" },
+            ]}
+            rows={inventoryRows}
+          />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
           {/* <InspectionDocument */}
