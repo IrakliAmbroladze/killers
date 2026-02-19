@@ -74,7 +74,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
   };
   const handleFlyingPestMonitorChange = (
     rowIndex: number,
-    field: "id" | "fly" | "kinkla" | "plate_was_changed",
+    field: "id" | "fly" | "kinkla" | "blank" | "plate_was_changed",
     value: string | boolean,
   ) => {
     setFormData((prev) => ({

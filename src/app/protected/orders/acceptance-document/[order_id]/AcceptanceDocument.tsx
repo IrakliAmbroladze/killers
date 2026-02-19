@@ -14,7 +14,7 @@ import { use, useMemo } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
-// import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
+import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 import { notoSansGeorgian } from "@/fonts";
 import { CheckBox } from "@/components/atoms/CheckBox";
 
@@ -35,7 +35,7 @@ export default function AcceptanceDocument({
     handleProcedureTimeChange,
     handleDateChange,
     handlePestTextChange,
-    // handleFlyingPestMonitorChange,
+    handleFlyingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -162,6 +162,54 @@ export default function AcceptanceDocument({
     [formData.inventory, handleSoldInventoryChange],
   );
 
+  const flyingPestMonitorRows: Cell[][] = useMemo(
+    () =>
+      formData.flying_pest_monitor.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.id}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(rowIndex, "id", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.fly}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(rowIndex, "fly", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.plate_was_changed}
+              onChange={() =>
+                handleFlyingPestMonitorChange(
+                  rowIndex,
+                  "plate_was_changed",
+                  !item.plate_was_changed,
+                )
+              }
+            />
+          ),
+          justify_content: "start",
+        },
+      ]),
+    [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
+  );
   return (
     <div
       className={`${notoSansGeorgian.className} flex justify-center items-center flex-col gap-5 px-2.5 text-sm`}
@@ -229,10 +277,10 @@ export default function AcceptanceDocument({
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          {/* <InspectionDocument */}
-          {/*   inspection_doc={order.inspection_doc} */}
-          {/*   handleFlyingPestMonitorChange={handleFlyingPestMonitorChange} */}
-          {/* /> */}
+          <InspectionDocument
+            inspection_doc={order.inspection_doc}
+            flyingPestMonitorRows={flyingPestMonitorRows}
+          />
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
             startTime={formData.startTime}
