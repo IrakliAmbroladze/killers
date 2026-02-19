@@ -1,17 +1,15 @@
-import { ReactNode, Fragment } from "react";
-
-export type Cell = ReactNode;
+import { Cell, JustifyContent } from "@/types";
+import { Fragment } from "react";
 
 type TableProps = {
   id: string;
-  title?: { title: string; position?: "left" | "center" | "right" };
+  title?: { title: string; justify_content?: JustifyContent };
   headers: Cell[];
   rows: Cell[][];
 };
 
 export const Table = ({ title, headers, rows }: TableProps) => {
-  const styleCellLeft = "border p-2.5 flex items-center h-full";
-  const styleCellCenter = `${styleCellLeft} justify-center`;
+  const styleCell = "border p-2.5 flex items-center h-full";
 
   const columnsNumber = headers.length;
 
@@ -19,7 +17,7 @@ export const Table = ({ title, headers, rows }: TableProps) => {
     <>
       {title && (
         <h2
-          style={{ textAlign: title.position }}
+          style={{ textAlign: title.justify_content }}
           className="mt-5 mb-2.5 tracking-widest font-bold"
         >
           {title.title}
@@ -30,8 +28,11 @@ export const Table = ({ title, headers, rows }: TableProps) => {
         style={{ gridTemplateColumns: `repeat(${columnsNumber}, 1fr)` }}
       >
         {headers.map((header, index) => (
-          <div key={`header-${index}`} className={styleCellCenter}>
-            {header}
+          <div
+            key={`header-${index}`}
+            className={`${styleCell} justify-${header.justify_content}`}
+          >
+            {header.node}
           </div>
         ))}
 
@@ -40,9 +41,9 @@ export const Table = ({ title, headers, rows }: TableProps) => {
             {row.map((cell, cellIndex) => (
               <div
                 key={`${rowIndex}-${cellIndex}`}
-                className={cellIndex === 0 ? styleCellLeft : styleCellCenter}
+                className={`${styleCell} justify-${cell.justify_content}`}
               >
-                {cell}
+                {cell.node}
               </div>
             ))}
           </Fragment>

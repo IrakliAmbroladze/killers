@@ -3,14 +3,14 @@ import { LogoWhiteOnBlue } from "@/components/atoms/logoWhiteOnBlue";
 import DoneAreas from "./DoneAreas";
 import ProcedureTime from "./ProcedureTime";
 import AcceptanceSignature from "./AcceptanceSignature";
-import { OrderExtended } from "@/types";
+import { Cell, OrderExtended } from "@/types";
 import { acceptanceFormData } from "@/constants";
 import { Table } from "@/components";
 import { useAcceptanceForm } from "@/hooks";
 import { Address } from "./Address";
 import { ServicesCheckboxes } from "./ServicesCheckboxes";
 import CustomerNamePersonalNumber from "./CustomerNamePersonalNumber";
-import { ReactNode, use, useMemo } from "react";
+import { use, useMemo } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
@@ -40,29 +40,46 @@ export default function AcceptanceDocument({
     handleFlyingPestMonitorChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
-  const pestRows: ReactNode[][] = useMemo(
+  const pestRows: Cell[][] = useMemo(
     () =>
       formData.pests.map((pest, index) => [
-        pest.name,
-        <CheckBox
-          key={index}
-          checked={pest.monitor}
-          onChange={() =>
-            handlePestEventChange(pest.name, "monitor", !pest.monitor)
-          }
-        />,
-        <CheckBox
-          key={index}
-          checked={pest.spray}
-          onChange={() =>
-            handlePestEventChange(pest.name, "spray", !pest.spray)
-          }
-        />,
-        <CheckBox
-          key={index}
-          checked={pest.gel}
-          onChange={() => handlePestEventChange(pest.name, "gel", !pest.gel)}
-        />,
+        { node: pest.name, justify_content: "start" },
+        {
+          node: (
+            <CheckBox
+              key={index}
+              checked={pest.monitor}
+              onChange={() =>
+                handlePestEventChange(pest.name, "monitor", !pest.monitor)
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={index}
+              checked={pest.spray}
+              onChange={() =>
+                handlePestEventChange(pest.name, "spray", !pest.spray)
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={index}
+              checked={pest.gel}
+              onChange={() =>
+                handlePestEventChange(pest.name, "gel", !pest.gel)
+              }
+            />
+          ),
+          justify_content: "center",
+        },
       ]),
     [formData.pests, handlePestEventChange],
   );
@@ -94,8 +111,16 @@ export default function AcceptanceDocument({
           </h3>
           <Table
             id="pests"
-            title={{ title: "გატარებული ღონისძიება", position: "center" }}
-            headers={["მავნებელი", "მონიტორი", "სპრეი", "გელი"]}
+            title={{
+              title: "გატარებული ღონისძიება",
+              justify_content: "center",
+            }}
+            headers={[
+              { node: "მავნებელი", justify_content: "center" },
+              { node: "მონიტორი", justify_content: "center" },
+              { node: "სპრეი", justify_content: "center" },
+              { node: "გელი", justify_content: "center" },
+            ]}
             rows={pestRows}
           />
           {/* <Table */}
