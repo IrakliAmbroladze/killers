@@ -8,11 +8,13 @@ export const InspectionDocument = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
   rodentMonitorRows,
+  criteriaRows,
 }: {
   inspection_doc: "default" | "unplanned" | "follow_up";
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
   rodentMonitorRows: Cell[][];
+  criteriaRows: Cell[][];
 }) => {
   switch (inspection_doc) {
     case "unplanned":
@@ -26,6 +28,7 @@ export const InspectionDocument = ({
           flyingPestMonitorRows={flyingPestMonitorRows}
           crawlingPestMonitorRows={crawlingPestMonitorRows}
           rodentMonitorRows={rodentMonitorRows}
+          criteriaRows={criteriaRows}
         />
       );
   }

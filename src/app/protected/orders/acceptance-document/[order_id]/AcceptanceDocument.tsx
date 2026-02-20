@@ -504,22 +504,12 @@ export default function AcceptanceDocument({
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
 
-          <Table
-            id="criteria"
-            headers={[
-              { node: "#", justify_content: "center" },
-              { node: "გარე ტერიტორია", justify_content: "center" },
-              { node: "კი", justify_content: "center" },
-              { node: "არა", justify_content: "center" },
-              { node: "N/A", justify_content: "center" },
-            ]}
-            rows={criteriaRows}
-          />
           <InspectionDocument
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
             crawlingPestMonitorRows={crawlingPestMonitorRows}
             rodentMonitorRows={rodentMonitorRows}
+            criteriaRows={criteriaRows}
           />
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}

@@ -5,14 +5,27 @@ export const InspectionDefault = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
   rodentMonitorRows,
+  criteriaRows,
 }: {
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
   rodentMonitorRows: Cell[][];
+  criteriaRows: Cell[][];
 }) => {
   return (
-    <div>
-      this is default component
+    <div className="mt-5">
+      <h2 className="m-5 text-center">გეგმიური ინსპექტირება</h2>
+      <Table
+        id="criteria"
+        headers={[
+          { node: "#", justify_content: "center" },
+          { node: "გარე ტერიტორია", justify_content: "center" },
+          { node: "კი", justify_content: "center" },
+          { node: "არა", justify_content: "center" },
+          { node: "N/A", justify_content: "center" },
+        ]}
+        rows={criteriaRows}
+      />
       <Table
         id="flying_pest_monitor"
         title={{
