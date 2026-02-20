@@ -164,7 +164,51 @@ export default function AcceptanceDocument({
       ]),
     [formData.inventory, handleSoldInventoryChange],
   );
-
+  const criteriaRows: Cell[][] = [
+    [
+      {
+        node: 1,
+      },
+      {
+        node: "ნაგვის ურნები შენობიდან მოშორებითაა",
+      },
+      {
+        node: (
+          <input
+            type="radio"
+            name="1.1"
+            onChange={(e) => handleCriteriaChange(e.target.name, true)}
+            className="scale-200 w-1/2"
+          />
+        ),
+        justify_content: "center",
+      },
+      {
+        node: (
+          <input
+            type="radio"
+            name="1.1"
+            onChange={(e) => {
+              handleCriteriaChange(e.target.name, false);
+            }}
+            className="scale-200 w-1/2"
+          />
+        ),
+        justify_content: "center",
+      },
+      {
+        node: (
+          <input
+            type="radio"
+            name="1.1"
+            onChange={(e) => handleCriteriaChange(e.target.name, null)}
+            className="scale-200 w-1/2"
+          />
+        ),
+        justify_content: "center",
+      },
+    ],
+  ];
   const flyingPestMonitorRows: Cell[][] = useMemo(
     () =>
       formData.flying_pest_monitor.map((item, rowIndex) => [
@@ -459,79 +503,18 @@ export default function AcceptanceDocument({
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          <fieldset>
-            <legend>Area is clean and tidy</legend>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="1.1"
-                  onChange={(e) => handleCriteriaChange(e.target.name, true)}
-                />
-                Yes
-              </label>
-            </div>
 
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="1.1"
-                  onChange={(e) => {
-                    handleCriteriaChange(e.target.name, false);
-                  }}
-                />
-                No
-              </label>
-            </div>
-
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="1.1"
-                  onChange={(e) => handleCriteriaChange(e.target.name, null)}
-                />
-                N/A
-              </label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Second Area is clean and tidy</legend>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="1.2"
-                  onChange={(e) => handleCriteriaChange(e.target.name, true)}
-                />
-                Yes
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="1.2"
-                  onChange={(e) => {
-                    handleCriteriaChange(e.target.name, false);
-                  }}
-                />
-                No
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="1.2"
-                  onChange={(e) => handleCriteriaChange(e.target.name, null)}
-                />
-                N/A
-              </label>
-            </div>
-          </fieldset>
-
+          <Table
+            id="criteria"
+            headers={[
+              { node: "#", justify_content: "center" },
+              { node: "გარე ტერიტორია", justify_content: "center" },
+              { node: "კი", justify_content: "center" },
+              { node: "არა", justify_content: "center" },
+              { node: "N/A", justify_content: "center" },
+            ]}
+            rows={criteriaRows}
+          />
           <InspectionDocument
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
