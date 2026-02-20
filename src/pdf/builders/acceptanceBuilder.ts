@@ -21,7 +21,6 @@ import { drawSoldInventoryTable } from "../layout/table/SoldInventoryTable";
 import { drawTimeAndAddress } from "../layout/text/drawTimeAndAddress";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
-  console.log(formData.criteria);
   const pdf = await PDFDocument.create();
   const logoPath = path.join(process.cwd(), "public", "logoBlue.png");
   const logoBytes = fs.readFileSync(logoPath);
@@ -90,7 +89,13 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   cursor.move(spaces_inspected_height);
   drawSignatures({ drawer, cursor, formData, page, pdf });
   drawStamp({ drawer, cursor, image: stampImage });
-
+  const secondPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+  const secondCursor = createCursor(secondPage);
+  const secondDrawer = new PDFDrawer(pdf, secondPage, font, boldFont);
+  secondDrawer.drawText("ტერიტორიის ინსპექტირება", 0, secondCursor.y, {
+    maxWidth: PAGE_WIDTH,
+    align: "center",
+  });
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }
