@@ -74,7 +74,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
   };
   const handleFlyingPestMonitorChange = (
     rowIndex: number,
-    field: "id" | "fly" | "kinkla" | "plate_was_changed",
+    field: "id" | "fly" | "kinkla" | "blank" | "plate_was_changed",
     value: string | boolean,
   ) => {
     setFormData((prev) => ({
@@ -118,6 +118,42 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
+  const handleCrawlingPestMonitorChange = (
+    rowIndex: number,
+    field: "id" | "ant" | "cockroach" | "blank" | "plate_was_changed",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      crawling_pest_monitor: prev.crawling_pest_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
+  const handleRodentMonitorChange = (
+    rowIndex: number,
+    field: "id" | "captured" | "plate_was_changed" | "chemical_was_added",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      rodent_monitor: prev.rodent_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
+
+  const handleCriteriaChange = (name: string, value: boolean | null) => {
+    console.log(name, value);
+    setFormData((prev) => ({
+      ...prev,
+      criteria: {
+        ...prev.criteria,
+        [name]: value,
+      },
+    }));
+  };
+
   return {
     handlePestTextChange,
     formData,
@@ -130,5 +166,8 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleProcedureTimeChange,
     handleDateChange,
     handleFlyingPestMonitorChange,
+    handleCrawlingPestMonitorChange,
+    handleRodentMonitorChange,
+    handleCriteriaChange,
   };
 }

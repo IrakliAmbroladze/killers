@@ -44,6 +44,21 @@ export type AcceptanceFormData = {
     id: string;
     fly: string;
     kinkla: string;
+    blank: string;
     plate_was_changed: boolean;
   }>;
+  crawling_pest_monitor: Array<{
+    id: string;
+    ant: string;
+    cockroach: string;
+    blank: string;
+    plate_was_changed: boolean;
+  }>;
+  rodent_monitor: Array<{
+    id: string;
+    captured: string;
+    plate_was_changed: boolean;
+    chemical_was_added: boolean;
+  }>;
+  criteria: { [key: string]: boolean | null };
 };

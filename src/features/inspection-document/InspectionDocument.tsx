@@ -1,36 +1,34 @@
+import { Cell } from "@/types";
 import { InspectionDefault } from "./InspectionDefault";
 import { InspectionFollowUp } from "./InspectionFollowUp";
 import { InspectionUnplanned } from "./InspectionUnplanned";
 
 export const InspectionDocument = ({
   inspection_doc,
-  handleFlyingPestMonitorChange,
+  flyingPestMonitorRows,
+  crawlingPestMonitorRows,
+  rodentMonitorRows,
+  criteriaRows,
 }: {
   inspection_doc: "default" | "unplanned" | "follow_up";
-  handleFlyingPestMonitorChange: (
-    rowIndex: number,
-    field: "id" | "fly" | "kinkla" | "plate_was_changed",
-    value: string | boolean,
-  ) => void;
+  flyingPestMonitorRows: Cell[][];
+  crawlingPestMonitorRows: Cell[][];
+  rodentMonitorRows: Cell[][];
+  criteriaRows: Cell[][];
 }) => {
   switch (inspection_doc) {
     case "unplanned":
-      return (
-        <InspectionUnplanned
-          handleFlyingPestMonitorChange={handleFlyingPestMonitorChange}
-        />
-      );
+      return <InspectionUnplanned />;
 
     case "follow_up":
-      return (
-        <InspectionFollowUp
-          handleFlyingPestMonitorChange={handleFlyingPestMonitorChange}
-        />
-      );
+      return <InspectionFollowUp />;
     default:
       return (
         <InspectionDefault
-          handleFlyingPestMonitorChange={handleFlyingPestMonitorChange}
+          flyingPestMonitorRows={flyingPestMonitorRows}
+          crawlingPestMonitorRows={crawlingPestMonitorRows}
+          rodentMonitorRows={rodentMonitorRows}
+          criteriaRows={criteriaRows}
         />
       );
   }

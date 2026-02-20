@@ -14,9 +14,10 @@ import { use, useMemo } from "react";
 import { AcceptanceDocumentTitle } from "@/features/acceptance-documnet/components/AcceptanceDocumentTitle";
 import { AcceptanceDocumentDate } from "@/features/acceptance-documnet/components/AcceptanceDocumentDate";
 import { MainText } from "./MainText";
-// import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
+import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 import { notoSansGeorgian } from "@/fonts";
 import { CheckBox } from "@/components/atoms/CheckBox";
+import { criteria_constants } from "@/constants/acceptance";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -35,7 +36,10 @@ export default function AcceptanceDocument({
     handleProcedureTimeChange,
     handleDateChange,
     handlePestTextChange,
-    // handleFlyingPestMonitorChange,
+    handleFlyingPestMonitorChange,
+    handleCrawlingPestMonitorChange,
+    handleRodentMonitorChange,
+    handleCriteriaChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -161,6 +165,274 @@ export default function AcceptanceDocument({
       ]),
     [formData.inventory, handleSoldInventoryChange],
   );
+  const criteriaRows: Cell[][] = useMemo(() => {
+    return criteria_constants.map((criterium) => [
+      {
+        node: criterium.label,
+      },
+      {
+        node: (
+          <input
+            type="radio"
+            name={criterium.id}
+            onChange={(e) => handleCriteriaChange(e.target.name, true)}
+            className="scale-200 w-1/2"
+          />
+        ),
+        justify_content: "center",
+      },
+      {
+        node: (
+          <input
+            type="radio"
+            name={criterium.id}
+            onChange={(e) => {
+              handleCriteriaChange(e.target.name, false);
+            }}
+            className="scale-200 w-1/2"
+          />
+        ),
+        justify_content: "center",
+      },
+      {
+        node: (
+          <input
+            type="radio"
+            name={criterium.id}
+            onChange={(e) => handleCriteriaChange(e.target.name, null)}
+            className="scale-200 w-1/2"
+          />
+        ),
+        justify_content: "center",
+      },
+    ]);
+  }, [handleCriteriaChange]);
+  const flyingPestMonitorRows: Cell[][] = useMemo(
+    () =>
+      formData.flying_pest_monitor.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type=""
+              value={item.id}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(rowIndex, "id", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.fly}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(rowIndex, "fly", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.kinkla}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(
+                  rowIndex,
+                  "kinkla",
+                  e.target.value,
+                )
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.blank}
+              onChange={(e) =>
+                handleFlyingPestMonitorChange(rowIndex, "blank", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.plate_was_changed}
+              onChange={() =>
+                handleFlyingPestMonitorChange(
+                  rowIndex,
+                  "plate_was_changed",
+                  !item.plate_was_changed,
+                )
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+      ]),
+    [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
+  );
+
+  const crawlingPestMonitorRows: Cell[][] = useMemo(
+    () =>
+      formData.crawling_pest_monitor.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.id}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(rowIndex, "id", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.ant}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(rowIndex, "ant", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.cockroach}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(
+                  rowIndex,
+                  "cockroach",
+                  e.target.value,
+                )
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.blank}
+              onChange={(e) =>
+                handleCrawlingPestMonitorChange(
+                  rowIndex,
+                  "blank",
+                  e.target.value,
+                )
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "start",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.plate_was_changed}
+              onChange={() =>
+                handleCrawlingPestMonitorChange(
+                  rowIndex,
+                  "plate_was_changed",
+                  !item.plate_was_changed,
+                )
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+      ]),
+    [formData.crawling_pest_monitor, handleCrawlingPestMonitorChange],
+  );
+
+  const rodentMonitorRows: Cell[][] = useMemo(
+    () =>
+      formData.rodent_monitor.map((item, rowIndex) => [
+        {
+          node: (
+            <input
+              type="text"
+              value={item.id}
+              onChange={(e) =>
+                handleRodentMonitorChange(rowIndex, "id", e.target.value)
+              }
+              className="w-full"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <input
+              type="text"
+              value={item.captured}
+              onChange={(e) =>
+                handleRodentMonitorChange(rowIndex, "captured", e.target.value)
+              }
+              className="w-full text-center"
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.plate_was_changed}
+              onChange={() =>
+                handleRodentMonitorChange(
+                  rowIndex,
+                  "plate_was_changed",
+                  !item.plate_was_changed,
+                )
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+        {
+          node: (
+            <CheckBox
+              key={rowIndex}
+              checked={item.chemical_was_added}
+              onChange={() =>
+                handleRodentMonitorChange(
+                  rowIndex,
+                  "chemical_was_added",
+                  !item.chemical_was_added,
+                )
+              }
+            />
+          ),
+          justify_content: "center",
+        },
+      ]),
+    [formData.rodent_monitor, handleRodentMonitorChange],
+  );
 
   return (
     <div
@@ -229,10 +501,14 @@ export default function AcceptanceDocument({
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          {/* <InspectionDocument */}
-          {/*   inspection_doc={order.inspection_doc} */}
-          {/*   handleFlyingPestMonitorChange={handleFlyingPestMonitorChange} */}
-          {/* /> */}
+
+          <InspectionDocument
+            inspection_doc={order.inspection_doc}
+            flyingPestMonitorRows={flyingPestMonitorRows}
+            crawlingPestMonitorRows={crawlingPestMonitorRows}
+            rodentMonitorRows={rodentMonitorRows}
+            criteriaRows={criteriaRows}
+          />
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
             startTime={formData.startTime}
