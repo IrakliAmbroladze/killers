@@ -457,6 +457,48 @@ export default function AcceptanceDocument({
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
+          <form>
+            <fieldset>
+              <legend>Area is clean and tidy</legend>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="1.1"
+                    value="true"
+                    onChange={(e) => console.log(e.target.value)}
+                  />
+                  Yes
+                </label>
+              </div>
+
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    name="1.1"
+                    value="false"
+                    onChange={(e) => console.log(e.target.value)}
+                  />
+                  No
+                </label>
+              </div>
+
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    id="mail"
+                    name="1.1"
+                    value="null"
+                    onChange={(e) => console.log(e.target.value)}
+                  />
+                  N/A
+                </label>
+              </div>
+            </fieldset>
+          </form>
+
           <InspectionDocument
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}

@@ -60,4 +60,5 @@ export type AcceptanceFormData = {
     plate_was_changed: boolean;
     chemical_was_added: boolean;
   }>;
+  criteria: { [key: string]: boolean | null };
 };
