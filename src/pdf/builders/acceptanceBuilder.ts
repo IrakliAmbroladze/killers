@@ -10,7 +10,12 @@ import {
 } from "../constants/pdfPageDimensions";
 import { createCursor } from "../layout/cursor";
 import { PDFDrawer } from "../classes/PDFDrawer";
-import { drawDate, drawDocTitle, drawIntro } from "../layout/text";
+import {
+  drawDate,
+  drawDocTitle,
+  drawInspectionCustomerNameSection,
+  drawIntro,
+} from "../layout/text";
 import { sanitaryServices } from "../utils/sanitaryServices";
 import { Services } from "../types/SanitaryServices";
 import { drawServicesCheckBoxes } from "../layout/checkboxes";
@@ -59,6 +64,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     cursor,
     font_size: 14,
   });
+  cursor.move(30);
   drawDate({ drawer, date: formData.date, cursor });
   drawIntro({
     drawer,
@@ -104,6 +110,15 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     cursor: secondCursor,
     font_size: 10,
   });
+  secondCursor.move(9);
+  drawInspectionCustomerNameSection({
+    drawer: secondDrawer,
+    cursor: secondCursor,
+    font_size: 9,
+    customer_name: formData.customer.name,
+  });
+  secondCursor.move(18);
+  drawDate({ drawer: secondDrawer, date: formData.date, cursor: secondCursor });
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }
