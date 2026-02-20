@@ -115,9 +115,7 @@ export const acceptanceFormData = (
       plate_was_changed: false,
       chemical_was_added: false,
     })),
-    criteria: Object.fromEntries(
-      CRITERIA.map((criterion) => [criterion, null]),
-    ),
+    criteria: {},
   };
 };
 
@@ -142,5 +140,3 @@ export const DONE_AREAS = [
   "ნაგავსაყრელი",
   "გარე ტერიტორია",
 ];
-
-export const CRITERIA = [1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 2.5];

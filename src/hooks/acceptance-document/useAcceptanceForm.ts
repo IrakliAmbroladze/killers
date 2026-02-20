@@ -145,6 +145,13 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
 
   const handleCriteriaChange = (name: string, value: boolean | null) => {
     console.log(name, value);
+    setFormData((prev) => ({
+      ...prev,
+      criteria: {
+        ...prev.criteria,
+        [name]: value,
+      },
+    }));
   };
 
   return {
