@@ -17,6 +17,7 @@ import { MainText } from "./MainText";
 import { InspectionDocument } from "@/features/inspection-document/InspectionDocument";
 import { notoSansGeorgian } from "@/fonts";
 import { CheckBox } from "@/components/atoms/CheckBox";
+import { criteria_constants } from "@/constants/acceptance";
 
 export default function AcceptanceDocument({
   orderPromise,
@@ -165,15 +166,6 @@ export default function AcceptanceDocument({
     [formData.inventory, handleSoldInventoryChange],
   );
   const criteriaRows: Cell[][] = useMemo(() => {
-    const criteria_constants = [
-      { id: "1.1", label: "ნაგვის ურნები შენობიდან მოშორებითაა" },
-      { id: "1.2", label: "ნაგვის ურნები არის სათანადოდ მოწესრიგებული" },
-      { id: "2.1", label: "კედლებს არ აქვს ღიობები" },
-      { id: "2.2", label: "კარებს არ აქვს ღიობები" },
-      { id: "2.3", label: "ფანჯრებს არ აქვს ღიობები" },
-      { id: "2.4", label: "საფეხმავლო ბილიკს არ აქვს ღიობები" },
-      { id: "2.5", label: "ტროტუარს არ აქვს ღიობები" },
-    ];
     return criteria_constants.map((criterium) => [
       {
         node: criterium.label,
