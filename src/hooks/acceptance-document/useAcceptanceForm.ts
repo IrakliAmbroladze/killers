@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
-import { AcceptanceFormData, HandleServicesChange, UiTableCell } from "@/types";
+import { useCallback, useState } from "react";
+import { AcceptanceFormData, HandleServicesChange } from "@/types";
 
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
@@ -72,7 +72,18 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       ),
     }));
   };
-
+  const handleFlyingPestMonitorChange = (
+    rowIndex: number,
+    field: "id" | "fly" | "kinkla" | "blank" | "plate_was_changed",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      flying_pest_monitor: prev.flying_pest_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
   const handlePestEventChange = (
     pestName: string,
     field: "monitor" | "spray" | "gel",
@@ -107,72 +118,41 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
-  const pestRows: UiTableCell[][] = useMemo(
-    () =>
-      formData.pests.map((pest, index) => [
-        index < 10
-          ? { type: "text", text: pest.name }
-          : { type: "pestInputText", text: pest.name },
-        {
-          type: "checkbox",
-          checked: pest.monitor,
-          pestName: pest.name,
-          field: "monitor",
-        },
-        {
-          type: "checkbox",
-          checked: pest.spray,
-          pestName: pest.name,
-          field: "spray",
-        },
-        {
-          type: "checkbox",
-          checked: pest.gel,
-          pestName: pest.name,
-          field: "gel",
-        },
-      ]),
-    [formData.pests],
-  );
+  const handleCrawlingPestMonitorChange = (
+    rowIndex: number,
+    field: "id" | "ant" | "cockroach" | "blank" | "plate_was_changed",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      crawling_pest_monitor: prev.crawling_pest_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
+  const handleRodentMonitorChange = (
+    rowIndex: number,
+    field: "id" | "captured" | "plate_was_changed" | "chemical_was_added",
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      rodent_monitor: prev.rodent_monitor.map((item, index) =>
+        index === rowIndex ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
 
-  const materialRows: UiTableCell[][] = useMemo(
-    () =>
-      formData.products.map((material) => [
-        { type: "text", text: material.name },
-        { type: "text", text: material.dosage },
-        {
-          type: "inputText",
-          materialName: material.name,
-          value: material.used,
-        },
-      ]),
-    [formData.products],
-  );
-
-  const inventoryRows: UiTableCell[][] = useMemo(
-    () =>
-      formData.inventory.map((item, rowIndex) => [
-        {
-          type: "inventoryInputText",
-          rowIndex,
-          field: "name",
-          value: item.name,
-        },
-        {
-          type: "inventoryInputText",
-          rowIndex,
-          field: "price",
-          value: item.price,
-        },
-        {
-          type: "inventoryInputText",
-          rowIndex,
-          field: "quantity",
-          value: item.quantity,
-        },
-      ]),
-    [formData.inventory],
-  );
+  const handleCriteriaChange = (name: string, value: boolean | null) => {
+    console.log(name, value);
+    setFormData((prev) => ({
+      ...prev,
+      criteria: {
+        ...prev.criteria,
+        [name]: value,
+      },
+    }));
+  };
 
   return {
     handlePestTextChange,
@@ -182,11 +162,12 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleSoldInventoryChange,
     handlePestEventChange,
     handleMaterialEventChange,
-    pestRows,
-    materialRows,
-    inventoryRows,
     handleSpaceChange,
     handleProcedureTimeChange,
     handleDateChange,
+    handleFlyingPestMonitorChange,
+    handleCrawlingPestMonitorChange,
+    handleRodentMonitorChange,
+    handleCriteriaChange,
   };
 }
