@@ -52,7 +52,13 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ formData });
   drawLogo({ drawer, cursor, image: logoImage });
-  drawDocTitle({ drawer, title: "მიღება-ჩაბარების აქტი", cursor });
+  cursor.move(-31);
+  drawDocTitle({
+    drawer,
+    title: "მიღება-ჩაბარების აქტი",
+    cursor,
+    font_size: 14,
+  });
   drawDate({ drawer, date: formData.date, cursor });
   drawIntro({
     drawer,
@@ -92,9 +98,11 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const secondPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   const secondCursor = createCursor(secondPage);
   const secondDrawer = new PDFDrawer(pdf, secondPage, font, boldFont);
-  secondDrawer.drawText("ტერიტორიის ინსპექტირება", 0, secondCursor.y, {
-    maxWidth: PAGE_WIDTH,
-    align: "center",
+  drawDocTitle({
+    drawer: secondDrawer,
+    title: "ტერიტორიის ინსპექტირება",
+    cursor: secondCursor,
+    font_size: 10,
   });
   const pdfBytes = await pdf.save();
   return pdfBytes;
