@@ -12,7 +12,6 @@ import { createCursor } from "../layout/cursor";
 import { PDFDrawer } from "../classes/PDFDrawer";
 import {
   drawDate,
-  drawDocTitle,
   drawInspectionCustomerNameSection,
   drawIntro,
 } from "../layout/text";
@@ -21,7 +20,6 @@ import { Services } from "../types/SanitaryServices";
 import { drawServicesCheckBoxes } from "../layout/checkboxes";
 import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
-import { drawLogo, drawStamp } from "../layout/images";
 import { drawSoldInventoryTable } from "../layout/table/SoldInventoryTable";
 import { drawTimeAndAddress } from "../layout/text/drawTimeAndAddress";
 
@@ -56,16 +54,18 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
 
   const drawer = new PDFDrawer(pdf, page, font, boldFont);
   const services: Services[] = sanitaryServices({ formData });
-  drawLogo({ drawer, cursor, image: logoImage });
-  cursor.move(-31);
-  drawDocTitle({
-    drawer,
-    title: "მიღება-ჩაბარების აქტი",
-    cursor,
-    font_size: 14,
+  cursor.move(65);
+  drawer.drawImage(logoImage, MARGIN_X - 22, cursor.y, { height: 65 });
+  cursor.move(-30);
+  drawer.drawText("მიღება-ჩაბარების აქტი", 0, cursor.y, {
+    size: 14,
+    bold: true,
+    align: "center",
+    maxWidth: PAGE_WIDTH,
   });
   cursor.move(30);
   drawDate({ drawer, date: formData.date, cursor });
+  cursor.move(15);
   drawIntro({
     drawer,
     cursor,
@@ -100,15 +100,18 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   });
   cursor.move(spaces_inspected_height);
   drawSignatures({ drawer, cursor, formData, page, pdf });
-  drawStamp({ drawer, cursor, image: stampImage });
+  drawer.drawImage(stampImage, PAGE_WIDTH / 2 - 40, cursor.y, {
+    height: 80,
+  });
   const secondPage = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   const secondCursor = createCursor(secondPage);
   const secondDrawer = new PDFDrawer(pdf, secondPage, font, boldFont);
-  drawDocTitle({
-    drawer: secondDrawer,
-    title: "ტერიტორიის ინსპექტირება",
-    cursor: secondCursor,
-    font_size: 10,
+  secondCursor.move(10);
+  secondDrawer.drawText("ტერიტორიის ინსპექტირება", 0, secondCursor.y, {
+    size: 10,
+    bold: true,
+    align: "center",
+    maxWidth: PAGE_WIDTH,
   });
   secondCursor.move(9);
   drawInspectionCustomerNameSection({
