@@ -164,19 +164,25 @@ export default function AcceptanceDocument({
       ]),
     [formData.inventory, handleSoldInventoryChange],
   );
-  const criteriaRows: Cell[][] = [
-    [
+  const criteriaRows: Cell[][] = useMemo(() => {
+    const criteria_constants = [
+      { id: "1.1", label: "ნაგვის ურნები შენობიდან მოშორებითაა" },
+      { id: "1.2", label: "ნაგვის ურნები არის სათანადოდ მოწესრიგებული" },
+      { id: "2.1", label: "კედლებს არ აქვს ღიობები" },
+      { id: "2.2", label: "კარებს არ აქვს ღიობები" },
+      { id: "2.3", label: "ფანჯრებს არ აქვს ღიობები" },
+      { id: "2.4", label: "საფეხმავლო ბილიკს არ აქვს ღიობები" },
+      { id: "2.5", label: "ტროტუარს არ აქვს ღიობები" },
+    ];
+    return criteria_constants.map((criterium) => [
       {
-        node: 1,
-      },
-      {
-        node: "ნაგვის ურნები შენობიდან მოშორებითაა",
+        node: criterium.label,
       },
       {
         node: (
           <input
             type="radio"
-            name="1.1"
+            name={criterium.id}
             onChange={(e) => handleCriteriaChange(e.target.name, true)}
             className="scale-200 w-1/2"
           />
@@ -187,7 +193,7 @@ export default function AcceptanceDocument({
         node: (
           <input
             type="radio"
-            name="1.1"
+            name={criterium.id}
             onChange={(e) => {
               handleCriteriaChange(e.target.name, false);
             }}
@@ -200,22 +206,22 @@ export default function AcceptanceDocument({
         node: (
           <input
             type="radio"
-            name="1.1"
+            name={criterium.id}
             onChange={(e) => handleCriteriaChange(e.target.name, null)}
             className="scale-200 w-1/2"
           />
         ),
         justify_content: "center",
       },
-    ],
-  ];
+    ]);
+  }, [handleCriteriaChange]);
   const flyingPestMonitorRows: Cell[][] = useMemo(
     () =>
       formData.flying_pest_monitor.map((item, rowIndex) => [
         {
           node: (
             <input
-              type="text"
+              type=""
               value={item.id}
               onChange={(e) =>
                 handleFlyingPestMonitorChange(rowIndex, "id", e.target.value)

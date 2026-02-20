@@ -18,7 +18,6 @@ export const InspectionDefault = ({
       <Table
         id="criteria"
         headers={[
-          { node: "#", justify_content: "center" },
           { node: "გარე ტერიტორია", justify_content: "center" },
           { node: "კი", justify_content: "center" },
           { node: "არა", justify_content: "center" },
