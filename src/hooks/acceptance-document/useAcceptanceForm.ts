@@ -143,6 +143,10 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     }));
   };
 
+  const handleCriteriaChange = (name: string, value: boolean | null) => {
+    console.log(name, value);
+  };
+
   return {
     handlePestTextChange,
     formData,
@@ -157,5 +161,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleFlyingPestMonitorChange,
     handleCrawlingPestMonitorChange,
     handleRodentMonitorChange,
+    handleCriteriaChange,
   };
 }

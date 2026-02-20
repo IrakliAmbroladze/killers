@@ -38,6 +38,7 @@ export default function AcceptanceDocument({
     handleFlyingPestMonitorChange,
     handleCrawlingPestMonitorChange,
     handleRodentMonitorChange,
+    handleCriteriaChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -390,6 +391,7 @@ export default function AcceptanceDocument({
       ]),
     [formData.rodent_monitor, handleRodentMonitorChange],
   );
+
   return (
     <div
       className={`${notoSansGeorgian.className} flex justify-center items-center flex-col gap-5 px-2.5 text-sm`}
@@ -457,47 +459,78 @@ export default function AcceptanceDocument({
           />
 
           <DoneAreas spaces={formData.spaces} onChange={handleSpaceChange} />
-          <form>
-            <fieldset>
-              <legend>Area is clean and tidy</legend>
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="1.1"
-                    value="true"
-                    onChange={(e) => console.log(e.target.value)}
-                  />
-                  Yes
-                </label>
-              </div>
+          <fieldset>
+            <legend>Area is clean and tidy</legend>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="1.1"
+                  onChange={(e) => handleCriteriaChange(e.target.name, true)}
+                />
+                Yes
+              </label>
+            </div>
 
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="1.1"
-                    value="false"
-                    onChange={(e) => console.log(e.target.value)}
-                  />
-                  No
-                </label>
-              </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="1.1"
+                  onChange={(e) => {
+                    handleCriteriaChange(e.target.name, false);
+                  }}
+                />
+                No
+              </label>
+            </div>
 
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    id="mail"
-                    name="1.1"
-                    value="null"
-                    onChange={(e) => console.log(e.target.value)}
-                  />
-                  N/A
-                </label>
-              </div>
-            </fieldset>
-          </form>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="1.1"
+                  onChange={(e) => handleCriteriaChange(e.target.name, null)}
+                />
+                N/A
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Second Area is clean and tidy</legend>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="1.2"
+                  onChange={(e) => handleCriteriaChange(e.target.name, true)}
+                />
+                Yes
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="1.2"
+                  onChange={(e) => {
+                    handleCriteriaChange(e.target.name, false);
+                  }}
+                />
+                No
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="1.2"
+                  onChange={(e) => handleCriteriaChange(e.target.name, null)}
+                />
+                N/A
+              </label>
+            </div>
+          </fieldset>
 
           <InspectionDocument
             inspection_doc={order.inspection_doc}
