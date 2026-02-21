@@ -110,14 +110,14 @@ export class PDFDrawer {
             start: { x: x + 1, y: y + size / 2 },
             end: { x: x + size / 2, y },
             thickness: 1,
-            color: rgb(0, 0, 0),
+            color: rgb(0, 128 / 255, 0),
           });
 
           this.page.drawLine({
             start: { x: x + size / 2, y },
             end: { x: x + size - 1, y: y + size - 1 },
             thickness: 1,
-            color: rgb(0, 0, 0),
+            color: rgb(0, 128 / 255, 0),
           });
         }
         break;
@@ -126,17 +126,24 @@ export class PDFDrawer {
           start: { x: x + 1, y: y + size - 1 },
           end: { x: x + size - 1, y: y + 1 },
           thickness: 1,
-          color: rgb(0, 0, 0),
+          color: rgb(1, 0, 0),
         });
         this.page.drawLine({
           start: { x: x + 1, y: y + 1 },
           end: { x: x + size - 1, y: y + size - 1 },
           thickness: 1,
-          color: rgb(0, 0, 0),
+          color: rgb(1, 0, 0),
         });
 
         break;
+      case "NA":
+        this.page.drawText("N/A", {
+          x,
+          y: y + size / 2 - 3,
+          size: 6,
+        });
 
+        break;
       default:
         break;
     }

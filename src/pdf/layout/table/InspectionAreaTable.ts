@@ -26,7 +26,7 @@ export const drawInpectionAreaTable = ({
           type: "text",
           text:
             "ნაგვის ურნები შენობიდან მოშორებითაა" +
-            drawer.drawCheckbox(500, cursor.y - 100, "crossed"),
+            drawer.drawCheckbox(500, cursor.y - 100, "NA"),
         },
       ],
       [
