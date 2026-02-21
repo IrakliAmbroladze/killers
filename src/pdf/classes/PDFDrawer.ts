@@ -103,20 +103,42 @@ export class PDFDrawer {
       color: rgb(1, 1, 1),
     });
 
-    if (state === "checked") {
-      this.page.drawLine({
-        start: { x: x + 1, y: y + size / 2 },
-        end: { x: x + size / 2, y },
-        thickness: 1,
-        color: rgb(0, 0, 0),
-      });
+    switch (state) {
+      case "checked":
+        {
+          this.page.drawLine({
+            start: { x: x + 1, y: y + size / 2 },
+            end: { x: x + size / 2, y },
+            thickness: 1,
+            color: rgb(0, 0, 0),
+          });
 
-      this.page.drawLine({
-        start: { x: x + size / 2, y },
-        end: { x: x + size - 1, y: y + size - 1 },
-        thickness: 1,
-        color: rgb(0, 0, 0),
-      });
+          this.page.drawLine({
+            start: { x: x + size / 2, y },
+            end: { x: x + size - 1, y: y + size - 1 },
+            thickness: 1,
+            color: rgb(0, 0, 0),
+          });
+        }
+        break;
+      case "crossed":
+        this.page.drawLine({
+          start: { x: x + 1, y: y + size - 1 },
+          end: { x: x + size - 1, y: y + 1 },
+          thickness: 1,
+          color: rgb(0, 0, 0),
+        });
+        this.page.drawLine({
+          start: { x: x + 1, y: y + 1 },
+          end: { x: x + size - 1, y: y + size - 1 },
+          thickness: 1,
+          color: rgb(0, 0, 0),
+        });
+
+        break;
+
+      default:
+        break;
     }
   }
 
