@@ -80,7 +80,12 @@ export const drawSpacesInspected = ({
     const xPos = MARGIN_X + col * spaceColWidth;
     const yPos = y - row * ROW_HEIGHT;
 
-    drawer.drawCheckbox(xPos, yPos, formData.spaces[space] || false, 8);
+    drawer.drawCheckbox(
+      xPos,
+      yPos,
+      formData.spaces[space] ? "checked" : "blank",
+      8,
+    );
     drawer.drawText(space, xPos + 15, yPos, { size: 7 });
   });
   y -= Math.ceil(spacesList.length / spaceCols) * ROW_HEIGHT;
