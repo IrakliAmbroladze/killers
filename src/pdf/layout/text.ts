@@ -7,30 +7,13 @@ type BaseDraw = {
   cursor: Cursor;
 };
 
-type DrawDocTitle = BaseDraw & {
-  title: string;
-};
-
-export const drawDocTitle = ({ drawer, title, cursor }: DrawDocTitle) => {
-  const TEXT_HEIGHT = 14;
-  cursor.move(TEXT_HEIGHT + 5 - 50);
-  drawer.drawText(title, 0, cursor.y, {
-    size: TEXT_HEIGHT,
-    bold: true,
-    align: "center",
-    maxWidth: PAGE_WIDTH,
-  });
-
-  cursor.move(30);
-};
-
 type DrawDate = BaseDraw & {
   date: string;
 };
 
 export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
   drawer.drawText(
-    `${date.slice(8, 10)}.${date.slice(5, 7)}.${date.slice(0, 4)}`,
+    `თარიღი: ${date.slice(8, 10)}.${date.slice(5, 7)}.${date.slice(0, 4)}`,
     MARGIN_X,
     cursor.y + 15,
     {
@@ -39,7 +22,6 @@ export const drawDate = ({ drawer, date, cursor }: DrawDate) => {
       maxWidth: PAGE_WIDTH - MARGIN_X * 2,
     },
   );
-  cursor.move(15);
 };
 
 type DrawIntro = BaseDraw & {
@@ -64,4 +46,26 @@ export const drawIntro = ({
     { size: 10 },
   );
   cursor.move(textHeight + 10);
+};
+
+type drawInspectionCustomerNameSectionProps = BaseDraw & {
+  font_size: number;
+  customer_name: string;
+};
+
+export const drawInspectionCustomerNameSection = ({
+  drawer,
+  cursor,
+  font_size,
+  customer_name,
+}: drawInspectionCustomerNameSectionProps) => {
+  cursor.move(font_size);
+  drawer.drawText(
+    `დასახელება: __________${customer_name}__________`,
+    MARGIN_X,
+    cursor.y,
+    {
+      size: font_size,
+    },
+  );
 };
