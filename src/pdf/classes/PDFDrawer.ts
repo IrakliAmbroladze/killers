@@ -90,7 +90,7 @@ export class PDFDrawer {
   drawCheckbox(
     x: number,
     y: number,
-    checked: boolean,
+    state: "checked" | "crossed" | "NA" | "blank",
     size: number = 10,
   ): void {
     this.page.drawRectangle({
@@ -103,7 +103,7 @@ export class PDFDrawer {
       color: rgb(1, 1, 1),
     });
 
-    if (checked) {
+    if (state === "checked") {
       this.page.drawLine({
         start: { x: x + 1, y: y + size / 2 },
         end: { x: x + size / 2, y },
@@ -211,7 +211,7 @@ export class PDFDrawer {
             this.drawCheckbox(
               currentX + cellWidth / 2 - 4,
               currentY - rowHeight / 2 - 4,
-              cell.checked,
+              cell.checked ? "checked" : "blank",
               8,
             );
             break;

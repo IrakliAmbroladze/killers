@@ -19,7 +19,7 @@ export const drawServicesCheckBoxes = ({
     const row = Math.floor(index / 2);
     const xPos = MARGIN_X + 100 + col * colWidth;
     const yPos = cursor.y - row * 20;
-    drawer.drawCheckbox(xPos, yPos, service.checked, 8);
+    drawer.drawCheckbox(xPos, yPos, service.checked ? "checked" : "blank", 8);
     drawer.drawText(service.label, xPos + 15, yPos, { size: 10 });
   });
 
