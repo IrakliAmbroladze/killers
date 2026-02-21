@@ -22,6 +22,7 @@ import { drawMainTable, drawSpacesInspected } from "../layout/table";
 import { drawSignatures } from "../layout/signatures";
 import { drawSoldInventoryTable } from "../layout/table/SoldInventoryTable";
 import { drawTimeAndAddress } from "../layout/text/drawTimeAndAddress";
+import { drawInpectionAreaTable } from "../layout/table/InspectionAreaTable";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -124,29 +125,10 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   drawDate({ drawer: secondDrawer, date: formData.date, cursor: secondCursor });
   //
   // გარე ტერიტორია
-  secondDrawer.drawTable(MARGIN_X, secondCursor.y, {
-    headers: [
-      { text: "#", width: 20, align: "center" },
-      { text: "გარე ტერიტორია", width: 400 },
-    ],
-    rows: [
-      [
-        { type: "text", text: "1", align: "center" },
-        {
-          type: "text",
-          text:
-            "ნაგვის ურნები შენობიდან მოშორებითაა" +
-            secondDrawer.drawCheckbox(500, secondCursor.y - 100, true),
-        },
-      ],
-      [
-        { type: "text", text: "2", align: "center" },
-        {
-          type: "text",
-          text: "კედლებს კარებს ფანჯრებს საფეხმავლო ბილიკს და ტროტუარს არ აქვს ღიობები",
-        },
-      ],
-    ],
+  drawInpectionAreaTable({
+    drawer: secondDrawer,
+    cursor: secondCursor,
+    formData,
   });
 
   const pdfBytes = await pdf.save();
