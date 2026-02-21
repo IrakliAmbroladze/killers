@@ -122,6 +122,33 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   });
   secondCursor.move(18);
   drawDate({ drawer: secondDrawer, date: formData.date, cursor: secondCursor });
+  //
+  // გარე ტერიტორია
+  secondDrawer.drawTable(MARGIN_X, secondCursor.y, {
+    headers: [
+      { text: "#", width: 20, align: "center" },
+      { text: "გარე ტერიტორია", width: 400 },
+    ],
+    rows: [
+      [
+        { type: "text", text: "1", align: "center" },
+        {
+          type: "text",
+          text:
+            "ნაგვის ურნები შენობიდან მოშორებითაა" +
+            secondDrawer.drawCheckbox(500, secondCursor.y - 100, true),
+        },
+      ],
+      [
+        { type: "text", text: "2", align: "center" },
+        {
+          type: "text",
+          text: "კედლებს კარებს ფანჯრებს საფეხმავლო ბილიკს და ტროტუარს არ აქვს ღიობები",
+        },
+      ],
+    ],
+  });
+
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }
