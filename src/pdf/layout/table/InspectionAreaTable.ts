@@ -1,7 +1,6 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
 import { MARGIN_X, PAGE_WIDTH } from "@/pdf/constants/pdfPageDimensions";
 import { Cursor } from "@/pdf/types/Cursor";
-import { getCheckboxState } from "@/pdf/utils/getCheckboxState";
 import { AcceptanceFormData } from "@/types";
 import { drawInpectionTable } from "./OutdoorInspectionTable";
 
@@ -39,6 +38,18 @@ const outdoorCheckboxes = [
   { x: 437, y: 135, criteria: "6.2" },
 ];
 
+const kitchenCheckboxes = [
+  { x: 253, y: 35, criteria: "7.1" },
+  { x: 390, y: 35, criteria: "7.2" },
+  { x: 335, y: 55, criteria: "8.1" },
+  { x: 370, y: 75, criteria: "9.1" },
+  { x: 260, y: 95, criteria: "10.1" },
+  { x: 437, y: 115, criteria: "11.1" },
+  { x: 196, y: 135, criteria: "12.1" },
+  { x: 345, y: 135, criteria: "12.2" },
+  { x: 260, y: 155, criteria: "13.1" },
+];
+
 type drawInpectionAreaTableProps = {
   drawer: PDFDrawer;
   cursor: Cursor;
@@ -52,8 +63,6 @@ export const drawInpectionAreaTable = ({
 }: drawInpectionAreaTableProps) => {
   const FIRST_COLUMN_WIDTH = 20;
   const SECOND_COLUMN_WIDTH = PAGE_WIDTH - MARGIN_X * 2 - FIRST_COLUMN_WIDTH;
-  const checkbox_X = MARGIN_X;
-  const checkbox_Y = cursor.y;
 
   drawInpectionTable({
     drawer,
@@ -67,64 +76,15 @@ export const drawInpectionAreaTable = ({
     checkboxes: outdoorCheckboxes,
   });
 
-  drawer.drawTable(MARGIN_X, cursor.y - 145, {
-    headers: [
-      { text: "", width: FIRST_COLUMN_WIDTH, align: "center" },
-      { text: "სამზარეულო", width: SECOND_COLUMN_WIDTH, align: "center" },
-    ],
-    rows: inspectionKitchen.map((area, index) => [
-      { type: "text", text: String(index + 7), align: "center" },
-      {
-        type: "text",
-        text: area,
-        align: "left",
-      },
-    ]),
+  drawInpectionTable({
+    drawer,
+    x: MARGIN_X,
+    y: cursor.y - 145,
+    formData,
+    FIRST_COLUMN_WIDTH,
+    SECOND_COLUMN_WIDTH,
+    title: "სამზარეულო",
+    areas: inspectionKitchen,
+    checkboxes: kitchenCheckboxes,
   });
-  drawer.drawCheckbox(
-    checkbox_X + 253,
-    checkbox_Y - 180,
-    getCheckboxState(formData.criteria["7.1"]),
-  );
-
-  drawer.drawCheckbox(
-    checkbox_X + 390,
-    checkbox_Y - 180,
-    getCheckboxState(formData.criteria["7.2"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 335,
-    checkbox_Y - 200,
-    getCheckboxState(formData.criteria["8.1"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 370,
-    checkbox_Y - 220,
-    getCheckboxState(formData.criteria["9.1"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 260,
-    checkbox_Y - 240,
-    getCheckboxState(formData.criteria["10.1"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 437,
-    checkbox_Y - 260,
-    getCheckboxState(formData.criteria["11.1"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 196,
-    checkbox_Y - 280,
-    getCheckboxState(formData.criteria["12.1"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 345,
-    checkbox_Y - 280,
-    getCheckboxState(formData.criteria["12.2"]),
-  );
-  drawer.drawCheckbox(
-    checkbox_X + 260,
-    checkbox_Y - 300,
-    getCheckboxState(formData.criteria["13.1"]),
-  );
 };
