@@ -1,6 +1,5 @@
 import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
-import { MARGIN_X } from "@/pdf/constants/pdfPageDimensions";
-import { Cursor } from "@/pdf/types/Cursor";
+import { getCheckboxState } from "@/pdf/utils/getCheckboxState";
 import { AcceptanceFormData } from "@/types";
 
 const inspectionOutdoor = [
@@ -42,4 +41,69 @@ export const drawOutdoorInpectionTable = ({
       },
     ]),
   });
+  drawer.drawCheckbox(
+    x + 214,
+    y - 35,
+    getCheckboxState(formData.criteria["1.1"]),
+  );
+  drawer.drawCheckbox(
+    x + 390,
+    y - 35,
+    getCheckboxState(formData.criteria["1.2"]),
+  );
+  drawer.drawCheckbox(
+    x + 67,
+    y - 55,
+    getCheckboxState(formData.criteria["2.1"]),
+  );
+  drawer.drawCheckbox(
+    x + 115,
+    y - 55,
+    getCheckboxState(formData.criteria["2.2"]),
+  );
+  drawer.drawCheckbox(
+    x + 175,
+    y - 55,
+    getCheckboxState(formData.criteria["2.3"]),
+  );
+  drawer.drawCheckbox(
+    x + 289,
+    y - 55,
+    getCheckboxState(formData.criteria["2.4"]),
+  );
+  drawer.drawCheckbox(
+    x + 370,
+    y - 55,
+    getCheckboxState(formData.criteria["2.5"]),
+  );
+  drawer.drawCheckbox(
+    x + 280,
+    y - 75,
+    getCheckboxState(formData.criteria["3.1"]),
+  );
+  drawer.drawCheckbox(
+    x + 420,
+    y - 75,
+    getCheckboxState(formData.criteria["3.2"]),
+  );
+  drawer.drawCheckbox(
+    x + 300,
+    y - 95,
+    getCheckboxState(formData.criteria["4.1"]),
+  );
+  drawer.drawCheckbox(
+    x + 455,
+    y - 115,
+    getCheckboxState(formData.criteria["5.1"]),
+  );
+  drawer.drawCheckbox(
+    x + 205,
+    y - 135,
+    getCheckboxState(formData.criteria["6.1"]),
+  );
+  drawer.drawCheckbox(
+    x + 437,
+    y - 135,
+    getCheckboxState(formData.criteria["6.2"]),
+  );
 };
