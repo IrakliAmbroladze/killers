@@ -46,5 +46,6 @@ export const drawInpectionAreaTable = ({
     title: "სამზარეულო",
     areas: inspectionKitchen,
     checkboxes: kitchenCheckboxes,
+    rowNumber: 7,
   });
 };

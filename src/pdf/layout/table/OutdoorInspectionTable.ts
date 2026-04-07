@@ -12,6 +12,7 @@ type drawInpectionTableProps = {
   title: string;
   areas: string[];
   checkboxes: { x: number; y: number; criteria: string }[];
+  rowNumber?: number;
 };
 export const drawInpectionTable = ({
   drawer,
@@ -23,6 +24,7 @@ export const drawInpectionTable = ({
   title,
   areas,
   checkboxes,
+  rowNumber = 1,
 }: drawInpectionTableProps) => {
   drawer.drawTable(x, y, {
     headers: [
@@ -30,7 +32,7 @@ export const drawInpectionTable = ({
       { text: title, width: SECOND_COLUMN_WIDTH, align: "center" },
     ],
     rows: areas.map((area, index) => [
-      { type: "text", text: String(index + 1), align: "center" },
+      { type: "text", text: String(index + rowNumber), align: "center" },
       {
         type: "text",
         text: area,
