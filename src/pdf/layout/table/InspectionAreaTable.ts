@@ -3,15 +3,7 @@ import { MARGIN_X, PAGE_WIDTH } from "@/pdf/constants/pdfPageDimensions";
 import { Cursor } from "@/pdf/types/Cursor";
 import { getCheckboxState } from "@/pdf/utils/getCheckboxState";
 import { AcceptanceFormData } from "@/types";
-
-const inspectionOutdoor = [
-  "ნაგვის ურნები შენობიდან მოშორებითაა      არის სათანადოდ მოწესრიგებული",
-  "კედლებს      კარებს      ფანჯრებს      საფეხმავლო ბილიკს      და ტროტუარს      არ აქვს ღიობები",
-  "სანიაღვრე წყლები შენობიდან შორს არის მიმართული      არ ხდება წყლის დადგომა",
-  "მილები და საკანალიზაციო ჭები დაცულია მეტალის ბადით",
-  "ხეები, ბუჩქები, ნაფოტები, ნახერხი და სხვა ტიპის მცენარეები არის შენობიდან მოშორებით",
-  "შენობის გარშემო არ გროვდება ნაგავი      მოწესრიგებულია ბალახი და სხვა მცენარეები",
-];
+import { drawOutdoorInpectionTable } from "./OutdoorInspectionTable";
 
 const inspectionKitchen = [
   "კედლები და ჭერი არის სუფთა, არ არის ცხიმიანი      და არ იქმნება კონდესატი",
@@ -36,24 +28,17 @@ export const drawInpectionAreaTable = ({
 }: drawInpectionAreaTableProps) => {
   const FIRST_COLUMN_WIDTH = 20;
   const SECOND_COLUMN_WIDTH = PAGE_WIDTH - MARGIN_X * 2 - FIRST_COLUMN_WIDTH;
-
-  drawer.drawTable(MARGIN_X, cursor.y, {
-    headers: [
-      { text: "", width: FIRST_COLUMN_WIDTH, align: "center" },
-      { text: "გარე ტერიტორია", width: SECOND_COLUMN_WIDTH, align: "center" },
-    ],
-    rows: inspectionOutdoor.map((area, index) => [
-      { type: "text", text: String(index + 1), align: "center" },
-      {
-        type: "text",
-        text: area,
-        align: "left",
-      },
-    ]),
-  });
-
   const checkbox_X = MARGIN_X;
   const checkbox_Y = cursor.y;
+
+  drawOutdoorInpectionTable({
+    drawer,
+    x: MARGIN_X,
+    y: cursor.y,
+    formData,
+    FIRST_COLUMN_WIDTH,
+    SECOND_COLUMN_WIDTH,
+  });
 
   drawer.drawCheckbox(
     checkbox_X + 214,
