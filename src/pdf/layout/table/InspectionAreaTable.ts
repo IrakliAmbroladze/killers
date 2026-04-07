@@ -5,8 +5,10 @@ import { AcceptanceFormData } from "@/types";
 import { drawInpectionTable } from "./OutdoorInspectionTable";
 import {
   inspectionKitchen,
+  inspectionOther,
   inspectionOutdoor,
   kitchenCheckboxes,
+  otherCheckboxes,
   outdoorCheckboxes,
 } from "./constants/inspection-table";
 
@@ -47,5 +49,17 @@ export const drawInpectionAreaTable = ({
     areas: inspectionKitchen,
     checkboxes: kitchenCheckboxes,
     rowNumber: 7,
+  });
+  drawInpectionTable({
+    drawer,
+    x: MARGIN_X,
+    y: cursor.y - 310,
+    formData,
+    FIRST_COLUMN_WIDTH,
+    SECOND_COLUMN_WIDTH,
+    title: "სხვა სივრცეები",
+    areas: inspectionOther,
+    checkboxes: otherCheckboxes,
+    rowNumber: 14,
   });
 };

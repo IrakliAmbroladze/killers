@@ -16,6 +16,11 @@ export const inspectionKitchen = [
   "გასარეცხი ჭურჭელი არ გროვდება სამზარეულოში",
 ];
 
+export const inspectionOther = [
+  "ნარჩენების ოთახი მოწესრიგებულია, ნაგავი სწორად არის შეფუთული",
+  "კონტეინერები სუფთა მდგომარეობაშია",
+];
+
 export const outdoorCheckboxes = [
   { x: 214, y: 35, criteria: "1.1" },
   { x: 390, y: 35, criteria: "1.2" },
@@ -42,4 +47,9 @@ export const kitchenCheckboxes = [
   { x: 196, y: 135, criteria: "12.1" },
   { x: 345, y: 135, criteria: "12.2" },
   { x: 260, y: 155, criteria: "13.1" },
+];
+
+export const otherCheckboxes = [
+  { x: 355, y: 35, criteria: "14.1" },
+  { x: 253, y: 55, criteria: "15.1" },
 ];
