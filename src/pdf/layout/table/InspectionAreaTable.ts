@@ -3,52 +3,12 @@ import { MARGIN_X, PAGE_WIDTH } from "@/pdf/constants/pdfPageDimensions";
 import { Cursor } from "@/pdf/types/Cursor";
 import { AcceptanceFormData } from "@/types";
 import { drawInpectionTable } from "./OutdoorInspectionTable";
-
-const inspectionOutdoor = [
-  "ნაგვის ურნები შენობიდან მოშორებითაა      არის სათანადოდ მოწესრიგებული",
-  "კედლებს      კარებს      ფანჯრებს      საფეხმავლო ბილიკს      და ტროტუარს      არ აქვს ღიობები",
-  "სანიაღვრე წყლები შენობიდან შორს არის მიმართული      არ ხდება წყლის დადგომა",
-  "მილები და საკანალიზაციო ჭები დაცულია მეტალის ბადით",
-  "ხეები, ბუჩქები, ნაფოტები, ნახერხი და სხვა ტიპის მცენარეები არის შენობიდან მოშორებით",
-  "შენობის გარშემო არ გროვდება ნაგავი      მოწესრიგებულია ბალახი და სხვა მცენარეები",
-];
-const inspectionKitchen = [
-  "კედლები და ჭერი არის სუფთა, არ არის ცხიმიანი      და არ იქმნება კონდესატი",
-  "იატაკი და ტრაპები არის სუფთა, არ გროვდება ცხიმი ან ნარჩენები",
-  "საკვების მოსამზადებელი სივრცე მოწესრიგებულია, არ რჩება ნარჩენები",
-  "საკვები არ არის ხელმისაწვდომი მავნებლისთვის",
-  "საკვების მოსამზადებელი დანადგარები არის სუფთა, არ გროვდება ცხიმი ან ნარჩენები",
-  "ჭურჭლის სარეცხი სივრცე სუფთადაა      შენარჩუნებულია სიმშრალე",
-  "გასარეცხი ჭურჭელი არ გროვდება სამზარეულოში",
-];
-
-const outdoorCheckboxes = [
-  { x: 214, y: 35, criteria: "1.1" },
-  { x: 390, y: 35, criteria: "1.2" },
-  { x: 67, y: 55, criteria: "2.1" },
-  { x: 115, y: 55, criteria: "2.2" },
-  { x: 175, y: 55, criteria: "2.3" },
-  { x: 289, y: 55, criteria: "2.4" },
-  { x: 370, y: 55, criteria: "2.5" },
-  { x: 280, y: 75, criteria: "3.1" },
-  { x: 420, y: 75, criteria: "3.2" },
-  { x: 305, y: 95, criteria: "4.1" },
-  { x: 455, y: 115, criteria: "5.1" },
-  { x: 205, y: 135, criteria: "6.1" },
-  { x: 437, y: 135, criteria: "6.2" },
-];
-
-const kitchenCheckboxes = [
-  { x: 253, y: 35, criteria: "7.1" },
-  { x: 390, y: 35, criteria: "7.2" },
-  { x: 335, y: 55, criteria: "8.1" },
-  { x: 370, y: 75, criteria: "9.1" },
-  { x: 260, y: 95, criteria: "10.1" },
-  { x: 437, y: 115, criteria: "11.1" },
-  { x: 196, y: 135, criteria: "12.1" },
-  { x: 345, y: 135, criteria: "12.2" },
-  { x: 260, y: 155, criteria: "13.1" },
-];
+import {
+  inspectionKitchen,
+  inspectionOutdoor,
+  kitchenCheckboxes,
+  outdoorCheckboxes,
+} from "./constants/inspection-table";
 
 type drawInpectionAreaTableProps = {
   drawer: PDFDrawer;
