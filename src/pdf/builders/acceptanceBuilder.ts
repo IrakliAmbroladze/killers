@@ -23,6 +23,7 @@ import { drawSignatures } from "../layout/signatures";
 import { drawSoldInventoryTable } from "../layout/table/SoldInventoryTable";
 import { drawTimeAndAddress } from "../layout/text/drawTimeAndAddress";
 import { drawInpectionAreaTable } from "../layout/table/InspectionAreaTable";
+import { drawCapturedInsectsTable } from "../layout/table/CapturedInsectsTable";
 
 export async function buildAcceptancePdf(formData: AcceptanceFormData) {
   const pdf = await PDFDocument.create();
@@ -130,6 +131,8 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     cursor: secondCursor,
     formData,
   });
+
+  secondCursor.move(500);
   drawCapturedInsectsTable({
     drawer: secondDrawer,
     cursor: secondCursor,
