@@ -16,12 +16,13 @@ export const drawCapturedInsectsTable = ({
 }: drawCapturedInsectsTableProps) => {
   drawer.drawTable(MARGIN_X, cursor.y, {
     headers: [
-      { text: "", width: 100, align: "center" },
-      { text: "header", width: 200, align: "center" },
+      { text: "N", width: 100, align: "center" },
+      { text: "დაჭერილი", width: 200, align: "center" },
+      { text: "შეიცვალა ფირფიტა", width: 100, align: "center" },
     ],
     rows: [
       [
-        { type: "text", text: "first text", align: "center" },
+        { type: "text", text: "დაჭერილი", align: "center" },
         {
           type: "text",
           text: "hi there",
