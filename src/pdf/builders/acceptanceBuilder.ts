@@ -130,6 +130,11 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     cursor: secondCursor,
     formData,
   });
+  drawCapturedInsectsTable({
+    drawer: secondDrawer,
+    cursor: secondCursor,
+    formData,
+  });
 
   const pdfBytes = await pdf.save();
   return pdfBytes;
