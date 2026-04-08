@@ -25,7 +25,7 @@ export const drawCapturedInsectsTable = ({
         { type: "text", text: "დაჭერილი", align: "center" },
         {
           type: "text",
-          text: "hi there",
+          text: formData.address,
           align: "left",
         },
       ],
