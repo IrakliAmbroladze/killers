@@ -2,6 +2,7 @@ import { PDFDrawer } from "@/pdf/classes/PDFDrawer";
 import { MARGIN_X } from "@/pdf/constants/pdfPageDimensions";
 import { Cursor } from "@/pdf/types/Cursor";
 import { AcceptanceFormData } from "@/types";
+import { drawCapturedTable } from "./drawCapturedTable";
 
 type drawCapturedInsectsTableProps = {
   drawer: PDFDrawer;
@@ -14,6 +15,11 @@ export const drawCapturedInsectsTable = ({
   cursor,
   formData,
 }: drawCapturedInsectsTableProps) => {
+  console.log("formData is", formData);
+  drawCapturedTable({
+    title: "მფრინავი მავნებლის მონიტორი",
+    monitorData: formData.flying_pest_monitor,
+  });
   drawer.drawTable(MARGIN_X, cursor.y, {
     headers: [
       { text: "N", width: 100, align: "center" },
