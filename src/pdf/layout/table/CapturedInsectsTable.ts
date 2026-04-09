@@ -18,22 +18,56 @@ export const drawCapturedInsectsTable = ({
   drawCapturedTable({
     title: "მფრინავი მავნებლის მონიტორი",
     monitorData: formData.flying_pest_monitor,
-  });
-  drawer.drawTable(MARGIN_X, cursor.y, {
-    headers: [
-      { text: "N", width: 100, align: "center" },
-      { text: "დაჭერილი", width: 200, align: "center" },
-      { text: "შეიცვალა ფირფიტა", width: 100, align: "center" },
+    drawer,
+    x: MARGIN_X - 20,
+    y: cursor.y,
+    columns: [
+      {
+        header: { text: "N", width: 50, align: "center" },
+        render: (row) => ({ type: "text", text: row.id, align: "center" }),
+      },
+      {
+        header: { text: "ბუზი", width: 50, align: "center" },
+        render: (row) => ({ type: "text", text: row.fly, align: "center" }),
+      },
+      {
+        header: { text: "ქინქლა", width: 50, align: "center" },
+        render: (row) => ({ type: "text", text: row.kinkla, align: "center" }),
+      },
+      {
+        header: { text: "ფირფიტა", width: 50, align: "center" },
+        render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
+      },
     ],
-    rows: [
-      [
-        { type: "text", text: "დაჭერილი", align: "center" },
-        {
+  });
+
+  drawCapturedTable({
+    title: "მползავი მავნებლის მონიტორი",
+    monitorData: formData.crawling_pest_monitor,
+    drawer,
+    x: MARGIN_X + 210,
+    y: cursor.y,
+    columns: [
+      {
+        header: { text: "N", width: 50, align: "center" },
+        render: (row) => ({ type: "text", text: row.id, align: "center" }),
+      },
+      {
+        header: { text: "ჭიანჭველა", width: 100, align: "center" },
+        render: (row) => ({ type: "text", text: row.ant, align: "center" }),
+      },
+      {
+        header: { text: "ტარაკანი", width: 100, align: "center" },
+        render: (row) => ({
           type: "text",
-          text: formData.address,
-          align: "left",
-        },
-      ],
+          text: row.cockroach,
+          align: "center",
+        }),
+      },
+      {
+        header: { text: "შეიცვალა ფირფიტა", width: 120, align: "center" },
+        render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
+      },
     ],
   });
 };
