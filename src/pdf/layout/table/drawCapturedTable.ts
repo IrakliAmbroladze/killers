@@ -1,22 +1,33 @@
-type drawCapturedTableProps = {
-  title: string;
-  monitorData:
-    | Array<{
-        id: string;
-        fly: string;
-        kinkla: string;
-        blank: string;
-        plate_was_changed: boolean;
-      }>
-    | Array<{
-        id: string;
-        ant: string;
-        cockroach: string;
-        blank: string;
-        plate_was_changed: boolean;
-      }>;
+type BaseMonitorRow = {
+  id: string;
+  blank: string;
+  plate_was_changed: boolean;
 };
-export const drawCapturedTable = ({
+
+// type FlyingMonitorRow = BaseMonitorRow & {
+//   fly: string;
+//   kinkla: string;
+// };
+//
+// type CrawlingMonitorRow = BaseMonitorRow & {
+//   ant: string;
+//   cockroach: string;
+// };
+//
+// type RodentMonitorRow = BaseMonitorRow & {
+//   captured: string;
+//   chemical_was_added: boolean;
+// };
+
+type DrawCapturedTableProps<T extends BaseMonitorRow> = {
+  title: string;
+  monitorData: T[];
+};
+
+export const drawCapturedTable = <T extends BaseMonitorRow>({
   title,
   monitorData,
-}: drawCapturedTableProps) => {};
+}: DrawCapturedTableProps<T>) => {
+  console.log("title is ", title);
+  console.log("monitor data is: ", monitorData);
+};

@@ -15,7 +15,6 @@ export const drawCapturedInsectsTable = ({
   cursor,
   formData,
 }: drawCapturedInsectsTableProps) => {
-  console.log("formData is", formData);
   drawCapturedTable({
     title: "მფრინავი მავნებლის მონიტორი",
     monitorData: formData.flying_pest_monitor,
