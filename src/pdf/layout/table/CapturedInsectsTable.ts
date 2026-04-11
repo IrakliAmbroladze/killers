@@ -79,7 +79,7 @@ export const drawCapturedInsectsTable = ({
     ],
   });
   drawCapturedTable({
-    title: "მხოხავი მავნებლის მონიტორი",
+    title: "მხოხავი მავნ. მონიტორი",
     monitorData: formData.crawling_pest_monitor,
     drawer,
     x: MARGIN_X + 370,
@@ -96,14 +96,13 @@ export const drawCapturedInsectsTable = ({
       {
         header: { text: "ფირფიტა", width: 40, align: "center" },
         render: (row) => ({
-          type: "text",
-          text: row.cockroach,
-          align: "center",
+          type: "checkbox",
+          checked: row.plate_was_changed,
         }),
       },
       {
         header: { text: "ქიმიკატი", width: 45, align: "center" },
-        render: (row) => ({ type: "text", text: row.blank, align: "center" }),
+        render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
       },
     ],
   });
