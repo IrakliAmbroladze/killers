@@ -33,7 +33,7 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
     size: 8,
     bold: true,
     align: "center",
-    maxWidth: 160,
+    maxWidth: 170,
   });
   drawer.drawTable(
     x,
