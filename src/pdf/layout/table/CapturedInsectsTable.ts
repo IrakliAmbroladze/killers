@@ -19,15 +19,15 @@ export const drawCapturedInsectsTable = ({
     title: "მფრინავი მავნებლის მონიტორი",
     monitorData: formData.flying_pest_monitor,
     drawer,
-    x: MARGIN_X - 15,
+    x: MARGIN_X,
     y: cursor.y,
     columns: [
       {
-        header: { text: "N", width: 20, align: "center" },
+        header: { text: "N", width: 15, align: "center" },
         render: (row) => ({ type: "text", text: row.id, align: "center" }),
       },
       {
-        header: { text: "ბუზი", width: 30, align: "center" },
+        header: { text: "ბუზი", width: 45, align: "center" },
         render: (row) => ({ type: "text", text: row.fly, align: "center" }),
       },
       {
@@ -35,11 +35,11 @@ export const drawCapturedInsectsTable = ({
         render: (row) => ({ type: "text", text: row.kinkla, align: "center" }),
       },
       {
-        header: { text: "", width: 30, align: "center" },
+        header: { text: "", width: 40, align: "center" },
         render: (row) => ({ type: "text", text: row.blank, align: "center" }),
       },
       {
-        header: { text: "ფირფიტა", width: 50, align: "center" },
+        header: { text: "ფირფიტა", width: 40, align: "center" },
         render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
       },
     ],
@@ -49,19 +49,19 @@ export const drawCapturedInsectsTable = ({
     title: "მღრღნელის მონიტორი",
     monitorData: formData.crawling_pest_monitor,
     drawer,
-    x: MARGIN_X + 160,
+    x: MARGIN_X + 185,
     y: cursor.y,
     columns: [
       {
-        header: { text: "N", width: 20, align: "center" },
+        header: { text: "N", width: 15, align: "center" },
         render: (row) => ({ type: "text", text: row.id, align: "center" }),
       },
       {
-        header: { text: "ჭიანჭველა", width: 60, align: "center" },
+        header: { text: "ჭიანჭველა", width: 45, align: "center" },
         render: (row) => ({ type: "text", text: row.ant, align: "center" }),
       },
       {
-        header: { text: "ტარაკანი", width: 50, align: "center" },
+        header: { text: "ტარაკანი", width: 40, align: "center" },
         render: (row) => ({
           type: "text",
           text: row.cockroach,
@@ -69,41 +69,40 @@ export const drawCapturedInsectsTable = ({
         }),
       },
       {
-        header: { text: "", width: 30, align: "center" },
+        header: { text: "", width: 40, align: "center" },
         render: (row) => ({ type: "text", text: row.blank, align: "center" }),
       },
       {
-        header: { text: "ფირფიტა", width: 50, align: "center" },
+        header: { text: "ფირფიტა", width: 40, align: "center" },
         render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
       },
     ],
   });
   drawCapturedTable({
-    title: "მხოხავი მავნებლის მონიტორი",
+    title: "მხოხავი მავნ. მონიტორი",
     monitorData: formData.crawling_pest_monitor,
     drawer,
-    x: MARGIN_X + 375,
+    x: MARGIN_X + 370,
     y: cursor.y,
     columns: [
       {
-        header: { text: "N", width: 20, align: "center" },
+        header: { text: "N", width: 15, align: "center" },
         render: (row) => ({ type: "text", text: row.id, align: "center" }),
       },
       {
-        header: { text: "დაჭერილი", width: 60, align: "center" },
+        header: { text: "დაჭერილი", width: 45, align: "center" },
         render: (row) => ({ type: "text", text: row.ant, align: "center" }),
       },
       {
-        header: { text: "ფირფიტა", width: 50, align: "center" },
+        header: { text: "ფირფიტა", width: 40, align: "center" },
         render: (row) => ({
-          type: "text",
-          text: row.cockroach,
-          align: "center",
+          type: "checkbox",
+          checked: row.plate_was_changed,
         }),
       },
       {
         header: { text: "ქიმიკატი", width: 45, align: "center" },
-        render: (row) => ({ type: "text", text: row.blank, align: "center" }),
+        render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
       },
     ],
   });

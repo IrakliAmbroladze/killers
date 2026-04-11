@@ -29,9 +29,19 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
   x,
   y,
 }: DrawCapturedTableProps<T>) => {
-  console.log(title);
-  drawer.drawTable(x, y, {
-    headers: columns.map((col) => col.header),
-    rows: monitorData.map((row) => columns.map((col) => col.render(row))),
+  drawer.drawText(title, x, y, {
+    size: 8,
+    bold: true,
+    align: "center",
+    maxWidth: 170,
   });
+  drawer.drawTable(
+    x,
+    y - 5,
+    {
+      headers: columns.map((col) => col.header),
+      rows: monitorData.map((row) => columns.map((col) => col.render(row))),
+    },
+    { headerBold: false, fontSize: 7 },
+  );
 };
