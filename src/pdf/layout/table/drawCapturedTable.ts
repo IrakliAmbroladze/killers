@@ -29,7 +29,7 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
   x,
   y,
 }: DrawCapturedTableProps<T>) => {
-  console.log(title);
+  drawer.drawText(title, x, y);
   drawer.drawTable(x, y, {
     headers: columns.map((col) => col.header),
     rows: monitorData.map((row) => columns.map((col) => col.render(row))),
