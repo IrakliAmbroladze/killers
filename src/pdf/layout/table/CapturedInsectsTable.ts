@@ -23,7 +23,7 @@ export const drawCapturedInsectsTable = ({
     y: cursor.y,
     columns: [
       {
-        header: { text: "N", width: 20, align: "center" },
+        header: { text: "N", width: 15, align: "center" },
         render: (row) => ({ type: "text", text: row.id, align: "center" }),
       },
       {
@@ -31,7 +31,7 @@ export const drawCapturedInsectsTable = ({
         render: (row) => ({ type: "text", text: row.fly, align: "center" }),
       },
       {
-        header: { text: "ქინქლა", width: 40, align: "center" },
+        header: { text: "ქინქლა", width: 30, align: "center" },
         render: (row) => ({ type: "text", text: row.kinkla, align: "center" }),
       },
       {
@@ -39,7 +39,7 @@ export const drawCapturedInsectsTable = ({
         render: (row) => ({ type: "text", text: row.blank, align: "center" }),
       },
       {
-        header: { text: "ფირფიტა", width: 50, align: "center" },
+        header: { text: "ფირფიტა", width: 35, align: "center" },
         render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
       },
     ],
@@ -53,15 +53,15 @@ export const drawCapturedInsectsTable = ({
     y: cursor.y,
     columns: [
       {
-        header: { text: "N", width: 20, align: "center" },
+        header: { text: "N", width: 15, align: "center" },
         render: (row) => ({ type: "text", text: row.id, align: "center" }),
       },
       {
-        header: { text: "ჭიანჭველა", width: 60, align: "center" },
+        header: { text: "ჭიანჭველა", width: 45, align: "center" },
         render: (row) => ({ type: "text", text: row.ant, align: "center" }),
       },
       {
-        header: { text: "ტარაკანი", width: 50, align: "center" },
+        header: { text: "ტარაკანი", width: 35, align: "center" },
         render: (row) => ({
           type: "text",
           text: row.cockroach,
