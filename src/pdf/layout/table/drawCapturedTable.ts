@@ -37,11 +37,11 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
   });
   drawer.drawTable(
     x,
-    y - 5,
+    y - 10,
     {
       headers: columns.map((col) => col.header),
       rows: monitorData.map((row) => columns.map((col) => col.render(row))),
     },
-    { headerBold: false, fontSize: 7, headerHeight: 40 },
+    { headerBold: false, fontSize: 7, headerHeight: 25 },
   );
 };
