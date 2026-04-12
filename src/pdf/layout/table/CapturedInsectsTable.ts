@@ -15,6 +15,7 @@ export const drawCapturedInsectsTable = ({
   cursor,
   formData,
 }: drawCapturedInsectsTableProps) => {
+  console.log(formData);
   drawCapturedTable({
     title: "მფრინავი მავნებლის მონიტორი",
     monitorData: formData.flying_pest_monitor,
@@ -46,7 +47,7 @@ export const drawCapturedInsectsTable = ({
   });
 
   drawCapturedTable({
-    title: "მღრღნელის მონიტორი",
+    title: "მხოხავი მავნებლის მონიტორი",
     monitorData: formData.crawling_pest_monitor,
     drawer,
     x: MARGIN_X + 185,
@@ -79,7 +80,7 @@ export const drawCapturedInsectsTable = ({
     ],
   });
   drawCapturedTable({
-    title: "მხოხავი მავნ. მონიტორი",
+    title: "მღრღნელის მონიტორი",
     monitorData: formData.crawling_pest_monitor,
     drawer,
     x: MARGIN_X + 370,
