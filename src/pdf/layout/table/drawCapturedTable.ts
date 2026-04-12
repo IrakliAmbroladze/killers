@@ -35,13 +35,26 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
     align: "center",
     maxWidth: 170,
   });
+
+  drawer.drawText("(დაჭერილი)", x + 20, y - 15, {
+    size: 6,
+    maxWidth: 170,
+  });
+  drawer.drawText("(დაჭერილი)", x + 61, y - 15, {
+    size: 6,
+    maxWidth: 170,
+  });
+  drawer.drawText("შეიცვალა", x + 145, y - 15, {
+    size: 6,
+    maxWidth: 170,
+  });
   drawer.drawTable(
     x,
-    y - 5,
+    y - 10,
     {
       headers: columns.map((col) => col.header),
       rows: monitorData.map((row) => columns.map((col) => col.render(row))),
     },
-    { headerBold: false, fontSize: 7 },
+    { headerBold: false, fontSize: 7, headerHeight: 25 },
   );
 };

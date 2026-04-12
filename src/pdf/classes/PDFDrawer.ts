@@ -160,9 +160,15 @@ export class PDFDrawer {
       fontSize?: number;
       rowHeight?: number;
       headerBold?: boolean;
+      headerHeight?: number;
     } = {},
   ): number {
-    const { fontSize = 9, rowHeight = 20, headerBold = true } = options;
+    const {
+      fontSize = 9,
+      headerHeight = 20,
+      rowHeight = 20,
+      headerBold = true,
+    } = options;
     let currentY = y;
     let currentX = x;
     const marginLeft: number = 2;
@@ -176,7 +182,7 @@ export class PDFDrawer {
         x: currentX,
         y: currentY - rowHeight,
         width: cellWidth,
-        height: rowHeight,
+        height: headerHeight || rowHeight,
         borderWidth: 0.5,
         borderColor: rgb(0, 0, 0),
       });
