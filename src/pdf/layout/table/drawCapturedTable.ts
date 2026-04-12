@@ -42,6 +42,6 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
       headers: columns.map((col) => col.header),
       rows: monitorData.map((row) => columns.map((col) => col.render(row))),
     },
-    { headerBold: false, fontSize: 7 },
+    { headerBold: false, fontSize: 7, headerHeight: 40 },
   );
 };
