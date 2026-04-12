@@ -101,7 +101,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     y: cursor.y,
   });
   cursor.move(spaces_inspected_height);
-  drawSignatures({ drawer, cursor, formData, page, pdf });
+  drawSignatures({ drawer, cursor, formData, page, pdf, pageNumber: 1 });
   drawer.drawImage(stampImage, PAGE_WIDTH / 2 - 40, cursor.y, {
     height: 80,
   });
@@ -139,6 +139,15 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     formData,
   });
 
+  secondCursor.move(190);
+  drawSignatures({
+    drawer: secondDrawer,
+    cursor: secondCursor,
+    formData,
+    page: secondPage,
+    pdf,
+    pageNumber: 2,
+  });
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }

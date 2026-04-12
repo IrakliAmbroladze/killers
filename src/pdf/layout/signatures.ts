@@ -10,6 +10,7 @@ type DrawSignaturesProps = {
   pdf: PDFDocument;
   formData: AcceptanceFormData;
   page: PDFPage;
+  pageNumber: number;
 };
 
 export const drawSignatures = async ({
@@ -18,6 +19,7 @@ export const drawSignatures = async ({
   pdf,
   formData,
   page,
+  pageNumber,
 }: DrawSignaturesProps) => {
   // === SIGNATURES ===
   /* if (cursorY < 200) {
@@ -35,32 +37,34 @@ export const drawSignatures = async ({
     size: 10,
     bold: true,
   });
-  cursor.move(line_y);
+  if (pageNumber === 1) {
+    cursor.move(line_y);
+    // Customer info
+    drawer.drawText(
+      `სახელი, გვარი: ${formData.customer.representative.name}`,
+      MARGIN_X,
+      cursor.y,
+      {
+        size: 9,
+      },
+    );
 
-  // Customer info
-  drawer.drawText(
-    `სახელი, გვარი: ${formData.customer.representative.name}`,
-    MARGIN_X,
-    cursor.y,
-    {
+    drawer.drawText("შპს ქილ", cursor_x, cursor.y, { size: 9 });
+    cursor.move(line_y);
+    drawer.drawText(
+      `პირადი ნომერი: ${formData.customer.representative.id}`,
+      MARGIN_X,
+      cursor.y,
+      { size: 9 },
+    );
+    drawer.drawText("ს/კ: 405049923", cursor_x, cursor.y, { size: 9 });
+    cursor.move(line_y);
+
+    drawer.drawText("ხელმოწერა", MARGIN_X, cursor.y, { size: 9 });
+    drawer.drawText("ხელმოწერა", cursor_x, cursor.y, {
       size: 9,
-    },
-  );
-  drawer.drawText("შპს ქილ", cursor_x, cursor.y, { size: 9 });
-  cursor.move(line_y);
-  drawer.drawText(
-    `პირადი ნომერი: ${formData.customer.representative.id}`,
-    MARGIN_X,
-    cursor.y,
-    { size: 9 },
-  );
-  drawer.drawText("ს/კ: 405049923", cursor_x, cursor.y, { size: 9 });
-  cursor.move(line_y);
-
-  drawer.drawText("ხელმოწერა", MARGIN_X, cursor.y, { size: 9 });
-  drawer.drawText("ხელმოწერა", cursor_x, cursor.y, {
-    size: 9,
-  });
+    });
+  }
   if (formData.customer.signature && formData.executor.signature) {
     const customerPngBytes = Uint8Array.from(
       atob(formData.customer.signature.replace(/^data:image\/png;base64,/, "")),
