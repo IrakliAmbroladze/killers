@@ -40,6 +40,14 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
     size: 6,
     maxWidth: 170,
   });
+  drawer.drawText("(დაჭერილი)", x + 61, y - 15, {
+    size: 6,
+    maxWidth: 170,
+  });
+  drawer.drawText("შეიცვალა", x + 145, y - 15, {
+    size: 6,
+    maxWidth: 170,
+  });
   drawer.drawTable(
     x,
     y - 10,
