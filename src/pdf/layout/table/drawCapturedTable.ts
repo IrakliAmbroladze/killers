@@ -36,18 +36,30 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
     maxWidth: 170,
   });
 
-  drawer.drawText("(დაჭერილი)", x + 20, y - 15, {
-    size: 6,
-    maxWidth: 170,
-  });
-  drawer.drawText("(დაჭერილი)", x + 61, y - 15, {
-    size: 6,
-    maxWidth: 170,
-  });
-  drawer.drawText("შეიცვალა", x + 145, y - 15, {
-    size: 6,
-    maxWidth: 170,
-  });
+  if (x < 370) {
+    drawer.drawText("(დაჭერილი)", x + 20, y - 15, {
+      size: 6,
+      maxWidth: 170,
+    });
+    drawer.drawText("(დაჭერილი)", x + 61, y - 15, {
+      size: 6,
+      maxWidth: 170,
+    });
+    drawer.drawText("შეიცვალა", x + 145, y - 15, {
+      size: 6,
+      maxWidth: 170,
+    });
+  } else {
+    drawer.drawText("შეიცვალა", x + 65, y - 15, {
+      size: 6,
+      maxWidth: 170,
+    });
+    drawer.drawText("დაემატა", x + 110, y - 15, {
+      size: 6,
+      maxWidth: 170,
+    });
+  }
+
   drawer.drawTable(
     x,
     y - 10,
