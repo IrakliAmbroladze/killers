@@ -35,6 +35,11 @@ export const drawCapturedTable = <T extends BaseMonitorRow>({
     align: "center",
     maxWidth: 170,
   });
+
+  drawer.drawText("(დაჭერილი)", x + 20, y - 15, {
+    size: 6,
+    maxWidth: 170,
+  });
   drawer.drawTable(
     x,
     y - 10,
