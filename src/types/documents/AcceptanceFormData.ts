@@ -61,4 +61,5 @@ export type AcceptanceFormData = {
     chemical_was_added: boolean;
   }>;
   criteria: { [key: string]: boolean | null };
+  comment: string;
 };

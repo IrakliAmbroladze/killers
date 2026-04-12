@@ -40,6 +40,7 @@ export default function AcceptanceDocument({
     handleCrawlingPestMonitorChange,
     handleRodentMonitorChange,
     handleCriteriaChange,
+    handleCommentChange,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -509,6 +510,14 @@ export default function AcceptanceDocument({
             rodentMonitorRows={rodentMonitorRows}
             criteriaRows={criteriaRows}
           />
+          <label className="mt-5 block">
+            კომენტარი:
+            <textarea
+              className="border my-5 w-full min-h-20 p-1.5"
+              value={formData.comment}
+              onChange={(e) => handleCommentChange(e.target.value)}
+            />
+          </label>
           <ProcedureTime
             onProcedureTimeChange={handleProcedureTimeChange}
             startTime={formData.startTime}
