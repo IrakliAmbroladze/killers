@@ -15,6 +15,7 @@ export const drawCapturedInsectsTable = ({
   cursor,
   formData,
 }: drawCapturedInsectsTableProps) => {
+  console.log(formData);
   drawCapturedTable({
     title: "მფრინავი მავნებლის მონიტორი",
     monitorData: formData.flying_pest_monitor,
@@ -80,7 +81,7 @@ export const drawCapturedInsectsTable = ({
   });
   drawCapturedTable({
     title: "მღრღნელის მონიტორი",
-    monitorData: formData.crawling_pest_monitor,
+    monitorData: formData.rodent_monitor,
     drawer,
     x: MARGIN_X + 370,
     y: cursor.y,
@@ -91,7 +92,11 @@ export const drawCapturedInsectsTable = ({
       },
       {
         header: { text: "დაჭერილი", width: 45, align: "center" },
-        render: (row) => ({ type: "text", text: row.ant, align: "center" }),
+        render: (row) => ({
+          type: "text",
+          text: row.captured,
+          align: "center",
+        }),
       },
       {
         header: { text: "ფირფიტა", width: 40, align: "center" },
@@ -102,7 +107,10 @@ export const drawCapturedInsectsTable = ({
       },
       {
         header: { text: "ქიმიკატი", width: 45, align: "center" },
-        render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
+        render: (row) => ({
+          type: "checkbox",
+          checked: row.chemical_was_added,
+        }),
       },
     ],
   });

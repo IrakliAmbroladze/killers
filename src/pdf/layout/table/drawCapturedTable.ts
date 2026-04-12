@@ -3,7 +3,7 @@ import { PdfTableCell, TableHeaderCell } from "@/pdf/types/Table";
 
 type BaseMonitorRow = {
   id: string;
-  blank: string;
+  blank?: string;
   plate_was_changed: boolean;
 };
 
