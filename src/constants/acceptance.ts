@@ -116,6 +116,7 @@ export const acceptanceFormData = (
       chemical_was_added: false,
     })),
     criteria: {},
+    comment: "",
   };
 };
 

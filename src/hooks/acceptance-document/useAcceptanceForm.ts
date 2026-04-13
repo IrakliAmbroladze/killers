@@ -4,6 +4,13 @@ import { AcceptanceFormData, HandleServicesChange } from "@/types";
 export function useAcceptanceForm(initialData: AcceptanceFormData) {
   const [formData, setFormData] = useState<AcceptanceFormData>(initialData);
 
+  const handleCommentChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      comment: value,
+    }));
+  };
+
   const handleProcedureTimeChange = (
     field: "startTime" | "endTime" | "name" | "personalNumber",
     value: string,
@@ -169,5 +176,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleCrawlingPestMonitorChange,
     handleRodentMonitorChange,
     handleCriteriaChange,
+    handleCommentChange,
   };
 }
