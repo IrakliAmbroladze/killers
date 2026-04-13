@@ -139,10 +139,8 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     formData,
   });
   secondCursor.move(145);
-  const comment =
-    "TThis is my comment This is my comment This is my comment This is my comment This is my comment This is my comment This is my comment This is my comment This is my comment his is my comment ";
   secondDrawer.drawParagraph(
-    `კომენტარი: ${comment}`,
+    `კომენტარი: ${formData.comment}`,
     MARGIN_X,
     secondCursor.y,
     500,
