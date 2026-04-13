@@ -101,7 +101,7 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     y: cursor.y,
   });
   cursor.move(spaces_inspected_height);
-  drawSignatures({ drawer, cursor, formData, page, pdf });
+  drawSignatures({ drawer, cursor, formData, page, pdf, pageNumber: 1 });
   drawer.drawImage(stampImage, PAGE_WIDTH / 2 - 40, cursor.y, {
     height: 80,
   });
@@ -138,7 +138,23 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     cursor: secondCursor,
     formData,
   });
+  secondCursor.move(145);
+  secondDrawer.drawParagraph(
+    `კომენტარი: ${formData.comment}`,
+    MARGIN_X,
+    secondCursor.y,
+    500,
+  );
 
+  secondCursor.move(45);
+  drawSignatures({
+    drawer: secondDrawer,
+    cursor: secondCursor,
+    formData,
+    page: secondPage,
+    pdf,
+    pageNumber: 2,
+  });
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }
