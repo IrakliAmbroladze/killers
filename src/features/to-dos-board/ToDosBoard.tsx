@@ -11,6 +11,7 @@ export const ToDosBoard = ({ board }: ToDosBoardProps): React.ReactElement => {
             id={column.id}
             title={column.title}
             taskList={column.taskList}
+            hasCreateNewTaskBtn={column.hasCreateNewTaskBtn}
           />
         ),
       )}
