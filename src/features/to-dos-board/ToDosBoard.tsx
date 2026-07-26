@@ -8,6 +8,7 @@ export const ToDosBoard = ({ board }: ToDosBoardProps): React.ReactElement => {
         (column: ToDoColumn): React.ReactElement => (
           <Column
             key={column.id}
+            id={column.id}
             title={column.title}
             taskList={column.taskList}
           />
