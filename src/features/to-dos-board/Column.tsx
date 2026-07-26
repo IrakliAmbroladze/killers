@@ -4,6 +4,7 @@ import { Task, ToDoColumn } from "./types/ToDosBoardProps";
 import { Header } from "./Header";
 import Modal from "@/components/ui/modal";
 import { CreateNewTask } from "./CreateNewTask";
+import { addTask } from "@/lib/addTask";
 
 export const Column = ({
   id,
@@ -12,6 +13,8 @@ export const Column = ({
   hasCreateNewTaskBtn = false,
 }: ToDoColumn): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResponseModalOpen, setIsResponseModalOpen] = useState(false);
+  const [response, setResponse] = useState("");
   const [visibleStatusArray, setVisibleStatusArray] = useState(() => [0, 1]);
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLButtonElement;
@@ -30,8 +33,11 @@ export const Column = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  const closeResponseModal = () => {
+    setIsResponseModalOpen(false);
+  };
 
-  const handleCreateNewTaskSubmit = ({
+  const handleCreateNewTaskSubmit = async ({
     title,
     description,
   }: {
@@ -42,6 +48,17 @@ export const Column = ({
     title: ${title}
     description: ${description}
 `);
+    try {
+      const res = await addTask({ title, description });
+      setResponse(res.message);
+      setIsResponseModalOpen(true);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log("Unknown error", err);
+      }
+    }
   };
 
   return (
@@ -65,6 +82,9 @@ export const Column = ({
           onCancel={closeModal}
           onSubmit={handleCreateNewTaskSubmit}
         />
+      </Modal>
+      <Modal isOpen={isResponseModalOpen} onClose={closeResponseModal}>
+        {response}
       </Modal>
     </div>
   );
