@@ -1,6 +1,6 @@
 "use server";
 
-// import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
 export const addTask = async ({
   title,
@@ -12,12 +12,12 @@ export const addTask = async ({
   const newTask = { title, description };
   console.log({ newTask });
 
-  // const supabase = await createClient();
-  // const { error } = await supabase.from("customers").insert([newCustomer]);
+  const supabase = await createClient();
+  const { error } = await supabase.from("teams_tasks").insert([newTask]);
 
-  // if (error) {
-  //   return { message: `❌ შეცდომა: ${error.message}` };
-  // }
+  if (error) {
+    return { message: `❌ შეცდომა: ${error.message}` };
+  }
   return {
     message: "✅ დავალება წარმატებით დაემატა",
   };
