@@ -37,7 +37,12 @@ export default function TasksPage(): React.ReactElement {
       taskList: [Card1, Card2],
       hasCreateNewTaskBtn: true,
     },
-    { id: 1, title: "In Progress", taskList: [Card3, Card4] },
+    {
+      id: 1,
+      title: "In Progress",
+      taskList: [Card3, Card4],
+      hasCreateNewTaskBtn: true,
+    },
     { id: 2, title: "Done", taskList: [Card5, Card6] },
   ];
   return (

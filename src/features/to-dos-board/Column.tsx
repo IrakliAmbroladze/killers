@@ -20,7 +20,7 @@ export const Column = ({
     );
   };
   const handleCreateNewTaskBtnClick = () => {
-    console.log("Handle create new task");
+    console.log(`column id is ${id}`);
   };
 
   return (
@@ -35,7 +35,7 @@ export const Column = ({
           onClick={handleCreateNewTaskBtnClick}
           className="cursor-pointer bg-blue-300 opacity-80 my-1.5 rounded-md hover:opacity-100 ease-in-out duration-150 active:scale-[0.97]"
         >
-          add new task
+          add task {title.toLocaleLowerCase()}
         </button>
       )}
     </div>
