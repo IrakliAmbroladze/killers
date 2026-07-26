@@ -40,16 +40,14 @@ export const Column = ({
   const handleCreateNewTaskSubmit = async ({
     title,
     description,
+    column_id,
   }: {
     title: string;
     description: string;
+    column_id: number;
   }) => {
-    console.log(`submitted: 
-    title: ${title}
-    description: ${description}
-`);
     try {
-      const res = await addTask({ title, description });
+      const res = await addTask({ title, description, column_id });
       setResponse(res.message);
       setIsResponseModalOpen(true);
     } catch (err) {
@@ -80,7 +78,9 @@ export const Column = ({
         The id of current column is {id}
         <CreateNewTask
           onCancel={closeModal}
-          onSubmit={handleCreateNewTaskSubmit}
+          onSubmit={({ title, description }) =>
+            handleCreateNewTaskSubmit({ title, description, column_id: id })
+          }
         />
       </Modal>
       <Modal isOpen={isResponseModalOpen} onClose={closeResponseModal}>

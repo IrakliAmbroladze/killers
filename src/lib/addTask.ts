@@ -5,12 +5,13 @@ import { createClient } from "@/utils/supabase/server";
 export const addTask = async ({
   title,
   description,
+  column_id,
 }: {
   title: string;
   description: string;
+  column_id: number;
 }) => {
-  const newTask = { title, description };
-  console.log({ newTask });
+  const newTask = { title, description, column_id };
 
   const supabase = await createClient();
   const { error } = await supabase.from("teams_tasks").insert([newTask]);
