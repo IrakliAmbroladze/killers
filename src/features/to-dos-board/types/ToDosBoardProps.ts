@@ -6,6 +6,7 @@ export type ToDoColumn = {
   id: number;
   title: string;
   taskList: Task[];
+  hasCreateNewTaskBtn?: boolean;
 };
 
 export type ToDosBoardProps = {
