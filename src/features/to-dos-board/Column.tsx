@@ -3,6 +3,7 @@ import { ReactElement, useState } from "react";
 import { Task, ToDoColumn } from "./types/ToDosBoardProps";
 import { Header } from "./Header";
 import Modal from "@/components/ui/modal";
+import { CreateNewTask } from "./CreateNewTask";
 
 export const Column = ({
   id,
@@ -30,6 +31,19 @@ export const Column = ({
     setIsModalOpen(false);
   };
 
+  const handleCreateNewTaskSubmit = ({
+    title,
+    description,
+  }: {
+    title: string;
+    description: string;
+  }) => {
+    console.log(`submitted: 
+    title: ${title}
+    description: ${description}
+`);
+  };
+
   return (
     <div className="flex flex-col w-80 shrink-0 bg-gray-100 dark:bg-gray-800 rounded-lg p-2.5 ">
       <Header id={id.toString()} status={title} onHandleClick={handleClick} />
@@ -46,7 +60,11 @@ export const Column = ({
         </button>
       )}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        something
+        The id of current column is {id}
+        <CreateNewTask
+          onCancel={closeModal}
+          onSubmit={handleCreateNewTaskSubmit}
+        />
       </Modal>
     </div>
   );
