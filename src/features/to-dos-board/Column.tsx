@@ -2,6 +2,7 @@
 import { ReactElement, useState } from "react";
 import { Task, ToDoColumn } from "./types/ToDosBoardProps";
 import { Header } from "./Header";
+import Modal from "@/components/ui/modal";
 
 export const Column = ({
   id,
@@ -9,6 +10,7 @@ export const Column = ({
   taskList,
   hasCreateNewTaskBtn = false,
 }: ToDoColumn): ReactElement => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [visibleStatusArray, setVisibleStatusArray] = useState(() => [0, 1]);
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLButtonElement;
@@ -20,7 +22,12 @@ export const Column = ({
     );
   };
   const handleCreateNewTaskBtnClick = () => {
+    setIsModalOpen(true);
     console.log(`column id is ${id}`);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -38,6 +45,9 @@ export const Column = ({
           add task {title.toLocaleLowerCase()}
         </button>
       )}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        something
+      </Modal>
     </div>
   );
 };
