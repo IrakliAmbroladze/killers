@@ -12,4 +12,9 @@ export const allLinks: LinkItem[] = [
     href: "/protected/customers",
     visibleToTechnician: false,
   },
+  {
+    name: "Tasks",
+    href: "/protected/tasks",
+    visibleToTechnician: false,
+  },
 ];

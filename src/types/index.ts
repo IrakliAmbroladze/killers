@@ -4,4 +4,5 @@ export type { Order, OrderExtended } from "./Order";
 export type { Customer } from "./Customer";
 export type { JustifyContent } from "./JustifyContent";
 export type { Cell } from "./Cell";
+export type { TeamTask } from "./TeamTask";
 export * from "./calendar";
