@@ -1,50 +1,31 @@
 import { ToDosBoard } from "@/features/to-dos-board";
+import { TaskCard } from "@/features/to-dos-board/TaskCard";
 import {
   Task,
   ToDoColumn,
 } from "@/features/to-dos-board/types/ToDosBoardProps";
+import { getTeamTasks } from "@/lib/getTeamTasks";
 
-export default function TasksPage(): React.ReactElement {
-  const Card1: Task = {
-    id: "1",
-    node: <div>Card1</div>,
-  };
-  const Card2: Task = {
-    id: "2",
-    node: <div>Card2</div>,
-  };
-  const Card3: Task = {
-    id: "3",
-    node: <div>Card3</div>,
-  };
-  const Card4: Task = {
-    id: "4",
-    node: <div>Card4</div>,
-  };
-  const Card5: Task = {
-    id: "5",
-    node: <div>Card5</div>,
-  };
-  const Card6: Task = {
-    id: "6",
-    node: <div>Card6</div>,
-  };
+const COLUMN_DEFS: Omit<ToDoColumn, "taskList">[] = [
+  { id: 0, title: "To do", hasCreateNewTaskBtn: true },
+  { id: 1, title: "In Progress", hasCreateNewTaskBtn: true },
+  { id: 2, title: "Done" },
+];
 
-  const taskColumns: ToDoColumn[] = [
-    {
-      id: 0,
-      title: "To do",
-      taskList: [Card1, Card2],
-      hasCreateNewTaskBtn: true,
-    },
-    {
-      id: 1,
-      title: "In Progress",
-      taskList: [Card3, Card4],
-      hasCreateNewTaskBtn: true,
-    },
-    { id: 2, title: "Done", taskList: [Card5, Card6] },
-  ];
+export default async function TasksPage(): Promise<React.ReactElement> {
+  const tasks = await getTeamTasks();
+  const taskColumns: ToDoColumn[] = COLUMN_DEFS.map((col) => ({
+    ...col,
+    taskList: (tasks ?? [])
+      .filter((t) => t.column_id === col.id)
+      .map(
+        (t): Task => ({
+          id: t.id,
+          node: <TaskCard title={t.title} description={t.description} />,
+        }),
+      ),
+  }));
+
   return (
     <div>
       <ToDosBoard board={taskColumns} />
