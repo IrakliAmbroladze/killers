@@ -5,6 +5,8 @@ import { Header } from "./Header";
 import Modal from "@/components/ui/modal";
 import { CreateNewTask } from "./CreateNewTask";
 import { addTask } from "@/lib/addTask";
+import { EditTask } from "./EditTask";
+import { editTask } from "@/lib/editTask";
 
 export const Column = ({
   id,
@@ -16,6 +18,7 @@ export const Column = ({
   const [isResponseModalOpen, setIsResponseModalOpen] = useState(false);
   const [response, setResponse] = useState("");
   const [visibleStatusArray, setVisibleStatusArray] = useState(() => [0, 1]);
+  const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLButtonElement;
     const id = Number(target.id);
@@ -59,12 +62,42 @@ export const Column = ({
     }
   };
 
+  const handleEditTaskSubmit = async ({
+    title,
+    description,
+    id,
+  }: {
+    title: string;
+    description: string;
+    id: string;
+  }) => {
+    try {
+      const res = await editTask({ title, description, id });
+      setResponse(res.message);
+      setIsResponseModalOpen(true);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log("Unknown error", err);
+      }
+    }
+  };
+
+  const closeEditModal = () => {
+    setActiveTaskId(null);
+  };
+
   return (
     <div className="flex flex-col w-80 shrink-0 bg-gray-100 dark:bg-gray-800 rounded-lg p-2.5 ">
       <Header id={id.toString()} status={title} onHandleClick={handleClick} />
       {visibleStatusArray.includes(id) &&
         taskList.map(
-          (task: Task): ReactElement => <div key={task.id}>{task.node}</div>,
+          (task: Task): ReactElement => (
+            <div key={task.id} onClick={() => setActiveTaskId(task.id)}>
+              {task.node}
+            </div>
+          ),
         )}
       {hasCreateNewTaskBtn && (
         <button
@@ -75,7 +108,6 @@ export const Column = ({
         </button>
       )}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        The id of current column is {id}
         <CreateNewTask
           onCancel={closeModal}
           onSubmit={({ title, description }) =>
@@ -85,6 +117,16 @@ export const Column = ({
       </Modal>
       <Modal isOpen={isResponseModalOpen} onClose={closeResponseModal}>
         {response}
+      </Modal>
+      <Modal isOpen={!!activeTaskId} onClose={closeEditModal}>
+        <EditTask
+          key={activeTaskId}
+          id={activeTaskId}
+          onCancel={closeEditModal}
+          onSubmit={({ id, title, description }) =>
+            handleEditTaskSubmit({ id, title, description })
+          }
+        />
       </Modal>
     </div>
   );
