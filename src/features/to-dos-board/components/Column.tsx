@@ -1,6 +1,6 @@
 "use client";
 import { ReactElement, useState } from "react";
-import { Task, ToDoColumn } from "./types/ToDosBoardProps";
+import { Task, ToDoColumn } from "../types/ToDosBoardProps";
 import { Header } from "./Header";
 import Modal from "@/components/ui/modal";
 import { CreateNewTask } from "./CreateNewTask";
