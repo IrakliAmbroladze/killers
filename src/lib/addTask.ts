@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export const addTask = async ({
   title,
@@ -23,6 +24,7 @@ export const addTask = async ({
     author_id: session?.user.id,
   };
   const { error } = await supabase.from("teams_tasks").insert([newTask]);
+  revalidatePath("/protected/tasks");
 
   if (error) {
     return { message: `❌ შეცდომა: ${error.message}` };
