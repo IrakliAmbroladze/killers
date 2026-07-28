@@ -6,9 +6,15 @@ type EditTaskProps = {
   id: string | null;
   onSubmit: (task: { id: string; title: string; description: string }) => void;
   onCancel: () => void;
+  onDelete: (id: string) => void;
 };
 
-export const EditTask = ({ id, onSubmit, onCancel }: EditTaskProps) => {
+export const EditTask = ({
+  id,
+  onSubmit,
+  onCancel,
+  onDelete,
+}: EditTaskProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +94,7 @@ export const EditTask = ({ id, onSubmit, onCancel }: EditTaskProps) => {
       <div className="flex justify-between">
         <button
           type="button"
-          onClick={onCancel}
+          onClick={() => onDelete(id)}
           className="rounded-lg px-4 py-2 text-sm font-medium text-red-700 dark:text-red-300 transition hover:underline cursor-pointer active:scale-95 ease-in-out duration-150"
         >
           delete
