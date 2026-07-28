@@ -1,5 +1,4 @@
-import { ToDosBoard } from "@/features/to-dos-board";
-import { TaskCard } from "@/features/to-dos-board/TaskCard";
+import { ToDosBoard, TaskCard } from "@/features/to-dos-board";
 import {
   Task,
   ToDoColumn,

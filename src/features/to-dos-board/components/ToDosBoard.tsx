@@ -1,4 +1,4 @@
-import { ToDoColumn, ToDosBoardProps } from "./types/ToDosBoardProps";
+import { ToDoColumn, ToDosBoardProps } from "../types/ToDosBoardProps";
 import { Column } from "./Column";
 
 export const ToDosBoard = ({ board }: ToDosBoardProps): React.ReactElement => {
