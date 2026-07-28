@@ -1,12 +1,13 @@
 "use client";
 import { ReactElement, useState } from "react";
-import { Task, ToDoColumn } from "./types/ToDosBoardProps";
+import { Task, ToDoColumn } from "../types/ToDosBoardProps";
 import { Header } from "./Header";
 import Modal from "@/components/ui/modal";
 import { CreateNewTask } from "./CreateNewTask";
 import { addTask } from "@/lib/addTask";
 import { EditTask } from "./EditTask";
 import { editTask } from "@/lib/editTask";
+import { deleteTask } from "../lib/deleteTask";
 
 export const Column = ({
   id,
@@ -27,6 +28,9 @@ export const Column = ({
         ? prev.filter((columnId) => columnId !== id)
         : [...prev, id],
     );
+  };
+  const closeEditModal = () => {
+    setActiveTaskId(null);
   };
   const handleCreateNewTaskBtnClick = () => {
     setIsModalOpen(true);
@@ -62,6 +66,21 @@ export const Column = ({
     }
   };
 
+  const handleDeleteTask = async (id: string) => {
+    try {
+      const res = await deleteTask({ id });
+      setResponse(res.message);
+      setIsResponseModalOpen(true);
+      closeEditModal();
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log("Unknown error", err);
+      }
+    }
+  };
+
   const handleEditTaskSubmit = async ({
     title,
     description,
@@ -82,10 +101,6 @@ export const Column = ({
         console.log("Unknown error", err);
       }
     }
-  };
-
-  const closeEditModal = () => {
-    setActiveTaskId(null);
   };
 
   return (
@@ -126,6 +141,7 @@ export const Column = ({
           onSubmit={({ id, title, description }) =>
             handleEditTaskSubmit({ id, title, description })
           }
+          onDelete={handleDeleteTask}
         />
       </Modal>
     </div>
