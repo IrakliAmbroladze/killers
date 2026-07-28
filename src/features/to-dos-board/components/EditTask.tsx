@@ -85,22 +85,30 @@ export const EditTask = ({ id, onSubmit, onCancel }: EditTaskProps) => {
           className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
         />
       </div>
-
-      <div className="flex justify-end gap-3">
+      <div className="flex justify-between">
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium transition hover:bg-gray-100"
+          className="rounded-lg px-4 py-2 text-sm font-medium text-red-700 dark:text-red-300 transition hover:underline cursor-pointer active:scale-95 ease-in-out duration-150"
         >
-          Cancel
+          delete
         </button>
-        <button
-          type="submit"
-          disabled={!title.trim()}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Save changes
-        </button>
+        <div className="flex justify-end gap-3">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium transition hover:bg-gray-100"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={!title.trim()}
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Save changes
+          </button>
+        </div>
       </div>
     </form>
   );
