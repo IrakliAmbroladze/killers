@@ -7,10 +7,12 @@ export const editTask = async ({
   title,
   description,
   id,
+  column_id,
 }: {
   title: string;
   description: string;
   id: string;
+  column_id: number;
 }) => {
   const supabase = await createClient();
 
@@ -18,6 +20,7 @@ export const editTask = async ({
     title,
     description,
     id,
+    column_id,
   };
   const { error } = await supabase
     .from("teams_tasks")
