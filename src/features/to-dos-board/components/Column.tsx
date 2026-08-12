@@ -85,13 +85,15 @@ export const Column = ({
     title,
     description,
     id,
+    column_id,
   }: {
     title: string;
     description: string;
     id: string;
+    column_id: number;
   }) => {
     try {
-      const res = await editTask({ title, description, id });
+      const res = await editTask({ title, description, id, column_id });
       setResponse(res.message);
       setIsResponseModalOpen(true);
     } catch (err) {
@@ -138,8 +140,8 @@ export const Column = ({
           key={activeTaskId}
           id={activeTaskId}
           onCancel={closeEditModal}
-          onSubmit={({ id, title, description }) =>
-            handleEditTaskSubmit({ id, title, description })
+          onSubmit={({ id, title, description, column_id }) =>
+            handleEditTaskSubmit({ id, title, description, column_id })
           }
           onDelete={handleDeleteTask}
         />

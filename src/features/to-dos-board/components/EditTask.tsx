@@ -4,7 +4,12 @@ import { getTask } from "@/lib/getTask";
 
 type EditTaskProps = {
   id: string | null;
-  onSubmit: (task: { id: string; title: string; description: string }) => void;
+  onSubmit: (task: {
+    id: string;
+    title: string;
+    description: string;
+    column_id: number;
+  }) => void;
   onCancel: () => void;
   onDelete: (id: string) => void;
 };
@@ -29,7 +34,6 @@ export const EditTask = ({
     getTask(id)
       .then((task) => {
         if (cancelled) return;
-        console.log({ task });
         setTitle(task?.title ?? "");
         setDescription(task?.description ?? "");
         setStatusId(task?.column_id ?? 0);
@@ -52,7 +56,12 @@ export const EditTask = ({
     event.preventDefault();
     if (!title.trim()) return;
 
-    onSubmit({ id, title: title.trim(), description: description.trim() });
+    onSubmit({
+      id,
+      title: title.trim(),
+      description: description.trim(),
+      column_id: statusId,
+    });
   };
 
   if (isLoading) {
