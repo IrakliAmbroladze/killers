@@ -17,6 +17,7 @@ export const EditTask = ({
 }: EditTaskProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [statusId, setStatusId] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,8 +29,10 @@ export const EditTask = ({
     getTask(id)
       .then((task) => {
         if (cancelled) return;
-        setTitle(task.title ?? "");
-        setDescription(task.description ?? "");
+        console.log({ task });
+        setTitle(task?.title ?? "");
+        setDescription(task?.description ?? "");
+        setStatusId(task?.column_id ?? 0);
       })
       .catch((err) => {
         console.error("Failed to load task:", err);
@@ -99,6 +102,19 @@ export const EditTask = ({
         >
           delete
         </button>
+        <select
+          name="todolist-status"
+          id="todolist-status"
+          className="dark:bg-blue-900 bg-gray-400 rounded-lg"
+          value={statusId}
+          onChange={(e) => {
+            setStatusId(Number(e?.target?.value));
+          }}
+        >
+          <option value={0}>To do</option>
+          <option value={1}>In progress</option>
+          <option value={2}>Done</option>
+        </select>{" "}
         <div className="flex justify-end gap-3">
           <button
             type="button"

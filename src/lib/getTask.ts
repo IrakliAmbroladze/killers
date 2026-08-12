@@ -6,7 +6,7 @@ export const getTask = async (id: string) => {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("teams_tasks")
-    .select("id, title, description")
+    .select("id, title, description, column_id")
     .eq("id", id)
     .single();
 
