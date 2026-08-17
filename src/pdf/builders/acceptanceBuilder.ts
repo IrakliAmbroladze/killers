@@ -155,6 +155,9 @@ export async function buildAcceptancePdf(formData: AcceptanceFormData) {
     pdf,
     pageNumber: 2,
   });
+  secondDrawer.drawImage(stampImage, PAGE_WIDTH / 2 - 40, secondCursor.y - 20, {
+    height: 80,
+  });
   const pdfBytes = await pdf.save();
   return pdfBytes;
 }
