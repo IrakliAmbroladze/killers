@@ -38,6 +38,7 @@ export default function AcceptanceDocument({
     handlePestTextChange,
     handleFlyingPestMonitorChange,
     handleCrawlingPestMonitorChange,
+    handleUpdateCrawlingPestMonitorHeaders,
     handleRodentMonitorChange,
     handleCriteriaChange,
     handleCommentChange,
@@ -510,6 +511,9 @@ export default function AcceptanceDocument({
             flyingPestMonitorRows={flyingPestMonitorRows}
             crawlingPestMonitorRows={crawlingPestMonitorRows}
             crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
+            updateCrawlingPestMonitorHeaders={
+              handleUpdateCrawlingPestMonitorHeaders
+            }
             rodentMonitorRows={rodentMonitorRows}
             criteriaRows={criteriaRows}
           />

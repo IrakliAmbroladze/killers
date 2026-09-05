@@ -9,6 +9,7 @@ export const InspectionDocument = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
   crawlingPestMonitorHeaders,
+  updateCrawlingPestMonitorHeaders,
   rodentMonitorRows,
   criteriaRows,
 }: {
@@ -16,6 +17,7 @@ export const InspectionDocument = ({
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
   crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
+  updateCrawlingPestMonitorHeaders: (propName: string, value: string) => void;
   rodentMonitorRows: Cell[][];
   criteriaRows: Cell[][];
 }) => {
@@ -31,6 +33,7 @@ export const InspectionDocument = ({
           flyingPestMonitorRows={flyingPestMonitorRows}
           crawlingPestMonitorRows={crawlingPestMonitorRows}
           crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
+          updateCrawlingPestMonitorHeaders={updateCrawlingPestMonitorHeaders}
           rodentMonitorRows={rodentMonitorRows}
           criteriaRows={criteriaRows}
         />

@@ -1,17 +1,20 @@
 import { Table } from "@/components";
 import { Cell } from "@/types";
 import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
+import { BlankInputForPestMonitorTable } from "./BlankInputForPestMonitorTable";
 
 export const InspectionDefault = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
   crawlingPestMonitorHeaders,
   rodentMonitorRows,
+  updateCrawlingPestMonitorHeaders,
   criteriaRows,
 }: {
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
   crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
+  updateCrawlingPestMonitorHeaders: (propName: string, value: string) => void;
   rodentMonitorRows: Cell[][];
   criteriaRows: Cell[][];
 }) => {
@@ -56,8 +59,21 @@ export const InspectionDefault = ({
             node: crawlingPestMonitorHeaders.cockroach,
             justify_content: "center",
           },
-          { node: crawlingPestMonitorHeaders.blank, justify_content: "center" },
-          { node: "შეიცვალა ფირფიტა", justify_content: "center" },
+          {
+            node: (
+              <BlankInputForPestMonitorTable
+                crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
+                updateCrawlingPestMonitorHeaders={
+                  updateCrawlingPestMonitorHeaders
+                }
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: `შეიცვალა ${crawlingPestMonitorHeaders.plate_was_changed}`,
+            justify_content: "center",
+          },
         ]}
         rows={crawlingPestMonitorRows}
       />
