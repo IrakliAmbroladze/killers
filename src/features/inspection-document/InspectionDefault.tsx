@@ -54,18 +54,32 @@ export const InspectionDefault = ({
         }}
         headers={[
           { node: "#", justify_content: "center" },
-          { node: crawlingPestMonitorHeaders.ant, justify_content: "center" },
           {
-            node: crawlingPestMonitorHeaders.cockroach,
+            node: (
+              <BlankInputForPestMonitorTable
+                value={crawlingPestMonitorHeaders.ant}
+                propName="ant"
+                updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
+              />
+            ),
             justify_content: "center",
           },
           {
             node: (
               <BlankInputForPestMonitorTable
-                crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
-                updateCrawlingPestMonitorHeaders={
-                  updateCrawlingPestMonitorHeaders
-                }
+                value={crawlingPestMonitorHeaders.cockroach}
+                propName="cockroach"
+                updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: (
+              <BlankInputForPestMonitorTable
+                value={crawlingPestMonitorHeaders.blank}
+                propName="blank"
+                updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
               />
             ),
             justify_content: "center",

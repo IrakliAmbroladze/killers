@@ -1,19 +1,20 @@
-import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
 import { UpdatePestMonitorHeaders } from "./types/UpdatePestMonitorHeaders";
 
 export const BlankInputForPestMonitorTable = ({
-  crawlingPestMonitorHeaders,
-  updateCrawlingPestMonitorHeaders,
+  value,
+  propName,
+  updatePestMonitorHeaders,
 }: {
-  crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
-  updateCrawlingPestMonitorHeaders: UpdatePestMonitorHeaders;
+  value: string;
+  propName: string;
+  updatePestMonitorHeaders: UpdatePestMonitorHeaders;
 }) => {
   return (
     <input
       className="w-full text-center"
-      value={crawlingPestMonitorHeaders.blank}
+      value={value}
       onChange={(e) => {
-        updateCrawlingPestMonitorHeaders("blank", e.target.value);
+        updatePestMonitorHeaders(propName, e.target.value);
       }}
     />
   );
