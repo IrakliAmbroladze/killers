@@ -53,15 +53,27 @@ export const drawCapturedInsectsTable = ({
     y: cursor.y,
     columns: [
       {
-        header: { text: "N", width: 15, align: "center" },
+        header: {
+          text: formData.crawling_pest_monitor_table_headers.id,
+          width: 15,
+          align: "center",
+        },
         render: (row) => ({ type: "text", text: row.id, align: "center" }),
       },
       {
-        header: { text: "ჭიანჭველა", width: 45, align: "center" },
+        header: {
+          text: formData.crawling_pest_monitor_table_headers.ant,
+          width: 45,
+          align: "center",
+        },
         render: (row) => ({ type: "text", text: row.ant, align: "center" }),
       },
       {
-        header: { text: "ტარაკანი", width: 40, align: "center" },
+        header: {
+          text: formData.crawling_pest_monitor_table_headers.cockroach,
+          width: 40,
+          align: "center",
+        },
         render: (row) => ({
           type: "text",
           text: row.cockroach,
@@ -69,11 +81,19 @@ export const drawCapturedInsectsTable = ({
         }),
       },
       {
-        header: { text: "", width: 40, align: "center" },
+        header: {
+          text: formData.crawling_pest_monitor_table_headers.blank,
+          width: 40,
+          align: "center",
+        },
         render: (row) => ({ type: "text", text: row.blank, align: "center" }),
       },
       {
-        header: { text: "ფირფიტა", width: 40, align: "center" },
+        header: {
+          text: formData.crawling_pest_monitor_table_headers.plate_was_changed,
+          width: 40,
+          align: "center",
+        },
         render: (row) => ({ type: "checkbox", checked: row.plate_was_changed }),
       },
     ],

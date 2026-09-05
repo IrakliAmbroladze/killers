@@ -110,11 +110,11 @@ export const acceptanceFormData = (
       plate_was_changed: false,
     })),
     crawling_pest_monitor_table_headers: {
-      id: "Numb",
-      ant: "ჭიანჭ",
-      cockroach: "ტარაკ",
+      id: "N",
+      ant: "ჭიანჭველა",
+      cockroach: "ტარაკანი",
       blank: "",
-      plate_was_changed: "შეიცვალა",
+      plate_was_changed: "ფირფიტა",
     },
     rodent_monitor: Array.from({ length: 5 }, () => ({
       id: "",
