@@ -1,14 +1,17 @@
 import { Table } from "@/components";
 import { Cell } from "@/types";
+import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
 
 export const InspectionDefault = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
+  crawlingPestMonitorHeaders,
   rodentMonitorRows,
   criteriaRows,
 }: {
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
+  crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
   rodentMonitorRows: Cell[][];
   criteriaRows: Cell[][];
 }) => {
@@ -32,7 +35,7 @@ export const InspectionDefault = ({
           justify_content: "center",
         }}
         headers={[
-          { node: "#", justify_content: "center" },
+          { node: "N", justify_content: "center" },
           { node: "ბუზი", justify_content: "center" },
           { node: "ქინქლა", justify_content: "center" },
           { node: "", justify_content: "center" },
@@ -48,9 +51,12 @@ export const InspectionDefault = ({
         }}
         headers={[
           { node: "#", justify_content: "center" },
-          { node: "ჭიანჭველა", justify_content: "center" },
-          { node: "ტარაკანი", justify_content: "center" },
-          { node: "", justify_content: "center" },
+          { node: crawlingPestMonitorHeaders.ant, justify_content: "center" },
+          {
+            node: crawlingPestMonitorHeaders.cockroach,
+            justify_content: "center",
+          },
+          { node: crawlingPestMonitorHeaders.blank, justify_content: "center" },
           { node: "შეიცვალა ფირფიტა", justify_content: "center" },
         ]}
         rows={crawlingPestMonitorRows}

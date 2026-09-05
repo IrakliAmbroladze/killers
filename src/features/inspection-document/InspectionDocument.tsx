@@ -2,17 +2,20 @@ import { Cell } from "@/types";
 import { InspectionDefault } from "./InspectionDefault";
 import { InspectionFollowUp } from "./InspectionFollowUp";
 import { InspectionUnplanned } from "./InspectionUnplanned";
+import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
 
 export const InspectionDocument = ({
   inspection_doc,
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
+  crawlingPestMonitorHeaders,
   rodentMonitorRows,
   criteriaRows,
 }: {
   inspection_doc: "default" | "unplanned" | "follow_up";
   flyingPestMonitorRows: Cell[][];
   crawlingPestMonitorRows: Cell[][];
+  crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
   rodentMonitorRows: Cell[][];
   criteriaRows: Cell[][];
 }) => {
@@ -27,6 +30,7 @@ export const InspectionDocument = ({
         <InspectionDefault
           flyingPestMonitorRows={flyingPestMonitorRows}
           crawlingPestMonitorRows={crawlingPestMonitorRows}
+          crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
           rodentMonitorRows={rodentMonitorRows}
           criteriaRows={criteriaRows}
         />

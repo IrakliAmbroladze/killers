@@ -287,6 +287,8 @@ export default function AcceptanceDocument({
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
   );
 
+  const crawlingPestMonitorHeaders =
+    formData.crawling_pest_monitor_table_headers;
   const crawlingPestMonitorRows: Cell[][] = useMemo(
     () =>
       formData.crawling_pest_monitor.map((item, rowIndex) => [
@@ -507,6 +509,7 @@ export default function AcceptanceDocument({
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
             crawlingPestMonitorRows={crawlingPestMonitorRows}
+            crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
             rodentMonitorRows={rodentMonitorRows}
             criteriaRows={criteriaRows}
           />

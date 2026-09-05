@@ -1,3 +1,5 @@
+import { CrawlingPestMonitorTableHeaders } from "./CrawlingPestMonitorTableHeaders";
+
 export type AcceptanceFormData = {
   date: string;
   services: {
@@ -54,13 +56,7 @@ export type AcceptanceFormData = {
     blank: string;
     plate_was_changed: boolean;
   }>;
-  crawling_pest_monitor_table_headers: {
-    id: string;
-    ant: string;
-    cockroach: string;
-    blank: string;
-    plate_was_changed: string;
-  };
+  crawling_pest_monitor_table_headers: CrawlingPestMonitorTableHeaders;
   rodent_monitor: Array<{
     id: string;
     captured: string;
