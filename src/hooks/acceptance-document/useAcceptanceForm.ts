@@ -164,8 +164,6 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     propName: string,
     value: string,
   ) => {
-    console.log(propName, "something");
-    console.log(value);
     setFormData((prev) => ({
       ...prev,
       crawling_pest_monitor_table_headers: {
@@ -178,12 +176,10 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     propName: string,
     value: string,
   ) => {
-    console.log(propName, "something");
-    console.log(value);
     setFormData((prev) => ({
       ...prev,
-      crawling_pest_monitor_table_headers: {
-        ...prev.crawling_pest_monitor_table_headers,
+      flying_pest_monitor_table_headers: {
+        ...prev.flying_pest_monitor_table_headers,
         [propName]: value,
       },
     }));

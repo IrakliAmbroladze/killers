@@ -102,6 +102,13 @@ export const acceptanceFormData = (
       blank: "",
       plate_was_changed: false,
     })),
+    flying_pest_monitor_table_headers: {
+      id: "N",
+      fly: "ბუზი",
+      kinkla: "ქინქლა",
+      blank: "",
+      plate_was_changed: "ფირფიტა",
+    },
     crawling_pest_monitor: Array.from({ length: 5 }, () => ({
       id: "",
       ant: "",

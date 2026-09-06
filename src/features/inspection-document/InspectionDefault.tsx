@@ -2,19 +2,25 @@ import { Table } from "@/components";
 import { Cell } from "@/types";
 import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
 import { PestMonitorTableHeader } from "./PestMonitorTableHeader";
+import { UpdatePestMonitorHeaders } from "./types/UpdatePestMonitorHeaders";
+import { FlyingPestMonitorTableHeaders } from "@/types/documents/FlyingPestMonitorTableHeaders";
 
 export const InspectionDefault = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
+  flyingPestMonitorHeaders,
   crawlingPestMonitorHeaders,
   rodentMonitorRows,
   updateCrawlingPestMonitorHeaders,
+  updateFlyingPestMonitorHeaders,
   criteriaRows,
 }: {
   flyingPestMonitorRows: Cell[][];
+  flyingPestMonitorHeaders: FlyingPestMonitorTableHeaders;
   crawlingPestMonitorRows: Cell[][];
   crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
-  updateCrawlingPestMonitorHeaders: (propName: string, value: string) => void;
+  updateCrawlingPestMonitorHeaders: UpdatePestMonitorHeaders;
+  updateFlyingPestMonitorHeaders: UpdatePestMonitorHeaders;
   rodentMonitorRows: Cell[][];
   criteriaRows: Cell[][];
 }) => {
@@ -39,7 +45,16 @@ export const InspectionDefault = ({
         }}
         headers={[
           { node: "N", justify_content: "center" },
-          { node: "ბუზი", justify_content: "center" },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={flyingPestMonitorHeaders.fly}
+                propName="fly"
+                updatePestMonitorHeaders={updateFlyingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
           { node: "ქინქლა", justify_content: "center" },
           { node: "", justify_content: "center" },
           { node: "შეიცვალა ფირფიტა", justify_content: "center" },

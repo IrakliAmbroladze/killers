@@ -42,6 +42,7 @@ export default function AcceptanceDocument({
     handleRodentMonitorChange,
     handleCriteriaChange,
     handleCommentChange,
+    handleUpdateFlyingPestMonitorHeaders,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -287,6 +288,9 @@ export default function AcceptanceDocument({
       ]),
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
   );
+  const flyingPestMonitorHeaders = formData.flying_pest_monitor_table_headers;
+  console.log("here", { formData });
+  console.log("here", { flyingPestMonitorHeaders });
 
   const crawlingPestMonitorHeaders =
     formData.crawling_pest_monitor_table_headers;
@@ -509,8 +513,12 @@ export default function AcceptanceDocument({
           <InspectionDocument
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
+            flyingPestMonitorHeaders={flyingPestMonitorHeaders}
             crawlingPestMonitorRows={crawlingPestMonitorRows}
             crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
+            updateFlyingPestMonitorHeaders={
+              handleUpdateFlyingPestMonitorHeaders
+            }
             updateCrawlingPestMonitorHeaders={
               handleUpdateCrawlingPestMonitorHeaders
             }
