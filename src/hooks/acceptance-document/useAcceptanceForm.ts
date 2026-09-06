@@ -160,6 +160,30 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       },
     }));
   };
+  const handleUpdateCrawlingPestMonitorHeaders = (
+    propName: string,
+    value: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      crawling_pest_monitor_table_headers: {
+        ...prev.crawling_pest_monitor_table_headers,
+        [propName]: value,
+      },
+    }));
+  };
+  const handleUpdateFlyingPestMonitorHeaders = (
+    propName: string,
+    value: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      flying_pest_monitor_table_headers: {
+        ...prev.flying_pest_monitor_table_headers,
+        [propName]: value,
+      },
+    }));
+  };
 
   return {
     handlePestTextChange,
@@ -177,5 +201,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleRodentMonitorChange,
     handleCriteriaChange,
     handleCommentChange,
+    handleUpdateFlyingPestMonitorHeaders,
+    handleUpdateCrawlingPestMonitorHeaders,
   };
 }
