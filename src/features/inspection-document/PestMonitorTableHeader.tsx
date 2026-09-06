@@ -1,6 +1,6 @@
 import { UpdatePestMonitorHeaders } from "./types/UpdatePestMonitorHeaders";
 
-export const BlankInputForPestMonitorTable = ({
+export const PestMonitorTableHeader = ({
   value,
   propName,
   updatePestMonitorHeaders,

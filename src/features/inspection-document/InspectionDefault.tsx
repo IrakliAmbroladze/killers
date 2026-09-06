@@ -1,7 +1,7 @@
 import { Table } from "@/components";
 import { Cell } from "@/types";
 import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
-import { BlankInputForPestMonitorTable } from "./BlankInputForPestMonitorTable";
+import { PestMonitorTableHeader } from "./PestMonitorTableHeader";
 
 export const InspectionDefault = ({
   flyingPestMonitorRows,
@@ -56,7 +56,7 @@ export const InspectionDefault = ({
           { node: "#", justify_content: "center" },
           {
             node: (
-              <BlankInputForPestMonitorTable
+              <PestMonitorTableHeader
                 value={crawlingPestMonitorHeaders.ant}
                 propName="ant"
                 updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
@@ -66,7 +66,7 @@ export const InspectionDefault = ({
           },
           {
             node: (
-              <BlankInputForPestMonitorTable
+              <PestMonitorTableHeader
                 value={crawlingPestMonitorHeaders.cockroach}
                 propName="cockroach"
                 updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
@@ -76,7 +76,7 @@ export const InspectionDefault = ({
           },
           {
             node: (
-              <BlankInputForPestMonitorTable
+              <PestMonitorTableHeader
                 value={crawlingPestMonitorHeaders.blank}
                 propName="blank"
                 updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
