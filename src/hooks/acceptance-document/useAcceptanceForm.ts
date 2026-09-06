@@ -174,6 +174,20 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
       },
     }));
   };
+  const handleUpdateFlyingPestMonitorHeaders = (
+    propName: string,
+    value: string,
+  ) => {
+    console.log(propName, "something");
+    console.log(value);
+    setFormData((prev) => ({
+      ...prev,
+      crawling_pest_monitor_table_headers: {
+        ...prev.crawling_pest_monitor_table_headers,
+        [propName]: value,
+      },
+    }));
+  };
 
   return {
     handlePestTextChange,
@@ -191,6 +205,7 @@ export function useAcceptanceForm(initialData: AcceptanceFormData) {
     handleRodentMonitorChange,
     handleCriteriaChange,
     handleCommentChange,
+    handleUpdateFlyingPestMonitorHeaders,
     handleUpdateCrawlingPestMonitorHeaders,
   };
 }
