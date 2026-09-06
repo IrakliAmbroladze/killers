@@ -55,8 +55,26 @@ export const InspectionDefault = ({
             ),
             justify_content: "center",
           },
-          { node: "ქინქლა", justify_content: "center" },
-          { node: "", justify_content: "center" },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={flyingPestMonitorHeaders.kinkla}
+                propName="kinkla"
+                updatePestMonitorHeaders={updateFlyingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={flyingPestMonitorHeaders.blank}
+                propName="blank"
+                updatePestMonitorHeaders={updateFlyingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
           { node: "შეიცვალა ფირფიტა", justify_content: "center" },
         ]}
         rows={flyingPestMonitorRows}
