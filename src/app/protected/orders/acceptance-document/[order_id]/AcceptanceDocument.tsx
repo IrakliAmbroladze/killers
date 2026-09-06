@@ -24,7 +24,6 @@ export default function AcceptanceDocument({
 }: {
   orderPromise: Promise<OrderExtended>;
 }) {
-  console.log("render AcceptanceDocument");
   const order = use(orderPromise);
   const {
     formData,
@@ -289,8 +288,6 @@ export default function AcceptanceDocument({
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
   );
   const flyingPestMonitorHeaders = formData.flying_pest_monitor_table_headers;
-  console.log("here", { formData });
-  console.log("here", { flyingPestMonitorHeaders });
 
   const crawlingPestMonitorHeaders =
     formData.crawling_pest_monitor_table_headers;

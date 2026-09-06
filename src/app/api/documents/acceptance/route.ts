@@ -6,7 +6,6 @@ export async function POST(req: Request) {
   try {
     const formData: AcceptanceFormData = await req.json();
     const pdfBytes = await buildAcceptancePdf(formData);
-    console.log({ formData });
 
     return new NextResponse(pdfBytes, {
       headers: {
