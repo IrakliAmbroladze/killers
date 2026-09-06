@@ -1,14 +1,26 @@
 import { Table } from "@/components";
 import { Cell } from "@/types";
+import { CrawlingPestMonitorTableHeaders } from "@/types/documents/CrawlingPestMonitorTableHeaders";
+import { PestMonitorTableHeader } from "./PestMonitorTableHeader";
+import { UpdatePestMonitorHeaders } from "./types/UpdatePestMonitorHeaders";
+import { FlyingPestMonitorTableHeaders } from "@/types/documents/FlyingPestMonitorTableHeaders";
 
 export const InspectionDefault = ({
   flyingPestMonitorRows,
   crawlingPestMonitorRows,
+  flyingPestMonitorHeaders,
+  crawlingPestMonitorHeaders,
   rodentMonitorRows,
+  updateCrawlingPestMonitorHeaders,
+  updateFlyingPestMonitorHeaders,
   criteriaRows,
 }: {
   flyingPestMonitorRows: Cell[][];
+  flyingPestMonitorHeaders: FlyingPestMonitorTableHeaders;
   crawlingPestMonitorRows: Cell[][];
+  crawlingPestMonitorHeaders: CrawlingPestMonitorTableHeaders;
+  updateCrawlingPestMonitorHeaders: UpdatePestMonitorHeaders;
+  updateFlyingPestMonitorHeaders: UpdatePestMonitorHeaders;
   rodentMonitorRows: Cell[][];
   criteriaRows: Cell[][];
 }) => {
@@ -32,10 +44,37 @@ export const InspectionDefault = ({
           justify_content: "center",
         }}
         headers={[
-          { node: "#", justify_content: "center" },
-          { node: "ბუზი", justify_content: "center" },
-          { node: "ქინქლა", justify_content: "center" },
-          { node: "", justify_content: "center" },
+          { node: "N", justify_content: "center" },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={flyingPestMonitorHeaders.fly}
+                propName="fly"
+                updatePestMonitorHeaders={updateFlyingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={flyingPestMonitorHeaders.kinkla}
+                propName="kinkla"
+                updatePestMonitorHeaders={updateFlyingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={flyingPestMonitorHeaders.blank}
+                propName="blank"
+                updatePestMonitorHeaders={updateFlyingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
           { node: "შეიცვალა ფირფიტა", justify_content: "center" },
         ]}
         rows={flyingPestMonitorRows}
@@ -48,10 +87,40 @@ export const InspectionDefault = ({
         }}
         headers={[
           { node: "#", justify_content: "center" },
-          { node: "ჭიანჭველა", justify_content: "center" },
-          { node: "ტარაკანი", justify_content: "center" },
-          { node: "", justify_content: "center" },
-          { node: "შეიცვალა ფირფიტა", justify_content: "center" },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={crawlingPestMonitorHeaders.ant}
+                propName="ant"
+                updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={crawlingPestMonitorHeaders.cockroach}
+                propName="cockroach"
+                updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: (
+              <PestMonitorTableHeader
+                value={crawlingPestMonitorHeaders.blank}
+                propName="blank"
+                updatePestMonitorHeaders={updateCrawlingPestMonitorHeaders}
+              />
+            ),
+            justify_content: "center",
+          },
+          {
+            node: `შეიცვალა ${crawlingPestMonitorHeaders.plate_was_changed}`,
+            justify_content: "center",
+          },
         ]}
         rows={crawlingPestMonitorRows}
       />

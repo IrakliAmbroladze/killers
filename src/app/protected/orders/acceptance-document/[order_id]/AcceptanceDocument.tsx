@@ -24,7 +24,6 @@ export default function AcceptanceDocument({
 }: {
   orderPromise: Promise<OrderExtended>;
 }) {
-  console.log("render AcceptanceDocument");
   const order = use(orderPromise);
   const {
     formData,
@@ -38,9 +37,11 @@ export default function AcceptanceDocument({
     handlePestTextChange,
     handleFlyingPestMonitorChange,
     handleCrawlingPestMonitorChange,
+    handleUpdateCrawlingPestMonitorHeaders,
     handleRodentMonitorChange,
     handleCriteriaChange,
     handleCommentChange,
+    handleUpdateFlyingPestMonitorHeaders,
   } = useAcceptanceForm(acceptanceFormData(order));
 
   const pestRows: Cell[][] = useMemo(
@@ -286,7 +287,10 @@ export default function AcceptanceDocument({
       ]),
     [formData.flying_pest_monitor, handleFlyingPestMonitorChange],
   );
+  const flyingPestMonitorHeaders = formData.flying_pest_monitor_table_headers;
 
+  const crawlingPestMonitorHeaders =
+    formData.crawling_pest_monitor_table_headers;
   const crawlingPestMonitorRows: Cell[][] = useMemo(
     () =>
       formData.crawling_pest_monitor.map((item, rowIndex) => [
@@ -506,7 +510,15 @@ export default function AcceptanceDocument({
           <InspectionDocument
             inspection_doc={order.inspection_doc}
             flyingPestMonitorRows={flyingPestMonitorRows}
+            flyingPestMonitorHeaders={flyingPestMonitorHeaders}
             crawlingPestMonitorRows={crawlingPestMonitorRows}
+            crawlingPestMonitorHeaders={crawlingPestMonitorHeaders}
+            updateFlyingPestMonitorHeaders={
+              handleUpdateFlyingPestMonitorHeaders
+            }
+            updateCrawlingPestMonitorHeaders={
+              handleUpdateCrawlingPestMonitorHeaders
+            }
             rodentMonitorRows={rodentMonitorRows}
             criteriaRows={criteriaRows}
           />
