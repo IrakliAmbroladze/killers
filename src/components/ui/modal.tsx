@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 interface ModalProps {
@@ -10,17 +10,27 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!isOpen) return;
 
-    document.body.style.overflow = "hidden";
+    const preventScroll = (e: Event) => {
+      if (modalRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+    };
+
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    document.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
-      document.body.style.overflow = "";
+      document.removeEventListener("wheel", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
     };
   }, [isOpen]);
 
   if (!isOpen) return null;
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -32,7 +42,10 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
       className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-lg relative max-h-[80vh] overflow-y-auto">
+      <div
+        ref={modalRef}
+        className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-lg relative max-h-[80vh] overflow-y-auto overscroll-contain"
+      >
         <button
           onClick={onClose}
           className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
