@@ -14,18 +14,34 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   useEffect(() => {
     if (!isOpen) return;
-
+    const scrollKeys = [
+      "ArrowUp",
+      "ArrowDown",
+      "PageUp",
+      "PageDown",
+      "Home",
+      "End",
+      " ",
+    ];
     const preventScroll = (e: Event) => {
+      if (modalRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+    };
+
+    const preventKeyScroll = (e: KeyboardEvent) => {
+      if (!scrollKeys.includes(e.key)) return;
       if (modalRef.current?.contains(e.target as Node)) return;
       e.preventDefault();
     };
 
     document.addEventListener("wheel", preventScroll, { passive: false });
     document.addEventListener("touchmove", preventScroll, { passive: false });
+    document.addEventListener("keydown", preventKeyScroll, { passive: false });
 
     return () => {
       document.removeEventListener("wheel", preventScroll);
       document.removeEventListener("touchmove", preventScroll);
+      document.removeEventListener("keydown", preventKeyScroll);
     };
   }, [isOpen]);
 
