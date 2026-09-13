@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
 interface ModalProps {
@@ -10,8 +10,17 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (!isOpen) return;
 
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -23,7 +32,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
       className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-lg relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-lg relative max-h-[80vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
@@ -33,7 +42,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         {children}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 };
 
