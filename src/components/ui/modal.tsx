@@ -11,6 +11,7 @@ interface ModalProps {
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const mouseDownOnOverlay = useRef(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -47,15 +48,21 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   if (!isOpen) return null;
 
+  const handleOverlayMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    mouseDownOnOverlay.current = e.target === e.currentTarget;
+  };
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && mouseDownOnOverlay.current) {
       onClose();
     }
+    mouseDownOnOverlay.current = false;
   };
 
   return ReactDOM.createPortal(
     <div
       className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+      onMouseDown={handleOverlayMouseDown}
       onClick={handleOverlayClick}
     >
       <div className="bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full shadow-lg max-h-[80vh] flex flex-col">
