@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 interface ModalProps {
@@ -10,30 +10,76 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const mouseDownOnOverlay = useRef(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const scrollKeys = [
+      "ArrowUp",
+      "ArrowDown",
+      "PageUp",
+      "PageDown",
+      "Home",
+      "End",
+      " ",
+    ];
+    const preventScroll = (e: Event) => {
+      if (modalRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+    };
+
+    const preventKeyScroll = (e: KeyboardEvent) => {
+      if (!scrollKeys.includes(e.key)) return;
+      if (modalRef.current?.contains(e.target as Node)) return;
+      e.preventDefault();
+    };
+
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    document.addEventListener("touchmove", preventScroll, { passive: false });
+    document.addEventListener("keydown", preventKeyScroll, { passive: false });
+
+    return () => {
+      document.removeEventListener("wheel", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
+      document.removeEventListener("keydown", preventKeyScroll);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
+  const handleOverlayMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    mouseDownOnOverlay.current = e.target === e.currentTarget;
+  };
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
+    if (e.target === e.currentTarget && mouseDownOnOverlay.current) {
       onClose();
     }
+    mouseDownOnOverlay.current = false;
   };
 
   return ReactDOM.createPortal(
     <div
       className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+      onMouseDown={handleOverlayMouseDown}
       onClick={handleOverlayClick}
     >
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-lg relative max-h-[90vh] overflow-y-auto">
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
-        >
-          ✕
-        </button>
-        {children}
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full shadow-lg max-h-[80vh] flex flex-col">
+        <div className="text-right px-4 py-1">
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+        <div ref={modalRef} className="p-6 overflow-y-auto overscroll-contain">
+          {children}
+        </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 };
 

@@ -15,6 +15,9 @@ type EditTaskProps = {
   onDelete: (id: string) => void;
 };
 
+const buttonStyles =
+  "cursor-pointer text-sm border whitespace-nowrap hover:underline rounded-lg p-2 active:opacity-60";
+
 export const EditTask = ({
   id,
   onSubmit,
@@ -105,18 +108,18 @@ export const EditTask = ({
             className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
           />
         </div>
-        <div className="flex justify-between">
+        <div className="grid grid-cols-2 gap-4">
           <button
             type="button"
             onClick={() => onDelete(id)}
-            className="rounded-lg px-4 py-2 text-sm font-medium text-red-700 dark:text-red-300 transition hover:underline cursor-pointer active:scale-95 ease-in-out duration-150"
+            className={`${buttonStyles} text-red-700 dark:text-red-300`}
           >
             delete
           </button>
           <select
             name="todolist-status"
             id="todolist-status"
-            className="dark:bg-blue-900 bg-gray-400 rounded-lg"
+            className={`${buttonStyles} dark:bg-blue-900 bg-gray-400`}
             value={statusId}
             onChange={(e) => {
               setStatusId(Number(e?.target?.value));
@@ -125,23 +128,21 @@ export const EditTask = ({
             <option value={0}>To do</option>
             <option value={1}>In progress</option>
             <option value={2}>Done</option>
-          </select>{" "}
-          <div className="flex justify-end gap-3">
-            <button
-              type="button"
-              onClick={onCancel}
-              className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium transition hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={!title.trim()}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Save changes
-            </button>
-          </div>
+          </select>
+          <button
+            type="button"
+            onClick={onCancel}
+            className={`${buttonStyles} border-gray-300 `}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={!title.trim()}
+            className={`${buttonStyles} bg-blue-600 text-white`}
+          >
+            Save changes
+          </button>
         </div>
       </form>
       <Comments id={id} />
