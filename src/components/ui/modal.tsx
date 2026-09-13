@@ -58,17 +58,17 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
       className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
       onClick={handleOverlayClick}
     >
-      <div
-        ref={modalRef}
-        className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-lg w-full shadow-lg relative max-h-[80vh] overflow-y-auto overscroll-contain"
-      >
+      <div className="bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full shadow-lg relative max-h-[80vh] flex flex-col">
         <button
           onClick={onClose}
-          className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
+          className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 cursor-pointer z-10"
         >
           ✕
         </button>
-        {children}
+
+        <div ref={modalRef} className="p-6 overflow-y-auto overscroll-contain">
+          {children}
+        </div>
       </div>
     </div>,
     document.body,
