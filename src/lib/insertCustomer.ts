@@ -9,8 +9,12 @@ export async function insertCustomer(prevState: unknown, formData: FormData) {
     id: formData.get("id") as string,
     name: formData.get("name") as string,
     description: (formData.get("description") as string) ?? "",
+    source: formData.get("source") as string,
+    source_comment: (formData.get("source_comment") as string) || null,
   };
-
+  if (newCustomer.source === "other" && !newCustomer.source_comment) {
+    return { message: "გთხოვთ მიუთითოთ წყარო", success: false };
+  }
   const supabase = await createClient();
   const { error } = await supabase.from("customers").insert([newCustomer]);
 
@@ -20,5 +24,6 @@ export async function insertCustomer(prevState: unknown, formData: FormData) {
 
   return {
     message: "✅ მომხმარებელი წარმატებით დაემატა",
+    success: true,
   };
 }

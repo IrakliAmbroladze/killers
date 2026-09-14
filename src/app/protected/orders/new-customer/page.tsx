@@ -1,14 +1,25 @@
 // app/new-customer/page.tsx
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { insertCustomer } from "@/lib";
 import Link from "next/link";
+
+const sourceOptions = [
+  "facebook",
+  "google/yell.ge",
+  "რეკომენდაცია",
+  "ძველი კლიენტი",
+  "სელერის მოყვანილი",
+  "other",
+];
 
 export default function NewCustomerPage() {
   const [state, formAction, isPending] = useActionState(insertCustomer, {
     message: "",
+    success: false,
   });
+  const [source, setSource] = useState("");
 
   return (
     <div className="fixed inset-0 bg-gray-600/50 flex justify-center items-center">
@@ -42,6 +53,28 @@ export default function NewCustomerPage() {
               placeholder="აღწერა"
               className="w-full p-1 border rounded"
             />
+            <select
+              name="source"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              required
+              className="w-[50%] p-1 border rounded "
+            >
+              <option value="">მიუთითე კლიენტის მოსვლის წყარო</option>
+              {sourceOptions.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            {source === "other" && (
+              <textarea
+                name="source_comment"
+                required
+                placeholder="დაწერე ვინ/რა არის წყარო"
+                className="w-full p-1 border rounded"
+              />
+            )}
             <button
               type="submit"
               disabled={isPending}
@@ -51,8 +84,12 @@ export default function NewCustomerPage() {
             </button>
           </form>
 
-          {state.message && (
-            <p className="mt-2 text-sm text-green-600">{state.message}</p>
+          {state?.message && (
+            <p
+              className={`mt-2 text-sm ${state.success ? "text-green-600" : "text-red-600"}`}
+            >
+              {state.message}
+            </p>
           )}
         </div>
       </div>
