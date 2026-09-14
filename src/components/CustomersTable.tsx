@@ -161,7 +161,14 @@ export default function CustomersTable({ data }: Props) {
           <thead className="sticky top-0 bg-[#6b7280] dark:bg-[#19171c]">
             <tr>
               <th className="border-x border-b px-3 py-2 text-left">ACTION</th>
-              {["id", "name", "description", "contractor"].map((key) => (
+              {[
+                "id",
+                "name",
+                "description",
+                "contractor",
+                "source",
+                "source_comment",
+              ].map((key) => (
                 <th
                   key={key}
                   className="border-x border-b px-3 py-2 text-left cursor-pointer select-none"
@@ -234,13 +241,17 @@ export default function CustomersTable({ data }: Props) {
                   <td className="border px-3 py-2">
                     <ContractorStatus customer={c} />
                   </td>
+                  <td className="border px-3 py-2">{c.source ?? "-"}</td>
+                  <td className="border px-3 py-2">
+                    {c.source_comment ?? "-"}
+                  </td>
                 </tr>
               );
             })}
 
             {paginated.length === 0 && (
               <tr>
-                <td className="px-3 py-2 border text-center" colSpan={5}>
+                <td className="px-3 py-2 border text-center" colSpan={7}>
                   No customers found.
                 </td>
               </tr>
