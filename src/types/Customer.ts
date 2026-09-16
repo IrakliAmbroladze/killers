@@ -7,4 +7,5 @@ export type Customer = {
   contractor?: boolean | null;
   source: string | null;
   source_comment: string | null;
+  leave_reason?: string | null;
 };

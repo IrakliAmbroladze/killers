@@ -168,6 +168,7 @@ export default function CustomersTable({ data }: Props) {
                 "contractor",
                 "source",
                 "source_comment",
+                "leave_reason",
               ].map((key) => (
                 <th
                   key={key}
@@ -245,13 +246,14 @@ export default function CustomersTable({ data }: Props) {
                   <td className="border px-3 py-2">
                     {c.source_comment ?? "-"}
                   </td>
+                  <td className="border px-3 py-2">{c.leave_reason ?? "-"}</td>
                 </tr>
               );
             })}
 
             {paginated.length === 0 && (
               <tr>
-                <td className="px-3 py-2 border text-center" colSpan={7}>
+                <td className="px-3 py-2 border text-center" colSpan={8}>
                   No customers found.
                 </td>
               </tr>
