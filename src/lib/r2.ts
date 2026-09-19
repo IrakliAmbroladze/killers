@@ -1,10 +1,5 @@
 import { S3Client } from "@aws-sdk/client-s3";
-
-function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) throw new Error(`Missing required env var: ${name}`);
-  return value;
-}
+import { requireEnv } from "./env";
 
 const accountId = requireEnv("R2_ACCOUNT_ID");
 
@@ -16,3 +11,5 @@ export const r2 = new S3Client({
     secretAccessKey: requireEnv("R2_SECRET_ACCESS_KEY"),
   },
 });
+
+export const R2_BUCKET = requireEnv("R2_BUCKET_NAME");
