@@ -1,7 +1,9 @@
 import { uploadOrderDocument } from "@/lib/upload-order-document";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const UploadOrderDocument = ({ orderId }: { orderId: string }) => {
+  const router = useRouter();
   const [uploadStatus, setUploadStatus] = useState<
     "idle" | "uploading" | "done" | "error"
   >("idle");
@@ -9,9 +11,8 @@ export const UploadOrderDocument = ({ orderId }: { orderId: string }) => {
   const handleFileUpload = async (file: File) => {
     try {
       setUploadStatus("uploading");
-
       await uploadOrderDocument(orderId, file);
-
+      router.refresh();
       setUploadStatus("done");
     } catch (e) {
       console.error(e);

@@ -28,7 +28,9 @@ const OrderModal = () => {
               საბუთი
             </button>
           </Link>
-          {openOrderId && <UploadOrderDocument orderId={openOrderId} />}
+          {openOrderId && (
+            <UploadOrderDocument orderId={openOrderId} key={openOrderId} />
+          )}
         </div>
         <h2>{order.customers.name}</h2>
         <p>ს/კ: {order.customer_id}</p>

@@ -4,7 +4,6 @@ import type { Sheets_Invoice } from "@/types/invoices";
 export const documentLinkRenderer = (
   props: ICellRendererParams<Sheets_Invoice & { id: string }>,
 ) => {
-  console.log(props.data);
   const value: string | undefined = props.value;
   if (!value) return null;
 
@@ -17,6 +16,7 @@ export const documentLinkRenderer = (
   }
 
   const orderId = props.data?.id;
+  if (!orderId) return null;
 
   const open = async () => {
     const win = window.open("", "_blank");
