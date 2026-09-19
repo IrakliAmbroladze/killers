@@ -2,14 +2,38 @@ import type { ICellRendererParams } from "ag-grid-community";
 import type { Sheets_Invoice } from "@/types/invoices";
 
 export const documentLinkRenderer = (
-  props: ICellRendererParams<Sheets_Invoice>
+  props: ICellRendererParams<Sheets_Invoice & { id: string }>,
 ) => {
-  const url = props.value;
-  if (!url) return null;
+  console.log(props.data);
+  const value: string | undefined = props.value;
+  if (!value) return null;
+
+  if (value.startsWith("http")) {
+    return (
+      <a href={value} target="_blank" rel="noopener noreferrer">
+        📄
+      </a>
+    );
+  }
+
+  const orderId = props.data?.id;
+
+  const open = async () => {
+    const win = window.open("", "_blank");
+    try {
+      const res = await fetch(`/api/document-url?orderId=${orderId}`);
+      if (!res.ok) throw new Error(`document-url failed (${res.status})`);
+      const { url } = await res.json();
+      if (win) win.location.href = url;
+    } catch (e) {
+      console.error(e);
+      win?.close();
+    }
+  };
 
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer">
+    <button type="button" onClick={open} className="cursor-pointer">
       📄
-    </a>
+    </button>
   );
 };
