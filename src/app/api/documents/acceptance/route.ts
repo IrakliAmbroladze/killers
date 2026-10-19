@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { AcceptanceFormData } from "@/types";
 import { buildAcceptancePdf } from "@/pdf/builders/acceptanceBuilder";
+import { validateServices } from "@/utils/validateServices";
 
 export async function POST(req: Request) {
   try {
     const formData: AcceptanceFormData = await req.json();
+    if (!validateServices(formData.services)) {
+      return NextResponse.json(
+        { error: "მინიმუმ ერთი პროცედურა უნდა იყოს მონიშნული" },
+        { status: 400 },
+      );
+    }
     const pdfBytes = await buildAcceptancePdf(formData);
 
     return new NextResponse(pdfBytes, {
