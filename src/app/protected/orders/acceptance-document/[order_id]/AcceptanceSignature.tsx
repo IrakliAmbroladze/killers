@@ -16,6 +16,7 @@ export default function AcceptanceSignature({
   const [error, setError] = useState<string | null>(null);
 
   const handleOk = async () => {
+    setError(null);
     if (!customerSigRef.current || !executorSigRef.current) {
       setError("Signatures not ready");
       return;
@@ -64,7 +65,9 @@ export default function AcceptanceSignature({
     });
 
     if (!res.ok) {
-      return alert("PDF generation failed.");
+      const error = await res.json();
+      setError(error.error ?? "PDF generation failed.");
+      return;
     }
 
     const blob = await res.blob();
@@ -81,6 +84,7 @@ export default function AcceptanceSignature({
   };
 
   const handleDownload = async () => {
+    setError(null);
     if (!customerSigRef.current || !executorSigRef.current) {
       setError("Signatures not ready");
       return;
@@ -129,7 +133,9 @@ export default function AcceptanceSignature({
     });
 
     if (!res.ok) {
-      return alert("PDF generation failed.");
+      const error = await res.json();
+      setError(error.error ?? "PDF generation failed.");
+      return;
     }
 
     const blob = await res.blob();
