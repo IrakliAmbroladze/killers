@@ -9,7 +9,8 @@ import { validateSpaces } from "@/utils/validateSpaces";
 export async function POST(req: Request) {
   try {
     const formData: AcceptanceFormData = await req.json();
-
+    console.dir(formData.pests, { depth: null });
+    console.dir(formData.products, { depth: null });
     if (!validateServices(formData.services)) {
       return NextResponse.json(
         { error: "მინიმუმ ერთი პროცედურა უნდა იყოს მონიშნული" },
@@ -19,14 +20,18 @@ export async function POST(req: Request) {
 
     if (!validatePests(formData.pests)) {
       return NextResponse.json(
-        { error: "მინიმუმ ერთი მავნებელი უნდა იყოს მონიშნული" },
+        {
+          error: "მინიმუმ ერთი გატარებული ღონისძიება უნდა იყოს მონიშნული",
+        },
         { status: 400 },
       );
     }
 
     if (!validateProducts(formData.products)) {
       return NextResponse.json(
-        { error: "მინიმუმ ერთი პრეპარატი უნდა იყოს მონიშნული" },
+        {
+          error: "მინიმუმ ერთი გახარჯული რაოდენობა უნდა იყოს მითითებული",
+        },
         { status: 400 },
       );
     }
