@@ -6,6 +6,7 @@ import { validatePests } from "@/utils/validatePests";
 import { validateProducts } from "@/utils/validateProducts";
 import { validateSpaces } from "@/utils/validateSpaces";
 import { validateCriteria } from "@/utils/validateCriteria";
+import { validateRequiredFields } from "@/utils/validateRequiredFields";
 
 export async function POST(req: Request) {
   try {
@@ -50,30 +51,12 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-    if (!formData.customer.name.trim()) {
+    if (!validateRequiredFields(formData)) {
       return NextResponse.json(
-        { error: "დამკვეთის სახელი სავალდებულოა" },
-        { status: 400 },
-      );
-    }
-
-    if (!formData.startTime.trim()) {
-      return NextResponse.json(
-        { error: "დაწყების დრო სავალდებულოა" },
-        { status: 400 },
-      );
-    }
-
-    if (!formData.endTime.trim()) {
-      return NextResponse.json(
-        { error: "დასრულების დრო სავალდებულოა" },
-        { status: 400 },
-      );
-    }
-
-    if (!formData.comment.trim()) {
-      return NextResponse.json(
-        { error: "კომენტარი სავალდებულოა" },
+        {
+          error:
+            "დამკვეთის სახელი, დაწყების დრო, დასრულების დრო და კომენტარი სავალდებულოა",
+        },
         { status: 400 },
       );
     }
