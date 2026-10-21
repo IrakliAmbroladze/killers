@@ -15,31 +15,31 @@ export default function AcceptanceSignature({
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleOk = async () => {
+  const validateForm = () => {
     if (!customerSigRef.current || !executorSigRef.current) {
-      setError("Signatures not ready");
-      return;
-    }
-
-    if (customerSigRef.current.getDataURL().endsWith("AAAA")) {
-      setError("Customer signature is empty");
-      return;
-    }
-
-    if (executorSigRef.current.getDataURL().endsWith("AAAA")) {
-      setError("Executor signature is empty");
-      return;
+      return "Signatures not ready";
     }
 
     if (customerSigRef.current.isEmpty()) {
-      setError("Customer signature is required");
-      return;
-    }
-    if (executorSigRef.current.isEmpty()) {
-      setError("Executor signature is required");
-      return;
+      return "Customer signature is required";
     }
 
+    if (executorSigRef.current.isEmpty()) {
+      return "Executor signature is required";
+    }
+
+    return null;
+  };
+
+  const handleOk = async () => {
+    setError(null);
+    const error = validateForm();
+
+    if (error) {
+      setError(error);
+      return;
+    }
+    if (!customerSigRef.current || !executorSigRef.current) return;
     const customerPng = customerSigRef.current.getDataURL();
     const executorPng = executorSigRef.current.getDataURL();
 
@@ -64,7 +64,9 @@ export default function AcceptanceSignature({
     });
 
     if (!res.ok) {
-      return alert("PDF generation failed.");
+      const error = await res.json();
+      setError(error.error ?? "PDF generation failed.");
+      return;
     }
 
     const blob = await res.blob();
@@ -81,29 +83,14 @@ export default function AcceptanceSignature({
   };
 
   const handleDownload = async () => {
-    if (!customerSigRef.current || !executorSigRef.current) {
-      setError("Signatures not ready");
-      return;
-    }
+    setError(null);
 
-    if (customerSigRef.current.getDataURL().endsWith("AAAA")) {
-      setError("Customer signature is empty");
+    const error = validateForm();
+    if (error) {
+      setError(error);
       return;
     }
-
-    if (executorSigRef.current.getDataURL().endsWith("AAAA")) {
-      setError("Executor signature is empty");
-      return;
-    }
-
-    if (customerSigRef.current.isEmpty()) {
-      setError("Customer signature is required");
-      return;
-    }
-    if (executorSigRef.current.isEmpty()) {
-      setError("Executor signature is required");
-      return;
-    }
+    if (!customerSigRef.current || !executorSigRef.current) return;
 
     const customerPng = customerSigRef.current.getDataURL();
     const executorPng = executorSigRef.current.getDataURL();
@@ -129,7 +116,9 @@ export default function AcceptanceSignature({
     });
 
     if (!res.ok) {
-      return alert("PDF generation failed.");
+      const error = await res.json();
+      setError(error.error ?? "PDF generation failed.");
+      return;
     }
 
     const blob = await res.blob();
