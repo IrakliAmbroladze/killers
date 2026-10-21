@@ -50,6 +50,33 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
+    if (!formData.customer.name.trim()) {
+      return NextResponse.json(
+        { error: "დამკვეთის სახელი სავალდებულოა" },
+        { status: 400 },
+      );
+    }
+
+    if (!formData.startTime.trim()) {
+      return NextResponse.json(
+        { error: "დაწყების დრო სავალდებულოა" },
+        { status: 400 },
+      );
+    }
+
+    if (!formData.endTime.trim()) {
+      return NextResponse.json(
+        { error: "დასრულების დრო სავალდებულოა" },
+        { status: 400 },
+      );
+    }
+
+    if (!formData.comment.trim()) {
+      return NextResponse.json(
+        { error: "კომენტარი სავალდებულოა" },
+        { status: 400 },
+      );
+    }
     const pdfBytes = await buildAcceptancePdf(formData);
 
     return new NextResponse(pdfBytes, {
