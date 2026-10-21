@@ -5,12 +5,12 @@ import { validateServices } from "@/utils/validateServices";
 import { validatePests } from "@/utils/validatePests";
 import { validateProducts } from "@/utils/validateProducts";
 import { validateSpaces } from "@/utils/validateSpaces";
+import { validateCriteria } from "@/utils/validateCriteria";
 
 export async function POST(req: Request) {
   try {
     const formData: AcceptanceFormData = await req.json();
-    console.dir(formData.pests, { depth: null });
-    console.dir(formData.products, { depth: null });
+    console.log({ formData });
     if (!validateServices(formData.services)) {
       return NextResponse.json(
         { error: "მინიმუმ ერთი პროცედურა უნდა იყოს მონიშნული" },
@@ -42,7 +42,14 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-
+    if (!validateCriteria(formData.criteria)) {
+      return NextResponse.json(
+        {
+          error: "ინსპექტირებაში ყველა კრიტერიუმი უნდა იყოს მონიშნული",
+        },
+        { status: 400 },
+      );
+    }
     const pdfBytes = await buildAcceptancePdf(formData);
 
     return new NextResponse(pdfBytes, {
