@@ -11,7 +11,6 @@ import { validateRequiredFields } from "@/utils/validateRequiredFields";
 export async function POST(req: Request) {
   try {
     const formData: AcceptanceFormData = await req.json();
-    console.log({ formData });
     if (!validateServices(formData.services)) {
       return NextResponse.json(
         { error: "მინიმუმ ერთი პროცედურა უნდა იყოს მონიშნული" },

@@ -10,14 +10,13 @@ export const updateOrder = async (updatedOrder: Partial<Order>) => {
   });
   const responseObj: { success: boolean; data: Order; error: Error } =
     await response.json();
-  console.log("response is: ", responseObj);
   if (responseObj.success) {
     alert(
-      `✅ მონაცემები შენახულია წარმატებით: \n ს/კ: ${responseObj.data.customer_id} \n მისამართ: ${responseObj.data.address} \n პროდუქტი: ${responseObj.data.items} \n ფასი: ${responseObj.data.price} `
+      `✅ მონაცემები შენახულია წარმატებით: \n ს/კ: ${responseObj.data.customer_id} \n მისამართ: ${responseObj.data.address} \n პროდუქტი: ${responseObj.data.items} \n ფასი: ${responseObj.data.price} `,
     );
   } else {
     alert(
-      `❌ მონაცემების შენახვისას დაფიქსირდა შეცდომა \n ${responseObj.error}`
+      `❌ მონაცემების შენახვისას დაფიქსირდა შეცდომა \n ${responseObj.error}`,
     );
   }
 
