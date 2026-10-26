@@ -1,4 +1,6 @@
 export const useBtnClicks = () => {
-  const handleUpload = () => {};
+  const handleUpload = () => {
+    console.log("something");
+  };
   return { handleUpload };
 };
