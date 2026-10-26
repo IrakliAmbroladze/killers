@@ -3,6 +3,7 @@ import { SignatureField } from "@/components";
 import { useState, useRef } from "react";
 import { SignatureCanvasRef } from "@/components/Signature/SignatureCanvas";
 import { AcceptanceFormData } from "@/types";
+import { useBtnClicks } from "./hooks/useBtnClicks";
 
 export default function AcceptanceSignature({
   formData,
@@ -14,6 +15,7 @@ export default function AcceptanceSignature({
   const executorSigRef = useRef<SignatureCanvasRef | null>(null);
 
   const [error, setError] = useState<string | null>(null);
+  const { handleUpload } = useBtnClicks();
 
   const validateForm = () => {
     if (!customerSigRef.current || !executorSigRef.current) {
@@ -164,6 +166,12 @@ export default function AcceptanceSignature({
           onClick={handleOk}
         >
           preview
+        </button>
+        <button
+          className="w-28 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-20 cursor-pointer active:scale-95 disabled:active:scale-100 disabled:cursor-auto m-auto"
+          onClick={handleUpload}
+        >
+          upload
         </button>
         <button
           className="w-28 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-20 cursor-pointer active:scale-95 disabled:active:scale-100 disabled:cursor-auto m-auto"
