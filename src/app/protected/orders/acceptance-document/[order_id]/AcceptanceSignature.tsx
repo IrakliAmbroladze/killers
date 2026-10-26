@@ -11,7 +11,6 @@ export default function AcceptanceSignature({
 }: {
   formData: AcceptanceFormData;
 }) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const customerSigRef = useRef<SignatureCanvasRef | null>(null);
   const executorSigRef = useRef<SignatureCanvasRef | null>(null);
 
@@ -25,125 +24,6 @@ export default function AcceptanceSignature({
     executorSigRef,
     setError,
   });
-
-  const validateForm = () => {
-    if (!customerSigRef.current || !executorSigRef.current) {
-      return "Signatures not ready";
-    }
-
-    if (customerSigRef.current.isEmpty()) {
-      return "Customer signature is required";
-    }
-
-    if (executorSigRef.current.isEmpty()) {
-      return "Executor signature is required";
-    }
-
-    return null;
-  };
-
-  const handleOk = async () => {
-    setError(null);
-    const error = validateForm();
-
-    if (error) {
-      setError(error);
-      return;
-    }
-    if (!customerSigRef.current || !executorSigRef.current) return;
-    const customerPng = customerSigRef.current.getDataURL();
-    const executorPng = executorSigRef.current.getDataURL();
-
-    const acceptanceData: AcceptanceFormData = {
-      ...formData,
-      customer: {
-        name: formData.customer.name,
-        signature: customerPng,
-        personalNumber: formData.customer.personalNumber,
-        representative: {
-          name: formData.customer.representative.name,
-          id: formData.customer.representative.id,
-        },
-      },
-      executor: { signature: executorPng },
-    };
-
-    const res = await fetch("/api/documents/acceptance", {
-      method: "POST",
-      body: JSON.stringify(acceptanceData),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (!res.ok) {
-      const error = await res.json();
-      setError(error.error ?? "PDF generation failed.");
-      return;
-    }
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    // Trigger download
-    /*   const a = document.createElement("a");
-    a.href = url;
-    a.download = "acceptance_document.pdf";
-    a.click();*/
-    if (iframeRef.current) {
-      iframeRef.current.src = url;
-    }
-  };
-
-  const handleDownload = async () => {
-    setError(null);
-
-    const error = validateForm();
-    if (error) {
-      setError(error);
-      return;
-    }
-    if (!customerSigRef.current || !executorSigRef.current) return;
-
-    const customerPng = customerSigRef.current.getDataURL();
-    const executorPng = executorSigRef.current.getDataURL();
-
-    const acceptanceData: AcceptanceFormData = {
-      ...formData,
-      customer: {
-        name: formData.customer.name,
-        signature: customerPng,
-        personalNumber: formData.customer.personalNumber,
-        representative: {
-          name: formData.customer.representative.name,
-          id: formData.customer.representative.id,
-        },
-      },
-      executor: { signature: executorPng },
-    };
-
-    const res = await fetch("/api/documents/acceptance", {
-      method: "POST",
-      body: JSON.stringify(acceptanceData),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (!res.ok) {
-      const error = await res.json();
-      setError(error.error ?? "PDF generation failed.");
-      return;
-    }
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    // Trigger download
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "acceptance_document.pdf";
-    a.click();
-    /* if (iframeRef.current) {
-      iframeRef.current.src = url;
-    }*/
-  };
 
   return (
     <div className="flex flex-col">
@@ -169,13 +49,7 @@ export default function AcceptanceSignature({
         </div>
       </div>{" "}
       {error && <p className="text-red-600">{error}</p>}
-      <div className="flex">
-        <button
-          className="w-28 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-20 cursor-pointer active:scale-95 disabled:active:scale-100 disabled:cursor-auto m-auto"
-          onClick={handleOk}
-        >
-          preview
-        </button>
+      <div className="flex m-5">
         <button
           className="w-28 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-20 cursor-pointer active:scale-95 disabled:active:scale-100 disabled:cursor-auto m-auto"
           onClick={handleUpload}
@@ -187,21 +61,7 @@ export default function AcceptanceSignature({
               ? "uploaded ✓"
               : "upload"}
         </button>
-        <button
-          className="w-28 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-20 cursor-pointer active:scale-95 disabled:active:scale-100 disabled:cursor-auto m-auto"
-          onClick={handleDownload}
-        >
-          download
-        </button>
       </div>
-      <iframe
-        ref={iframeRef}
-        style={{
-          width: "100%",
-          height: "100vh",
-          border: "1px solid #ccc",
-        }}
-      />
     </div>
   );
 }
