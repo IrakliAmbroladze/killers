@@ -63,13 +63,17 @@ export const useBtnClicks = ({
       executor: { signature: executorPng },
     };
 
-    const url = "/api/documents/acceptance";
+    // const url = "/api/documents/acceptance";
+    const url = "http://localhost:8080/validate";
 
     const res = await fetch(url, {
       method: "POST",
       body: JSON.stringify(acceptanceData),
       headers: { "Content-Type": "application/json" },
     });
+
+    const result = await res.json();
+    console.log(result);
 
     if (!res.ok) {
       const err = await res.json().catch(() => null);
@@ -82,7 +86,7 @@ export const useBtnClicks = ({
 
   const handleUpload = async () => {
     // Open the window immediately (inside the click) to avoid popup blockers
-    const newWindow = window.open("", "_blank");
+    // const newWindow = window.open("", "_blank");
 
     try {
       setUploadStatus("uploading");
@@ -110,8 +114,8 @@ export const useBtnClicks = ({
       setUploadStatus("done");
     } catch (e) {
       console.error(e);
-      newWindow?.close();
-      setError("Upload failed. Please try again.");
+      // newWindow?.close();
+      setError("ატვირთვა ვერ მოხერხდა, სცადე თავიდან");
       setUploadStatus("error");
     }
   };
