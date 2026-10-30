@@ -11,54 +11,54 @@ import { validateRequiredFields } from "@/utils/validateRequiredFields";
 export async function POST(req: Request) {
   try {
     const formData: AcceptanceFormData = await req.json();
-    if (!validateServices(formData.services)) {
-      return NextResponse.json(
-        { error: "მინიმუმ ერთი პროცედურა უნდა იყოს მონიშნული" },
-        { status: 400 },
-      );
-    }
-
-    if (!validatePests(formData.pests)) {
-      return NextResponse.json(
-        {
-          error: "მინიმუმ ერთი გატარებული ღონისძიება უნდა იყოს მონიშნული",
-        },
-        { status: 400 },
-      );
-    }
-
-    if (!validateProducts(formData.products)) {
-      return NextResponse.json(
-        {
-          error: "მინიმუმ ერთი გახარჯული რაოდენობა უნდა იყოს მითითებული",
-        },
-        { status: 400 },
-      );
-    }
-
-    if (!validateSpaces(formData.spaces)) {
-      return NextResponse.json(
-        { error: "მინიმუმ ერთი სივრცე უნდა იყოს მონიშნული" },
-        { status: 400 },
-      );
-    }
-    if (!validateCriteria(formData.criteria)) {
-      return NextResponse.json(
-        {
-          error: "ინსპექტირებაში ყველა კრიტერიუმი უნდა იყოს მონიშნული",
-        },
-        { status: 400 },
-      );
-    }
-    if (!validateRequiredFields(formData)) {
-      return NextResponse.json(
-        {
-          error:
-            "დამკვეთის სახელი, დაწყების დრო, დასრულების დრო და კომენტარი სავალდებულოა",
-        },
-        { status: 400 },
-      );
-    }
+    // if (!validateServices(formData.services)) {
+    //   return NextResponse.json(
+    //     { error: "მინიმუმ ერთი პროცედურა უნდა იყოს მონიშნული" },
+    //     { status: 400 },
+    //   );
+    // }
+    //
+    // if (!validatePests(formData.pests)) {
+    //   return NextResponse.json(
+    //     {
+    //       error: "მინიმუმ ერთი გატარებული ღონისძიება უნდა იყოს მონიშნული",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
+    //
+    // if (!validateProducts(formData.products)) {
+    //   return NextResponse.json(
+    //     {
+    //       error: "მინიმუმ ერთი გახარჯული რაოდენობა უნდა იყოს მითითებული",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
+    //
+    // if (!validateSpaces(formData.spaces)) {
+    //   return NextResponse.json(
+    //     { error: "მინიმუმ ერთი სივრცე უნდა იყოს მონიშნული" },
+    //     { status: 400 },
+    //   );
+    // }
+    // if (!validateCriteria(formData.criteria)) {
+    //   return NextResponse.json(
+    //     {
+    //       error: "ინსპექტირებაში ყველა კრიტერიუმი უნდა იყოს მონიშნული",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
+    // if (!validateRequiredFields(formData)) {
+    //   return NextResponse.json(
+    //     {
+    //       error:
+    //         "დამკვეთის სახელი, დაწყების დრო, დასრულების დრო და კომენტარი სავალდებულოა",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
     const pdfBytes = await buildAcceptancePdf(formData);
 
     return new NextResponse(pdfBytes, {

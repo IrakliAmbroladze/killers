@@ -63,10 +63,9 @@ export const useBtnClicks = ({
       executor: { signature: executorPng },
     };
 
-    // const url = "/api/documents/acceptance";
-    const url = "http://localhost:8080/validate";
+    const validateUrl = "http://localhost:8080/validate";
 
-    const res = await fetch(url, {
+    const res = await fetch(validateUrl, {
       method: "POST",
       body: JSON.stringify(acceptanceData),
       headers: { "Content-Type": "application/json" },
@@ -75,42 +74,53 @@ export const useBtnClicks = ({
     const result = await res.json();
     console.log(result);
 
-    if (!res.ok) {
+    if (!res.ok || result.valid) {
       const err = await res.json().catch(() => null);
       setError(err?.error ?? "PDF generation failed.");
       return null;
     }
+    const pdfUrl = "/api/documents/acceptance";
 
-    return await res.blob();
+    const pdfRes = await fetch(pdfUrl, {
+      method: "POST",
+      body: JSON.stringify(acceptanceData),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!pdfRes.ok) {
+      const err = await pdfRes.json().catch(() => null);
+      setError(err?.error ?? "PDF generation failed.");
+      return null;
+    }
+    return await pdfRes.blob();
   };
 
   const handleUpload = async () => {
     // Open the window immediately (inside the click) to avoid popup blockers
-    // const newWindow = window.open("", "_blank");
+    const newWindow = window.open("", "_blank");
 
     try {
       setUploadStatus("uploading");
 
       const blob = await generatePdfBlob();
-      // if (!blob) {
-      //   newWindow?.close();
-      //   setUploadStatus("error");
-      //   return;
-      // }
-      //
-      // const file = new File([blob], "acceptance_document.pdf", {
-      //   type: "application/pdf",
-      // });
-      //
-      // await uploadOrderDocument(orderId, file);
-      //
-      // // Show the PDF in the blank window
-      // const url = URL.createObjectURL(blob);
-      // if (newWindow) {
-      //   newWindow.location.href = url;
-      // }
-      //
-      // router.refresh();
+      if (!blob) {
+        newWindow?.close();
+        setUploadStatus("error");
+        return;
+      }
+
+      const file = new File([blob], "acceptance_document.pdf", {
+        type: "application/pdf",
+      });
+
+      await uploadOrderDocument(orderId, file);
+
+      // Show the PDF in the blank window
+      const url = URL.createObjectURL(blob);
+      if (newWindow) {
+        newWindow.location.href = url;
+      }
+
+      router.refresh();
       setUploadStatus("done");
     } catch (e) {
       console.error(e);
