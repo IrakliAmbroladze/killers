@@ -63,7 +63,9 @@ export const useBtnClicks = ({
       executor: { signature: executorPng },
     };
 
-    const res = await fetch("/api/documents/acceptance", {
+    const url = "/api/documents/acceptance";
+
+    const res = await fetch(url, {
       method: "POST",
       body: JSON.stringify(acceptanceData),
       headers: { "Content-Type": "application/json" },
@@ -86,25 +88,25 @@ export const useBtnClicks = ({
       setUploadStatus("uploading");
 
       const blob = await generatePdfBlob();
-      if (!blob) {
-        newWindow?.close();
-        setUploadStatus("error");
-        return;
-      }
-
-      const file = new File([blob], "acceptance_document.pdf", {
-        type: "application/pdf",
-      });
-
-      await uploadOrderDocument(orderId, file);
-
-      // Show the PDF in the blank window
-      const url = URL.createObjectURL(blob);
-      if (newWindow) {
-        newWindow.location.href = url;
-      }
-
-      router.refresh();
+      // if (!blob) {
+      //   newWindow?.close();
+      //   setUploadStatus("error");
+      //   return;
+      // }
+      //
+      // const file = new File([blob], "acceptance_document.pdf", {
+      //   type: "application/pdf",
+      // });
+      //
+      // await uploadOrderDocument(orderId, file);
+      //
+      // // Show the PDF in the blank window
+      // const url = URL.createObjectURL(blob);
+      // if (newWindow) {
+      //   newWindow.location.href = url;
+      // }
+      //
+      // router.refresh();
       setUploadStatus("done");
     } catch (e) {
       console.error(e);
