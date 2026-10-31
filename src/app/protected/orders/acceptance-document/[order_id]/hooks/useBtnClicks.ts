@@ -96,14 +96,12 @@ export const useBtnClicks = ({
 
   const handleUpload = async () => {
     // Open the window immediately (inside the click) to avoid popup blockers
-    const newWindow = window.open("", "_blank");
 
     try {
       setUploadStatus("uploading");
 
       const blob = await generatePdfBlob();
       if (!blob) {
-        newWindow?.close();
         setUploadStatus("error");
         return;
       }
@@ -116,6 +114,7 @@ export const useBtnClicks = ({
 
       // Show the PDF in the blank window
       const url = URL.createObjectURL(blob);
+      const newWindow = window.open("", "_blank");
       if (newWindow) {
         newWindow.location.href = url;
       }
