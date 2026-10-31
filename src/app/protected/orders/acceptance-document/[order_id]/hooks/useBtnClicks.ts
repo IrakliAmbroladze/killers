@@ -81,8 +81,7 @@ export const useBtnClicks = ({
 
     if (!result.valid) {
       setError(
-        result?.message ??
-          "ფორმის ყველა აუცილებელმა ველმა ვალიდაცია ვერ გაიარა",
+        result?.error ?? "ფორმის ყველა აუცილებელმა ველმა ვალიდაცია ვერ გაიარა",
       );
       return null;
     }
