@@ -63,19 +63,43 @@ export const useBtnClicks = ({
       executor: { signature: executorPng },
     };
 
-    const res = await fetch("/api/documents/acceptance", {
+    const validateUrl = process.env.NEXT_PUBLIC_VALIDATOR_URL;
+    if (!validateUrl) {
+      throw new Error("NEXT_PUBLIC_VALIDATOR_URL is not configured");
+    }
+
+    const res = await fetch(validateUrl, {
       method: "POST",
       body: JSON.stringify(acceptanceData),
       headers: { "Content-Type": "application/json" },
     });
 
+    const result = await res.json();
+
     if (!res.ok) {
-      const err = await res.json().catch(() => null);
-      setError(err?.error ?? "PDF generation failed.");
+      setError(result?.error ?? "validation failed");
       return null;
     }
 
-    return await res.blob();
+    if (!result.valid) {
+      setError(
+        result?.error ?? "ფორმის ყველა აუცილებელმა ველმა ვალიდაცია ვერ გაიარა",
+      );
+      return null;
+    }
+    const pdfUrl = "/api/documents/acceptance";
+
+    const pdfRes = await fetch(pdfUrl, {
+      method: "POST",
+      body: JSON.stringify(acceptanceData),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!pdfRes.ok) {
+      const err = await pdfRes.json().catch(() => null);
+      setError(err?.error ?? "PDF generation failed.");
+      return null;
+    }
+    return await pdfRes.blob();
   };
 
   const handleUpload = async () => {
@@ -109,7 +133,7 @@ export const useBtnClicks = ({
     } catch (e) {
       console.error(e);
       newWindow?.close();
-      setError("Upload failed. Please try again.");
+      setError("ატვირთვა ვერ მოხერხდა, სცადე თავიდან");
       setUploadStatus("error");
     }
   };
