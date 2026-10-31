@@ -72,11 +72,18 @@ export const useBtnClicks = ({
     });
 
     const result = await res.json();
-    console.log(result);
 
-    if (!res.ok || result.valid) {
+    if (!res.ok) {
       const err = await res.json().catch(() => null);
-      setError(err?.error ?? "PDF generation failed.");
+      setError(err?.error ?? "validation failed.");
+      return null;
+    }
+
+    if (!result.valid) {
+      setError(
+        result?.message ??
+          "ფორმის ყველა აუცილებელმა ველმა ვალიდაცია ვერ გაიარა",
+      );
       return null;
     }
     const pdfUrl = "/api/documents/acceptance";
