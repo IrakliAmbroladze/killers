@@ -74,8 +74,7 @@ export const useBtnClicks = ({
     const result = await res.json();
 
     if (!res.ok) {
-      const err = await res.json().catch(() => null);
-      setError(err?.error ?? "validation failed.");
+      setError(result?.error ?? "validation failed");
       return null;
     }
 
@@ -102,12 +101,14 @@ export const useBtnClicks = ({
 
   const handleUpload = async () => {
     // Open the window immediately (inside the click) to avoid popup blockers
+    const newWindow = window.open("", "_blank");
 
     try {
       setUploadStatus("uploading");
 
       const blob = await generatePdfBlob();
       if (!blob) {
+        newWindow?.close();
         setUploadStatus("error");
         return;
       }
@@ -120,7 +121,6 @@ export const useBtnClicks = ({
 
       // Show the PDF in the blank window
       const url = URL.createObjectURL(blob);
-      const newWindow = window.open("", "_blank");
       if (newWindow) {
         newWindow.location.href = url;
       }
@@ -129,7 +129,7 @@ export const useBtnClicks = ({
       setUploadStatus("done");
     } catch (e) {
       console.error(e);
-      // newWindow?.close();
+      newWindow?.close();
       setError("ატვირთვა ვერ მოხერხდა, სცადე თავიდან");
       setUploadStatus("error");
     }
