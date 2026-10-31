@@ -63,7 +63,10 @@ export const useBtnClicks = ({
       executor: { signature: executorPng },
     };
 
-    const validateUrl = "http://localhost:8080/validate";
+    const validateUrl = process.env.NEXT_PUBLIC_VALIDATOR_URL;
+    if (!validateUrl) {
+      throw new Error("NEXT_PUBLIC_VALIDATOR_URL is not configured");
+    }
 
     const res = await fetch(validateUrl, {
       method: "POST",
