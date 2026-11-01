@@ -116,6 +116,16 @@ export const NewOrderForm = ({ user }: { user: User | null }) => {
               <option value="1">გადარიცხვა</option>
               <option value="2">ხელზე</option>
             </select>
+            <select
+              name="items"
+              onChange={handleChange}
+              required
+              className="w-full p-1 border rounded"
+            >
+              <option value="1">გადარიცხვა</option>
+              <option value="2">ხელზე</option>
+            </select>
+
             <input
               name="items"
               placeholder="items"
