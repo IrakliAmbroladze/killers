@@ -6,8 +6,10 @@ import { CustomerSearchModal } from "./CustomerSearchModal";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
 import { newCustomerPathName } from "@/app/protected/orders/constants/ordersPathName";
+import { items } from "@/constants";
 
 export const NewOrderForm = ({ user }: { user: User | null }) => {
+  const [isItemsDropdown, setIsItemsDropdown] = useState(true);
   const initialData = {
     customer_id: "",
     address: "",
@@ -116,24 +118,38 @@ export const NewOrderForm = ({ user }: { user: User | null }) => {
               <option value="1">გადარიცხვა</option>
               <option value="2">ხელზე</option>
             </select>
-            <select
-              name="items"
-              onChange={handleChange}
-              required
-              className="w-full p-1 border rounded"
-            >
-              <option value="1">გადარიცხვა</option>
-              <option value="2">ხელზე</option>
-            </select>
-
-            <input
-              name="items"
-              placeholder="items"
-              value={formData.items ?? ""}
-              onChange={handleChange}
-              required
-              className="w-full p-1 border rounded"
-            />
+            <div className="flex gap-2">
+              {isItemsDropdown ? (
+                <select
+                  name="items"
+                  onChange={handleChange}
+                  defaultValue=""
+                  required
+                  className="w-full p-1 border rounded"
+                >
+                  <option value="" disabled hidden>
+                    items
+                  </option>
+                  {items.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  name="items"
+                  placeholder="items"
+                  value={formData.items ?? ""}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-1 border rounded"
+                />
+              )}
+              <button onClick={() => setIsItemsDropdown((prev) => !prev)}>
+                {isItemsDropdown ? "manual" : "dropdown"}
+              </button>
+            </div>
             <input
               name="price"
               type="number"

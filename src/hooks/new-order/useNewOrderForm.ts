@@ -19,7 +19,7 @@ export const useNewOrderForm = ({
   initialData: Partial<Order>;
 }) => {
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -35,7 +35,7 @@ export const useNewOrderForm = ({
   }, 500);
 
   const handleCustomerInput = async (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     handleChange(e);
     debouncedSearch(e.target.value);
@@ -46,7 +46,7 @@ export const useNewOrderForm = ({
   };
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement | HTMLSelectElement>
+    e: React.FormEvent<HTMLFormElement | HTMLSelectElement>,
   ) => {
     e.preventDefault();
     if (!formData.customer_id) {
