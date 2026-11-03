@@ -148,6 +148,17 @@ export const getColumnDefs = (
     },
     { field: "technician", editable: false },
     { field: "document", cellRenderer: Renderer.documentLinkRenderer },
+    {
+      headerName: "source",
+      field: "customers.source",
+      editable: false,
+    },
+
+    {
+      headerName: "source_comment",
+      field: "customers.source_comment",
+      editable: false,
+    },
     { headerName: "Order_id", field: "id", editable: false },
     { field: "plan_time", editable: false },
     { field: "approve", editable: false },
