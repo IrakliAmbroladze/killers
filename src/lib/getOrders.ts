@@ -41,7 +41,7 @@ export const getOrders = async ({
       .select(
         `
         *,
-        customers (id, name, description, contractor),
+        customers (id, name, description, contractor, source, source_comment),
         payment_types (id, name),
         providers (id, name),
         employees (id, display_name, role_id)
