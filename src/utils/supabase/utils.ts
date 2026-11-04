@@ -20,3 +20,6 @@ export const isSalesPage = (request: NextRequest) =>
 
 export const isTasksPage = (request: NextRequest) =>
   request.nextUrl.pathname.startsWith("/protected/tasks");
+
+export const isAcceptanceDocumentPage = (request: NextRequest) =>
+  request.nextUrl.pathname.startsWith("/protected/acceptance-document");
