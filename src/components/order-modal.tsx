@@ -19,7 +19,7 @@ const OrderModal = () => {
       <div>
         <div className="text-center pb-2.5">შეკვეთის დეტალები</div>
         <div className="flex justify-between">
-          <Link href={`/protected/orders/acceptance-document/${order.id}`}>
+          <Link href={`/protected/acceptance-document/${order.id}`}>
             <button
               type="button"
               className="border py-1.5 px-2.5 rounded-md active:scale-95 transition-transform duration-150 ease-in-out cursor-pointer hover:scale-105"
