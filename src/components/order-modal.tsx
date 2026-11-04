@@ -8,6 +8,7 @@ import { useCommentsQuantities } from "@/hooks/useCommentsQuantities";
 import TechniciansOrder from "./technicians-order";
 import Link from "next/link";
 import { UploadOrderDocument } from "./UploadOrderDocument";
+import { openAcceptanceDocument } from "@/utils/openAcceptanceDocument";
 
 const OrderModal = () => {
   const { openOrderId, closeOrder, order } = useOrderModal();
@@ -19,15 +20,24 @@ const OrderModal = () => {
       <div>
         <div className="text-center pb-2.5">შეკვეთის დეტალები</div>
         <div className="flex justify-between">
-          <Link href={`/protected/orders/acceptance-document/${order.id}`}>
+          <Link href={`/protected/acceptance-document/${order.id}`}>
             <button
               type="button"
               className="border py-1.5 px-2.5 rounded-md active:scale-95 transition-transform duration-150 ease-in-out cursor-pointer hover:scale-105"
               onClick={closeOrder}
             >
-              საბუთი
+              საბუთის შექმნა
             </button>
           </Link>
+          {openOrderId && (
+            <button
+              type="button"
+              className="border py-1.5 px-2.5 rounded-md active:scale-95 transition-transform duration-150 ease-in-out cursor-pointer hover:scale-105"
+              onClick={() => openAcceptanceDocument({ orderId: openOrderId })}
+            >
+              საბუთის ნახვა
+            </button>
+          )}
           {openOrderId && (
             <UploadOrderDocument orderId={openOrderId} key={openOrderId} />
           )}

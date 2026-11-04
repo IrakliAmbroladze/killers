@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
-import { isSalesPage, isTechnician } from "./utils";
+import { isSalesPage, isTasksPage, isTechnician } from "./utils";
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
@@ -23,17 +23,17 @@ export const updateSession = async (request: NextRequest) => {
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value }) =>
-              request.cookies.set(name, value)
+              request.cookies.set(name, value),
             );
             response = NextResponse.next({
               request,
             });
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options)
+              response.cookies.set(name, value, options),
             );
           },
         },
-      }
+      },
     );
 
     // This will refresh session if expired - required for Server Components
@@ -48,9 +48,12 @@ export const updateSession = async (request: NextRequest) => {
     // if (request.nextUrl.pathname === "/" && !user.error) {
     //   return NextResponse.redirect(new URL("/protected", request.url));
     // }
-    if (isSalesPage(request) && (await isTechnician(user))) {
+    if (
+      (isSalesPage(request) || isTasksPage(request)) &&
+      (await isTechnician(user))
+    ) {
       return NextResponse.redirect(
-        new URL("/protected/procedures", request.url)
+        new URL("/protected/procedures", request.url),
       );
     }
 
