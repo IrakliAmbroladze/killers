@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 type DoneAreasProps = {
   spaces: Record<string, boolean>;
   onChange: (area: string, checked: boolean) => void;
@@ -12,6 +14,7 @@ function chunk<T>(arr: T[], size: number): T[][] {
 }
 
 export default function DoneAreas({ spaces, onChange }: DoneAreasProps) {
+  const [newArea, setNewArea] = useState("");
   const entries = Object.entries(spaces);
 
   return (
@@ -42,6 +45,18 @@ export default function DoneAreas({ spaces, onChange }: DoneAreasProps) {
                 </label>
               </td>
             ))}
+            <td className="text-center">
+              <label>
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={false}
+                    onChange={(e) => onChange(newArea, e.target.checked)}
+                  />
+                </div>
+                {newArea}
+              </label>
+            </td>
           </tr>
         ))}
       </tbody>
