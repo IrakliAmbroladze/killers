@@ -54,14 +54,7 @@ export const drawSpacesInspected = ({
   x,
   y,
 }: DrawSpacesInspected) => {
-  let spacesList: string[] = [];
-  if (formData?.spaces) {
-    const spacesArr = Object.keys(formData.spaces);
-    if (spacesArr.length) {
-      spacesList = spacesArr;
-    }
-  }
-  console.log({ spacesList });
+  const spacesList: string[] = Object.keys(formData?.spaces) ?? [];
   const initial_y = y;
   const ROW_HEIGHT = 18;
   const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
