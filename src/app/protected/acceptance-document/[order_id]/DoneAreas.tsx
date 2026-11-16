@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 type DoneAreasProps = {
   spaces: Record<string, boolean>;
   onChange: (area: string, checked: boolean) => void;
 };
+
+type CellItem =
+  { type: "area"; area: string; checked: boolean } | { type: "new" };
 
 function chunk<T>(arr: T[], size: number): T[][] {
   const res: T[][] = [];
@@ -12,7 +17,23 @@ function chunk<T>(arr: T[], size: number): T[][] {
 }
 
 export default function DoneAreas({ spaces, onChange }: DoneAreasProps) {
-  const entries = Object.entries(spaces);
+  const [newArea, setNewArea] = useState("");
+
+  const cells: CellItem[] = [
+    ...Object.entries(spaces).map(([area, checked]) => ({
+      type: "area" as const,
+      area,
+      checked,
+    })),
+    { type: "new" },
+  ];
+
+  const handleAdd = (checked: boolean) => {
+    const trimmed = newArea.trim();
+    if (!trimmed) return;
+    onChange(trimmed, checked);
+    setNewArea("");
+  };
 
   return (
     <table className="text-sm">
@@ -26,22 +47,42 @@ export default function DoneAreas({ spaces, onChange }: DoneAreasProps) {
       </thead>
 
       <tbody>
-        {chunk(entries, 3).map((row, rowIndex) => (
+        {chunk(cells, 3).map((row, rowIndex) => (
           <tr key={rowIndex}>
-            {row.map(([area, checked]) => (
-              <td key={area} className="text-center">
-                <label>
-                  <div>
+            {row.map((cell) =>
+              cell.type === "area" ? (
+                <td key={cell.area} className="text-center">
+                  <label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={cell.checked}
+                        onChange={(e) => onChange(cell.area, e.target.checked)}
+                      />
+                    </div>
+                    {cell.area}
+                  </label>
+                </td>
+              ) : (
+                <td key="__new__" className="text-center">
+                  <label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={false}
+                        disabled={!newArea.trim()}
+                        onChange={(e) => handleAdd(e.target.checked)}
+                      />
+                    </div>
                     <input
-                      type="checkbox"
-                      checked={checked}
-                      onChange={(e) => onChange(area, e.target.checked)}
+                      type="text"
+                      value={newArea}
+                      onChange={(e) => setNewArea(e.target.value)}
                     />
-                  </div>
-                  {area}
-                </label>
-              </td>
-            ))}
+                  </label>
+                </td>
+              ),
+            )}
           </tr>
         ))}
       </tbody>
