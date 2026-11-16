@@ -4,7 +4,6 @@ import { MARGIN_X, PAGE_WIDTH } from "../constants/pdfPageDimensions";
 import { Cursor } from "../types/Cursor";
 import {
   SPACE_BETWEEN_TITLE_AND_TABLE,
-  spacesList,
   TABLE_ROW_HEIGHT,
 } from "../constants/tableData";
 import { createPestsTable } from "./table/PestsTable";
@@ -55,6 +54,14 @@ export const drawSpacesInspected = ({
   x,
   y,
 }: DrawSpacesInspected) => {
+  let spacesList: string[] = [];
+  if (formData?.spaces) {
+    const spacesArr = Object.keys(formData.spaces);
+    if (spacesArr.length) {
+      spacesList = spacesArr;
+    }
+  }
+  console.log({ spacesList });
   const initial_y = y;
   const ROW_HEIGHT = 18;
   const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
