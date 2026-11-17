@@ -1,5 +1,5 @@
-import { getCustomers } from "@/lib";
 import CustomersTable from "@/modules/customers/components/CustomersTable";
+import { getCustomers } from "@/modules/customers/server";
 import type { Customer } from "@/types";
 
 export default async function Customers() {
