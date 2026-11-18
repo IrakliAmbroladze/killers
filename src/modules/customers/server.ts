@@ -1,7 +1,7 @@
 "use server";
 
-import type { Customer } from "@/types";
 import { createClient } from "@/utils/supabase/server";
+import { Customer } from "./types";
 
 export const getCustomers = async () => {
   const supabase = await createClient();
