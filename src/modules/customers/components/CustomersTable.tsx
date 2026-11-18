@@ -2,8 +2,8 @@
 
 import { useState, useMemo } from "react";
 import type { Customer } from "@/types";
-import { ContractorStatus } from "./atoms/ContractorStatus";
 import { editCustomer } from "@/lib/editCustomer";
+import { ContractorStatus } from "./ContractorStatus";
 
 type Props = {
   data: Customer[];

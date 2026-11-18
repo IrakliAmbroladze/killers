@@ -1,6 +1,6 @@
 //Order.ts
 
-import { Customer } from "./Customer";
+import { Customer } from ".";
 import { Employee } from "./Employee";
 import { PaymentType } from "./PaymentType";
 import { Provider } from "./Provider";
