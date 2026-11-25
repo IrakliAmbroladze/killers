@@ -1,12 +1,5 @@
-import CustomersTable from "@/modules/customers/components/CustomersTable";
-import { getCustomers } from "@/modules/customers/server";
-import type { Customer } from "@/types";
+import CustomersPage from "@/modules/customers/components/CustomersPage";
 
 export default async function Customers() {
-  const { customers }: { customers: Customer[] } = await getCustomers();
-  return (
-    <div className="p-6">
-      <CustomersTable data={customers} />
-    </div>
-  );
+  <CustomersPage />;
 }
