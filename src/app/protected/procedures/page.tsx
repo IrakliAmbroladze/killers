@@ -10,11 +10,14 @@ import { getCalendarTasks } from "@/lib";
 import { getOrders } from "@/modules/orders/server";
 import { validateUrlForGettingOrders } from "@/modules/orders/utils/validateUrlForGettingOrders";
 
-const ProceduresPage = async ({
+type Props = {
+  searchParams: Promise<{
+    [key: string]: string | string[] | undefined;
+  }>;
+};
+export default async function ProceduresPage({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) => {
+}: Props) {
   const params = await searchParams;
   const header = await headers();
 
@@ -34,4 +37,3 @@ const ProceduresPage = async ({
   );
 };
 
-export default ProceduresPage;

@@ -22,4 +22,3 @@ export const OrdersPage = async ({
 
   return <OrderTable ordersPromise={ordersPromise} />;
 };
-
