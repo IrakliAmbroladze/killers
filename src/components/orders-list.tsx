@@ -54,8 +54,8 @@ const OrdersList = () => {
   const updateInvoice = (updatedInvoice: Sheets_Invoice) => {
     setInvoices((prev) =>
       prev.map((invoice) =>
-        invoice.order_id === updatedInvoice.order_id ? updatedInvoice : invoice
-      )
+        invoice.order_id === updatedInvoice.order_id ? updatedInvoice : invoice,
+      ),
     );
   };
 
@@ -108,7 +108,7 @@ const OrdersList = () => {
                       setOpenModalIndex(
                         openModalIndex === invoice.order_id
                           ? null
-                          : invoice.order_id
+                          : invoice.order_id,
                       );
                       setStatus("update");
                       setTitle("Edit Order");
@@ -124,7 +124,7 @@ const OrdersList = () => {
                       setOpenModalIndex(
                         openModalIndex === invoice.order_id
                           ? null
-                          : invoice.order_id
+                          : invoice.order_id,
                       );
                       setStatus("add");
                       setTitle("Copy Order");
@@ -147,7 +147,7 @@ const OrdersList = () => {
             handleCopy={handleCopy}
             invoice={
               searchedInvoices.find(
-                (invoice) => invoice.order_id === openModalIndex
+                (invoice) => invoice.order_id === openModalIndex,
               ) as Sheets_Invoice
             }
             setOpenModalIndex={setOpenModalIndex}

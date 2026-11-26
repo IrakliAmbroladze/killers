@@ -46,7 +46,7 @@ export function Calendar({
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const days = Array.from(
     { length: daysInMonth(year, month) },
-    (_, i) => new Date(year, month, i + 1)
+    (_, i) => new Date(year, month, i + 1),
   );
 
   const toggleTask = async (key: string, idx: number) => {
@@ -77,7 +77,7 @@ export function Calendar({
       console.error("Error updating task:", updateError);
     } else {
       const updated = tasks[key].map((task, i) =>
-        i === idx ? { ...task, checked: updatedChecked } : task
+        i === idx ? { ...task, checked: updatedChecked } : task,
       );
       setTasks((prev) => ({ ...prev, [key]: updated }));
     }
@@ -114,7 +114,7 @@ export function Calendar({
       console.error("Error updating task:", updateError);
     } else {
       const updated = tasks[key].map((task, i) =>
-        i === idx ? { ...task, text: newText } : task
+        i === idx ? { ...task, text: newText } : task,
       );
       setTasks((prev) => ({ ...prev, [key]: updated }));
     }

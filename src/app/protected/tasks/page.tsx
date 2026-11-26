@@ -17,12 +17,10 @@ export default async function TasksPage(): Promise<React.ReactElement> {
     ...col,
     taskList: (tasks ?? [])
       .filter((t) => t.column_id === col.id)
-      .map(
-        (t): Task => ({
-          id: t.id,
-          node: <TaskCard title={t.title} description={t.description} />,
-        }),
-      ),
+      .map((t): Task => ({
+        id: t.id,
+        node: <TaskCard title={t.title} description={t.description} />,
+      })),
   }));
 
   return (

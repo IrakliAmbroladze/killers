@@ -6,7 +6,7 @@ import { confirDeletePrompt } from "@/utils";
 import { deleteOrders } from "@/lib";
 
 export const createDeleteButton = (
-  gridRef: RefObject<AgGridReact<OrderExtended> | null>
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>,
 ) => {
   return function DeleteButton(props: ICellRendererParams<OrderExtended>) {
     if (!gridRef.current) {

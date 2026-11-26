@@ -7,14 +7,14 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         orders: state.orders.filter(
-          (order) => order.order_id !== action.payload.order_id
+          (order) => order.order_id !== action.payload.order_id,
         ),
       };
     case "UPDATE_ORDER":
       return {
         ...state,
         orders: state.orders.map((order) =>
-          order.order_id === action.payload.order_id ? action.payload : order
+          order.order_id === action.payload.order_id ? action.payload : order,
         ),
       };
     case "ADD_ORDER":

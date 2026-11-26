@@ -109,13 +109,11 @@ export const Column = ({
     <div className="flex flex-col w-80 shrink-0 bg-gray-100 dark:bg-gray-800 rounded-lg p-2.5 ">
       <Header id={id.toString()} status={title} onHandleClick={handleClick} />
       {visibleStatusArray.includes(id) &&
-        taskList.map(
-          (task: Task): ReactElement => (
-            <div key={task.id} onClick={() => setActiveTaskId(task.id)}>
-              {task.node}
-            </div>
-          ),
-        )}
+        taskList.map((task: Task): ReactElement => (
+          <div key={task.id} onClick={() => setActiveTaskId(task.id)}>
+            {task.node}
+          </div>
+        ))}
       {hasCreateNewTaskBtn && (
         <button
           onClick={handleCreateNewTaskBtnClick}

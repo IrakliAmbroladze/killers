@@ -13,7 +13,9 @@ export async function deleteComment(commentId: string) {
     throw new Error("User is not authenticated");
   }
 
-  const { error } = await (await supabase)
+  const { error } = await (
+    await supabase
+  )
     .from("comments")
     .delete()
     .eq("id", commentId);

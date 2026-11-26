@@ -2,7 +2,7 @@ import { Sheets_Invoice } from "@/types/invoices";
 
 export const buildCopiedRow = (
   original: Sheets_Invoice,
-  userInputDate: string
+  userInputDate: string,
 ): Sheets_Invoice => {
   return {
     ...original,

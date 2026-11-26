@@ -2,14 +2,14 @@ import type { Customer } from "@/types";
 
 export const fetchCustomers = async (
   id: string,
-  mode: "exact" | "search" = "search"
+  mode: "exact" | "search" = "search",
 ): Promise<Customer[] | null> => {
   try {
     console.log("start of fetchCustomers");
 
     const res = await fetch(
       `/api/orders/fetchCustomers?id=${encodeURIComponent(id)}&mode=${mode}`,
-      { method: "GET", headers: { "Content-Type": "application/json" } }
+      { method: "GET", headers: { "Content-Type": "application/json" } },
     );
 
     if (!res.ok) {

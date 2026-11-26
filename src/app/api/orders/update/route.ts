@@ -22,13 +22,13 @@ export async function POST(req: NextRequest) {
     if (!updatedRow) {
       return NextResponse.json(
         { error: "Update failed: no data returned" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(
       { success: true, data: updatedRow },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     if (error instanceof Error) {
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     }
     return NextResponse.json(
       { error: "Unknown server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

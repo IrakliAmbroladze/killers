@@ -49,12 +49,12 @@ const InitialTechniciansContainer = ({
       return;
     }
     const updatedTechnicians = selectedTechnicians.filter(
-      (item) => item !== name
+      (item) => item !== name,
     );
 
     if (updatedTechnicians.length == 0 && order.plan_time) {
       alert(
-        "პროცედურაზე, რომელსაც დაგეგმვის თარიღი აქვს, ერთი ტექნიკოსი მაინც უნდა იყოს მონიშნული"
+        "პროცედურაზე, რომელსაც დაგეგმვის თარიღი აქვს, ერთი ტექნიკოსი მაინც უნდა იყოს მონიშნული",
       );
       return;
     }

@@ -26,7 +26,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
       payment_types(id, name),
       providers(id, name),
       employees(id, display_name, role_id)
-    `
+    `,
       )
       .eq("id", id)
       .single();
@@ -48,7 +48,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
       payment_types(id, name),
       providers(id, name),
       employees(id, display_name, role_id)
-    `
+    `,
       )
       .eq("id", id)
       .single();

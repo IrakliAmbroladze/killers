@@ -5,7 +5,7 @@ import { fetchComments } from "../lib/fetch-comments";
 
 export const refreshComments = async (
   id: string,
-  set: Dispatch<SetStateAction<CommentType[] | null>>
+  set: Dispatch<SetStateAction<CommentType[] | null>>,
 ) => {
   try {
     const result = await fetchComments(id);

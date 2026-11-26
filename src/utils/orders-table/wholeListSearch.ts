@@ -5,7 +5,7 @@ export const wholeListSearch = (list: Sheets_Invoice[], serchTerm: string) => {
     Object.values(itemObj)
       .filter((val) => typeof val === "string" || typeof val === "number")
       .some((val) =>
-        val?.toString().toLowerCase().includes(serchTerm.toLowerCase())
-      )
+        val?.toString().toLowerCase().includes(serchTerm.toLowerCase()),
+      ),
   );
 };

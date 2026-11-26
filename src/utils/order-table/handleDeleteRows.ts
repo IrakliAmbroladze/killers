@@ -6,7 +6,7 @@ import { OrderExtended } from "@/types/Order";
 import { deleteOrders } from "@/lib";
 
 export const handleDeleteRows = async (
-  gridRef: RefObject<AgGridReact<OrderExtended> | null>
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>,
 ) => {
   const api = gridRef.current?.api;
   if (!api) return;
@@ -23,7 +23,7 @@ export const handleDeleteRows = async (
   }
 
   const confirmDelete = window.confirm(
-    `ნამდვილად გსურს წაშლა? \nწასაშლელი მონაცემების რაოდენობაა: ${selectedRows.length}`
+    `ნამდვილად გსურს წაშლა? \nწასაშლელი მონაცემების რაოდენობაა: ${selectedRows.length}`,
   );
   if (!confirmDelete) return;
 

@@ -6,7 +6,7 @@ export const alertsForSelectedRows = (rs: OrderExtended[]) => {
     const draftDate = new Date().toISOString().split("T")[0];
     const input = prompt(
       `შეიყვანე შეკვეთის მიღების თარიღი YYYY-MM-DD (მაგ: ${draftDate}):`,
-      draftDate ?? ""
+      draftDate ?? "",
     );
     if (!input) {
       alert("შეკვეთის აღების თარიღი არ მიგითითებია");

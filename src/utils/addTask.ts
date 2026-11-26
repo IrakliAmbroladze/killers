@@ -5,7 +5,7 @@ import { getDateKey } from "@/utils";
 export const addTask = async (
   date: Date,
   taskText: string,
-  setTasks: React.Dispatch<React.SetStateAction<CalendarTasksArray>>
+  setTasks: React.Dispatch<React.SetStateAction<CalendarTasksArray>>,
 ) => {
   const key = getDateKey(date);
   const taskData = {

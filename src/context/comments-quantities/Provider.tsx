@@ -17,7 +17,7 @@ export const Provider = ({
       acc[task.id] = task.comments_num;
       return acc;
     },
-    {}
+    {},
   );
 
   const [state, dispatch] = useReducer(reducer, initialMapped);

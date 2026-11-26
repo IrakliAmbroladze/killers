@@ -2,7 +2,7 @@
 
 export const dateOnlyComparator = (
   filterDate: Date,
-  cellValue: string
+  cellValue: string,
 ): number => {
   if (!cellValue) return -1;
 

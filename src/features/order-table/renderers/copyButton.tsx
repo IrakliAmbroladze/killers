@@ -6,7 +6,7 @@ import { AgGridReact } from "ag-grid-react";
 import { OrderExtended } from "@/types/Order";
 
 export const createCopyButton = (
-  gridRef: RefObject<AgGridReact<OrderExtended> | null>
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>,
 ) => {
   return function CopyButton(props: ICellRendererParams<OrderExtended>) {
     return (

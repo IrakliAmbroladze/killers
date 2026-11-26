@@ -54,7 +54,7 @@ const DayGrid = ({
         const myDate = new Date(order.plan_time);
         return myDate.toLocaleDateString() === date.toLocaleDateString();
       }),
-    [date, orders]
+    [date, orders],
   );
   const ordersByGroup: { [groupKey: string]: typeof orders } = {};
   const { setNodeRef } = useDroppable({
@@ -122,7 +122,8 @@ const DayGrid = ({
         <span className="text-xs">{todaysDayInGeo()}</span>
         <span className="text-xs">
           {" "}
-          {date.getDate()} {date.toLocaleString("ka-GE", { month: "short" })}{" "}
+          {date.getDate()}{" "}
+          {date.toLocaleString("ka-GE", { month: "short" })}{" "}
         </span>
       </div>
 

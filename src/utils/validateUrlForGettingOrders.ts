@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 export const validateUrlForGettingOrders = (
   params: { [key: string]: string | string[] | undefined },
   header: Headers,
-  pageName: string
+  pageName: string,
 ) => {
   if (!hasValidDateRangeQuery(params)) {
     const pathname = header.get("x-url")?.split("?")[0] ?? pageName;

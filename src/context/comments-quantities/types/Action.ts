@@ -1,3 +1,2 @@
 export type Action =
-  | { type: "INCREASE"; payload: string }
-  | { type: "DECREASE"; payload: string };
+  { type: "INCREASE"; payload: string } | { type: "DECREASE"; payload: string };
