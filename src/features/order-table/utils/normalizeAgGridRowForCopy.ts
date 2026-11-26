@@ -1,4 +1,4 @@
-import { Order, OrderExtended } from "@/types/Order";
+import { Order, OrderExtended } from "@/modules/orders/types";
 
 export const normalizeAgGridRowForCopy = (
   row: OrderExtended,

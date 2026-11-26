@@ -3,7 +3,7 @@ import { FiCopy } from "react-icons/fi";
 import { handleCopyRows } from "@/utils";
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { OrderExtended } from "@/types/Order";
+import { OrderExtended } from "@/modules/orders/types";
 
 export const createCopyButton = (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>,

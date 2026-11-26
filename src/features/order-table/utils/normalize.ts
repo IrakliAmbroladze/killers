@@ -1,5 +1,5 @@
 // lib/normalize.ts
-import type { Order, OrderExtended } from "@/types/Order";
+import type { Order, OrderExtended } from "@/modules/orders/types";
 
 export function normalizeOrder(order: Partial<OrderExtended>): Partial<Order> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

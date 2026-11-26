@@ -2,8 +2,8 @@
 
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { OrderExtended } from "@/types/Order";
 import { deleteOrders } from "@/lib";
+import { OrderExtended } from "@/modules/orders/types";
 
 export const handleDeleteRows = async (
   gridRef: RefObject<AgGridReact<OrderExtended> | null>,

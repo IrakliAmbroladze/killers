@@ -3,10 +3,10 @@
 import type { ICellRendererParams } from "ag-grid-community";
 import { editOrder } from "@/lib";
 import { FaRegSave } from "react-icons/fa";
-import type { OrderExtended } from "@/types/Order";
 import { normalizeOrder } from "../utils/normalize";
 import { ordersPathName } from "@/app/protected/orders/constants/ordersPathName";
 import { useRouter } from "next/navigation";
+import { OrderExtended } from "@/modules/orders/types";
 
 export const SaveButton = (props: ICellRendererParams<OrderExtended>) => {
   const router = useRouter();

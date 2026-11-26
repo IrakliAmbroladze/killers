@@ -4,10 +4,10 @@ import type { ColDef } from "ag-grid-community";
 import * as Renderer from "../renderers";
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { OrderExtended } from "@/types/Order";
 import { formatAgGridDate } from "../utils";
 import { dateOnlyComparator } from "../utils/customDateComparator";
 import { validDecimalNumberRegex } from "@/constants/regex";
+import { OrderExtended } from "@/modules/orders/types";
 // import * as Utils from "@/utils";
 
 export const getColumnDefs = (

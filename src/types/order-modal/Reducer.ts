@@ -1,4 +1,4 @@
-import { OrderExtended } from "../Order";
+import { OrderExtended } from "@/modules/orders/types";
 
 type State = { openOrderId: string | null; order: OrderExtended | null };
 type Action =
