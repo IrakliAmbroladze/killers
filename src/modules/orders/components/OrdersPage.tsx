@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
 
 import OrderTable from "@/features/order-table/components/OrderTable";
-import { getOrders } from "@/lib/getOrders";
 import { validateUrlForGettingOrders } from "@/utils";
 import { ordersPathName } from "../constants";
+import { getOrders } from "@/modules/orders/server";
 
 const OrdersPage = async ({
   searchParams,
