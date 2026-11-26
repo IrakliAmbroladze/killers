@@ -1,11 +1,6 @@
 export { firstDayOfCurrentMonth } from "./firstDayOfCurrentMonth";
 export { formatDateYYYYMMDD } from "./formatDateYYYYMMDD";
 export { isValidYYYYMMDD } from "./isValidYYYYMMDD";
-export { hasValidDateRangeQuery } from "./hasValidDateRangeQuery";
-export {
-  getDefaultDateParams,
-  getRedirectWithValidDateRange,
-} from "./dateQuery";
 export { deepEqual } from "./deepEqual";
 export { alertsForSelectedRows } from "./order-table/alertsForSelectedRows";
 export { confirDeletePrompt } from "./order-table/confirDeletePrompt";

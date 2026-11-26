@@ -1,5 +1,5 @@
-import { getRedirectWithValidDateRange } from "./dateQuery";
-import { hasValidDateRangeQuery } from "./hasValidDateRangeQuery";
+import { getRedirectWithValidDateRange } from "@/modules/orders/utils/dateQuery";
+import { hasValidDateRangeQuery } from "@/modules/orders/utils/hasValidDateRangeQuery";
 import { redirect } from "next/navigation";
 
 export const validateUrlForGettingOrders = (
