@@ -1,4 +1,4 @@
-"server-only"
+"server-only";
 
 import { createClient } from "@/utils/supabase/server";
 import { OrderExtended } from "./types";

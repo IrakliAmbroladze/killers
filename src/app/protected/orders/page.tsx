@@ -1,4 +1,4 @@
-import OrdersPage from "@/modules/orders";
+import { OrdersPage } from "@/modules/orders";
 
 type Props = {
   searchParams: Promise<{

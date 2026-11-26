@@ -1,3 +1,2 @@
-import OrdersPage from "./components/OrdersPage";
-
-export default OrdersPage;
+export { OrdersPage } from "./components/OrdersPage";
+export { getOrders } from "./server";

@@ -5,7 +5,7 @@ import { ordersPathName } from "../constants";
 import { getOrders } from "@/modules/orders/server";
 import { validateUrlForGettingOrders } from "../utils/validateUrlForGettingOrders";
 
-const OrdersPage = async ({
+export const OrdersPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -23,4 +23,3 @@ const OrdersPage = async ({
   return <OrderTable ordersPromise={ordersPromise} />;
 };
 
-export default OrdersPage;
