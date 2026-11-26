@@ -6,7 +6,6 @@ export { alertsForSelectedRows } from "./order-table/alertsForSelectedRows";
 export { confirDeletePrompt } from "./order-table/confirDeletePrompt";
 export { handleCopyRows } from "./order-table/handleCopyRows";
 export { handleDeleteRows } from "./order-table/handleDeleteRows";
-export { validateUrlForGettingOrders } from "./validateUrlForGettingOrders";
 export { daysArrayOfMonth } from "./calendar/daysArrayOfMonth";
 export { weeksNumberInMonth } from "./calendar/weeksNumberInMonth";
 export { firstDayOfMonth } from "./calendar/firstDayOfMonth";
