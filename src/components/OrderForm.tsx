@@ -41,7 +41,7 @@ export default function OrderForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { updateOrder, addOrder } = useOrders();
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -49,7 +49,7 @@ export default function OrderForm({
     return crypto.randomUUID();
   }
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement | HTMLSelectElement>
+    e: React.FormEvent<HTMLFormElement | HTMLSelectElement>,
   ) => {
     e.preventDefault();
     setIsSubmitting(true);

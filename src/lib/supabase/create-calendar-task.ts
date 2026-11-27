@@ -31,7 +31,7 @@ export async function createCalendarTask(taskData: CalendarTask) {
         Authorization: `Bearer ${session.access_token}`,
       },
       body: JSON.stringify(taskData),
-    }
+    },
   );
 
   if (!response.ok) {

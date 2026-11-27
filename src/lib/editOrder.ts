@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 export const editOrder = async (
   updatedOrder: Partial<Order>,
-  revalidatePathName: string | null = null
+  revalidatePathName: string | null = null,
 ) => {
   const supabase = await createClient();
 

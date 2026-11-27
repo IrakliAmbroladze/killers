@@ -2,13 +2,13 @@
 
 import { RefObject } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { OrderExtended } from "@/types/Order";
 import { normalizeAgGridRowForCopy } from "../../features/order-table/utils/normalizeAgGridRowForCopy";
 import { addOrders } from "@/lib";
 import { alertsForSelectedRows } from "@/utils";
+import { OrderExtended } from "@/modules/orders/types";
 
 export const handleCopyRows = async (
-  gridRef: RefObject<AgGridReact<OrderExtended> | null>
+  gridRef: RefObject<AgGridReact<OrderExtended> | null>,
 ) => {
   const api = gridRef.current?.api;
   if (!api) {
@@ -22,7 +22,7 @@ export const handleCopyRows = async (
   api.setGridOption("loading", true);
   try {
     const newOrders = selectedRows.map((row) =>
-      normalizeAgGridRowForCopy(row, input)
+      normalizeAgGridRowForCopy(row, input),
     );
 
     const response = await addOrders(newOrders);

@@ -1,6 +1,6 @@
 export const reducer = (
   state: Record<string, number>,
-  action: { type: string; payload: string }
+  action: { type: string; payload: string },
 ) => {
   switch (action.type) {
     case "INCREASE":

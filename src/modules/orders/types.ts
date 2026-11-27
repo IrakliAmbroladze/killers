@@ -1,9 +1,9 @@
 //Order.ts
 
-import { Customer } from ".";
-import { Employee } from "./Employee";
-import { PaymentType } from "./PaymentType";
-import { Provider } from "./Provider";
+import { Customer } from "@/types";
+import { Employee } from "@/types/Employee";
+import { PaymentType } from "@/types/PaymentType";
+import { Provider } from "@/types/Provider";
 
 export interface Order {
   id: string;

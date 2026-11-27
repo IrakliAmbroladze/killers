@@ -25,7 +25,7 @@ export const useFilteredOrders = () => {
         result = result.filter((order) =>
           (order[key as FilterableKeys] as string)
             ?.toLowerCase()
-            .includes(value.toLowerCase())
+            .includes(value.toLowerCase()),
         );
       }
     }

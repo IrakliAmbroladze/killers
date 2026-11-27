@@ -3,7 +3,7 @@ import { ActionType } from "../types/ActionType";
 
 const useListsContainer = (
   visibleStatusArray: number[],
-  dispatch: (action: ActionType) => void
+  dispatch: (action: ActionType) => void,
 ) => {
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLButtonElement;

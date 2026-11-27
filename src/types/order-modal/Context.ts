@@ -1,4 +1,4 @@
-import { OrderExtended } from "../Order";
+import { OrderExtended } from "@/modules/orders/types";
 
 export interface Context {
   order: OrderExtended | null;

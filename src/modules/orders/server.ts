@@ -1,7 +1,7 @@
-//getORders.ts
+"server-only";
 
 import { createClient } from "@/utils/supabase/server";
-import { OrderExtended } from "@/types/Order";
+import { OrderExtended } from "./types";
 export const getOrders = async ({
   fromDate,
   toDate,

@@ -5,7 +5,7 @@ export const useCommentsQuantities = () => {
   const context = useContext(Context);
   if (!context)
     throw new Error(
-      "useCommentsQuantity must be used within CommentsQuantityProvider"
+      "useCommentsQuantity must be used within CommentsQuantityProvider",
     );
   return context;
 };

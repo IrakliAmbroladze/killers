@@ -3,7 +3,7 @@ export const confirDeletePrompt = (id: string, name: string) => {
     `წაიშალოს შემდეგი მონაცემები? \n 
       Identity: ${id} \n 
       Customer: ${name} \n 
-      `
+      `,
   );
   return confirmDelete;
 };

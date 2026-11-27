@@ -16,7 +16,7 @@ export async function fetchComments(task_id: string) {
       employees (
         display_name
       )
-    `
+    `,
     )
     .eq("task_id", task_id);
   if (error instanceof Error) {

@@ -5,7 +5,7 @@ import { useDebouncedCallback } from "use-debounce";
 export const useDateParams = (
   pathname: string,
   router: AppRouterInstance,
-  searchParams: ReadonlyURLSearchParams
+  searchParams: ReadonlyURLSearchParams,
 ) => {
   const updateDateParam = useDebouncedCallback(
     (key: "fromDate" | "toDate", value: string) => {
@@ -19,7 +19,7 @@ export const useDateParams = (
 
       router.replace(`${pathname}?${params.toString()}`);
     },
-    50
+    50,
   );
   return { updateDateParam };
 };

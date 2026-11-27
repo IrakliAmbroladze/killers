@@ -3,7 +3,7 @@ import { Sheets_Invoice } from "@/types/invoices";
 export const filterByYearMonth = (
   orders: Sheets_Invoice[],
   targetYear: number,
-  targetMonth: number // 0-indexed: Jan = 0, Dec = 11
+  targetMonth: number, // 0-indexed: Jan = 0, Dec = 11
 ) => {
   return orders.filter((order) => {
     const rawDate = order.date;

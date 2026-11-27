@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     if (!id) {
       return NextResponse.json(
         { success: false, error: "Missing id parameter" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
         success: false,
         error: error instanceof Error ? error.message : "Unknown server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -11,7 +11,7 @@ export async function GET() {
     }
     return NextResponse.json(
       { error: "Unknown server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,6 +1,6 @@
 export const deepEqual = (
   a: Record<string, object>,
-  b: Record<string, object>
+  b: Record<string, object>,
 ): boolean => {
   if (a === b) return true;
 
@@ -17,7 +17,7 @@ export const deepEqual = (
       !keysB.includes(key) ||
       !deepEqual(
         a[key] as Record<string, object>,
-        b[key] as Record<string, object>
+        b[key] as Record<string, object>,
       )
     )
       return false;

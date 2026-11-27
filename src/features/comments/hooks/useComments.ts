@@ -19,7 +19,7 @@ const useComments = (id: string) => {
   const [formData, setFormData] = useState<CommentType>(initialFormData);
   const [commentList, setCommentList] = useState<CommentType[] | null>([]);
   const [editing, setEditing] = useState<{ id: string | null; text: string }>(
-    blankContent
+    blankContent,
   );
 
   const { increaseQuantity, decreaseQuantity } = useCommentsQuantities();

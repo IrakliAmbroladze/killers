@@ -9,7 +9,7 @@ export const getDefaultDateParams = () => ({
 
 export const getRedirectWithValidDateRange = (
   pathname: string,
-  currentParams: { [key: string]: string | string[] | undefined }
+  currentParams: { [key: string]: string | string[] | undefined },
 ): string => {
   const query = new URLSearchParams();
   Object.entries(currentParams).forEach(([key, value]) => {

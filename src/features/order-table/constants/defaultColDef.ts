@@ -1,4 +1,4 @@
-import { OrderExtended } from "@/types/Order";
+import { OrderExtended } from "@/modules/orders/types";
 import type { ColDef } from "ag-grid-community";
 
 export const defaultColumnDefs: ColDef<OrderExtended> = {

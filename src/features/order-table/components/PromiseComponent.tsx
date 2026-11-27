@@ -15,9 +15,7 @@ const PromiseComponent = ({
     totalCount: number;
   }>;
   columnDefs:
-    | (ColDef<OrderExtended> | ColGroupDef<OrderExtended>)[]
-    | null
-    | undefined;
+    (ColDef<OrderExtended> | ColGroupDef<OrderExtended>)[] | null | undefined;
   gridRef: React.Ref<AgGridReact<OrderExtended>> | undefined;
 }) => {
   const { orders } = use(ordersPromise);

@@ -13,7 +13,9 @@ export async function updateComment(commentId: string, newText: string) {
     throw new Error("User is not authenticated");
   }
 
-  const { error } = await (await supabase)
+  const { error } = await (
+    await supabase
+  )
     .from("comments")
     .update({ text: newText })
     .eq("id", commentId);

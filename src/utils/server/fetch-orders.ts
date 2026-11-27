@@ -11,7 +11,7 @@ const fetchOrders = async (start = 0, limit = 10000) => {
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
 
     if (!response.ok) {

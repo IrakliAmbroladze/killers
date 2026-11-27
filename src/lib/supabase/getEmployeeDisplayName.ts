@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { User } from "@supabase/supabase-js";
 
 export const getEmployeeDisplayName = async (
-  user: User | null
+  user: User | null,
 ): Promise<string | null> => {
   if (!user) {
     console.warn("No user data is provided in getEmployeeDisplayName function");

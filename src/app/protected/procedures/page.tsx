@@ -2,13 +2,13 @@
 // import { MonthProvider } from "@/context/month/Provider";
 // import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 
-import { validateUrlForGettingOrders } from "@/utils";
 import { headers } from "next/headers";
 import { proceduresPathName } from "./constants/proceduresPathName";
-import { getOrders } from "@/lib/getOrders";
 import { Calendar } from "@/components";
 import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
 import { getCalendarTasks } from "@/lib";
+import { getOrders } from "@/modules/orders/server";
+import { validateUrlForGettingOrders } from "@/modules/orders/utils/validateUrlForGettingOrders";
 
 const ProceduresPage = async ({
   searchParams,

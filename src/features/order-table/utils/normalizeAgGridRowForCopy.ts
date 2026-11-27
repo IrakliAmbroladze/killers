@@ -1,8 +1,8 @@
-import { Order, OrderExtended } from "@/types/Order";
+import { Order, OrderExtended } from "@/modules/orders/types";
 
 export const normalizeAgGridRowForCopy = (
   row: OrderExtended,
-  date = new Date().toISOString()
+  date = new Date().toISOString(),
 ) => {
   const {
     id,
@@ -29,7 +29,7 @@ export const normalizeAgGridRowForCopy = (
     document,
     plan_time,
     approve,
-    "for preparing order to be copied"
+    "for preparing order to be copied",
   );
 
   const newOrder: Omit<

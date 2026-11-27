@@ -61,7 +61,7 @@ export const CalendarGrid = ({
     viewMode === "month"
       ? Array.from(
           { length: dayOfWeekOfFirstDayOfMonth(year, month) },
-          (_, i) => <div key={`empty-${i}`} className="border p-2" />
+          (_, i) => <div key={`empty-${i}`} className="border p-2" />,
         )
       : [];
 

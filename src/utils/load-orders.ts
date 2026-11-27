@@ -6,8 +6,8 @@ export const loadOrders = async (
   start: number,
   limit: number,
   setInvoices: (
-    invoices: Sheets_Invoice[] | ((prev: Sheets_Invoice[]) => Sheets_Invoice[])
-  ) => void
+    invoices: Sheets_Invoice[] | ((prev: Sheets_Invoice[]) => Sheets_Invoice[]),
+  ) => void,
 ) => {
   try {
     setLoading(true);
