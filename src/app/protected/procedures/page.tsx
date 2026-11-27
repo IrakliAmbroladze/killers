@@ -1,39 +1,11 @@
-// import Calendar from "@/features/calendar/components/Calendar";
-// import { MonthProvider } from "@/context/month/Provider";
-// import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
-
-import { headers } from "next/headers";
-import { proceduresPathName } from "./constants/proceduresPathName";
-import { Calendar } from "@/components";
-import ToDoDoneList from "@/features/to-do-list/components/ToDoDoneList";
-import { getCalendarTasks } from "@/lib";
-import { getOrders } from "@/modules/orders/server";
-import { validateUrlForGettingOrders } from "@/modules/orders/utils/validateUrlForGettingOrders";
+import { ProceduresSection } from "@/modules/procedures/server";
 
 type Props = {
   searchParams: Promise<{
     [key: string]: string | string[] | undefined;
   }>;
 };
-export default async function ProceduresPage({
-  searchParams,
-}: Props) {
-  const params = await searchParams;
-  const header = await headers();
 
-  validateUrlForGettingOrders(params, header, proceduresPathName);
-  const { fromDate, toDate } = params;
-  const { orders } = await getOrders({ fromDate, toDate } as {
-    fromDate: string;
-    toDate: string;
-  });
-  const calendarTasks = await getCalendarTasks();
-
-  return (
-    <div className="w-full">
-      <Calendar orders={orders} calendarTasks={calendarTasks} />
-      <ToDoDoneList orders={orders} />
-    </div>
-  );
-};
-
+export default function ProceduresPage({ searchParams }: Props) {
+  return <ProceduresSection searchParams={searchParams} />;
+}
